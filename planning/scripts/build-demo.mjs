@@ -62,6 +62,27 @@ await writeFile(
     "'use client'\nimport Link from '@/lib/navigation'\nimport AttendanceControl from './attendance-control'\nimport { courseLevels } from '@/lib/course-levels'\nimport type { teacherProps } from '@/lib/admin-store'\nexport default function TeacherDashboard({past,slots,user}: ReturnType<typeof teacherProps>) {\n" +
         teacher.slice(teacher.indexOf('    return (')),
 )
+let login = await readFile(path.join(root, 'app/page.tsx'), 'utf8')
+login =
+    "'use client'\nimport { useState, type FormEvent } from 'react'\nimport { router } from '@/lib/navigation'\n" +
+    login
+        .replace(
+            /export default async function Login[\s\S]*?    const errors/,
+            `export default function Login() {
+    const [error, setError] = useState('')
+    function submit(event: FormEvent<HTMLFormElement>) {
+        event.preventDefault()
+        const form = new FormData(event.currentTarget)
+        const name = String(form.get('login') ?? '').trim().toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g, '')
+        const destinations: Record<string, string> = { admin: '/admin/planning', prof: '/teacher', etudiant: '/student' }
+        if (!destinations[name]) { setError('login'); return }
+        setError('')
+        router.push(destinations[name])
+    }
+    const errors`,
+        )
+        .replace('action="/api/auth/demo" method="post"', 'onSubmit={submit}')
+await writeFile(path.join(target, 'components/demo-login.tsx'), login)
 const layout = await readFile(path.join(root, 'app/layout.tsx'), 'utf8')
 const brand = layout.slice(layout.indexOf('<Link href="/"'), layout.indexOf('</Link>') + '</Link>'.length)
 await writeFile(

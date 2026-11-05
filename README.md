@@ -4,7 +4,9 @@ Démo publique : https://salutmarine.github.io/ecole-lesage/
 
 ## Démo autonome GitHub Pages
 
-La démo s’ouvre sans connexion. Les réservations et les pointages sont fictifs,
+La démo affiche une mire de connexion fictive : `admin`, `prof` ou `etudiant`
+permettent de choisir un rôle, avec un mot de passe prérempli sans vérification.
+Aucun compte réel ni connexion à un service externe n’est nécessaire. Les réservations et les pointages sont fictifs,
 conservés dans le `localStorage` du navigateur et ne sont jamais partagés entre
 visiteurs. Le stockage désactivé est pris en charge en mémoire jusqu’au rechargement.
 Le bouton « Réinitialiser ma démo » restaure les données de départ.
@@ -12,7 +14,7 @@ Le bouton « Réinitialiser ma démo » restaure les données de départ.
 La démo réutilise les composants et styles de l’application locale : espaces
 administrateur, étudiant et professeur, formulaires de gestion, calendrier, pointage
 et export PDF. Le logo et les quatre graisses de la police ABChanel sont servis avec
-les fichiers statiques. Le sélecteur de l’en-tête permet de changer de rôle sans compte.
+les fichiers statiques. Le bouton « Se déconnecter » ramène à la mire sans effacer les réservations locales.
 La navigation utilise des fragments d’URL (`#/admin/planning`) pour fonctionner sur
 GitHub Pages, y compris après un rechargement.
 Les cours proviennent du catalogue du projet ; les personnes et les créneaux sont
