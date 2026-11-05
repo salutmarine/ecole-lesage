@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useId, useState } from 'react'
 import { dateLabel } from './month-calendar'
+import Toast from './toast'
 
 export type MovedBooking = {
     id: string
@@ -164,11 +165,7 @@ export default function BookingActions({
                     </div>
                 </div>
             )}
-            {error && (
-                <p className="error" role="alert">
-                    {error}
-                </p>
-            )}
+            {error && <Toast message={error} variant="error" />}
         </div>
     )
 }

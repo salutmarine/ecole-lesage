@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { dateLabel } from '@/components/month-calendar'
+import Toast from '@/components/toast'
 import type { StudentEntitlement } from './student-credits'
 
 type Slot = { id: string; startsAt: string; endsAt: string; places: number; teacher: string | null }
@@ -152,11 +153,7 @@ export default function StudentBooking({
                     </button>
                 </div>
             </fieldset>
-            {error && (
-                <p className="error" role="alert">
-                    {error}
-                </p>
-            )}
+            {error && <Toast message={error} variant="error" />}
         </form>
     )
 }

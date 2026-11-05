@@ -406,7 +406,7 @@ label {
     &_controls {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 5px;
         white-space: nowrap;
         strong {
             text-transform: capitalize;
@@ -415,8 +415,18 @@ label {
             text-align: center;
         }
         .btn {
-            font-size: 20px !important;
-            padding: 5px 12px !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            flex-shrink: 0;
+            padding: 0;
+            border-radius: 50%;
+            &:focus-visible {
+                outline: 2px solid var(--ink);
+                outline-offset: 3px;
+            }
         }
     }
     &_grid {
@@ -902,6 +912,10 @@ label {
     gap: 4px;
     text-align: left;
     overflow-wrap: anywhere;
+    border: none;
+    padding: 10px;
+    border-radius: 15px;
+    cursor: pointer;
 }
 
 .student_booking_history {

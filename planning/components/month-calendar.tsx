@@ -140,7 +140,9 @@ export function MonthCalendar({
                         onClick={() => setMonth((d) => new Date(d.getFullYear(), d.getMonth() - 1, 1))}
                         aria-label="Mois précédent"
                     >
-                        ‹
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
+                            <path d="m14 6-6 6 6 6" />
+                        </svg>
                     </button>
                     <strong>
                         {month.toLocaleDateString('fr-FR', {
@@ -154,7 +156,9 @@ export function MonthCalendar({
                         onClick={() => setMonth((d) => new Date(d.getFullYear(), d.getMonth() + 1, 1))}
                         aria-label="Mois suivant"
                     >
-                        ›
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
+                            <path d="m10 6 6 6-6 6" />
+                        </svg>
                     </button>
                 </div>
             </div>

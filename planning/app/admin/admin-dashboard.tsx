@@ -1176,7 +1176,7 @@ export default function AdminDashboard({
                                 {matchingStudents.map(({ student, entitlement }) => (
                                     <button
                                         key={student.id}
-                                        className="btn secondary slot_student_result"
+                                        className="slot_student_result"
                                         type="button"
                                         disabled={busy}
                                         aria-label={`Ajouter ${student.name} au cours`}
@@ -1197,11 +1197,7 @@ export default function AdminDashboard({
                             )}
                         </div>
                     )}
-                    {bookingError && (
-                        <p className="error" role="alert">
-                            {bookingError}
-                        </p>
-                    )}
+                    {bookingError && <Toast message={bookingError} variant="error" />}
                     {slotError && (
                         <p className="error" role="alert">
                             {slotError}
