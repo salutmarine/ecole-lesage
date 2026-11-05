@@ -22,7 +22,7 @@ export type Course = {
     bookingDelayHours: number
 }
 export const sourceCatalogue = catalogue
-export const STORAGE_KEY = 'lesage-pages-demo-v1'
+export const STORAGE_KEY = 'lesage-pages-demo-v2'
 export type Slot = {
     id: string
     courseId: string
@@ -61,19 +61,17 @@ export type Entitlement = {
     status: string
 }
 export type State = {
-    version: 1
+    version: 2
     slots: Slot[]
     entitlements: Entitlement[]
     bookings: Booking[]
     courses?: Course[]
     people?: Person[]
 }
-export function createState(now = new Date()): State {
+export function createState(now = new Date(), withDemoBookings = true): State {
     const courses = [
-        catalogue[0],
-        catalogue[5],
-        catalogue.find((c) => c.level === 'PERFECTIONNEMENT')!,
-        catalogue.find((c) => c.level === 'SPECIALISATION')!,
+        catalogue.find((c) => c.name === 'DECOUVERTE AIGUILLE : CŒUR BAROQUE')!,
+        catalogue.find((c) => c.name === 'HAUTE COUTURE')!,
     ]
     const entitlements = courses.map((c, i) => ({
         id: `credit-${i}`,
@@ -109,7 +107,37 @@ export function createState(now = new Date()): State {
             })
         }
     }
-    return { version: 1, entitlements, slots, bookings: [] }
+    const bookings: Booking[] = []
+    if (withDemoBookings) {
+        const heartSlot = slots.find(
+            (slot) => slot.course === 'DECOUVERTE AIGUILLE : CŒUR BAROQUE' && new Date(slot.startsAt) > now,
+        )
+        const coutureSlot = slots.find((slot) => {
+            const date = new Date(slot.startsAt)
+            return slot.course === 'HAUTE COUTURE' && date.getMonth() === now.getMonth() && date.getDate() === 10
+        })
+        for (const [slot, entitlement] of [
+            [heartSlot, entitlements[0]],
+            [coutureSlot, entitlements[1]],
+        ] as const) {
+            if (!slot || !entitlement) continue
+            bookings.push({
+                id: `booking-demo-${slot.id}`,
+                slotId: slot.id,
+                entitlementId: entitlement.id,
+                course: slot.course,
+                date: slot.startsAt,
+                endsAt: slot.endsAt,
+                teacher: slot.teacher,
+                status: 'BOOKED',
+                cancellationHours: slot.cancellationHours,
+                attendance: 'UNMARKED',
+            })
+            slot.reserved++
+        }
+        if (coutureSlot) coutureSlot.reserved = coutureSlot.capacity
+    }
+    return { version: 2, entitlements, slots, bookings }
 }
 let current: State | undefined
 export function loadState(): State {
@@ -119,7 +147,7 @@ export function loadState(): State {
         if (raw) {
             const parsed = JSON.parse(raw) as State
             if (
-                parsed.version === 1 &&
+                parsed.version === 2 &&
                 Array.isArray(parsed.slots) &&
                 Array.isArray(parsed.entitlements) &&
                 Array.isArray(parsed.bookings) &&

@@ -2,11 +2,27 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { createState, mutateBooking, remaining, demoFetch } from './store'
 function scenario() {
-    const state = createState()
+    const state = createState(new Date(), false)
     const slot = state.slots.find((s) => new Date(s.startsAt).getTime() > Date.now() + 7 * 86400000)!
     const credit = state.entitlements.find((e) => e.courseId === slot.courseId)!
     return { state, slot, credit }
 }
+test('la démo étudiante démarre avec les cours et réservations attendus', () => {
+    const state = createState(new Date(2026, 10, 5, 12))
+    assert.deepEqual(
+        state.entitlements.map((entitlement) => entitlement.course),
+        ['DECOUVERTE AIGUILLE : CŒUR BAROQUE', 'HAUTE COUTURE'],
+    )
+    assert.deepEqual(
+        state.bookings.map((booking) => booking.course),
+        ['DECOUVERTE AIGUILLE : CŒUR BAROQUE', 'HAUTE COUTURE'],
+    )
+    const couture = state.slots.find((slot) => {
+        const date = new Date(slot.startsAt)
+        return slot.course === 'HAUTE COUTURE' && date.getMonth() === 10 && date.getDate() === 10
+    })!
+    assert.equal(couture.reserved, couture.capacity)
+})
 test('reservations, déplacement, annulation et crédits restent cohérents', () => {
     const { state, slot, credit } = scenario()
     const created = mutateBooking(state, 'POST', { slotId: slot.id, entitlementId: credit.id })
@@ -27,7 +43,7 @@ test('reservations, déplacement, annulation et crédits restent cohérents', ()
 })
 test('chaque visiteur possède des données indépendantes', () => {
     const { state, slot, credit } = scenario()
-    const other = createState()
+    const other = createState(new Date(), false)
     mutateBooking(state, 'POST', { slotId: slot.id, entitlementId: credit.id })
     assert.equal(other.bookings.length, 0)
     assert.equal(other.slots.find((s) => s.id === slot.id)!.reserved, 0)
