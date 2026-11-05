@@ -11,7 +11,6 @@ export default async function Login({ searchParams }: { searchParams: Promise<{ 
         <div className="login_wrap">
             <h1>Planifiez vos cours à l'école Lesage</h1>
             <form className="login_form" action="/api/auth/demo" method="post">
-                <h2 className="login_group_title">Identifiants de connexion</h2>
                 <div className="login_field_group">
                     <div className={`login_field${error === 'login' ? ' is_invalid' : ''}`}>
                         <input
@@ -27,7 +26,7 @@ export default async function Login({ searchParams }: { searchParams: Promise<{ 
                             aria-describedby="login-hint"
                         />
                         <label htmlFor="demo-login">
-                            Login <span aria-hidden="true">*</span>
+                            Login : admin, prof ou etudiant. <span aria-hidden="true">*</span>
                         </label>
                     </div>
                     <div className="login_field">
@@ -45,10 +44,7 @@ export default async function Login({ searchParams }: { searchParams: Promise<{ 
                             Mot de passe <span aria-hidden="true">*</span>
                         </label>
                     </div>
-                </div>
-                <p className="login_hint" id="login-hint">
-                    Login : admin, prof ou etudiant. Le mot de passe est fictif.
-                </p>
+                </div><br/>
                 {error && errors[error] && <Toast message={errors[error]} />}
                 <button className="btn btn-large" type="submit">
                     Se connecter

@@ -7,6 +7,7 @@ const target = path.join(root, '.pages-build')
 await rm(target, { recursive: true, force: true })
 await mkdir(target, { recursive: true })
 await cp(path.join(root, 'demo'), target, { recursive: true })
+await cp(path.join(root, 'app/icon.svg'), path.join(target, 'app/icon.svg'))
 await writeFile(
     path.join(target, 'lib/store.ts'),
     (await readFile(path.join(target, 'lib/store.ts'), 'utf8')).replace(
