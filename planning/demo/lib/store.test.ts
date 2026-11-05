@@ -9,12 +9,18 @@ function scenario() {
 }
 test('la démo étudiante démarre avec les cours et réservations attendus', () => {
     const state = createState(new Date(2026, 10, 5, 12))
+    const studentEntitlementIds = state.entitlements
+        .filter((entitlement) => (entitlement.userId ?? 'student-demo') === 'student-demo')
+        .map((entitlement) => entitlement.id)
+    const studentBookings = state.bookings.filter((booking) => studentEntitlementIds.includes(booking.entitlementId))
     assert.deepEqual(
-        state.entitlements.map((entitlement) => entitlement.course),
+        state.entitlements
+            .filter((entitlement) => studentEntitlementIds.includes(entitlement.id))
+            .map((entitlement) => entitlement.course),
         ['DECOUVERTE AIGUILLE : CŒUR BAROQUE', 'HAUTE COUTURE'],
     )
     assert.deepEqual(
-        state.bookings.map((booking) => booking.course),
+        studentBookings.map((booking) => booking.course),
         ['DECOUVERTE AIGUILLE : CŒUR BAROQUE'],
     )
     const couture = state.slots.find((slot) => {
@@ -23,9 +29,14 @@ test('la démo étudiante démarre avec les cours et réservations attendus', ()
     })!
     assert.equal(couture.reserved, couture.capacity)
     assert.equal(
-        state.bookings.some((booking) => booking.slotId === couture.id),
+        studentBookings.some((booking) => booking.slotId === couture.id),
         false,
     )
+    const coutureStudents = state.bookings
+        .filter((booking) => booking.slotId === couture.id)
+        .map((booking) => state.entitlements.find((item) => item.id === booking.entitlementId)?.userId)
+    assert.equal(coutureStudents.length, couture.capacity)
+    assert.equal(new Set(coutureStudents).size, couture.capacity)
     assert.ok(state.slots.some((slot) => slot.reserved === 0))
     assert.ok(state.slots.some((slot) => slot.capacity - slot.reserved === 2))
     assert.ok(state.slots.some((slot) => slot.capacity - slot.reserved === 3))

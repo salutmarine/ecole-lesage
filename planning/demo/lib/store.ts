@@ -22,7 +22,7 @@ export type Course = {
     bookingDelayHours: number
 }
 export const sourceCatalogue = catalogue
-export const STORAGE_KEY = 'lesage-pages-demo-v3'
+export const STORAGE_KEY = 'lesage-pages-demo-v4'
 export type Slot = {
     id: string
     courseId: string
@@ -61,7 +61,7 @@ export type Entitlement = {
     status: string
 }
 export type State = {
-    version: 3
+    version: 4
     slots: Slot[]
     entitlements: Entitlement[]
     bookings: Booking[]
@@ -73,7 +73,7 @@ export function createState(now = new Date(), withDemoBookings = true): State {
         catalogue.find((c) => c.name === 'DECOUVERTE AIGUILLE : CŒUR BAROQUE')!,
         catalogue.find((c) => c.name === 'HAUTE COUTURE')!,
     ]
-    const entitlements = courses.map((c, i) => ({
+    const entitlements: Entitlement[] = courses.map((c, i) => ({
         id: `credit-${i}`,
         courseId: `course-${i}`,
         course: c.name,
@@ -84,6 +84,52 @@ export function createState(now = new Date(), withDemoBookings = true): State {
         expiresAt: new Date(now.getFullYear() + 1, now.getMonth() + 4, 1).toISOString(),
         status: 'ACTIVE',
     }))
+    const demoStudents: Person[] = [
+        ['alice-moreau', 'Alice', 'Moreau'],
+        ['ines-laurent', 'Inès', 'Laurent'],
+        ['clara-robert', 'Clara', 'Robert'],
+        ['juliette-bernard', 'Juliette', 'Bernard'],
+        ['lea-petit', 'Léa', 'Petit'],
+        ['emma-dubois', 'Emma', 'Dubois'],
+    ].map(([id, firstName, lastName]) => ({
+        id,
+        firstName,
+        lastName,
+        email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}@example.test`,
+        phone: null,
+        language: 'fr',
+        role: 'STUDENT' as const,
+    }))
+    const people: Person[] = [
+        {
+            id: 'student-demo',
+            firstName: 'Élève',
+            lastName: 'Démo',
+            email: 'eleve@example.test',
+            phone: null,
+            language: 'fr',
+            role: 'STUDENT',
+        },
+        ...demoStudents,
+        {
+            id: 'teacher-louise',
+            firstName: 'Louise',
+            lastName: 'Bernard',
+            email: 'louise@example.test',
+            phone: null,
+            language: 'fr',
+            role: 'TEACHER',
+        },
+        {
+            id: 'teacher-camille',
+            firstName: 'Camille',
+            lastName: 'Martin',
+            email: 'camille@example.test',
+            phone: null,
+            language: 'fr',
+            role: 'TEACHER',
+        },
+    ]
     const slots: Slot[] = []
     for (let day = 1; day <= 190; day++) {
         const date = new Date(now.getFullYear(), now.getMonth(), day, 9, 30)
@@ -109,6 +155,22 @@ export function createState(now = new Date(), withDemoBookings = true): State {
     }
     const bookings: Booking[] = []
     if (withDemoBookings) {
+        for (const student of demoStudents) {
+            courses.forEach((course, index) => {
+                entitlements.push({
+                    userId: student.id,
+                    id: `credit-${student.id}-${index}`,
+                    courseId: `course-${index}`,
+                    course: course.name,
+                    total: 200,
+                    remaining: 200,
+                    bookingDelayHours: 0,
+                    purchaseDate: new Date(now.getFullYear(), now.getMonth() - 2, 1).toISOString(),
+                    expiresAt: new Date(now.getFullYear() + 2, now.getMonth(), 1).toISOString(),
+                    status: 'ACTIVE',
+                })
+            })
+        }
         const occupancy = [0, 4, 3, 6]
         slots.forEach((slot, index) => {
             slot.reserved = occupancy[index % occupancy.length]
@@ -137,8 +199,29 @@ export function createState(now = new Date(), withDemoBookings = true): State {
             heartSlot.reserved = Math.max(1, Math.min(heartSlot.reserved, heartSlot.capacity - 1))
         }
         if (coutureSlot) coutureSlot.reserved = coutureSlot.capacity
+        slots.forEach((slot, slotIndex) => {
+            const existing = bookings.filter((booking) => booking.slotId === slot.id).length
+            for (let seat = existing; seat < slot.reserved; seat++) {
+                const student = demoStudents[(slotIndex + seat) % demoStudents.length]
+                const entitlement = entitlements.find(
+                    (item) => item.userId === student.id && item.courseId === slot.courseId,
+                )!
+                bookings.push({
+                    id: `booking-${slot.id}-${student.id}`,
+                    slotId: slot.id,
+                    entitlementId: entitlement.id,
+                    course: slot.course,
+                    date: slot.startsAt,
+                    endsAt: slot.endsAt,
+                    teacher: slot.teacher,
+                    status: new Date(slot.endsAt) < now ? 'COMPLETED' : 'BOOKED',
+                    cancellationHours: slot.cancellationHours,
+                    attendance: 'UNMARKED',
+                })
+            }
+        })
     }
-    return { version: 3, entitlements, slots, bookings }
+    return { version: 4, entitlements, slots, bookings, people }
 }
 let current: State | undefined
 export function loadState(): State {
@@ -148,7 +231,7 @@ export function loadState(): State {
         if (raw) {
             const parsed = JSON.parse(raw) as State
             if (
-                parsed.version === 3 &&
+                parsed.version === 4 &&
                 Array.isArray(parsed.slots) &&
                 Array.isArray(parsed.entitlements) &&
                 Array.isArray(parsed.bookings) &&
