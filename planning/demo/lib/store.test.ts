@@ -15,13 +15,20 @@ test('la démo étudiante démarre avec les cours et réservations attendus', ()
     )
     assert.deepEqual(
         state.bookings.map((booking) => booking.course),
-        ['DECOUVERTE AIGUILLE : CŒUR BAROQUE', 'HAUTE COUTURE'],
+        ['DECOUVERTE AIGUILLE : CŒUR BAROQUE'],
     )
     const couture = state.slots.find((slot) => {
         const date = new Date(slot.startsAt)
         return slot.course === 'HAUTE COUTURE' && date.getMonth() === 10 && date.getDate() === 10
     })!
     assert.equal(couture.reserved, couture.capacity)
+    assert.equal(
+        state.bookings.some((booking) => booking.slotId === couture.id),
+        false,
+    )
+    assert.ok(state.slots.some((slot) => slot.reserved === 0))
+    assert.ok(state.slots.some((slot) => slot.capacity - slot.reserved === 2))
+    assert.ok(state.slots.some((slot) => slot.capacity - slot.reserved === 3))
 })
 test('reservations, déplacement, annulation et crédits restent cohérents', () => {
     const { state, slot, credit } = scenario()

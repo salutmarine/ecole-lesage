@@ -22,7 +22,7 @@ export type Course = {
     bookingDelayHours: number
 }
 export const sourceCatalogue = catalogue
-export const STORAGE_KEY = 'lesage-pages-demo-v2'
+export const STORAGE_KEY = 'lesage-pages-demo-v3'
 export type Slot = {
     id: string
     courseId: string
@@ -61,7 +61,7 @@ export type Entitlement = {
     status: string
 }
 export type State = {
-    version: 2
+    version: 3
     slots: Slot[]
     entitlements: Entitlement[]
     bookings: Booking[]
@@ -109,6 +109,10 @@ export function createState(now = new Date(), withDemoBookings = true): State {
     }
     const bookings: Booking[] = []
     if (withDemoBookings) {
+        const occupancy = [0, 4, 3, 6]
+        slots.forEach((slot, index) => {
+            slot.reserved = occupancy[index % occupancy.length]
+        })
         const heartSlot = slots.find(
             (slot) => slot.course === 'DECOUVERTE AIGUILLE : CŒUR BAROQUE' && new Date(slot.startsAt) > now,
         )
@@ -116,28 +120,25 @@ export function createState(now = new Date(), withDemoBookings = true): State {
             const date = new Date(slot.startsAt)
             return slot.course === 'HAUTE COUTURE' && date.getMonth() === now.getMonth() && date.getDate() === 10
         })
-        for (const [slot, entitlement] of [
-            [heartSlot, entitlements[0]],
-            [coutureSlot, entitlements[1]],
-        ] as const) {
-            if (!slot || !entitlement) continue
+        if (heartSlot) {
+            const entitlement = entitlements[0]
             bookings.push({
-                id: `booking-demo-${slot.id}`,
-                slotId: slot.id,
+                id: `booking-demo-${heartSlot.id}`,
+                slotId: heartSlot.id,
                 entitlementId: entitlement.id,
-                course: slot.course,
-                date: slot.startsAt,
-                endsAt: slot.endsAt,
-                teacher: slot.teacher,
+                course: heartSlot.course,
+                date: heartSlot.startsAt,
+                endsAt: heartSlot.endsAt,
+                teacher: heartSlot.teacher,
                 status: 'BOOKED',
-                cancellationHours: slot.cancellationHours,
+                cancellationHours: heartSlot.cancellationHours,
                 attendance: 'UNMARKED',
             })
-            slot.reserved++
+            heartSlot.reserved = Math.max(1, Math.min(heartSlot.reserved, heartSlot.capacity - 1))
         }
         if (coutureSlot) coutureSlot.reserved = coutureSlot.capacity
     }
-    return { version: 2, entitlements, slots, bookings }
+    return { version: 3, entitlements, slots, bookings }
 }
 let current: State | undefined
 export function loadState(): State {
@@ -147,7 +148,7 @@ export function loadState(): State {
         if (raw) {
             const parsed = JSON.parse(raw) as State
             if (
-                parsed.version === 2 &&
+                parsed.version === 3 &&
                 Array.isArray(parsed.slots) &&
                 Array.isArray(parsed.entitlements) &&
                 Array.isArray(parsed.bookings) &&
