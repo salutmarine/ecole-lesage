@@ -48,8 +48,6 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ v
                         <p>Consultez les séances et pointez les élèves de vos cours.</p>
                     </div>
                 </div>
-            </aside>
-            <div className="teacher_content">
                 <nav className="attendance_views" aria-label="Période des séances">
                     <Link
                         className={past ? 'btn secondary' : 'btn'}
@@ -66,6 +64,8 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ v
                         Séances passées
                     </Link>
                 </nav>
+            </aside>
+            <div className="teacher_content">
                 {slots.length === 0 && <p className="card">Aucune séance pour cette période.</p>}
                 {slots.map((s) => {
                     const registered = s.bookings.length

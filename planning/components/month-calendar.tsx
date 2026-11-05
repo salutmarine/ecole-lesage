@@ -1,7 +1,6 @@
 'use client'
-import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { courseLevels, type CourseLevel } from '@/lib/course-levels'
-import { courseImage } from '@/lib/course-images'
 export type CalendarSlot = {
     id: string
     courseId: string | null
@@ -233,6 +232,9 @@ export function MonthCalendar({
                                                 className={
                                                     'btn ' +
                                                     ('month_event ' +
+                                                        (s.level
+                                                            ? `month_event_level_border_${s.level.toLowerCase()} `
+                                                            : '') +
                                                         (booked
                                                             ? 'month_event_booked'
                                                             : disabled
@@ -242,13 +244,6 @@ export function MonthCalendar({
                                                 disabled={mode === 'student' && !booked && disabled}
                                                 onClick={() => onSelect(s)}
                                                 title={`${s.course} · ${availability}${booked ? ' · Déjà réservé' : ''}`}
-                                                style={
-                                                    courseImage(s.course)
-                                                        ? ({
-                                                              '--course-image': `url("${courseImage(s.course)}")`,
-                                                          } as CSSProperties)
-                                                        : undefined
-                                                }
                                             >
                                                 {booked && (
                                                     <span className="month_event_badge">
@@ -262,24 +257,8 @@ export function MonthCalendar({
                                                     })}
                                                 </span>
                                                 <span className="month_event_name">{s.course}</span>
-                                                {s.level && (
-                                                    <span
-                                                        className={`month_event_level month_event_level_${s.level.toLowerCase()}`}
-                                                    >
-                                                        {courseLevels[s.level]}
-                                                    </span>
-                                                )}
-                                                {mode === 'admin' && (
-                                                    <>
-                                                        {s.teacher && (
-                                                            <span className="month_event_places">{s.teacher}</span>
-                                                        )}
-                                                        <span className="month_event_places">{availability}</span>
-                                                    </>
-                                                )}
-                                                {mode === 'student' && available === 0 && (
-                                                    <span className="month_event_places">Complet</span>
-                                                )}
+                                                {s.teacher && <span className="month_event_places">{s.teacher}</span>}
+                                                <span className="month_event_places">{availability}</span>
                                             </button>
                                         )
                                     })}
@@ -289,21 +268,28 @@ export function MonthCalendar({
                     </div>
                 ))}
             </div>
-            {(showLegend || mode === 'student') && (
-                <div className="month_legend" aria-label="Légende des créneaux">
+            <div className="month_legend" aria-label="Légende des créneaux et des niveaux">
+                <span>
+                    <i className="month_legend_swatch month_legend_available" aria-hidden="true" /> Disponible
+                </span>
+                <span>
+                    <i className="month_legend_swatch month_legend_unavailable" aria-hidden="true" /> Indisponible
+                </span>
+                {mode === 'student' && (
                     <span>
-                        <i className="month_legend_swatch month_legend_available" aria-hidden="true" /> Disponible
+                        <i className="month_legend_swatch month_legend_booked" aria-hidden="true" /> Réservé
                     </span>
-                    <span>
-                        <i className="month_legend_swatch month_legend_unavailable" aria-hidden="true" /> Indisponible
+                )}
+                {(Object.entries(courseLevels) as [CourseLevel, string][]).map(([level, label]) => (
+                    <span key={level}>
+                        <i
+                            className={`month_legend_swatch month_legend_level month_legend_level_${level.toLowerCase()}`}
+                            aria-hidden="true"
+                        />{' '}
+                        {label}
                     </span>
-                    {mode === 'student' && (
-                        <span>
-                            <i className="month_legend_swatch month_legend_booked" aria-hidden="true" /> Réservé
-                        </span>
-                    )}
-                </div>
-            )}
+                ))}
+            </div>
         </div>
     )
 }

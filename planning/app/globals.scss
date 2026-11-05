@@ -527,9 +527,7 @@ label {
         width: 100%;
         min-width: 0;
         text-align: left !important;
-        background:
-            linear-gradient(rgba(15, 15, 24, 0.7), rgba(15, 15, 24, 0.82)),
-            var(--course-image, linear-gradient(var(--waouh), var(--waouh))) center / cover !important;
+        background: var(--waouh) !important;
         color: white !important;
         border-radius: 6px !important;
         padding: 7px !important;
@@ -558,9 +556,7 @@ label {
         cursor: not-allowed;
     }
     &_event_booked {
-        background:
-            linear-gradient(rgba(24, 82, 49, 0.72), rgba(24, 82, 49, 0.84)),
-            var(--course-image, linear-gradient(#205c35, #205c35)) center / cover !important;
+        background: #205c35 !important;
         color: #fff !important;
 
         &:disabled {
@@ -575,6 +571,16 @@ label {
         padding: 3px 6px;
         font-size: 10px;
         font-weight: 600;
+        border: 1px solid #669175;
+    }
+    &_event_level_border_initiation {
+        border-left: 4px solid #77a879 !important;
+    }
+    &_event_level_border_perfectionnement {
+        border-left: 4px solid #789ace !important;
+    }
+    &_event_level_border_specialisation {
+        border-left: 4px solid #b783c2 !important;
     }
     &_legend {
         display: flex;
@@ -607,6 +613,19 @@ label {
     &_legend_booked {
         background: #e6f4ea;
         border: 1px solid #b9dac4;
+    }
+    &_legend_level {
+        width: 4px;
+        border-radius: 999px;
+    }
+    &_legend_level_initiation {
+        background: #77a879;
+    }
+    &_legend_level_perfectionnement {
+        background: #789ace;
+    }
+    &_legend_level_specialisation {
+        background: #b783c2;
     }
 }
 .subtle_rule {
@@ -727,6 +746,54 @@ label {
 .teacher_sidebar {
     position: sticky;
     top: 20px;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 30px;
+    box-shadow: var(--shadow);
+
+    .hero_panel {
+        margin: 0;
+        padding: 20px;
+        border-radius: 18px 18px 0 0;
+        align-items: flex-start;
+
+        h1 {
+            margin: 10px 0;
+            font-size: 26px;
+            font-weight: 800;
+        }
+        p {
+            font-size: 14px;
+            font-weight: 400;
+        }
+    }
+    .attendance_views {
+        display: grid;
+        gap: 12px;
+        margin: 0;
+        padding: 20px;
+
+        .btn {
+            width: 100%;
+            padding: 10px 20px;
+            border-radius: 999px;
+            background: transparent;
+            color: var(--ink);
+            text-align: left;
+            font-size: 14px;
+            font-weight: 400;
+
+            &[aria-current='page'] {
+                background: #f0f0f0;
+                color: var(--ink);
+                font-weight: 600;
+            }
+            &:focus-visible {
+                outline: 2px solid var(--ink);
+                outline-offset: 3px;
+            }
+        }
+    }
 }
 .teacher_content {
     min-width: 0;
@@ -755,40 +822,32 @@ label {
     min-width: 0;
     overflow: hidden;
     background: #fff;
-    border-radius: 30px;
+    border-radius: 18px;
     box-shadow: var(--shadow);
 
     .hero_panel {
-        min-height: 210px;
         margin: 0;
-        padding: 28px 36px;
-        border-radius: 30px 30px 0 0;
+        padding: 20px;
+        border-radius: 18px 18px 0 0;
         align-items: flex-start;
 
         h1 {
-            margin: 22px 0 24px;
-            font-size: 34px;
-            font-weight: 400;
-            letter-spacing: -1px;
+            margin: 10px 0;
+            font-size: 26px;
+            font-weight: 800;
         }
         p {
-            max-width: 205px;
-            font-size: 15px;
-            line-height: 1.45;
-            font-weight: 300;
-        }
-        .section_kicker {
-            font-size: 11px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            font-size: 14px;
+            font-weight: 400;
         }
     }
 }
 .admin_sidebar {
     background: #fff;
     border: 0;
-    border-radius: 0 0 30px 30px;
-    padding: 28px 20px 34px;
+    border-radius: 0 0 18px 18px;
+    padding: 20px;
+
     nav {
         display: grid;
         gap: 12px;
@@ -798,9 +857,9 @@ label {
         text-align: left;
         background: transparent;
         color: var(--ink);
-        padding: 16px 20px;
+        padding: 10px 20px;
         border-radius: 999px;
-        font-size: 15px;
+        font-size: 14px;
         font-weight: 400;
         &[aria-current='page'] {
             background: #f0f0f0;
@@ -930,6 +989,46 @@ label {
 .student_summary,
 .student_calendar {
     min-width: 0;
+}
+.student_summary {
+    position: sticky;
+    top: 20px;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+
+    .hero_panel {
+        margin: 0;
+        padding: 20px;
+        border-radius: 18px 18px 0 0;
+        align-items: flex-start;
+
+        h1 {
+            margin: 10px 0;
+            font-size: 26px;
+            font-weight: 800;
+        }
+        p {
+            font-size: 14px;
+            font-weight: 400;
+        }
+    }
+    > .card {
+        margin: 0;
+        padding: 20px;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+    }
+    > .student_reservations_cta {
+        width: calc(100% - 40px);
+        margin: 0 20px 20px;
+        padding: 13px 20px;
+        border-radius: 999px;
+        background: #f0f0f0;
+        color: var(--ink);
+    }
 }
 .student_entitlement {
     padding: 16px 0;
@@ -1093,6 +1192,9 @@ label {
 @media (max-width: 680px) {
     .student_workspace {
         grid-template-columns: 1fr;
+    }
+    .student_summary {
+        position: static;
     }
 }
 
