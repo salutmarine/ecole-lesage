@@ -9,9 +9,12 @@ conservés dans le `localStorage` du navigateur et ne sont jamais partagés entr
 visiteurs. Le stockage désactivé est pris en charge en mémoire jusqu’au rechargement.
 Le bouton « Réinitialiser ma démo » restaure les données de départ.
 
-La démo comprend l’espace étudiant (réserver, déplacer, annuler et consulter ses
-crédits), une vue du planning et un espace professeur pour tester le pointage.
-Les formulaires d’administration du serveur ne font pas partie de la version statique.
+La démo réutilise les composants et styles de l’application locale : espaces
+administrateur, étudiant et professeur, formulaires de gestion, calendrier, pointage
+et export PDF. Le logo et les quatre graisses de la police ABChanel sont servis avec
+les fichiers statiques. Le sélecteur de l’en-tête permet de changer de rôle sans compte.
+La navigation utilise des fragments d’URL (`#/admin/planning`) pour fonctionner sur
+GitHub Pages, y compris après un rechargement.
 Les cours proviennent du catalogue du projet ; les personnes et les créneaux sont
 fictifs. Le calendrier de démonstration couvre le mois courant et les cinq mois suivants.
 Aucun serveur, compte, secret, paiement ou envoi d’email n’est utilisé par la démo.

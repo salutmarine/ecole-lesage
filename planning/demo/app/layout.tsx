@@ -1,5 +1,4 @@
 import './globals.scss'
-import './demo.css'
 export const metadata = {
     title: 'École Lesage — Démo du planning',
     description:

@@ -30,12 +30,54 @@ dashboard = dashboard.replace("'use client'", "'use client'\nimport { demoFetch 
 await writeFile(path.join(target, 'components/student-dashboard.tsx'), dashboard)
 for (const name of ['course-levels', 'student-availability'])
     await cp(path.join(root, `lib/${name}.ts`), path.join(target, `lib/${name}.ts`))
-await writeFile(
-    path.join(target, 'app/globals.scss'),
-    (await readFile(path.join(root, 'app/globals.scss'), 'utf8'))
-        .replace(/@font-face\s*\{[^}]*\}/g, '')
-        .replaceAll("'abchanel-2022', sans-serif", 'Arial, sans-serif'),
+const basePath = process.env.PAGES_BASE_PATH ?? '/ecole-lesage'
+await mkdir(path.join(target, 'public/fonts'), { recursive: true })
+await cp(path.join(root, 'assets/fonts/abchanel'), path.join(target, 'public/fonts/abchanel'), { recursive: true })
+await cp(
+    path.join(root, 'assets/fonts/NotoSansJP-Regular.otf'),
+    path.join(target, 'public/fonts/NotoSansJP-Regular.otf'),
 )
+const stylesheet = (await readFile(path.join(root, 'app/globals.scss'), 'utf8')).replace(
+    /src:\s*url\('https:\/\/fonts\.chanel\.com\/k\/ABChanel2022-(\w+)\.woff2'\)[^;]+;/g,
+    (_, weight) => `src: url('${basePath}/fonts/abchanel/${weight}.woff2') format('woff2');`,
+)
+await writeFile(path.join(target, 'app/globals.scss'), stylesheet)
+for (const name of ['admin-dashboard', 'admin-forms', 'student-credits', 'student-booking', 'agenda-export']) {
+    let source = await readFile(path.join(root, `app/admin/${name}.tsx`), 'utf8')
+    source = source
+        .replace("'use client'", "'use client'\nimport { demoFetch as fetch } from '@/lib/store'")
+        .replaceAll("'next/navigation'", "'@/lib/navigation'")
+        .replaceAll("'next/link'", "'@/lib/navigation'")
+    await writeFile(path.join(target, `components/${name}.tsx`), source)
+}
+let attendance = await readFile(path.join(root, 'app/teacher/attendance-control.tsx'), 'utf8')
+await writeFile(
+    path.join(target, 'components/attendance-control.tsx'),
+    attendance.replace("'use client'", "'use client'\nimport { demoFetch as fetch } from '@/lib/store'"),
+)
+const teacher = await readFile(path.join(root, 'app/teacher/page.tsx'), 'utf8')
+await writeFile(
+    path.join(target, 'components/teacher-dashboard.tsx'),
+    "'use client'\nimport Link from '@/lib/navigation'\nimport AttendanceControl from './attendance-control'\nimport { courseLevels } from '@/lib/course-levels'\nimport type { teacherProps } from '@/lib/admin-store'\nexport default function TeacherDashboard({past,slots,user}: ReturnType<typeof teacherProps>) {\n" +
+        teacher.slice(teacher.indexOf('    return (')),
+)
+const layout = await readFile(path.join(root, 'app/layout.tsx'), 'utf8')
+const brand = layout.slice(layout.indexOf('<Link href="/"'), layout.indexOf('</Link>') + '</Link>'.length)
+await writeFile(
+    path.join(target, 'components/brand.tsx'),
+    "import Link from '@/lib/navigation'\nexport default function Brand(){ return (" + brand + ')}\n',
+)
+for (const name of ['admin-navigation', 'student-summary', 'agenda-period'])
+    await cp(path.join(root, `lib/${name}.ts`), path.join(target, `lib/${name}.ts`))
+let pdf = await readFile(path.join(root, 'lib/agenda-pdf.ts'), 'utf8')
+pdf = pdf
+    .replace("import { readFile } from 'node:fs/promises'", '')
+    .replace("import { join } from 'node:path'", '')
+    .replace(
+        "await readFile(join(process.cwd(), 'assets/fonts/NotoSansJP-Regular.otf'))",
+        `await (await fetch('${basePath}/fonts/NotoSansJP-Regular.otf')).arrayBuffer()`,
+    )
+await writeFile(path.join(target, 'lib/agenda-pdf.ts'), pdf)
 await writeFile(
     path.join(target, 'package.json'),
     JSON.stringify({

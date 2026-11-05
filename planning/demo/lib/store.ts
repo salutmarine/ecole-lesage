@@ -1,4 +1,27 @@
 import catalogue from '../../data/lesage/catalogue.json'
+export type Person = {
+    id: string
+    firstName: string
+    lastName: string
+    email: string
+    phone: string | null
+    language: string
+    role: 'STUDENT' | 'TEACHER'
+}
+export type Course = {
+    id: string
+    name: string
+    level: Slot['level']
+    durationMinutes: number
+    totalDurationMinutes: number
+    capacity: number
+    reminderDays: number | null
+    cancellationHours: number
+    defaultTeacherId: string | null
+    minGapHours: number
+    bookingDelayHours: number
+}
+export const sourceCatalogue = catalogue
 export const STORAGE_KEY = 'lesage-pages-demo-v1'
 export type Slot = {
     id: string
@@ -26,6 +49,7 @@ export type Booking = {
     attendance: string
 }
 export type Entitlement = {
+    userId?: string
     id: string
     courseId: string
     course: string
@@ -36,7 +60,14 @@ export type Entitlement = {
     purchaseDate: string
     status: string
 }
-export type State = { version: 1; slots: Slot[]; entitlements: Entitlement[]; bookings: Booking[] }
+export type State = {
+    version: 1
+    slots: Slot[]
+    entitlements: Entitlement[]
+    bookings: Booking[]
+    courses?: Course[]
+    people?: Person[]
+}
 export function createState(now = new Date()): State {
     const courses = [
         catalogue[0],
@@ -131,6 +162,8 @@ export function validateSlot(state: State, entitlementId: string, slotId: string
     const conflict = state.bookings.some(
         (b) =>
             b.id !== excluding &&
+            (state.entitlements.find((e) => e.id === b.entitlementId)?.userId ?? 'student-demo') ===
+                (credit.userId ?? 'student-demo') &&
             b.status === 'BOOKED' &&
             new Date(b.date) < new Date(slot.endsAt) &&
             new Date(b.endsAt) > new Date(slot.startsAt),
@@ -192,7 +225,9 @@ export async function demoFetch(input: string, init?: RequestInit): Promise<Resp
         const state = structuredClone(loadState())
         let result: unknown
         if (url.pathname === '/api/slots')
-            result = state.slots.filter((s) => s.startsAt.slice(0, 7) === url.searchParams.get('month'))
+            result = (await import('./admin-store'))
+                .calendarSlots(state)
+                .filter((s) => s.startsAt.slice(0, 7) === url.searchParams.get('month'))
         else if (url.pathname === '/api/bookings/available-slots') {
             const booking = state.bookings.find((b) => b.id === url.searchParams.get('bookingId'))
             if (!booking) throw Error('Réservation introuvable.')
@@ -208,7 +243,13 @@ export async function demoFetch(input: string, init?: RequestInit): Promise<Resp
         } else if (url.pathname === '/api/bookings') {
             result = mutateBooking(state, init?.method ?? '', JSON.parse(String(init?.body ?? '{}')))
             saveState(state)
-        } else throw Error('Action indisponible dans la démo.')
+        } else {
+            const { adminRequest } = await import('./admin-store')
+            const response = await adminRequest(state, url, init)
+            if (response instanceof Response) return response
+            result = response
+            if (init?.method && init.method !== 'GET') saveState(state)
+        }
         return Response.json(result)
     } catch (error) {
         return Response.json({ error: error instanceof Error ? error.message : 'Erreur' }, { status: 400 })

@@ -1,140 +1,105 @@
 'use client'
 import { useEffect, useState } from 'react'
 import StudentDashboard from '@/components/student-dashboard'
-import { MonthCalendar, dateLabel } from '@/components/month-calendar'
-import { loadState, resetState, remaining, saveState, type State } from '@/lib/store'
+import AdminDashboard from '@/components/admin-dashboard'
+import TeacherDashboard from '@/components/teacher-dashboard'
+import Brand from '@/components/brand'
+import { adminSections } from '@/lib/admin-navigation'
+import { adminProps, teacherProps, hydrate } from '@/lib/admin-store'
+import { loadState, resetState, remaining, type State } from '@/lib/store'
+import { router } from '@/lib/navigation'
 export default function Demo() {
     const [state, setState] = useState<State | null>(null)
-    const [view, setView] = useState('student')
+    const [route, setRoute] = useState('/admin/planning')
     const [revision, setRevision] = useState(0)
-    const [detail, setDetail] = useState('')
     useEffect(() => {
-        setState(structuredClone(loadState()))
+        function update() {
+            setRoute(window.location.hash.slice(1) || '/admin/planning')
+            setState(structuredClone(hydrate(loadState())))
+        }
+        update()
+        window.addEventListener('hashchange', update)
+        window.addEventListener('lesage:refresh', update)
+        return () => {
+            window.removeEventListener('hashchange', update)
+            window.removeEventListener('lesage:refresh', update)
+        }
     }, [])
-    function changeView(value: string) {
-        setState(structuredClone(loadState()))
-        setView(value)
-        setDetail('')
-        setRevision((n) => n + 1)
-    }
+    const view = route.startsWith('/student') ? 'student' : route.startsWith('/teacher') ? 'teacher' : 'admin'
+    const section = adminSections.find((s) => s.href === route)?.id ?? 'planning'
+    const breadcrumb =
+        view === 'admin'
+            ? 'Je suis un administrateur'
+            : view === 'teacher'
+              ? 'Je suis le professeur Louise Bernard'
+              : 'Je suis l’étudiant Élève Démo'
     return (
         <div className="app_shell app_shell_no_sidebar">
             <div className="main_area">
-                <header className="topbar demo_header">
-                    <strong>LESAGE</strong>
-                    <span className="breadcrumbs">École de broderie d’art · Démonstration du planning</span>
-                </header>
-                <div className="demo_banner">
-                    <p>
-                        <b>Démo autonome et sans connexion.</b> Les réservations sont fictives et enregistrées
-                        uniquement dans ce navigateur. Chaque visiteur dispose de ses propres données.
-                    </p>
-                    <button
-                        className="btn secondary"
-                        onClick={() => {
-                            if (confirm('Effacer vos réservations et réinitialiser cette démo ?')) {
-                                setState(resetState())
-                                setRevision((n) => n + 1)
+                <header className="topbar">
+                    <div className="topbar_left">
+                        <Brand />
+                    </div>
+                    <div className="topbar_right">
+                        <span className="breadcrumbs">{breadcrumb}</span>
+                        <select
+                            className="btn topbar_logout"
+                            style={{ width: 'auto', margin: 0 }}
+                            aria-label="Changer d’espace de démonstration"
+                            value={view}
+                            onChange={(e) =>
+                                router.push(e.target.value === 'admin' ? '/admin/planning' : `/${e.target.value}`)
                             }
-                        }}
-                    >
-                        Réinitialiser ma démo
-                    </button>
-                </div>
+                        >
+                            <option value="admin">Administrateur</option>
+                            <option value="student">Étudiant</option>
+                            <option value="teacher">Professeur</option>
+                        </select>
+                    </div>
+                </header>
                 <main className="wrap">
-                    <nav className="demo_nav" aria-label="Espaces de démonstration">
-                        {[
-                            ['student', 'Espace étudiant'],
-                            ['admin', 'Vue du planning'],
-                            ['teacher', 'Espace professeur'],
-                        ].map(([id, label]) => (
-                            <button
-                                key={id}
-                                className={`btn btn-medium ${view === id ? '' : 'secondary'}`}
-                                aria-pressed={view === id}
-                                onClick={() => changeView(id)}
-                            >
-                                {label}
-                            </button>
-                        ))}
-                    </nav>
                     {!state ? (
-                        <p role="status">Chargement de votre démo…</p>
+                        <p role="status">Chargement…</p>
                     ) : view === 'student' ? (
-                        <StudentDashboard key={revision} entitlements={remaining(state)} bookings={state.bookings} />
-                    ) : view === 'admin' ? (
-                        <>
-                            <div className="hero_panel">
-                                <div>
-                                    <div className="section_kicker">Planning de démonstration</div>
-                                    <h1>Calendrier des cours</h1>
-                                    <p>Les inscriptions affichées sont celles de votre navigateur.</p>
-                                </div>
-                            </div>
-                            {detail && (
-                                <p className="card" role="status">
-                                    {detail}
-                                </p>
+                        <StudentDashboard
+                            key={`student-${revision}`}
+                            entitlements={remaining(state).filter(
+                                (e) => (e.userId ?? 'student-demo') === 'student-demo',
                             )}
-                            <div className="card">
-                                <MonthCalendar
-                                    mode="admin"
-                                    refresh={revision}
-                                    onSelect={(slot) =>
-                                        setDetail(
-                                            `${slot.course} · ${dateLabel(slot.startsAt)} · ${slot.teacher} · ${slot.reserved} / ${slot.capacity} inscrits`,
-                                        )
-                                    }
-                                />
-                            </div>
-                        </>
+                            bookings={state.bookings.filter(
+                                (b) =>
+                                    (state.entitlements.find((e) => e.id === b.entitlementId)?.userId ??
+                                        'student-demo') === 'student-demo',
+                            )}
+                        />
+                    ) : view === 'teacher' ? (
+                        <TeacherDashboard
+                            key={`teacher-${route}-${revision}`}
+                            {...teacherProps(state, route.includes('view=past'))}
+                        />
                     ) : (
-                        <>
-                            <div className="hero_panel">
-                                <div>
-                                    <div className="section_kicker">Professeur · Démonstration</div>
-                                    <h1>Mon agenda</h1>
-                                    <p>Consultez les séances et pointez les inscriptions de votre démo.</p>
-                                </div>
-                            </div>
-                            <div className="card demo_list">
-                                {state.bookings.filter((b) => b.status === 'BOOKED').length === 0 && (
-                                    <p>
-                                        Aucune inscription pour le moment. Réservez une séance dans l’espace étudiant
-                                        pour tester le pointage.
-                                    </p>
-                                )}
-                                {state.bookings
-                                    .filter((b) => b.status === 'BOOKED')
-                                    .map((b) => (
-                                        <article key={b.id}>
-                                            <h2>{b.course}</h2>
-                                            <p>
-                                                {dateLabel(b.date)} · {b.teacher}
-                                            </p>
-                                            <label>
-                                                Élève de démonstration · Présence{' '}
-                                                <select
-                                                    value={b.attendance}
-                                                    onChange={(e) => {
-                                                        const next = structuredClone(state)
-                                                        next.bookings.find((item) => item.id === b.id)!.attendance =
-                                                            e.target.value
-                                                        saveState(next)
-                                                        setState(next)
-                                                    }}
-                                                >
-                                                    <option value="UNMARKED">Non renseignée</option>
-                                                    <option value="PRESENT">Présent</option>
-                                                    <option value="ABSENT">Absent</option>
-                                                </select>
-                                            </label>
-                                        </article>
-                                    ))}
-                            </div>
-                        </>
+                        <AdminDashboard key={`admin-${section}-${revision}`} section={section} {...adminProps(state)} />
                     )}
                 </main>
+                <footer className="wrap">
+                    <details>
+                        <summary className="muted">Démo autonome · Données propres à ce navigateur</summary>
+                        <p className="muted">
+                            Les réservations sont fictives et ne sont pas partagées entre visiteurs.
+                        </p>
+                        <button
+                            className="btn secondary"
+                            onClick={() => {
+                                if (confirm('Effacer vos réservations et réinitialiser cette démo ?')) {
+                                    setState(hydrate(resetState()))
+                                    setRevision((n) => n + 1)
+                                }
+                            }}
+                        >
+                            Réinitialiser ma démo
+                        </button>
+                    </details>
+                </footer>
             </div>
         </div>
     )
