@@ -32,6 +32,8 @@ dashboard = dashboard.replace("'use client'", "'use client'\nimport { demoFetch 
 await writeFile(path.join(target, 'components/student-dashboard.tsx'), dashboard)
 for (const name of ['course-levels', 'student-availability'])
     await cp(path.join(root, `lib/${name}.ts`), path.join(target, `lib/${name}.ts`))
+await cp(path.join(root, 'lib/course-images.ts'), path.join(target, 'lib/course-images.ts'))
+await cp(path.join(root, 'assets/course-images'), path.join(target, 'assets/course-images'), { recursive: true })
 const basePath = process.env.PAGES_BASE_PATH ?? '/ecole-lesage'
 await mkdir(path.join(target, 'public/fonts'), { recursive: true })
 await cp(path.join(root, 'assets/fonts/abchanel'), path.join(target, 'public/fonts/abchanel'), { recursive: true })

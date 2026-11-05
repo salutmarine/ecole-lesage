@@ -527,7 +527,9 @@ label {
         width: 100%;
         min-width: 0;
         text-align: left !important;
-        background: var(--waouh) !important;
+        background:
+            linear-gradient(rgba(15, 15, 24, 0.7), rgba(15, 15, 24, 0.82)),
+            var(--course-image, linear-gradient(var(--waouh), var(--waouh))) center / cover !important;
         color: white !important;
         border-radius: 6px !important;
         padding: 7px !important;
@@ -551,14 +553,15 @@ label {
         opacity: 0.75;
     }
     &_event_disabled {
-        background: #ededed !important;
-        color: #888 !important;
-        opacity: 1;
+        color: #fff !important;
+        opacity: 0.4;
         cursor: not-allowed;
     }
     &_event_booked {
-        background: #e6f4ea !important;
-        color: #205c35 !important;
+        background:
+            linear-gradient(rgba(24, 82, 49, 0.72), rgba(24, 82, 49, 0.84)),
+            var(--course-image, linear-gradient(#205c35, #205c35)) center / cover !important;
+        color: #fff !important;
 
         &:disabled {
             opacity: 1;

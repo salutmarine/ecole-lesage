@@ -1,6 +1,7 @@
 'use client'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
 import { courseLevels, type CourseLevel } from '@/lib/course-levels'
+import { courseImage } from '@/lib/course-images'
 export type CalendarSlot = {
     id: string
     courseId: string | null
@@ -241,6 +242,13 @@ export function MonthCalendar({
                                                 disabled={mode === 'student' && !booked && disabled}
                                                 onClick={() => onSelect(s)}
                                                 title={`${s.course} · ${availability}${booked ? ' · Déjà réservé' : ''}`}
+                                                style={
+                                                    courseImage(s.course)
+                                                        ? ({
+                                                              '--course-image': `url("${courseImage(s.course)}")`,
+                                                          } as CSSProperties)
+                                                        : undefined
+                                                }
                                             >
                                                 {booked && (
                                                     <span className="month_event_badge">
