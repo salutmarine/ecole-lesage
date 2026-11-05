@@ -1,0 +1,145 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  TEACHER
+  STUDENT
+}
+
+enum BookingStatus {
+  BOOKED
+  CANCELLED
+  COMPLETED
+}
+
+enum AttendanceStatus {
+  UNMARKED
+  PRESENT
+  ABSENT
+}
+
+enum EntitlementStatus {
+  ACTIVE
+  SUSPENDED
+}
+
+model User {
+  id             String        @id @default(cuid())
+  email          String        @unique
+  firstName      String
+  lastName       String
+  phone          String?
+  language       String        @default("fr")
+  role           Role          @default(STUDENT)
+  wordpressId    Int?          @unique
+  entitlements   Entitlement[]
+  bookings       Booking[]
+  defaultCourses Course[]      @relation("CourseTeacher")
+  teachingSlots  Slot[]        @relation("SlotTeacher")
+  createdAt      DateTime      @default(now())
+}
+
+enum CourseLevel {
+  INITIATION
+  PERFECTIONNEMENT
+  SPECIALISATION
+}
+
+model Course {
+  id                String  @id @default(cuid())
+  name              String
+  level             CourseLevel @default(INITIATION)
+  wooProductId      Int?    @unique
+  durationHours     Int     @default(3)
+  totalDurationMinutes Int?
+  durationMinutes   Int?
+  capacity          Int     @default(12)
+  reminderDays      Int?    @default(1)
+  cancellationHours Int     @default(48)
+  defaultTeacherId  String?
+  defaultTeacher    User?   @relation("CourseTeacher", fields: [defaultTeacherId], references: [id])
+  sessionsCount     Int     @default(1)
+  validityMonths    Int     @default(12)
+  minGapHours       Int     @default(48)
+  bookingDelayHours Int     @default(72)
+  maxPerDay         Int     @default(1)
+  maxPerWeek        Int     @default(0)
+
+  entitlements Entitlement[]
+  bookings     Booking[]
+  slots        Slot[]
+}
+
+model Entitlement {
+  id            String            @id @default(cuid())
+  userId        String
+  courseId      String
+  user          User              @relation(fields: [userId], references: [id])
+  course        Course            @relation(fields: [courseId], references: [id])
+  totalSessions Int
+  purchaseDate  DateTime
+  expiresAt     DateTime
+  source        String            @default("MANUAL")
+  externalKey   String?           @unique
+  status        EntitlementStatus @default(ACTIVE)
+  bookings      Booking[]
+  createdAt     DateTime          @default(now())
+}
+
+model Slot {
+  id       String   @id @default(cuid())
+  startsAt DateTime
+  endsAt   DateTime
+  capacity Int      @default(12)
+  blocked  Boolean  @default(false)
+
+  courseId String?
+  course   Course? @relation(fields: [courseId], references: [id])
+
+  teacherId String?
+  teacher   User?   @relation("SlotTeacher", fields: [teacherId], references: [id])
+
+  bookings  Booking[]
+  createdAt DateTime  @default(now())
+
+  @@index([courseId, startsAt])
+}
+
+model Blockout {
+  id       String   @id @default(cuid())
+  startsAt DateTime
+  endsAt   DateTime
+  reason   String?
+}
+
+model Booking {
+  id              String           @id @default(cuid())
+  userId          String
+  courseId        String
+  entitlementId   String
+  slotId          String
+  status          BookingStatus    @default(BOOKED)
+  attendance      AttendanceStatus @default(UNMARKED)
+  reminderSentFor DateTime?
+  user            User             @relation(fields: [userId], references: [id])
+  course          Course           @relation(fields: [courseId], references: [id])
+  entitlement     Entitlement      @relation(fields: [entitlementId], references: [id])
+  slot            Slot             @relation(fields: [slotId], references: [id])
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  @@index([slotId, status])
+  @@index([entitlementId, status])
+}
+
+model WebhookEvent {
+  id         String   @id
+  receivedAt DateTime @default(now())
+}

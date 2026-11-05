@@ -1,0 +1,38 @@
+{
+    "name": "lesage-planning",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "prisma generate && next build",
+        "start": "next start",
+        "db:push": "prisma db push",
+        "db:seed": "tsx prisma/seed.ts",
+        "db:studio": "prisma studio",
+        "prettier": "prettier . -w -c"
+    },
+    "dependencies": {
+        "@pdf-lib/fontkit": "^1.1.1",
+        "@prisma/client": "^6.3.0",
+        "bcryptjs": "^2.4.3",
+        "date-fns": "^4.1.0",
+        "jose": "^5.9.6",
+        "next": "^15.1.6",
+        "nodemailer": "^10.3.1",
+        "pdf-lib": "^1.17.1",
+        "react": "^19.2.8",
+        "react-dom": "^19.2.8",
+        "zod": "^3.24.1"
+    },
+    "devDependencies": {
+        "@types/node": "^26.1.2",
+        "@types/nodemailer": "^8.0.2",
+        "@types/react": "^19.2.18",
+        "@types/react-dom": "^19.2.4",
+        "prettier": "^3.9.6",
+        "prisma": "^6.3.0",
+        "sass": "^1.107.1",
+        "tsx": "^4.19.2",
+        "typescript": "^5.9.3"
+    }
+}

@@ -1,0 +1,899 @@
+{
+    "period": "Novembre 2026 – janvier 2027",
+    "fictional": true,
+    "newStudents": 15,
+    "students": [
+        {
+            "id": "cmw22c54w0000jvy1oi93ldyg",
+            "firstName": "Emma",
+            "lastName": "Lefebvre",
+            "email": "etudiant.demo.01@example.test"
+        },
+        {
+            "id": "cmw22c5530001jvy1h8le38h8",
+            "firstName": "Louis",
+            "lastName": "Dubois",
+            "email": "etudiant.demo.02@example.test"
+        },
+        {
+            "id": "cmw22c5570002jvy174cr6l5k",
+            "firstName": "Chloé",
+            "lastName": "Roux",
+            "email": "etudiant.demo.03@example.test"
+        },
+        {
+            "id": "cmw22c55a0003jvy1ibg6jrbm",
+            "firstName": "Gabriel",
+            "lastName": "Fontaine",
+            "email": "etudiant.demo.04@example.test"
+        },
+        {
+            "id": "cmw22c55e0004jvy13bqq61yj",
+            "firstName": "Léa",
+            "lastName": "Chevalier",
+            "email": "etudiant.demo.05@example.test"
+        },
+        {
+            "id": "cmw22c55h0005jvy124qpv9g3",
+            "firstName": "Hugo",
+            "lastName": "François",
+            "email": "etudiant.demo.06@example.test"
+        },
+        {
+            "id": "cmw22c55k0006jvy1to04rtoh",
+            "firstName": "Manon",
+            "lastName": "Legrand",
+            "email": "etudiant.demo.07@example.test"
+        },
+        {
+            "id": "cmw22c55o0007jvy1e934xrgd",
+            "firstName": "Arthur",
+            "lastName": "Garnier",
+            "email": "etudiant.demo.08@example.test"
+        },
+        {
+            "id": "cmw22c55r0008jvy1tb2m8hhp",
+            "firstName": "Inès",
+            "lastName": "Faure",
+            "email": "etudiant.demo.09@example.test"
+        },
+        {
+            "id": "cmw22c55t0009jvy197cue50u",
+            "firstName": "Raphaël",
+            "lastName": "Rousseau",
+            "email": "etudiant.demo.10@example.test"
+        },
+        {
+            "id": "cmw22c55v000ajvy1gz13o8gc",
+            "firstName": "Alice",
+            "lastName": "Vincent",
+            "email": "etudiant.demo.11@example.test"
+        },
+        {
+            "id": "cmw22c55x000bjvy1lrfjh6wq",
+            "firstName": "Jules",
+            "lastName": "Muller",
+            "email": "etudiant.demo.12@example.test"
+        },
+        {
+            "id": "cmw22c55y000cjvy1g1v9n0e0",
+            "firstName": "Sarah",
+            "lastName": "Lambert",
+            "email": "etudiant.demo.13@example.test"
+        },
+        {
+            "id": "cmw22c560000djvy1vpyux8ml",
+            "firstName": "Nathan",
+            "lastName": "Bonnet",
+            "email": "etudiant.demo.14@example.test"
+        },
+        {
+            "id": "cmw22c561000ejvy1y02ofpof",
+            "firstName": "Louise",
+            "lastName": "Girard",
+            "email": "etudiant.demo.15@example.test"
+        }
+    ],
+    "workingDays": 62,
+    "createdSessions": 113,
+    "existingDemoDays": 0,
+    "unavailable": 0,
+    "byMonth": {
+        "2026-11": 38,
+        "2026-12": 47,
+        "2027-01": 28
+    },
+    "sessions": [
+        {
+            "id": "demo-winter-2026-11-02-1",
+            "date": "2026-11-02",
+            "time": "14:00",
+            "course": "DECOUVERTE CROCHET NIVEAU 1 : NŒUD NOIR",
+            "teacherId": "cmw219lvz0000jvfxew7kossb"
+        },
+        {
+            "id": "demo-winter-2026-11-03-1",
+            "date": "2026-11-03",
+            "time": "09:30",
+            "course": "NIVEAU 5 : ANNEES 50",
+            "teacherId": "cmw219lwb0002jvfxfwnokz8x"
+        },
+        {
+            "id": "demo-winter-2026-11-03-2",
+            "date": "2026-11-03",
+            "time": "09:30",
+            "course": "NIVEAU 8 : ANNEES 2000",
+            "teacherId": "cmw219lwg0004jvfx0n4gf00n"
+        },
+        {
+            "id": "demo-winter-2026-11-03-3",
+            "date": "2026-11-03",
+            "time": "09:30",
+            "course": "POINTS TRADITIONNELS",
+            "teacherId": "cmw219lwd0003jvfx0uhd31nz"
+        },
+        {
+            "id": "demo-winter-2026-11-04-1",
+            "date": "2026-11-04",
+            "time": "14:00",
+            "course": "FORFAIT DE 2 SPECIALISATIONS",
+            "teacherId": "cmw219lwg0004jvfx0n4gf00n"
+        },
+        {
+            "id": "demo-winter-2026-11-04-2",
+            "date": "2026-11-04",
+            "time": "14:00",
+            "course": "NIVEAU 7 : ANNEES 80",
+            "teacherId": "cmw219lvz0000jvfxew7kossb"
+        },
+        {
+            "id": "demo-winter-2026-11-04-3",
+            "date": "2026-11-04",
+            "time": "09:30",
+            "course": "NIVEAU 3 : ANNEES 30",
+            "teacherId": "cmw219lwd0003jvfx0uhd31nz"
+        },
+        {
+            "id": "demo-winter-2026-11-05-1",
+            "date": "2026-11-05",
+            "time": "09:30",
+            "course": "AMEUBLEMENT",
+            "teacherId": "cmw219lvz0000jvfxew7kossb"
+        },
+        {
+            "id": "demo-winter-2026-11-06-1",
+            "date": "2026-11-06",
+            "time": "09:30",
+            "course": "DÉCOUVERTE PASSEMENTERIE : PORTE CARTE",
+            "teacherId": "cmw219lvz0000jvfxew7kossb"
+        },
+        {
+            "id": "demo-winter-2026-11-06-2",
+            "date": "2026-11-06",
+            "time": "09:30",
+            "course": "NIVEAU 3 : ANNEES 30",
+            "teacherId": "cmw219lwd0003jvfx0uhd31nz"
+        },
+        {
+            "id": "demo-winter-2026-11-09-1",
+            "date": "2026-11-09",
+            "time": "09:30",
+            "course": "NIVEAU 1 : MICHONET",
+            "teacherId": "cmw219lwd0003jvfx0uhd31nz"
+        },
+        {
+            "id": "demo-winter-2026-11-09-2",
+            "date": "2026-11-09",
+            "time": "14:00",
+            "course": "DECOUVERTE CROCHET NIVEAU 2 – COQUELICOT",
+            "teacherId": "cmw219lw80001jvfxehcdt2w0"
+        },
+        {
+            "id": "demo-winter-2026-11-10-1",
+            "date": "2026-11-10",
+            "time": "14:00",
+            "course": "NIVEAU 4 : ANNEES 40",
+            "teacherId": "cmw219lwb0002jvfxfwnokz8x"
+        },
+        {
+            "id": "demo-winter-2026-11-10-2",
+            "date": "2026-11-10",
+            "time": "14:00",
+            "course": "DECOUVERTE AIGUILLE : BRIN DE MUGUET",
+            "teacherId": "cmw219lwd0003jvfx0uhd31nz"
+        },
+        {
+            "id": "demo-winter-2026-11-10-3",
+            "date": "2026-11-10",
+            "time": "14:00",
+            "course": "HAUTE COUTURE",
+            "teacherId": "cmw219lwg0004jvfx0n4gf00n"
+        },
+        {
+            "id": "demo-winter-2026-11-12-1",
+            "date": "2026-11-12",
+            "time": "14:00",
+            "course": "DECOUVERTE CROCHET NIVEAU 1 : NŒUD NOIR",
+            "teacherId": "cmw219lvz0000jvfxew7kossb"
+        },
+        {
+            "id": "demo-winter-2026-11-12-2",
+            "date": "2026-11-12",
+            "time": "09:30",
+            "course": "NIVEAU 1 : MICHONET",
+            "teacherId": "cmw219lwd0003jvfx0uhd31nz"
+        },
+        {
+            "id": "demo-winter-2026-11-13-1",
+            "date": "2026-11-13",
+            "time": "09:30",
+            "course": "AMEUBLEMENT",
+            "teacherId": "cmw219lvz0000jvfxew7kossb"
+        },
+        {
+            "id": "demo-winter-2026-11-16-1",
+            "date": "2026-11-16",
+            "time": "14:00",
+            "course": "DECOUVERTE CANETILLE : BRODERIE D’OR",
+            "teacherId": "cmw219lw80001jvfxehcdt2w0"
+        },
+        {
+            "id": "demo-winter-2026-11-17-1",
+            "date": "2026-11-17",
+            "time": "14:00",
+            "course": "DECOUVERTE AIGUILLE : IRIS",
+            "teacherId": "cmw219lw80001jvfxehcdt2w0"
+        },
+        {
+            "id": "demo-winter-2026-11-17-2",
+            "date": "2026-11-17",
+            "time": "14:00",
+            "course": "NIVEAU 8 : ANNEES 2000",
+            "teacherId": "cmw219lwg0004jvfx0n4gf00n"
+        },
+        {
+            "id": "demo-winter-2026-11-18-1",
+            "date": "2026-11-18",
+            "time": "09:30",
+            "course": "DECOUVERTE CROCHET NIVEAU 1 : NŒUD NOIR",
+            "teacherId": "cmw219lvz0000jvfxew7kossb"
+        },
+        {
+            "id": "demo-winter-2026-11-18-2",
+            "date": "2026-11-18",
+            "time": "14:00",
+            "course": "NIVEAU 1 : MICHONET",
+            "teacherId": "cmw219lwd0003jvfx0uhd31nz"
+        },
+        {
+            "id": "demo-winter-2026-11-19-1",
+            "date": "2026-11-19",
+            "time": "14:00",
+            "course": "AMEUBLEMENT",
+            "teacherId": "cmw219lvz0000jvfxew7kossb"
+        },
+        {
+            "id": "demo-winter-2026-11-20-1",
+            "date": "2026-11-20",
+            "time": "14:00",
+            "course": "POINTS TRADITIONNELS",
+            "teacherId": "cmw219lwd0003jvfx0uhd31nz"
+        },
+        {
+            "id": "demo-winter-2026-11-23-1",
+            "date": "2026-11-23",
+            "time": "09:30",
+            "course": "DECOUVERTE CROCHET NIVEAU 2 – COQUELICOT",
+            "teacherId": "cmw219lw80001jvfxehcdt2w0"
+        },
+        {
+            "id": "demo-winter-2026-11-24-1",
+            "date": "2026-11-24",
+            "time": "09:30",
+            "course": "NIVEAU 6 : ANNEES 60",
+            "teacherId": "cmw219lwg0004jvfx0n4gf00n"
+        },
+        {
+            "id": "demo-winter-2026-11-24-2",
+            "date": "2026-11-24",
+            "time": "14:00",
+            "course": "NIVEAU 3 : ANNEES 30",
+            "teacherId": "cmw219lwd0003jvfx0uhd31nz"
+        },
+        {
+            "id": "demo-winter-2026-11-24-3",
+            "date": "2026-11-24",
+            "time": "14:00",
+            "course": "NIVEAU 4 : ANNEES 40",
+            "teacherId": "cmw219lwb0002jvfxfwnokz8x"
+        },
+        {
+            "id": "demo-winter-2026-11-25-1",
+            "date": "2026-11-25",
+            "time": "09:30",
+            "course": "DECOUVERTE CROCHET NIVEAU 1 : NŒUD BLANC",
+            "teacherId": "cmw219lw80001jvfxehcdt2w0"
+        },
+        {
+            "id": "demo-winter-2026-11-25-2",
+            "date": "2026-11-25",
+            "time": "14:00",
+            "course": "DÉCOUVERTE PASSEMENTERIE : PORTE CARTE",
+            "teacherId": "cmw219lvz0000jvfxew7kossb"
+        },
+        {
+            "id": "demo-winter-2026-11-26-1",
+            "date": "2026-11-26",
+            "time": "14:00",
+            "course": "BRODERIE AU RUBAN : NIVEAU 2",
+            "teacherId": "cmw219lwg0004jvfx0n4gf00n"
+        },
+        {
+            "id": "demo-winter-2026-11-26-2",
+            "date": "2026-11-26",
+            "time": "09:30",
+            "course": "DECOUVERTE CANETILLE : BRODERIE D’OR",
+            "teacherId": "cmw219lw80001jvfxehcdt2w0"
+        },
+        {
+            "id": "demo-winter-2026-11-26-3",
+            "date": "2026-11-26",
+            "time": "14:00",
+            "course": "NIVEAU 4 : ANNEES 40",
+            "teacherId": "cmw219lwb0002jvfxfwnokz8x"
+        },
+        {
+            "id": "demo-winter-2026-11-27-1",
+            "date": "2026-11-27",
+            "time": "14:00",
+            "course": "DECOUVERTE AIGUILLE : FLEUR NOIRE",
+            "teacherId": "cmw219lwb0002jvfxfwnokz8x"
+        },
+        {
+            "id": "demo-winter-2026-11-30-1",
+            "date": "2026-11-30",
+            "time": "14:00",
+            "course": "NIVEAU 3 : ANNEES 30",
+            "teacherId": "cmw219lwd0003jvfx0uhd31nz"
+        },
+        {
+            "id": "demo-winter-2026-11-30-2",
+            "date": "2026-11-30",
+            "time": "09:30",
+            "course": "DECOUVERTE CANETILLE : BRODERIE D’OR",
+            "teacherId": "cmw219lw80001jvfxehcdt2w0"
+        },
+        {
+            "id": "demo-winter-2026-11-30-3",
+            "date": "2026-11-30",
+            "time": "14:00",
+            "course": "DECOUVERTE CROCHET NIVEAU 1 : NŒUD NOIR",
+            "teacherId": "cmw219lvz0000jvfxew7kossb"
+        },
+        {
+            "id": "demo-winter-2026-12-01-1",
+            "date": "2026-12-01",
+            "time": "09:30",
+            "course": "DECOUVERTE AIGUILLE : CŒUR BAROQUE",
+            "teacherId": "cmw219lw80001jvfxehcdt2w0"
+        },
+        {
+            "id": "demo-winter-2026-12-01-2",
+            "date": "2026-12-01",
+            "time": "09:30",
+            "course": "NIVEAU 1 : MICHONET",
+            "teacherId": "cmw219lwd0003jvfx0uhd31nz"
+        },
+        {
+            "id": "demo-winter-2026-12-02-1",
+            "date": "2026-12-02",
+            "time": "09:30",
+            "course": "DECOUVERTE CROCHET NIVEAU 1 : NŒUD FUCHSIA",
+            "teacherId": "cmw219lwd0003jvfx0uhd31nz"
+        },
+        {
+            "id": "demo-winter-2026-12-03-1",
+            "date": "2026-12-03",
+            "time": "14:00",
+            "course": "NIVEAU 4 : ANNEES 40",
+            "teacherId": "cmw219lwb0002jvfxfwnokz8x"
+        },
+        {
+            "id": "demo-winter-2026-12-03-2",
+            "date": "2026-12-03",
+            "time": "09:30",
+            "course": "DECOUVERTE CROCHET NIVEAU 2 – COQUELICOT",
+            "teacherId": "cmw219lw80001jvfxehcdt2w0"
+        },
+        {
+            "id": "demo-winter-2026-12-04-1",
+            "date": "2026-12-04",
+            "time": "14:00",
+            "course": "NIVEAU 6 : ANNEES 60",
+            "teacherId": "cmw219lwg0004jvfx0n4gf00n"
+        },
+        {
+            "id": "demo-winter-2026-12-07-1",
+            "date": "2026-12-07",
+            "time": "09:30",
+            "course": "POINTS TRADITIONNELS",
+            "teacherId": "cmw219lwd0003jvfx0uhd31nz"
+        },
+        {
+            "id": "demo-winter-2026-12-07-2",
+            "date": "2026-12-07",
+            "time": "09:30",
+            "course": "BRODERIE AU RUBAN : NIVEAU 1",
+            "teacherId": "cmw219lwb0002jvfxfwnokz8x"
+        },
+        {
+            "id": "demo-winter-2026-12-08-1",
+            "date": "2026-12-08",
+            "time": "14:00",
+            "course": "DÉCOUVERTE PASSEMENTERIE : PORTE CARTE",
+            "teacherId": "cmw219lvz0000jvfxew7kossb"
+        },
+        {
+            "id": "demo-winter-2026-12-08-2",
+            "date": "2026-12-08",
+            "time": "14:00",
+            "course": "NIVEAU 4 : ANNEES 40",
+            "teacherId": "cmw219lwb0002jvfxfwnokz8x"
+        },
+        {
+            "id": "demo-winter-2026-12-09-1",
+            "date": "2026-12-09",
+            "time": "14:00",
+            "course": "FORFAIT DE 2 SPECIALISATIONS",
+            "teacherId": "cmw219lwg0004jvfx0n4gf00n"
+        },
+        {
+            "id": "demo-winter-2026-12-09-2",
+            "date": "2026-12-09",
+            "time": "09:30",
+            "course": "BRODERIE AU RUBAN : NIVEAU 1",
+            "teacherId": "cmw219lwb0002jvfxfwnokz8x"
+        },
+        {
+            "id": "demo-winter-2026-12-09-3",
+            "date": "2026-12-09",
+            "time": "09:30",
+            "course": "DECOUVERTE CROCHET NIVEAU 2 – COQUELICOT",
+            "teacherId": "cmw219lw80001jvfxehcdt2w0"
+        },
+        {
+            "id": "demo-winter-2026-12-10-1",
+            "date": "2026-12-10",
+            "time": "09:30",
+            "course": "DECOUVERTE CROCHET NIVEAU 1 : NŒUD BLANC",
+            "teacherId": "cmw219lw80001jvfxehcdt2w0"
+        },
+        {
+            "id": "demo-winter-2026-12-10-2",
+            "date": "2026-12-10",
+            "time": "14:00",
+            "course": "DECOUVERTE CROCHET NIVEAU 1 : NŒUD NOIR",
+            "teacherId": "cmw219lvz0000jvfxew7kossb"
+        },
+        {
+            "id": "demo-winter-2026-12-10-3",
+            "date": "2026-12-10",
+            "time": "09:30",
+            "course": "DECOUVERTE AIGUILLE : BRIN DE MUGUET",
+            "teacherId": "cmw219lwd0003jvfx0uhd31nz"
+        },
+        {
+            "id": "demo-winter-2026-12-11-1",
+            "date": "2026-12-11",
+            "time": "09:30",
+            "course": "DECOUVERTE AIGUILLE : CŒUR BAROQUE",
+            "teacherId": "cmw219lw80001jvfxehcdt2w0"
+        },
+        {
+            "id": "demo-winter-2026-12-11-2",
+            "date": "2026-12-11",
+            "time": "14:00",
+            "course": "DECOUVERTE CROCHET NIVEAU 2 – COQUELICOT",
+            "teacherId": "cmw219lw80001jvfxehcdt2w0"
+        },
+        {
+            "id": "demo-winter-2026-12-11-3",
+            "date": "2026-12-11",
+            "time": "14:00",
+            "course": "FORFAIT DE 2 SPECIALISATIONS",
+            "teacherId": "cmw219lwg0004jvfx0n4gf00n"
+        },
+        {
+            "id": "demo-winter-2026-12-14-1",
+            "date": "2026-12-14",
+            "time": "14:00",
+            "course": "DECOUVERTE AIGUILLE : BRIN DE MUGUET",
+            "teacherId": "cmw219lwd0003jvfx0uhd31nz"
+        },
+        {
+            "id": "demo-winter-2026-12-14-2",
+            "date": "2026-12-14",
+            "time": "14:00",
+            "course": "NIVEAU 5 : ANNEES 50",
+            "teacherId": "cmw219lwb0002jvfxfwnokz8x"
+        },
+        {
+            "id": "demo-winter-2026-12-15-1",
+            "date": "2026-12-15",
+            "time": "09:30",
+            "course": "DECOUVERTE CROCHET NIVEAU 1 : NŒUD NOIR",
+            "teacherId": "cmw219lvz0000jvfxew7kossb"
+        },
+        {
+            "id": "demo-winter-2026-12-15-2",
+            "date": "2026-12-15",
+            "time": "09:30",
+            "course": "NIVEAU 8 : ANNEES 2000",
+            "teacherId": "cmw219lwg0004jvfx0n4gf00n"
+        },
+        {
+            "id": "demo-winter-2026-12-16-1",
+            "date": "2026-12-16",
+            "time": "09:30",
+            "course": "NIVEAU 7 : ANNEES 80",
+            "teacherId": "cmw219lvz0000jvfxew7kossb"
+        },
+        {
+            "id": "demo-winter-2026-12-16-2",
+            "date": "2026-12-16",
+            "time": "09:30",
+            "course": "BRODERIE AU RUBAN : NIVEAU 1",
+            "teacherId": "cmw219lwb0002jvfxfwnokz8x"
+        },
+        {
+            "id": "demo-winter-2026-12-17-1",
+            "date": "2026-12-17",
+            "time": "09:30",
+            "course": "DECOUVERTE CROCHET NIVEAU 1 : NŒUD NOIR",
+            "teacherId": "cmw219lvz0000jvfxew7kossb"
+        },
+        {
+            "id": "demo-winter-2026-12-17-2",
+            "date": "2026-12-17",
+            "time": "09:30",
+            "course": "NIVEAU 5 : ANNEES 50",
+            "teacherId": "cmw219lwb0002jvfxfwnokz8x"
+        },
+        {
+            "id": "demo-winter-2026-12-18-1",
+            "date": "2026-12-18",
+            "time": "09:30",
+            "course": "POINTS TRADITIONNELS",
+            "teacherId": "cmw219lwd0003jvfx0uhd31nz"
+        },
+        {
+            "id": "demo-winter-2026-12-18-2",
+            "date": "2026-12-18",
+            "time": "14:00",
+            "course": "NIVEAU 8 : ANNEES 2000",
+            "teacherId": "cmw219lwg0004jvfx0n4gf00n"
+        },
+        {
+            "id": "demo-winter-2026-12-18-3",
+            "date": "2026-12-18",
+            "time": "14:00",
+            "course": "NIVEAU 1 : VASQUE FLEURIE, PANIER DE FRUITS",
+            "teacherId": "cmw219lvz0000jvfxew7kossb"
+        },
+        {
+            "id": "demo-winter-2026-12-21-1",
+            "date": "2026-12-21",
+            "time": "09:30",
+            "course": "DECOUVERTE AIGUILLE : IRIS",
+            "teacherId": "cmw219lw80001jvfxehcdt2w0"
+        },
+        {
+            "id": "demo-winter-2026-12-21-2",
+            "date": "2026-12-21",
+            "time": "14:00",
+            "course": "DECOUVERTE CANETILLE : BRODERIE D’OR",
+            "teacherId": "cmw219lw80001jvfxehcdt2w0"
+        },
+        {
+            "id": "demo-winter-2026-12-21-3",
+            "date": "2026-12-21",
+            "time": "14:00",
+            "course": "BRODERIE AU RUBAN : NIVEAU 2",
+            "teacherId": "cmw219lwg0004jvfx0n4gf00n"
+        },
+        {
+            "id": "demo-winter-2026-12-22-1",
+            "date": "2026-12-22",
+            "time": "14:00",
+            "course": "NIVEAU 5 : ANNEES 50",
+            "teacherId": "cmw219lwb0002jvfxfwnokz8x"
+        },
+        {
+            "id": "demo-winter-2026-12-22-2",
+            "date": "2026-12-22",
+            "time": "14:00",
+            "course": "DECOUVERTE CROCHET NIVEAU 2 – COQUELICOT",
+            "teacherId": "cmw219lw80001jvfxehcdt2w0"
+        },
+        {
+            "id": "demo-winter-2026-12-23-1",
+            "date": "2026-12-23",
+            "time": "09:30",
+            "course": "HAUTE COUTURE",
+            "teacherId": "cmw219lwg0004jvfx0n4gf00n"
+        },
+        {
+            "id": "demo-winter-2026-12-23-2",
+            "date": "2026-12-23",
+            "time": "09:30",
+            "course": "DECOUVERTE AIGUILLE : FLEUR NOIRE",
+            "teacherId": "cmw219lwb0002jvfxfwnokz8x"
+        },
+        {
+            "id": "demo-winter-2026-12-24-1",
+            "date": "2026-12-24",
+            "time": "14:00",
+            "course": "DECOUVERTE CROCHET NIVEAU 1 : NŒUD BLANC",
+            "teacherId": "cmw219lw80001jvfxehcdt2w0"
+        },
+        {
+            "id": "demo-winter-2026-12-24-2",
+            "date": "2026-12-24",
+            "time": "14:00",
+            "course": "HAUTE COUTURE",
+            "teacherId": "cmw219lwg0004jvfx0n4gf00n"
+        },
+        {
+            "id": "demo-winter-2026-12-24-3",
+            "date": "2026-12-24",
+            "time": "09:30",
+            "course": "FORFAIT DE 2 SPECIALISATIONS",
+            "teacherId": "cmw219lwg0004jvfx0n4gf00n"
+        },
+        {
+            "id": "demo-winter-2026-12-28-1",
+            "date": "2026-12-28",
+            "time": "14:00",
+            "course": "DECOUVERTE CROCHET NIVEAU 1 : NŒUD BLANC",
+            "teacherId": "cmw219lw80001jvfxehcdt2w0"
+        },
+        {
+            "id": "demo-winter-2026-12-29-1",
+            "date": "2026-12-29",
+            "time": "09:30",
+            "course": "POINTS TRADITIONNELS",
+            "teacherId": "cmw219lwd0003jvfx0uhd31nz"
+        },
+        {
+            "id": "demo-winter-2026-12-29-2",
+            "date": "2026-12-29",
+            "time": "14:00",
+            "course": "NIVEAU 1 : VASQUE FLEURIE, PANIER DE FRUITS",
+            "teacherId": "cmw219lvz0000jvfxew7kossb"
+        },
+        {
+            "id": "demo-winter-2026-12-29-3",
+            "date": "2026-12-29",
+            "time": "14:00",
+            "course": "BRODERIE AU RUBAN : NIVEAU 2",
+            "teacherId": "cmw219lwg0004jvfx0n4gf00n"
+        },
+        {
+            "id": "demo-winter-2026-12-30-1",
+            "date": "2026-12-30",
+            "time": "09:30",
+            "course": "NIVEAU 6 : ANNEES 60",
+            "teacherId": "cmw219lwg0004jvfx0n4gf00n"
+        },
+        {
+            "id": "demo-winter-2026-12-30-2",
+            "date": "2026-12-30",
+            "time": "14:00",
+            "course": "DECOUVERTE CROCHET NIVEAU 1 : NŒUD NOIR",
+            "teacherId": "cmw219lvz0000jvfxew7kossb"
+        },
+        {
+            "id": "demo-winter-2026-12-31-1",
+            "date": "2026-12-31",
+            "time": "09:30",
+            "course": "NIVEAU 7 : ANNEES 80",
+            "teacherId": "cmw219lvz0000jvfxew7kossb"
+        },
+        {
+            "id": "demo-winter-2027-01-04-1",
+            "date": "2027-01-04",
+            "time": "14:00",
+            "course": "DÉCOUVERTE PASSEMENTERIE : PORTE CARTE",
+            "teacherId": "cmw219lvz0000jvfxew7kossb"
+        },
+        {
+            "id": "demo-winter-2027-01-04-2",
+            "date": "2027-01-04",
+            "time": "14:00",
+            "course": "BRODERIE AU RUBAN : NIVEAU 2",
+            "teacherId": "cmw219lwg0004jvfx0n4gf00n"
+        },
+        {
+            "id": "demo-winter-2027-01-04-3",
+            "date": "2027-01-04",
+            "time": "14:00",
+            "course": "BRODERIE AU RUBAN : NIVEAU 1",
+            "teacherId": "cmw219lwb0002jvfxfwnokz8x"
+        },
+        {
+            "id": "demo-winter-2027-01-05-1",
+            "date": "2027-01-05",
+            "time": "14:00",
+            "course": "NIVEAU 8 : ANNEES 2000",
+            "teacherId": "cmw219lwg0004jvfx0n4gf00n"
+        },
+        {
+            "id": "demo-winter-2027-01-06-1",
+            "date": "2027-01-06",
+            "time": "14:00",
+            "course": "NIVEAU 2 : ANNEES 20",
+            "teacherId": "cmw219lwb0002jvfxfwnokz8x"
+        },
+        {
+            "id": "demo-winter-2027-01-07-1",
+            "date": "2027-01-07",
+            "time": "14:00",
+            "course": "NIVEAU 1 : VASQUE FLEURIE, PANIER DE FRUITS",
+            "teacherId": "cmw219lvz0000jvfxew7kossb"
+        },
+        {
+            "id": "demo-winter-2027-01-08-1",
+            "date": "2027-01-08",
+            "time": "14:00",
+            "course": "NIVEAU 3 : ANNEES 30",
+            "teacherId": "cmw219lwd0003jvfx0uhd31nz"
+        },
+        {
+            "id": "demo-winter-2027-01-08-2",
+            "date": "2027-01-08",
+            "time": "14:00",
+            "course": "BRODERIE AU RUBAN : NIVEAU 2",
+            "teacherId": "cmw219lwg0004jvfx0n4gf00n"
+        },
+        {
+            "id": "demo-winter-2027-01-08-3",
+            "date": "2027-01-08",
+            "time": "14:00",
+            "course": "DECOUVERTE AIGUILLE : CŒUR BAROQUE",
+            "teacherId": "cmw219lw80001jvfxehcdt2w0"
+        },
+        {
+            "id": "demo-winter-2027-01-11-1",
+            "date": "2027-01-11",
+            "time": "14:00",
+            "course": "NIVEAU 1 : MICHONET",
+            "teacherId": "cmw219lwd0003jvfx0uhd31nz"
+        },
+        {
+            "id": "demo-winter-2027-01-12-1",
+            "date": "2027-01-12",
+            "time": "14:00",
+            "course": "NIVEAU 4 : ANNEES 40",
+            "teacherId": "cmw219lwb0002jvfxfwnokz8x"
+        },
+        {
+            "id": "demo-winter-2027-01-13-1",
+            "date": "2027-01-13",
+            "time": "09:30",
+            "course": "NIVEAU 6 : ANNEES 60",
+            "teacherId": "cmw219lwg0004jvfx0n4gf00n"
+        },
+        {
+            "id": "demo-winter-2027-01-14-1",
+            "date": "2027-01-14",
+            "time": "09:30",
+            "course": "DECOUVERTE CROCHET NIVEAU 1 : NŒUD FUCHSIA",
+            "teacherId": "cmw219lwd0003jvfx0uhd31nz"
+        },
+        {
+            "id": "demo-winter-2027-01-15-1",
+            "date": "2027-01-15",
+            "time": "09:30",
+            "course": "DECOUVERTE CROCHET NIVEAU 1 : NŒUD NOIR",
+            "teacherId": "cmw219lvz0000jvfxew7kossb"
+        },
+        {
+            "id": "demo-winter-2027-01-18-1",
+            "date": "2027-01-18",
+            "time": "09:30",
+            "course": "DECOUVERTE AIGUILLE : IRIS",
+            "teacherId": "cmw219lw80001jvfxehcdt2w0"
+        },
+        {
+            "id": "demo-winter-2027-01-19-1",
+            "date": "2027-01-19",
+            "time": "14:00",
+            "course": "NIVEAU 7 : ANNEES 80",
+            "teacherId": "cmw219lvz0000jvfxew7kossb"
+        },
+        {
+            "id": "demo-winter-2027-01-20-1",
+            "date": "2027-01-20",
+            "time": "09:30",
+            "course": "NIVEAU 7 : ANNEES 80",
+            "teacherId": "cmw219lvz0000jvfxew7kossb"
+        },
+        {
+            "id": "demo-winter-2027-01-20-2",
+            "date": "2027-01-20",
+            "time": "09:30",
+            "course": "BRODERIE AU RUBAN : NIVEAU 2",
+            "teacherId": "cmw219lwg0004jvfx0n4gf00n"
+        },
+        {
+            "id": "demo-winter-2027-01-20-3",
+            "date": "2027-01-20",
+            "time": "09:30",
+            "course": "DECOUVERTE AIGUILLE : IRIS",
+            "teacherId": "cmw219lw80001jvfxehcdt2w0"
+        },
+        {
+            "id": "demo-winter-2027-01-21-1",
+            "date": "2027-01-21",
+            "time": "09:30",
+            "course": "NIVEAU 1 : MICHONET",
+            "teacherId": "cmw219lwd0003jvfx0uhd31nz"
+        },
+        {
+            "id": "demo-winter-2027-01-22-1",
+            "date": "2027-01-22",
+            "time": "09:30",
+            "course": "DECOUVERTE CANETILLE : BRODERIE D’OR",
+            "teacherId": "cmw219lw80001jvfxehcdt2w0"
+        },
+        {
+            "id": "demo-winter-2027-01-22-2",
+            "date": "2027-01-22",
+            "time": "09:30",
+            "course": "NIVEAU 2 : ANNEES 20",
+            "teacherId": "cmw219lwb0002jvfxfwnokz8x"
+        },
+        {
+            "id": "demo-winter-2027-01-25-1",
+            "date": "2027-01-25",
+            "time": "09:30",
+            "course": "DECOUVERTE CANETILLE : BRODERIE D’OR",
+            "teacherId": "cmw219lw80001jvfxehcdt2w0"
+        },
+        {
+            "id": "demo-winter-2027-01-25-2",
+            "date": "2027-01-25",
+            "time": "09:30",
+            "course": "BRODERIE AU RUBAN : NIVEAU 2",
+            "teacherId": "cmw219lwg0004jvfx0n4gf00n"
+        },
+        {
+            "id": "demo-winter-2027-01-26-1",
+            "date": "2027-01-26",
+            "time": "14:00",
+            "course": "BRODERIE AU RUBAN : NIVEAU 1",
+            "teacherId": "cmw219lwb0002jvfxfwnokz8x"
+        },
+        {
+            "id": "demo-winter-2027-01-27-1",
+            "date": "2027-01-27",
+            "time": "14:00",
+            "course": "NIVEAU 4 : ANNEES 40",
+            "teacherId": "cmw219lwb0002jvfxfwnokz8x"
+        },
+        {
+            "id": "demo-winter-2027-01-28-1",
+            "date": "2027-01-28",
+            "time": "14:00",
+            "course": "NIVEAU 6 : ANNEES 60",
+            "teacherId": "cmw219lwg0004jvfx0n4gf00n"
+        },
+        {
+            "id": "demo-winter-2027-01-29-1",
+            "date": "2027-01-29",
+            "time": "09:30",
+            "course": "NIVEAU 7 : ANNEES 80",
+            "teacherId": "cmw219lvz0000jvfxew7kossb"
+        }
+    ]
+}

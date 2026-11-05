@@ -1,0 +1,265 @@
+{
+    "importedAt": "2026-11-04T11:28:25.260Z",
+    "created": 25,
+    "updated": 0,
+    "total": 25,
+    "teachers": [
+        {
+            "id": "cmw219lvz0000jvfxew7kossb",
+            "name": "Sophie Martin",
+            "email": "sophie.martin@professeurs.example.test",
+            "fictional": true
+        },
+        {
+            "id": "cmw219lw80001jvfxehcdt2w0",
+            "name": "Élise Bernard",
+            "email": "elise.bernard@professeurs.example.test",
+            "fictional": true
+        },
+        {
+            "id": "cmw219lwb0002jvfxfwnokz8x",
+            "name": "Camille Moreau",
+            "email": "camille.moreau@professeurs.example.test",
+            "fictional": true
+        },
+        {
+            "id": "cmw219lwd0003jvfx0uhd31nz",
+            "name": "Julien Laurent",
+            "email": "julien.laurent@professeurs.example.test",
+            "fictional": true
+        },
+        {
+            "id": "cmw219lwg0004jvfx0n4gf00n",
+            "name": "Clara Petit",
+            "email": "clara.petit@professeurs.example.test",
+            "fictional": true
+        }
+    ],
+    "assignments": [
+        {
+            "courseId": "cmw219lwr0006jvfxr7quf9ro",
+            "course": "NIVEAU 5 : ANNEES 50",
+            "level": "PERFECTIONNEMENT",
+            "sessions": 13,
+            "totalHours": 39,
+            "teacher": "Camille Moreau",
+            "sourceUrl": "https://ecolelesage.com/fr/courses/annees-50s/"
+        },
+        {
+            "courseId": "cmw219lx10008jvfxgo7hb8l1",
+            "course": "BRODERIE AU RUBAN : NIVEAU 2",
+            "level": "INITIATION",
+            "sessions": 10,
+            "totalHours": 30,
+            "teacher": "Clara Petit",
+            "sourceUrl": "https://ecolelesage.com/fr/courses/ruban-et-dentelle/"
+        },
+        {
+            "courseId": "cmw219lx6000ajvfxqql26117",
+            "course": "NIVEAU 1 : MICHONET",
+            "level": "PERFECTIONNEMENT",
+            "sessions": 10,
+            "totalHours": 30,
+            "teacher": "Julien Laurent",
+            "sourceUrl": "https://ecolelesage.com/fr/courses/michonet/"
+        },
+        {
+            "courseId": "cmw219lxb000cjvfxu1cdcphf",
+            "course": "AMEUBLEMENT",
+            "level": "SPECIALISATION",
+            "sessions": 50,
+            "totalHours": 150,
+            "teacher": "Sophie Martin",
+            "sourceUrl": "https://ecolelesage.com/fr/courses/specialisation-ameublement-broderie-dinterieur/"
+        },
+        {
+            "courseId": "cmw219lxg000ejvfxz0woi50l",
+            "course": "DECOUVERTE AIGUILLE : CŒUR BAROQUE",
+            "level": "INITIATION",
+            "sessions": 1,
+            "totalHours": 3,
+            "teacher": "Élise Bernard",
+            "sourceUrl": "https://ecolelesage.com/fr/courses/decouverte-aiguille-coeur-baroque/"
+        },
+        {
+            "courseId": "cmw219lxk000gjvfxp3r9xbzr",
+            "course": "NIVEAU 2 : ANNEES 20",
+            "level": "PERFECTIONNEMENT",
+            "sessions": 10,
+            "totalHours": 30,
+            "teacher": "Camille Moreau",
+            "sourceUrl": "https://ecolelesage.com/fr/courses/annees-20s/"
+        },
+        {
+            "courseId": "cmw219lxq000ijvfxx7nw86pi",
+            "course": "HAUTE COUTURE",
+            "level": "SPECIALISATION",
+            "sessions": 50,
+            "totalHours": 150,
+            "teacher": "Clara Petit",
+            "sourceUrl": "https://ecolelesage.com/fr/courses/specialisation-haute-couture/"
+        },
+        {
+            "courseId": "cmw219lxv000kjvfxqhfy73oe",
+            "course": "NIVEAU 3 : ANNEES 30",
+            "level": "PERFECTIONNEMENT",
+            "sessions": 10,
+            "totalHours": 30,
+            "teacher": "Julien Laurent",
+            "sourceUrl": "https://ecolelesage.com/fr/courses/annees-30s/"
+        },
+        {
+            "courseId": "cmw219lxz000mjvfxb6mg4nta",
+            "course": "DÉCOUVERTE PASSEMENTERIE : PORTE CARTE",
+            "level": "INITIATION",
+            "sessions": 9,
+            "totalHours": 27,
+            "teacher": "Sophie Martin",
+            "sourceUrl": "https://ecolelesage.com/fr/courses/decouverte-passementerie-porte-carte/"
+        },
+        {
+            "courseId": "cmw219ly3000ojvfxmf235ccx",
+            "course": "DECOUVERTE CROCHET NIVEAU 1 : NŒUD BLANC",
+            "level": "INITIATION",
+            "sessions": 4,
+            "totalHours": 12,
+            "teacher": "Élise Bernard",
+            "sourceUrl": "https://ecolelesage.com/fr/courses/decouverte-crochet-noeud-blanc/"
+        },
+        {
+            "courseId": "cmw219ly7000qjvfx1djcmkoz",
+            "course": "NIVEAU 4 : ANNEES 40",
+            "level": "PERFECTIONNEMENT",
+            "sessions": 10,
+            "totalHours": 30,
+            "teacher": "Camille Moreau",
+            "sourceUrl": "https://ecolelesage.com/fr/courses/annees-40s/"
+        },
+        {
+            "courseId": "cmw219lyc000sjvfxvfsb63i1",
+            "course": "NIVEAU 8 : ANNEES 2000",
+            "level": "PERFECTIONNEMENT",
+            "sessions": 16,
+            "totalHours": 48,
+            "teacher": "Clara Petit",
+            "sourceUrl": "https://ecolelesage.com/fr/courses/annees-2000/"
+        },
+        {
+            "courseId": "cmw219lyi000ujvfxti76wano",
+            "course": "DECOUVERTE AIGUILLE : BRIN DE MUGUET",
+            "level": "INITIATION",
+            "sessions": 2,
+            "totalHours": 6,
+            "teacher": "Julien Laurent",
+            "sourceUrl": "https://ecolelesage.com/fr/courses/decouverte-de-laiguille/"
+        },
+        {
+            "courseId": "cmw219lym000wjvfx8vc0h5wq",
+            "course": "DECOUVERTE CROCHET NIVEAU 1 : NŒUD NOIR",
+            "level": "INITIATION",
+            "sessions": 4,
+            "totalHours": 12,
+            "teacher": "Sophie Martin",
+            "sourceUrl": "https://ecolelesage.com/fr/courses/decouverte-crochet-noeud-noir/"
+        },
+        {
+            "courseId": "cmw219lyr000yjvfxagu5zj7a",
+            "course": "DECOUVERTE CROCHET NIVEAU 2 – COQUELICOT",
+            "level": "INITIATION",
+            "sessions": 6,
+            "totalHours": 18,
+            "teacher": "Élise Bernard",
+            "sourceUrl": "https://ecolelesage.com/fr/courses/decouverte-crochet-niveau-2-coquelicot/"
+        },
+        {
+            "courseId": "cmw219lyw0010jvfxucufu6up",
+            "course": "BRODERIE AU RUBAN : NIVEAU 1",
+            "level": "INITIATION",
+            "sessions": 2,
+            "totalHours": 6,
+            "teacher": "Camille Moreau",
+            "sourceUrl": "https://ecolelesage.com/fr/courses/ruban-niveau-1-a-laiguille/"
+        },
+        {
+            "courseId": "cmw219lz20012jvfxt831o1rm",
+            "course": "NIVEAU 6 : ANNEES 60",
+            "level": "PERFECTIONNEMENT",
+            "sessions": 10,
+            "totalHours": 30,
+            "teacher": "Clara Petit",
+            "sourceUrl": "https://ecolelesage.com/fr/courses/annees-60s/"
+        },
+        {
+            "courseId": "cmw219lz80014jvfxvq6cw6xa",
+            "course": "POINTS TRADITIONNELS",
+            "level": "INITIATION",
+            "sessions": 6,
+            "totalHours": 18,
+            "teacher": "Julien Laurent",
+            "sourceUrl": "https://ecolelesage.com/fr/courses/points-traditionnels/"
+        },
+        {
+            "courseId": "cmw219lze0016jvfxz1o3mfd6",
+            "course": "NIVEAU 1 : VASQUE FLEURIE, PANIER DE FRUITS",
+            "level": "PERFECTIONNEMENT",
+            "sessions": 10,
+            "totalHours": 30,
+            "teacher": "Sophie Martin",
+            "sourceUrl": "https://ecolelesage.com/fr/courses/fleurs-fruits/"
+        },
+        {
+            "courseId": "cmw219lzj0018jvfx5onvxvro",
+            "course": "DECOUVERTE AIGUILLE : IRIS",
+            "level": "INITIATION",
+            "sessions": 2,
+            "totalHours": 6,
+            "teacher": "Élise Bernard",
+            "sourceUrl": "https://ecolelesage.com/fr/courses/decouverte-aiguille/"
+        },
+        {
+            "courseId": "cmw219lzp001ajvfxa7bw52o1",
+            "course": "DECOUVERTE AIGUILLE : FLEUR NOIRE",
+            "level": "INITIATION",
+            "sessions": 2,
+            "totalHours": 6,
+            "teacher": "Camille Moreau",
+            "sourceUrl": "https://ecolelesage.com/fr/courses/decouverte-aiguille-fleur-noire/"
+        },
+        {
+            "courseId": "cmw219lzu001cjvfx7twkoiq2",
+            "course": "FORFAIT DE 2 SPECIALISATIONS",
+            "level": "SPECIALISATION",
+            "sessions": 100,
+            "totalHours": 300,
+            "teacher": "Clara Petit",
+            "sourceUrl": "https://ecolelesage.com/fr/courses/specialisation-haute-couture-et-ameublement-broderie-dinterieur/"
+        },
+        {
+            "courseId": "cmw219lzz001ejvfx9uczeftk",
+            "course": "DECOUVERTE CROCHET NIVEAU 1 : NŒUD FUCHSIA",
+            "level": "INITIATION",
+            "sessions": 4,
+            "totalHours": 12,
+            "teacher": "Julien Laurent",
+            "sourceUrl": "https://ecolelesage.com/fr/courses/initiation-decouverte-crochet/"
+        },
+        {
+            "courseId": "cmw219m04001gjvfxj6lb6vco",
+            "course": "NIVEAU 7 : ANNEES 80",
+            "level": "PERFECTIONNEMENT",
+            "sessions": 12,
+            "totalHours": 36,
+            "teacher": "Sophie Martin",
+            "sourceUrl": "https://ecolelesage.com/fr/courses/annees-80/"
+        },
+        {
+            "courseId": "cmw219m09001ijvfxpr1nd7rm",
+            "course": "DECOUVERTE CANETILLE : BRODERIE D’OR",
+            "level": "INITIATION",
+            "sessions": 6,
+            "totalHours": 18,
+            "teacher": "Élise Bernard",
+            "sourceUrl": "https://ecolelesage.com/fr/courses/broderie-de-cannetille/"
+        }
+    ]
+}

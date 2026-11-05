@@ -1,0 +1,184 @@
+{
+    "createdAt": "2026-11-04T12:01:57.208Z",
+    "students": 16,
+    "coursesAdded": 35,
+    "newReservations": 16,
+    "assignments": [
+        {
+            "student": "Nathan Bonnet",
+            "studentId": "cmw22c560000djvy1vpyux8ml",
+            "coursesAdded": ["NIVEAU 4 : ANNEES 40", "BRODERIE AU RUBAN : NIVEAU 2", "POINTS TRADITIONNELS"],
+            "newReservation": {
+                "id": "cmw22gqgz0003jvseerugu2yz",
+                "course": "NIVEAU 4 : ANNEES 40",
+                "startsAt": "2026-11-26T13:00:00.000Z"
+            },
+            "upcomingReservations": 1
+        },
+        {
+            "student": "Léa Chevalier",
+            "studentId": "cmw22c55e0004jvy13bqq61yj",
+            "coursesAdded": ["DECOUVERTE AIGUILLE : BRIN DE MUGUET", "NIVEAU 4 : ANNEES 40"],
+            "newReservation": {
+                "id": "cmw22gqhg000bjvseo8pznptc",
+                "course": "DECOUVERTE AIGUILLE : BRIN DE MUGUET",
+                "startsAt": "2026-12-10T08:30:00.000Z"
+            },
+            "upcomingReservations": 1
+        },
+        {
+            "student": "Louis Dubois",
+            "studentId": "cmw22c5530001jvy1h8le38h8",
+            "coursesAdded": ["BRODERIE AU RUBAN : NIVEAU 1", "BRODERIE AU RUBAN : NIVEAU 2", "NIVEAU 8 : ANNEES 2000"],
+            "newReservation": {
+                "id": "cmw22gqhq000hjvsep95h8k3q",
+                "course": "BRODERIE AU RUBAN : NIVEAU 1",
+                "startsAt": "2026-12-09T08:30:00.000Z"
+            },
+            "upcomingReservations": 1
+        },
+        {
+            "student": "Marie Dupont",
+            "studentId": "cmvz1ifuf0002jv6dyfnlttd5",
+            "coursesAdded": ["DECOUVERTE AIGUILLE : IRIS", "DECOUVERTE AIGUILLE : BRIN DE MUGUET"],
+            "newReservation": {
+                "id": "cmw22gqhz000pjvseuqmoa901",
+                "course": "DECOUVERTE AIGUILLE : IRIS",
+                "startsAt": "2027-01-20T08:30:00.000Z"
+            },
+            "upcomingReservations": 1
+        },
+        {
+            "student": "Inès Faure",
+            "studentId": "cmw22c55r0008jvy1tb2m8hhp",
+            "coursesAdded": ["DECOUVERTE AIGUILLE : CŒUR BAROQUE", "POINTS TRADITIONNELS", "NIVEAU 8 : ANNEES 2000"],
+            "newReservation": {
+                "id": "cmw22gqi7000vjvsecbrf4yxl",
+                "course": "DECOUVERTE AIGUILLE : CŒUR BAROQUE",
+                "startsAt": "2026-12-01T08:30:00.000Z"
+            },
+            "upcomingReservations": 1
+        },
+        {
+            "student": "Gabriel Fontaine",
+            "studentId": "cmw22c55a0003jvy1ibg6jrbm",
+            "coursesAdded": ["POINTS TRADITIONNELS", "DECOUVERTE CANETILLE : BRODERIE D’OR", "NIVEAU 1 : MICHONET"],
+            "newReservation": {
+                "id": "cmw22gqig0013jvse0l4wrcie",
+                "course": "POINTS TRADITIONNELS",
+                "startsAt": "2026-12-18T08:30:00.000Z"
+            },
+            "upcomingReservations": 1
+        },
+        {
+            "student": "Hugo François",
+            "studentId": "cmw22c55h0005jvy124qpv9g3",
+            "coursesAdded": ["NIVEAU 1 : VASQUE FLEURIE, PANIER DE FRUITS"],
+            "newReservation": {
+                "id": "cmw22gqio001bjvsezpjx20u0",
+                "course": "NIVEAU 1 : VASQUE FLEURIE, PANIER DE FRUITS",
+                "startsAt": "2027-01-07T13:00:00.000Z"
+            },
+            "upcomingReservations": 1
+        },
+        {
+            "student": "Arthur Garnier",
+            "studentId": "cmw22c55o0007jvy1e934xrgd",
+            "coursesAdded": ["DECOUVERTE AIGUILLE : BRIN DE MUGUET", "NIVEAU 2 : ANNEES 20", "NIVEAU 4 : ANNEES 40"],
+            "newReservation": {
+                "id": "cmw22gqiv001fjvseluo4bxt4",
+                "course": "DECOUVERTE AIGUILLE : BRIN DE MUGUET",
+                "startsAt": "2026-12-14T13:00:00.000Z"
+            },
+            "upcomingReservations": 1
+        },
+        {
+            "student": "Louise Girard",
+            "studentId": "cmw22c561000ejvy1y02ofpof",
+            "coursesAdded": ["DÉCOUVERTE PASSEMENTERIE : PORTE CARTE", "POINTS TRADITIONNELS", "NIVEAU 1 : MICHONET"],
+            "newReservation": {
+                "id": "cmw22gqj3001njvseu3jdza5h",
+                "course": "DÉCOUVERTE PASSEMENTERIE : PORTE CARTE",
+                "startsAt": "2026-11-06T08:30:00.000Z"
+            },
+            "upcomingReservations": 1
+        },
+        {
+            "student": "Sarah Lambert",
+            "studentId": "cmw22c55y000cjvy1g1v9n0e0",
+            "coursesAdded": ["NIVEAU 3 : ANNEES 30", "HAUTE COUTURE"],
+            "newReservation": {
+                "id": "cmw22gqjb001vjvsegg13nutc",
+                "course": "NIVEAU 3 : ANNEES 30",
+                "startsAt": "2026-11-06T08:30:00.000Z"
+            },
+            "upcomingReservations": 1
+        },
+        {
+            "student": "Emma Lefebvre",
+            "studentId": "cmw22c54w0000jvy1oi93ldyg",
+            "coursesAdded": ["BRODERIE AU RUBAN : NIVEAU 2"],
+            "newReservation": {
+                "id": "cmw22gqjj0021jvseh87ng3sp",
+                "course": "BRODERIE AU RUBAN : NIVEAU 2",
+                "startsAt": "2026-11-26T13:00:00.000Z"
+            },
+            "upcomingReservations": 1
+        },
+        {
+            "student": "Manon Legrand",
+            "studentId": "cmw22c55k0006jvy1to04rtoh",
+            "coursesAdded": ["BRODERIE AU RUBAN : NIVEAU 2"],
+            "newReservation": {
+                "id": "cmw22gqjq0025jvsexebn9jil",
+                "course": "BRODERIE AU RUBAN : NIVEAU 2",
+                "startsAt": "2026-12-29T13:00:00.000Z"
+            },
+            "upcomingReservations": 1
+        },
+        {
+            "student": "Jules Muller",
+            "studentId": "cmw22c55x000bjvy1lrfjh6wq",
+            "coursesAdded": ["DECOUVERTE CANETILLE : BRODERIE D’OR"],
+            "newReservation": {
+                "id": "cmw22gqjx0029jvse6womouvv",
+                "course": "DECOUVERTE CANETILLE : BRODERIE D’OR",
+                "startsAt": "2026-12-21T13:00:00.000Z"
+            },
+            "upcomingReservations": 1
+        },
+        {
+            "student": "Raphaël Rousseau",
+            "studentId": "cmw22c55t0009jvy197cue50u",
+            "coursesAdded": ["NIVEAU 7 : ANNEES 80", "NIVEAU 3 : ANNEES 30"],
+            "newReservation": {
+                "id": "cmw22gqk5002djvse7vm8jwgc",
+                "course": "NIVEAU 7 : ANNEES 80",
+                "startsAt": "2027-01-19T13:00:00.000Z"
+            },
+            "upcomingReservations": 1
+        },
+        {
+            "student": "Chloé Roux",
+            "studentId": "cmw22c5570002jvy174cr6l5k",
+            "coursesAdded": ["NIVEAU 4 : ANNEES 40", "NIVEAU 2 : ANNEES 20"],
+            "newReservation": {
+                "id": "cmw22gqkc002jjvse4pcgpvp1",
+                "course": "NIVEAU 4 : ANNEES 40",
+                "startsAt": "2026-12-08T13:00:00.000Z"
+            },
+            "upcomingReservations": 1
+        },
+        {
+            "student": "Alice Vincent",
+            "studentId": "cmw22c55v000ajvy1gz13o8gc",
+            "coursesAdded": ["NIVEAU 4 : ANNEES 40", "BRODERIE AU RUBAN : NIVEAU 2", "NIVEAU 8 : ANNEES 2000"],
+            "newReservation": {
+                "id": "cmw22gqkk002pjvse1r3llqsf",
+                "course": "NIVEAU 4 : ANNEES 40",
+                "startsAt": "2026-11-10T13:00:00.000Z"
+            },
+            "upcomingReservations": 1
+        }
+    ]
+}
