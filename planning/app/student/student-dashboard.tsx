@@ -49,7 +49,7 @@ function BookingPanel({
         new Date(booking.date).getTime() - Date.now() >= booking.cancellationHours * 3600000
     return (
         <SidePanel titleId="booking-panel-title" busy={busy} onClose={onClose}>
-            <span className="muted">Ma réservation</span>
+            <span className="section_kicker">Ma réservation</span>
             <h2 id="booking-panel-title">{booking.course}</h2>
             <dl className="admin_settings">
                 <div>
@@ -216,10 +216,10 @@ export default function StudentDashboard({ entitlements, bookings }: { entitleme
                                 <strong>{e.course}</strong>
                                 <div className="metric_value">
                                     {e.remaining}{' '}
-                                    <span>{e.remaining > 1 ? 'séances restantes' : 'séance restante'}</span>
+                                    <span>{e.remaining > 1 ? 'séances restantes' : 'séance restante'} sur {e.total}</span>
                                 </div>
                                 <p className="muted">
-                                    Sur {e.total} · Expire le {new Date(e.expiresAt).toLocaleDateString('fr-FR')}
+                                    Expire le {new Date(e.expiresAt).toLocaleDateString('fr-FR')}
                                 </p>
                             </div>
                         ))}
@@ -230,7 +230,7 @@ export default function StudentDashboard({ entitlements, bookings }: { entitleme
                         {reservations.map((b) => (
                             <button
                                 type="button"
-                                className="btn student_booking_row"
+                                className="student_booking_row"
                                 key={b.id}
                                 onClick={() => {
                                     setOpenedBookingId(b.id)
@@ -294,7 +294,7 @@ export default function StudentDashboard({ entitlements, bookings }: { entitleme
             {message && <Toast message={message} variant="error" />}
             {selected && current && (
                 <SidePanel titleId="reserve-panel-title" busy={busy} onClose={() => setSelected(null)}>
-                    <span className="muted">Réserver une séance</span>
+                    <span className="section_kicker">Réserver une séance</span>
                     <h2 id="reserve-panel-title">{selected.course}</h2>
                     <dl className="admin_settings">
                         <div>

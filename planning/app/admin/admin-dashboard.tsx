@@ -466,7 +466,6 @@ export default function AdminDashboard({
             </div>
             <div className="admin_workspace">
                 <aside className="admin_sidebar">
-                    <p className="admin_sidebar_title">Administrateur</p>
                     <nav aria-label="Navigation administrateur">
                         {sections.map((item) => (
                             <Link
@@ -590,7 +589,7 @@ export default function AdminDashboard({
                                         >
                                             <div>
                                                 <strong>
-                                                    {s.lastName} {s.firstName}
+                                                    {s.lastName.toLocaleUpperCase('fr-FR')} {s.firstName}
                                                 </strong>
                                                 <p className="muted">{s.email}</p>
                                                 <p className="muted">{s.phone || 'Téléphone non renseigné'}</p>

@@ -184,7 +184,7 @@ h2 {
 .muted {
     color: var(--muted);
     font-size: 11px;
-    font-style: italic;
+    font-weight: 200;
 }
 .slot {
     border: 1px solid #e8e8e8;
@@ -207,11 +207,19 @@ select {
     border-radius: 999px;
     margin: 8px 0 20px;
     outline: none;
-    font-size: 14px;
+    font-size: 13px;
 
     &:focus {
         border-color: var(--accent);
     }
+}
+select:not([multiple]):not([size]) {
+    appearance: none;
+    padding-right: 40px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 16px 16px;
 }
 label {
     font-size: 11px;
@@ -320,11 +328,11 @@ label {
 }
 .section_kicker {
     text-transform: uppercase;
-    font-size: 10px;
-    letter-spacing: 2px;
+    font-size: 9px;
+    letter-spacing: 1.5px;
     color: #cccccc;
     font-weight: 600;
-    margin-bottom: 9px;
+    margin-bottom: 7px;
 }
 .metric_value {
     font-family: inherit;
@@ -360,6 +368,7 @@ label {
         font-size: 13px;
         color: #eeeeee;
         margin: 0;
+        font-weight: 100;
     }
     .section_kicker {
         color: #dddddd;
@@ -399,8 +408,9 @@ label {
             margin-bottom: 4px;
         }
         p {
-            font-size: 12px;
+            font-size: 11px;
             margin: 0;
+            font-weight: 200;
         }
     }
     &_controls {
@@ -569,7 +579,6 @@ label {
     padding: 14px 0;
     border-bottom: 1px solid var(--line);
     p {
-        font-size: 12px;
         margin: 5px 0 0;
     }
 }
@@ -779,18 +788,24 @@ label {
 .student_entitlement {
     padding: 16px 0;
     border-bottom: 1px solid var(--line);
+
+    strong{
+        font-size: 14px;
+    }
     &:last-child {
         border-bottom: 0;
         padding-bottom: 0;
     }
     .metric_value {
-        font-size: 26px;
+        font-size: 22px;
+        margin: 5px 0 10px;
         span {
-            font-size: 12px;
+            font-size: 11px;
+    top: -1px;
+    position: relative;
         }
     }
     p {
-        font-size: 12px;
         margin-bottom: 0;
     }
 }
@@ -803,9 +818,16 @@ label {
     background: transparent;
     color: var(--ink);
     border-radius: 0;
+    border: none;
     border-bottom: 1px solid var(--line);
     padding: 16px 0;
     font-weight: 400;
+    cursor: pointer;
+
+    strong{
+        font-size: 14px;
+    }
+
     span {
         font-size: 12px;
     }
@@ -1166,12 +1188,13 @@ label {
     margin-bottom: 20px;
     h2 {
         margin-bottom: 8px;
+        font-size: 18px;
     }
 }
 .teacher_session_date {
     margin-bottom: 10px;
     color: var(--muted);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 300;
 }
 
