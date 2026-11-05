@@ -211,6 +211,7 @@ export function MonthCalendar({
                                     {(byDay.get(day) || []).map((s) => {
                                         const booked = mode === 'student' && bookedSlotIds.includes(s.id)
                                         const available = Math.max(0, s.capacity - s.reserved)
+                                        const full = available === 0
                                         const availability =
                                             available === 0
                                                 ? 'Complet'
@@ -237,9 +238,11 @@ export function MonthCalendar({
                                                             : '') +
                                                         (booked
                                                             ? 'month_event_booked'
-                                                            : disabled
-                                                              ? 'month_event_disabled'
-                                                              : ''))
+                                                            : full
+                                                              ? 'month_event_full'
+                                                              : disabled
+                                                                ? 'month_event_disabled'
+                                                                : ''))
                                                 }
                                                 disabled={mode === 'student' && !booked && disabled}
                                                 onClick={() => onSelect(s)}
@@ -248,6 +251,11 @@ export function MonthCalendar({
                                                 {booked && (
                                                     <span className="month_event_badge">
                                                         <span aria-hidden="true">✓</span> Réservé
+                                                    </span>
+                                                )}
+                                                {full && !booked && (
+                                                    <span className="month_event_badge month_event_badge_full">
+                                                        Complet
                                                     </span>
                                                 )}
                                                 <span className="month_event_time">
@@ -274,6 +282,9 @@ export function MonthCalendar({
                 </span>
                 <span>
                     <i className="month_legend_swatch month_legend_unavailable" aria-hidden="true" /> Indisponible
+                </span>
+                <span>
+                    <i className="month_legend_swatch month_legend_full" aria-hidden="true" /> Complet
                 </span>
                 {mode === 'student' && (
                     <span>

@@ -563,6 +563,12 @@ label {
             opacity: 1;
         }
     }
+    &_event_full {
+        background: linear-gradient(135deg, #5f471b 0%, #9b742b 52%, #c49a48 100%) !important;
+        color: #fff !important;
+        opacity: 1;
+        cursor: not-allowed;
+    }
     &_event_badge {
         align-self: flex-start;
         background: #205c35;
@@ -572,6 +578,11 @@ label {
         font-size: 10px;
         font-weight: 600;
         border: 1px solid #669175;
+    }
+    &_event_badge_full {
+        background: #d5aa53;
+        color: #2e210b;
+        border-color: #f0d38f;
     }
     &_event_level_border_initiation {
         border-left: 4px solid #77a879 !important;
@@ -613,6 +624,10 @@ label {
     &_legend_booked {
         background: #e6f4ea;
         border: 1px solid #b9dac4;
+    }
+    &_legend_full {
+        background: linear-gradient(135deg, #72551f, #d5aa53);
+        border: 1px solid #b58a39;
     }
     &_legend_level {
         width: 4px;
