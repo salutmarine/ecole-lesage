@@ -58,7 +58,7 @@
     --line: #e5e5e5;
     --paper: #f7f7f7;
     --accent: #0a0a0a;
-    --waouh: #04164d;
+    --waouh: #191926;
     --shadow: 0 8px 30px rgba(31, 48, 36, 0.045);
     font-family: 'abchanel-2022', sans-serif;
     color: var(--ink);
@@ -75,7 +75,7 @@ textarea {
 }
 strong,
 b {
-    font-weight: 600;
+    font-weight: 800;
 }
 body {
     margin: 0;
@@ -184,7 +184,7 @@ h2 {
     display: inline-block;
     text-decoration: none;
     border: 0;
-    background: var(--accent);
+    background: var(--waouh);
     color: #fff;
     padding: 6px 10px;
     border-radius: 999px;
@@ -455,7 +455,7 @@ label {
         p {
             font-size: 11px;
             margin: 0;
-            font-weight: 200;
+            font-weight: 300;
         }
     }
     &_controls {
@@ -544,6 +544,7 @@ label {
         font-size: 11px;
         line-height: 1.3;
         overflow-wrap: anywhere;
+        font-weight: 800;
     }
     &_event_places {
         font-size: 9px;
@@ -767,7 +768,7 @@ label {
         color: var(--ink);
         padding: 13px 12px;
         &[aria-current='page'] {
-            background: var(--accent);
+            background: var(--waouh);
             color: #fff;
         }
         &:focus-visible {
