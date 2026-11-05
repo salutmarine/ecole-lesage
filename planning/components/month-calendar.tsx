@@ -16,7 +16,7 @@ export type CalendarSlot = {
     reserved: number
     blocked: boolean
 }
-const week = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim']
+const week = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven']
 export const dateLabel = (iso: string) =>
     new Date(iso).toLocaleString('fr-FR', {
         dateStyle: 'full',
@@ -100,9 +100,14 @@ export function MonthCalendar({
     const slots = result.key === key ? result.slots : []
     const cells = useMemo(() => {
         const first = new Date(month.getFullYear(), month.getMonth(), 1)
-        const offset = (first.getDay() + 6) % 7
+        const firstWeekday = (first.getDay() + 6) % 7
+        const offset = firstWeekday < 5 ? firstWeekday : 0
         const days = new Date(month.getFullYear(), month.getMonth() + 1, 0).getDate()
-        return [...Array(offset).fill(null), ...Array.from({ length: days }, (_, i) => i + 1)]
+        const weekdays = Array.from({ length: days }, (_, i) => i + 1).filter((day) => {
+            const weekday = new Date(month.getFullYear(), month.getMonth(), day).getDay()
+            return weekday !== 0 && weekday !== 6
+        })
+        return [...Array(offset).fill(null), ...weekdays]
     }, [month])
     const byDay = useMemo(() => {
         const map = new Map<number, CalendarSlot[]>()
@@ -112,7 +117,6 @@ export function MonthCalendar({
                 !bookedSlotIds.includes(s.id) &&
                 (!canReserve ||
                     s.blocked ||
-                    s.reserved >= s.capacity ||
                     new Date(s.startsAt) <= new Date() ||
                     !(canReserveSlot ? canReserveSlot(s) : s.courseId === courseId))
             )
@@ -140,7 +144,18 @@ export function MonthCalendar({
                         onClick={() => setMonth((d) => new Date(d.getFullYear(), d.getMonth() - 1, 1))}
                         aria-label="Mois précédent"
                     >
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
+                        <svg
+                            width="18"
+                            height="18"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="1.8"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            aria-hidden="true"
+                            focusable="false"
+                        >
                             <path d="m14 6-6 6 6 6" />
                         </svg>
                     </button>
@@ -156,7 +171,18 @@ export function MonthCalendar({
                         onClick={() => setMonth((d) => new Date(d.getFullYear(), d.getMonth() + 1, 1))}
                         aria-label="Mois suivant"
                     >
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
+                        <svg
+                            width="18"
+                            height="18"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="1.8"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            aria-hidden="true"
+                            focusable="false"
+                        >
                             <path d="m10 6 6 6-6 6" />
                         </svg>
                     </button>
@@ -167,7 +193,9 @@ export function MonthCalendar({
                     {error}
                 </p>
             )}
-            <p className="muted" role="status" style={{ minHeight: '1.5em', margin: 0 }}>{loading ? 'Chargement du calendrier…' : '\u00a0'}</p>
+            <p className="muted" role="status" style={{ minHeight: '1.5em', margin: 0 }}>
+                {loading ? 'Chargement du calendrier…' : '\u00a0'}
+            </p>
             <div className="month_grid" role="grid" aria-label="Calendrier mensuel">
                 {week.map((d) => (
                     <div className="month_weekday" key={d}>
@@ -212,7 +240,7 @@ export function MonthCalendar({
                                                 }
                                                 disabled={mode === 'student' && !booked && disabled}
                                                 onClick={() => onSelect(s)}
-                                                title={`${s.course}${mode === 'admin' ? ` · ${availability}` : ''}${booked ? ' · Déjà réservé' : ''}`}
+                                                title={`${s.course} · ${availability}${booked ? ' · Déjà réservé' : ''}`}
                                             >
                                                 {booked && (
                                                     <span className="month_event_badge">
@@ -233,10 +261,17 @@ export function MonthCalendar({
                                                         {courseLevels[s.level]}
                                                     </span>
                                                 )}
-                                                {mode === 'admin' && <>
-                                                    {s.teacher && <span className="month_event_places">{s.teacher}</span>}
-                                                    <span className="month_event_places">{availability}</span>
-                                                </>}
+                                                {mode === 'admin' && (
+                                                    <>
+                                                        {s.teacher && (
+                                                            <span className="month_event_places">{s.teacher}</span>
+                                                        )}
+                                                        <span className="month_event_places">{availability}</span>
+                                                    </>
+                                                )}
+                                                {mode === 'student' && available === 0 && (
+                                                    <span className="month_event_places">Complet</span>
+                                                )}
                                             </button>
                                         )
                                     })}
@@ -246,11 +281,19 @@ export function MonthCalendar({
                     </div>
                 ))}
             </div>
-            {showLegend && (
-                <div className="month_legend">
-                    <span>● Disponible</span>
-                    <span>○ Complet / non éligible</span>
-                    {mode === 'student' && <span>✓ Réservé</span>}
+            {(showLegend || mode === 'student') && (
+                <div className="month_legend" aria-label="Légende des créneaux">
+                    <span>
+                        <i className="month_legend_swatch month_legend_available" aria-hidden="true" /> Disponible
+                    </span>
+                    <span>
+                        <i className="month_legend_swatch month_legend_unavailable" aria-hidden="true" /> Indisponible
+                    </span>
+                    {mode === 'student' && (
+                        <span>
+                            <i className="month_legend_swatch month_legend_booked" aria-hidden="true" /> Réservé
+                        </span>
+                    )}
                 </div>
             )}
         </div>

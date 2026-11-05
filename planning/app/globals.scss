@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Forum&family=Geist:ital,wght@0,100..900;1,100..900&family=Manrope:wght@200..800&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
 @font-face {
     font-family: 'abchanel-2022';
     src:
@@ -42,12 +44,21 @@
     font-display: swap;
 }
 
+:root[data-font='geist'] {
+    font-family: 'Geist', sans-serif;
+}
+
+:root[data-font='manrope'] {
+    font-family: 'Manrope', sans-serif;
+}
+
 :root {
     --ink: #171717;
     --muted: #888888;
     --line: #e5e5e5;
     --paper: #f7f7f7;
     --accent: #0a0a0a;
+    --waouh: #04164d;
     --shadow: 0 8px 30px rgba(31, 48, 36, 0.045);
     font-family: 'abchanel-2022', sans-serif;
     color: var(--ink);
@@ -118,6 +129,35 @@ h2 {
         display: flex;
         align-items: center;
         gap: 14px;
+    }
+}
+
+.font_toggle {
+    display: inline-flex;
+    flex-shrink: 0;
+    padding: 3px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    gap: 2px;
+
+    button {
+        border: 0;
+        border-radius: 999px;
+        padding: 5px 9px;
+        background: transparent;
+        color: var(--muted);
+        font-size: 11px;
+        cursor: pointer;
+
+        &[aria-pressed='true'] {
+            background: var(--ink);
+            color: #fff;
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--ink);
+            outline-offset: 2px;
+        }
     }
 }
 
@@ -341,7 +381,7 @@ label {
     margin: 10px 0 4px;
 }
 .hero_panel {
-    background: #111111;
+    background: var(--waouh);
     color: white;
     border-radius: 18px;
     padding: 25px;
@@ -353,12 +393,17 @@ label {
     overflow: hidden;
     position: relative;
     &:after {
-        content: '✳';
+        content: '';
         position: absolute;
-        right: 30px;
-        top: -47px;
-        font-size: 180px;
-        opacity: 0.08;
+        right: -12px;
+        top: 85%;
+        width: 200px;
+        height: 200px;
+        background: url('./icon.svg') center / contain no-repeat;
+        filter: brightness(0) invert(1);
+        opacity: 0.09;
+        transform: translateY(-50%) rotate(-8deg);
+        pointer-events: none;
     }
     h1 {
         margin: 4px 0 7px;
@@ -441,7 +486,7 @@ label {
     }
     &_grid {
         display: grid;
-        grid-template-columns: repeat(7, minmax(0, 1fr));
+        grid-template-columns: repeat(5, minmax(0, 1fr));
         border: 1px solid var(--line);
         border-radius: 12px;
         overflow: hidden;
@@ -461,7 +506,7 @@ label {
         border-right: 1px solid var(--line);
         border-bottom: 1px solid var(--line);
         min-width: 0;
-        &:nth-child(7n) {
+        &:nth-child(5n) {
             border-right: 0;
         }
     }
@@ -482,7 +527,7 @@ label {
         width: 100%;
         min-width: 0;
         text-align: left !important;
-        background: #171717 !important;
+        background: var(--waouh) !important;
         color: white !important;
         border-radius: 6px !important;
         padding: 7px !important;
@@ -507,6 +552,8 @@ label {
     &_event_disabled {
         background: #ededed !important;
         color: #888 !important;
+        opacity: 1;
+        cursor: not-allowed;
     }
     &_event_booked {
         background: #e6f4ea !important;
@@ -527,10 +574,35 @@ label {
     }
     &_legend {
         display: flex;
+        flex-wrap: wrap;
         gap: 18px;
         margin-top: 12px;
         font-size: 11px;
         color: #777;
+
+        span {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+    }
+    &_legend_swatch {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 3px;
+        flex-shrink: 0;
+    }
+    &_legend_available {
+        background: var(--waouh);
+    }
+    &_legend_unavailable {
+        background: #ededed;
+        border: 1px solid #d5d5d5;
+    }
+    &_legend_booked {
+        background: #e6f4ea;
+        border: 1px solid #b9dac4;
     }
 }
 .subtle_rule {
@@ -642,6 +714,31 @@ label {
     }
 }
 
+.teacher_workspace {
+    display: grid;
+    grid-template-columns: 300px minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+}
+.teacher_sidebar {
+    position: sticky;
+    top: 20px;
+}
+.teacher_content {
+    min-width: 0;
+}
+.admin_sidebar,
+.student_summary,
+.teacher_sidebar {
+    .hero_panel {
+        padding: 20px;
+        h1 {
+            font-size: 23px;
+            overflow-wrap: anywhere;
+        }
+    }
+}
+
 .admin_workspace {
     display: grid;
     grid-template-columns: 225px minmax(0, 1fr);
@@ -703,6 +800,13 @@ label {
     }
 }
 @media (max-width: 850px) {
+    .teacher_workspace {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+    .teacher_sidebar {
+        position: static;
+    }
     .admin_workspace {
         grid-template-columns: 1fr;
         gap: 18px;
@@ -789,7 +893,7 @@ label {
     padding: 16px 0;
     border-bottom: 1px solid var(--line);
 
-    strong{
+    strong {
         font-size: 14px;
     }
     &:last-child {
@@ -801,8 +905,8 @@ label {
         margin: 5px 0 10px;
         span {
             font-size: 11px;
-    top: -1px;
-    position: relative;
+            top: -1px;
+            position: relative;
         }
     }
     p {
@@ -824,7 +928,7 @@ label {
     font-weight: 400;
     cursor: pointer;
 
-    strong{
+    strong {
         font-size: 14px;
     }
 
@@ -840,7 +944,57 @@ label {
     }
 }
 
-#demo-password{
+.student_reservations_cta {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    border: 0;
+    background: var(--waouh);
+    color: #fff;
+    text-align: left;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+        filter: brightness(1.12);
+    }
+    &:focus-visible {
+        outline: 2px solid var(--ink);
+        outline-offset: 3px;
+    }
+}
+.student_reservations_section {
+    margin-top: 28px;
+
+    h3 {
+        margin-bottom: 12px;
+        font-size: 14px;
+    }
+}
+.student_reservation_card {
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+
+    p {
+        margin: 5px 0 0;
+        font-size: 12px;
+        line-height: 1.45;
+    }
+    .booking_actions {
+        margin-top: 14px;
+    }
+    .form_actions {
+        flex-wrap: wrap;
+    }
+}
+.student_reservation_past {
+    opacity: 0.78;
+}
+
+#demo-password {
     letter-spacing: 4px;
 }
 .sidepanel {

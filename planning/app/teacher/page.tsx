@@ -39,88 +39,94 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ v
         take: 100,
     })
     return (
-        <>
-            <div className="hero_panel">
-                <div>
-                    <div className="section_kicker">Professeur</div>
-                    <h1>Mon agenda</h1>
-                    <p>Consultez les séances et pointez les élèves de vos cours.</p>
-                </div>
-            </div>
-            <nav className="attendance_views" aria-label="Période des séances">
-                <Link
-                    className={past ? 'btn secondary' : 'btn'}
-                    href="/teacher"
-                    aria-current={!past ? 'page' : undefined}
-                >
-                    En cours et à venir
-                </Link>
-                <Link
-                    className={past ? 'btn' : 'btn secondary'}
-                    href="/teacher?view=past"
-                    aria-current={past ? 'page' : undefined}
-                >
-                    Séances passées
-                </Link>
-            </nav>
-            {slots.length === 0 && <p className="card">Aucune séance pour cette période.</p>}
-            {slots.map((s) => {
-                const registered = s.bookings.length
-                const full = registered >= s.capacity
-                const occupancy = s.capacity > 0 ? Math.min(100, Math.round((registered / s.capacity) * 100)) : 0
-                return (
-                    <div className="card" key={s.id}>
-                        <div className="teacher_session_heading">
-                            <h2>{s.course?.name || 'Cours non attribué'}</h2>
-                            <p className="teacher_session_date">
-                                {s.startsAt.toLocaleString('fr-FR', { dateStyle: 'full', timeStyle: 'short' })}
-                            </p>
-                            {s.course && (
-                                <span className={`month_event_level month_event_level_${s.course.level.toLowerCase()}`}>
-                                    {courseLevels[s.course.level]}
-                                </span>
-                            )}
-                        </div>
-                        <div className="session_occupancy">
-                            <label htmlFor={`occupancy-${s.id}`}>
-                                {registered}/{s.capacity} {registered === 1 ? 'inscrit' : 'inscrits'}
-                                {full ? ' · Complet' : ''} · {occupancy} %
-                            </label>
-                            <progress
-                                id={`occupancy-${s.id}`}
-                                value={registered}
-                                max={Math.max(1, s.capacity, registered)}
-                            >
-                                {occupancy} %
-                            </progress>
-                        </div>
-                        {s.bookings.map((b) => {
-                            const entitlements = b.user.entitlements.filter((e) => e.courseId === b.courseId)
-                            const totalSessions = entitlements.reduce((total, e) => total + e.totalSessions, 0)
-                            const remaining = entitlements.reduce(
-                                (total, e) => total + Math.max(0, e.totalSessions - e._count.bookings),
-                                0,
-                            )
-                            return (
-                                <div className="slot" key={b.id}>
-                                    <div className="attendance_row">
-                                        <AttendanceControl
-                                            bookingId={b.id}
-                                            initialAttendance={b.attendance}
-                                            studentName={`${b.user.lastName} ${b.user.firstName}`}
-                                            canEdit={s.teacherId === user.id}
-                                        />
-                                        <span className="muted">
-                                            {remaining} sur {totalSessions}{' '}
-                                            {totalSessions === 1 ? 'séance restante' : 'séances restantes'}
-                                        </span>
-                                    </div>
-                                </div>
-                            )
-                        })}
+        <div className="teacher_workspace">
+            <aside className="teacher_sidebar">
+                <div className="hero_panel">
+                    <div>
+                        <div className="section_kicker">Professeur</div>
+                        <h1>Mon agenda</h1>
+                        <p>Consultez les séances et pointez les élèves de vos cours.</p>
                     </div>
-                )
-            })}
-        </>
+                </div>
+            </aside>
+            <div className="teacher_content">
+                <nav className="attendance_views" aria-label="Période des séances">
+                    <Link
+                        className={past ? 'btn secondary' : 'btn'}
+                        href="/teacher"
+                        aria-current={!past ? 'page' : undefined}
+                    >
+                        En cours et à venir
+                    </Link>
+                    <Link
+                        className={past ? 'btn' : 'btn secondary'}
+                        href="/teacher?view=past"
+                        aria-current={past ? 'page' : undefined}
+                    >
+                        Séances passées
+                    </Link>
+                </nav>
+                {slots.length === 0 && <p className="card">Aucune séance pour cette période.</p>}
+                {slots.map((s) => {
+                    const registered = s.bookings.length
+                    const full = registered >= s.capacity
+                    const occupancy = s.capacity > 0 ? Math.min(100, Math.round((registered / s.capacity) * 100)) : 0
+                    return (
+                        <div className="card" key={s.id}>
+                            <div className="teacher_session_heading">
+                                <h2>{s.course?.name || 'Cours non attribué'}</h2>
+                                <p className="teacher_session_date">
+                                    {s.startsAt.toLocaleString('fr-FR', { dateStyle: 'full', timeStyle: 'short' })}
+                                </p>
+                                {s.course && (
+                                    <span
+                                        className={`month_event_level month_event_level_${s.course.level.toLowerCase()}`}
+                                    >
+                                        {courseLevels[s.course.level]}
+                                    </span>
+                                )}
+                            </div>
+                            <div className="session_occupancy">
+                                <label htmlFor={`occupancy-${s.id}`}>
+                                    {registered}/{s.capacity} {registered === 1 ? 'inscrit' : 'inscrits'}
+                                    {full ? ' · Complet' : ''} · {occupancy} %
+                                </label>
+                                <progress
+                                    id={`occupancy-${s.id}`}
+                                    value={registered}
+                                    max={Math.max(1, s.capacity, registered)}
+                                >
+                                    {occupancy} %
+                                </progress>
+                            </div>
+                            {s.bookings.map((b) => {
+                                const entitlements = b.user.entitlements.filter((e) => e.courseId === b.courseId)
+                                const totalSessions = entitlements.reduce((total, e) => total + e.totalSessions, 0)
+                                const remaining = entitlements.reduce(
+                                    (total, e) => total + Math.max(0, e.totalSessions - e._count.bookings),
+                                    0,
+                                )
+                                return (
+                                    <div className="slot" key={b.id}>
+                                        <div className="attendance_row">
+                                            <AttendanceControl
+                                                bookingId={b.id}
+                                                initialAttendance={b.attendance}
+                                                studentName={`${b.user.lastName} ${b.user.firstName}`}
+                                                canEdit={s.teacherId === user.id}
+                                            />
+                                            <span className="muted">
+                                                {remaining} sur {totalSessions}{' '}
+                                                {totalSessions === 1 ? 'séance restante' : 'séances restantes'}
+                                            </span>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    )
+                })}
+            </div>
+        </div>
     )
 }

@@ -466,6 +466,13 @@ export default function AdminDashboard({
             </div>
             <div className="admin_workspace">
                 <aside className="admin_sidebar">
+                    <div className="hero_panel">
+                        <div>
+                            <div className="section_kicker">Administrateur</div>
+                            <h1>{sections.find((item) => item.id === section)?.label}</h1>
+                            <p>Gérez les séances, les étudiants et les professeurs.</p>
+                        </div>
+                    </div>
                     <nav aria-label="Navigation administrateur">
                         {sections.map((item) => (
                             <Link
@@ -489,13 +496,6 @@ export default function AdminDashboard({
                     </nav>
                 </aside>
                 <div className="admin_content" id="admin-content">
-                    <div className="hero_panel">
-                        <div>
-                            <div className="section_kicker">Administrateur</div>
-                            <h1>{sections.find((item) => item.id === section)?.label}</h1>
-                            <p>Gérez les séances, les étudiants et les professeurs.</p>
-                        </div>
-                    </div>
                     {section === 'slots' && !editingSlot && (
                         <div className="admin_create">
                             <div className="card">

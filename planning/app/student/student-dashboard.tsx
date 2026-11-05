@@ -119,6 +119,83 @@ function BookingPanel({
         </SidePanel>
     )
 }
+
+function ReservationsPanel({
+    reservations,
+    busy,
+    onClose,
+    onCancel,
+    onMoved,
+    onBusyChange,
+}: {
+    reservations: Booking[]
+    busy: boolean
+    onClose: () => void
+    onCancel: (booking: Booking) => void
+    onMoved: (booking: MovedBooking) => void
+    onBusyChange: (busy: boolean) => void
+}) {
+    const now = Date.now()
+    const upcoming = reservations
+        .filter((booking) => booking.status === 'BOOKED' && new Date(booking.endsAt).getTime() >= now)
+        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+    const past = reservations
+        .filter((booking) => booking.status !== 'BOOKED' || new Date(booking.endsAt).getTime() < now)
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+
+    return (
+        <SidePanel titleId="reservations-panel-title" busy={busy} onClose={onClose}>
+            <span className="section_kicker">Mon agenda</span>
+            <h2 id="reservations-panel-title">Mes réservations</h2>
+
+            <section className="student_reservations_section" aria-labelledby="upcoming-reservations-title">
+                <h3 id="upcoming-reservations-title">À venir</h3>
+                {upcoming.length === 0 && <p className="muted">Aucune réservation à venir.</p>}
+                {upcoming.map((booking) => {
+                    const canManage = new Date(booking.date).getTime() - now >= booking.cancellationHours * 3600000
+                    return (
+                        <article className="student_reservation_card" key={booking.id}>
+                            <div>
+                                <strong>{booking.course}</strong>
+                                <p>{dateLabel(booking.date)}</p>
+                                <p className="muted">{booking.teacher || 'Professeur non attribué'}</p>
+                            </div>
+                            <BookingActions
+                                bookingId={booking.id}
+                                busy={busy}
+                                onBusyChange={onBusyChange}
+                                onMoved={onMoved}
+                                canManage={canManage}
+                                onCancelRequest={() => onCancel(booking)}
+                            />
+                            {!canManage && (
+                                <p className="muted">Le délai de modification et d’annulation est dépassé.</p>
+                            )}
+                        </article>
+                    )
+                })}
+            </section>
+
+            <section className="student_reservations_section" aria-labelledby="past-reservations-title">
+                <h3 id="past-reservations-title">Passées</h3>
+                {past.length === 0 && <p className="muted">Aucune réservation passée.</p>}
+                {past.map((booking) => (
+                    <article className="student_reservation_card student_reservation_past" key={booking.id}>
+                        <div>
+                            <strong>{booking.course}</strong>
+                            <p>{dateLabel(booking.date)}</p>
+                            <p className="muted">
+                                {booking.status === 'CANCELLED' ? 'Annulée' : 'Terminée'}
+                                {booking.teacher ? ` · ${booking.teacher}` : ''}
+                            </p>
+                        </div>
+                    </article>
+                ))}
+            </section>
+        </SidePanel>
+    )
+}
+
 export default function StudentDashboard({ entitlements, bookings }: { entitlements: Ent[]; bookings: Booking[] }) {
     const [items, setItems] = useState(entitlements),
         [reservations, setReservations] = useState(bookings),
@@ -127,6 +204,7 @@ export default function StudentDashboard({ entitlements, bookings }: { entitleme
         [busy, setBusy] = useState(false),
         [message, setMessage] = useState('')
     const [openedBookingId, setOpenedBookingId] = useState<string | null>(null)
+    const [reservationsOpen, setReservationsOpen] = useState(false)
     const [successToast, setSuccessToast] = useState<{ id: number; message: string } | null>(null)
     const openedBooking = reservations.find((booking) => booking.id === openedBookingId)
     function entitlementFor(slot: CalendarSlot) {
@@ -165,7 +243,10 @@ export default function StudentDashboard({ entitlements, bookings }: { entitleme
             ])
             setSelected(null)
             setRefresh((n) => n + 1)
-            setSuccessToast((previous) => ({ id: (previous?.id ?? 0) + 1, message: 'Votre réservation est confirmée.' }))
+            setSuccessToast((previous) => ({
+                id: (previous?.id ?? 0) + 1,
+                message: 'Votre réservation est confirmée.',
+            }))
         } catch (e) {
             setMessage(e instanceof Error ? e.message : 'Erreur')
         } finally {
@@ -196,18 +277,26 @@ export default function StudentDashboard({ entitlements, bookings }: { entitleme
             setBusy(false)
         }
     }
+    function moved(booking: MovedBooking) {
+        setReservations((current) => current.map((item) => (item.id === booking.id ? booking : item)))
+        setRefresh((n) => n + 1)
+        setSuccessToast((previous) => ({
+            id: (previous?.id ?? 0) + 1,
+            message: 'Réservation déplacée.',
+        }))
+    }
     return (
         <>
             {successToast && <Toast key={successToast.id} message={successToast.message} variant="success" />}
-            <div className="hero_panel">
-                <div>
-                    <div className="section_kicker">Etudiant</div>
-                    <h1>Mes cours & réservations</h1>
-                    <p>Réservez un cours dans le calendrier.</p>
-                </div>
-            </div>
             <div className="student_workspace">
                 <aside className="student_summary">
+                    <div className="hero_panel">
+                        <div>
+                            <div className="section_kicker">Etudiant</div>
+                            <h1>Mes cours & réservations</h1>
+                            <p>Réservez un cours dans le calendrier.</p>
+                        </div>
+                    </div>
                     <div className="card">
                         <h2>Mes séances restantes</h2>
                         {items.length === 0 && <p className="muted">Aucun cours acheté.</p>}
@@ -216,40 +305,25 @@ export default function StudentDashboard({ entitlements, bookings }: { entitleme
                                 <strong>{e.course}</strong>
                                 <div className="metric_value">
                                     {e.remaining}{' '}
-                                    <span>{e.remaining > 1 ? 'séances restantes' : 'séance restante'} sur {e.total}</span>
+                                    <span>
+                                        {e.remaining > 1 ? 'séances restantes' : 'séance restante'} sur {e.total}
+                                    </span>
                                 </div>
-                                <p className="muted">
-                                    Expire le {new Date(e.expiresAt).toLocaleDateString('fr-FR')}
-                                </p>
+                                <p className="muted">Expire le {new Date(e.expiresAt).toLocaleDateString('fr-FR')}</p>
                             </div>
                         ))}
                     </div>
-                    <div className="card">
-                        <h2>Mes réservations</h2>
-                        {reservations.length === 0 && <p className="muted">Aucune réservation.</p>}
-                        {reservations.map((b) => (
-                            <button
-                                type="button"
-                                className="student_booking_row"
-                                key={b.id}
-                                onClick={() => {
-                                    setOpenedBookingId(b.id)
-                                    setMessage('')
-                                }}
-                            >
-                                <strong>{b.course}</strong>
-                                <span>{dateLabel(b.date)}</span>
-                                <span className="muted">
-                                    {b.status === 'BOOKED'
-                                        ? 'Confirmée'
-                                        : b.status === 'CANCELLED'
-                                          ? 'Annulée'
-                                          : 'Terminée'}{' '}
-                                    · Voir les détails →
-                                </span>
-                            </button>
-                        ))}
-                    </div>
+                    <button
+                        type="button"
+                        className="card student_reservations_cta"
+                        onClick={() => {
+                            setReservationsOpen(true)
+                            setMessage('')
+                        }}
+                    >
+                        <span>Voir mes réservations</span>
+                        <span aria-hidden="true">→</span>
+                    </button>
                 </aside>
                 <div className="card student_calendar">
                     <MonthCalendar
@@ -284,11 +358,17 @@ export default function StudentDashboard({ entitlements, bookings }: { entitleme
                     onClose={() => setOpenedBookingId(null)}
                     onCancel={() => void cancel(openedBooking.id)}
                     onBusyChange={setBusy}
-                    onMoved={(booking) => {
-                        setReservations((current) => current.map((item) => (item.id === booking.id ? booking : item)))
-                        setRefresh((n) => n + 1)
-                        setSuccessToast((previous) => ({ id: (previous?.id ?? 0) + 1, message: 'Réservation déplacée.' }))
-                    }}
+                    onMoved={moved}
+                />
+            )}
+            {reservationsOpen && (
+                <ReservationsPanel
+                    reservations={reservations}
+                    busy={busy}
+                    onClose={() => setReservationsOpen(false)}
+                    onCancel={(booking) => void cancel(booking.id)}
+                    onMoved={moved}
+                    onBusyChange={setBusy}
                 />
             )}
             {message && <Toast message={message} variant="error" />}

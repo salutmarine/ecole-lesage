@@ -18,6 +18,7 @@ await writeFile(
 await rm(path.join(target, 'lib/store.test.ts'), { force: true })
 await symlink(path.join(root, 'node_modules'), path.join(target, 'node_modules'))
 await mkdir(path.join(target, 'components'), { recursive: true })
+await cp(path.join(root, 'components/font-toggle.tsx'), path.join(target, 'components/font-toggle.tsx'))
 await mkdir(path.join(target, 'data'), { recursive: true })
 await cp(path.join(root, 'data/lesage/catalogue.json'), path.join(target, 'data/catalogue.json'))
 for (const name of ['month-calendar', 'booking-actions', 'side-panel', 'toast']) {

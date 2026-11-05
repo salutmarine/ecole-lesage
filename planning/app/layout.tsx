@@ -2,6 +2,7 @@ import './globals.scss'
 import Link from 'next/link'
 import { sessionUser } from '@/lib/auth'
 import TopbarActions from '@/components/topbar-actions'
+import FontToggle from '@/components/font-toggle'
 
 export const metadata = {
     title: 'Planning Ecole Lesage',
@@ -44,20 +45,23 @@ export default async function Layout({ children }: { children: React.ReactNode }
                                     <span>école lesage</span>
                                 </Link>
                             </div>
-                            <TopbarActions>
-                                <span className="breadcrumbs">{breadcrumb}</span>
-                                {user ? (
-                                    <form action="/api/auth/logout" method="post">
-                                        <button type="submit" className="btn topbar_logout">
-                                            Se déconnecter
-                                        </button>
-                                    </form>
-                                ) : (
-                                    <Link href="/" className="btn topbar_login">
-                                        Se connecter
-                                    </Link>
-                                )}
-                            </TopbarActions>
+                            <div className="topbar_right">
+                                <FontToggle />
+                                <TopbarActions>
+                                    <span className="breadcrumbs">{breadcrumb}</span>
+                                    {user ? (
+                                        <form action="/api/auth/logout" method="post">
+                                            <button type="submit" className="btn topbar_logout">
+                                                Se déconnecter
+                                            </button>
+                                        </form>
+                                    ) : (
+                                        <Link href="/" className="btn topbar_login">
+                                            Se connecter
+                                        </Link>
+                                    )}
+                                </TopbarActions>
+                            </div>
                         </header>
                         <main className="wrap">{children}</main>
                     </div>
