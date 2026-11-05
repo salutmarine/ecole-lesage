@@ -727,7 +727,7 @@ label {
 .teacher_content {
     min-width: 0;
 }
-.admin_sidebar,
+.admin_sidebar_column,
 .student_summary,
 .teacher_sidebar {
     .hero_panel {
@@ -745,9 +745,12 @@ label {
     gap: 24px;
     align-items: start;
 }
-.admin_sidebar {
+.admin_sidebar_column {
     position: sticky;
     top: 20px;
+    min-width: 0;
+}
+.admin_sidebar {
     background: #fff;
     border: 1px solid var(--line);
     border-radius: 18px;
@@ -811,8 +814,10 @@ label {
         grid-template-columns: 1fr;
         gap: 18px;
     }
-    .admin_sidebar {
+    .admin_sidebar_column {
         position: static;
+    }
+    .admin_sidebar {
         nav {
             grid-template-columns: repeat(2, minmax(0, 1fr));
         }

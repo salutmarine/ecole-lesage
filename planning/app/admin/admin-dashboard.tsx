@@ -465,7 +465,7 @@ export default function AdminDashboard({
                 {toast && !student && !selected && <ToastMessage key={toast.id} message={toast.message} />}
             </div>
             <div className="admin_workspace">
-                <aside className="admin_sidebar">
+                <div className="admin_sidebar_column">
                     <div className="hero_panel">
                         <div>
                             <div className="section_kicker">Administrateur</div>
@@ -473,28 +473,30 @@ export default function AdminDashboard({
                             <p>Gérez les séances, les étudiants et les professeurs.</p>
                         </div>
                     </div>
-                    <nav aria-label="Navigation administrateur">
-                        {sections.map((item) => (
-                            <Link
-                                className="btn"
-                                href={item.href}
-                                prefetch={false}
-                                key={item.id}
-                                aria-current={section === item.id ? 'page' : undefined}
-                                aria-controls="admin-content"
-                                onClick={() => {
-                                    if (item.id === 'slots') {
-                                        setEditingSlot(null)
-                                        setStart('')
-                                    }
-                                    setMessage('')
-                                }}
-                            >
-                                {item.label}
-                            </Link>
-                        ))}
-                    </nav>
-                </aside>
+                    <aside className="admin_sidebar">
+                        <nav aria-label="Navigation administrateur">
+                            {sections.map((item) => (
+                                <Link
+                                    className="btn"
+                                    href={item.href}
+                                    prefetch={false}
+                                    key={item.id}
+                                    aria-current={section === item.id ? 'page' : undefined}
+                                    aria-controls="admin-content"
+                                    onClick={() => {
+                                        if (item.id === 'slots') {
+                                            setEditingSlot(null)
+                                            setStart('')
+                                        }
+                                        setMessage('')
+                                    }}
+                                >
+                                    {item.label}
+                                </Link>
+                            ))}
+                        </nav>
+                    </aside>
+                </div>
                 <div className="admin_content" id="admin-content">
                     {section === 'slots' && !editingSlot && (
                         <div className="admin_create">
