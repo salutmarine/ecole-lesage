@@ -567,7 +567,6 @@ export default function AdminDashboard({
                                     mode="admin"
                                     courseId={planningCourseId}
                                     teacherId={planningTeacherId}
-                                    showLegend={false}
                                     refresh={refresh}
                                     onSelect={(slot) => {
                                         setSelected(slot)
@@ -1191,7 +1190,21 @@ export default function AdminDashboard({
                         <ul className="slot_registered_students" aria-label="Étudiants inscrits">
                             {selected.students.map((student) => (
                                 <li key={student.bookingId}>
-                                    <strong>{student.name}</strong>
+                                    <button
+                                        type="button"
+                                        className="student_profile_link"
+                                        disabled={busy}
+                                        onClick={() => {
+                                            const profile = students.find((item) => item.id === student.id)
+                                            if (!profile) return
+                                            setSelected(null)
+                                            setStudent(profile)
+                                            setEditingStudent(false)
+                                            setStudentError('')
+                                        }}
+                                    >
+                                        {student.name}
+                                    </button>
                                     {student.status === 'BOOKED' && (
                                         <BookingActions
                                             compact

@@ -123,7 +123,7 @@ export function MonthCalendar({
     const byDay = useMemo(() => {
         const map = new Map<number, CalendarSlot[]>()
         for (const s of slots) {
-            if (mode === 'teacher' && s.teacherId !== teacherId) continue
+            if (mode === 'teacher' && (s.teacherId !== teacherId || (courseId && s.courseId !== courseId))) continue
             if (mode === 'admin' && ((courseId && s.courseId !== courseId) || (teacherId && s.teacherId !== teacherId)))
                 continue
             if (
@@ -222,11 +222,15 @@ export function MonthCalendar({
             <p className="muted" role="status" style={{ minHeight: '1.5em', margin: 0 }}>
                 {loading ? 'Chargement du calendrier…' : '\u00a0'}
             </p>
-            {!loading && !error && mode === 'admin' && (courseId || teacherId) && byDay.size === 0 && (
-                <p className="muted" role="status">
-                    Aucune séance ne correspond aux filtres pour ce mois.
-                </p>
-            )}
+            {!loading &&
+                !error &&
+                mode !== 'student' &&
+                (courseId || (mode === 'admin' && teacherId)) &&
+                byDay.size === 0 && (
+                    <p className="muted" role="status">
+                        Aucune séance ne correspond aux filtres pour ce mois.
+                    </p>
+                )}
             <div className="month_grid" role="grid" aria-label="Calendrier mensuel">
                 {week.map((d) => (
                     <div className="month_weekday" key={d}>
@@ -329,21 +333,17 @@ export function MonthCalendar({
             {showLegend && (
                 <div className="month_legend" aria-label="Légende des créneaux">
                     <span>
-                        <i className="month_legend_swatch month_legend_available" aria-hidden="true" />{' '}
-                        {mode === 'student' ? 'Réservation possible' : 'À venir · Places libres'}
+                        <i className="month_legend_swatch month_legend_blue" aria-hidden="true" />
+                        Disponible
                     </span>
                     <span>
-                        <i className="month_legend_swatch month_legend_unavailable" aria-hidden="true" />{' '}
-                        {mode === 'student' ? 'Indisponible' : 'Passée · Incomplète'}
+                        <i className="month_legend_swatch month_legend_green" aria-hidden="true" />
+                        {mode === 'student' ? 'Réservé' : 'Complet'}
                     </span>
                     <span>
-                        <i className="month_legend_swatch month_legend_full" aria-hidden="true" /> Complet
+                        <i className="month_legend_swatch month_legend_gray" aria-hidden="true" />
+                        {mode === 'student' ? 'Complet / Pas disponible' : 'Pas disponible'}
                     </span>
-                    {mode === 'student' && (
-                        <span>
-                            <i className="month_legend_swatch month_legend_booked" aria-hidden="true" /> Réservé
-                        </span>
-                    )}
                 </div>
             )}
         </div>

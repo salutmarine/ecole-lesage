@@ -4,7 +4,6 @@ import StudentDashboard from '@/components/student-dashboard'
 import AdminDashboard from '@/components/admin-dashboard'
 import TeacherDashboard from '@/components/teacher-dashboard'
 import Brand from '@/components/brand'
-import FontToggle from '@/components/font-toggle'
 import DemoLogin from '@/components/demo-login'
 import { adminSections } from '@/lib/admin-navigation'
 import { adminProps, teacherProps, hydrate, displayTeacher } from '@/lib/admin-store'
@@ -44,7 +43,6 @@ export default function Demo() {
                         <Brand />
                     </div>
                     <div className="topbar_right">
-                        <FontToggle />
                         {!isLogin && (
                             <div className="topbar_right">
                                 <span className="breadcrumbs">{breadcrumb}</span>

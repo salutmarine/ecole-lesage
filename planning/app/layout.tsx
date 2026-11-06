@@ -2,7 +2,6 @@ import './globals.scss'
 import Link from 'next/link'
 import { sessionUser } from '@/lib/auth'
 import TopbarActions from '@/components/topbar-actions'
-import FontToggle from '@/components/font-toggle'
 
 export const metadata = {
     title: 'Planning Ecole Lesage',
@@ -46,7 +45,6 @@ export default async function Layout({ children }: { children: React.ReactNode }
                                 </Link>
                             </div>
                             <div className="topbar_right">
-                                <FontToggle />
                                 <TopbarActions>
                                     <span className="breadcrumbs">{breadcrumb}</span>
                                     {user ? (

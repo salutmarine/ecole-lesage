@@ -37,7 +37,19 @@ export async function GET(req: NextRequest) {
                                 select: {
                                     courseId: true,
                                     totalSessions: true,
-                                    _count: { select: { bookings: { where: { status: { not: 'CANCELLED' } } } } },
+                                    status: true,
+                                    purchaseDate: true,
+                                    expiresAt: true,
+                                    _count: {
+                                        select: {
+                                            bookings: {
+                                                where: {
+                                                    status: { not: 'CANCELLED' },
+                                                    slot: { endsAt: { lte: new Date() } },
+                                                },
+                                            },
+                                        },
+                                    },
                                 },
                             },
                         },
@@ -106,7 +118,13 @@ export async function GET(req: NextRequest) {
                           name: `${booking.user.firstName} ${booking.user.lastName.toLocaleUpperCase('fr-FR')}`,
                           email: booking.user.email,
                           sessions: booking.user.entitlements
-                              .filter((entitlement) => entitlement.courseId === s.courseId)
+                              .filter(
+                                  (entitlement) =>
+                                      entitlement.courseId === s.courseId &&
+                                      entitlement.status === 'ACTIVE' &&
+                                      entitlement.purchaseDate <= new Date() &&
+                                      entitlement.expiresAt > new Date(),
+                              )
                               .reduce(
                                   (summary, entitlement) => ({
                                       total: summary.total + entitlement.totalSessions,

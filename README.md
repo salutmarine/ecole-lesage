@@ -13,8 +13,7 @@ Le bouton « Réinitialiser ma démo » restaure les données de départ.
 
 La démo réutilise les composants et styles de l’application locale : espaces
 administrateur, étudiant et professeur, formulaires de gestion, calendrier, pointage
-et export PDF. Le logo et les quatre graisses de la police ABChanel sont servis avec
-les fichiers statiques. Le bouton « Se déconnecter » ramène à la mire sans effacer les réservations locales.
+et export PDF. Le logo est servi avec les fichiers statiques ; l’interface utilise la police Manrope. Le bouton « Se déconnecter » ramène à la mire sans effacer les réservations locales.
 La navigation utilise des fragments d’URL (`#/admin/planning`) pour fonctionner sur
 GitHub Pages, y compris après un rechargement.
 Les cours proviennent du catalogue du projet ; les personnes et les créneaux sont

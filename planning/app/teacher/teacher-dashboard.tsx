@@ -5,7 +5,14 @@ import { CalendarSlot, MonthCalendar, dateLabel } from '@/components/month-calen
 import SidePanel from '@/components/side-panel'
 import AttendanceControl from './attendance-control'
 
-export default function TeacherDashboard({ user }: { user: { id: string; firstName: string; lastName: string } }) {
+export default function TeacherDashboard({
+    user,
+    courses,
+}: {
+    user: { id: string; firstName: string; lastName: string }
+    courses: { id: string; name: string }[]
+}) {
+    const [courseId, setCourseId] = useState('')
     const [selected, setSelected] = useState<CalendarSlot | null>(null)
     const [refresh, setRefresh] = useState(0)
     function close() {
@@ -26,12 +33,31 @@ export default function TeacherDashboard({ user }: { user: { id: string; firstNa
                             <p>Consultez vos séances et faites l’appel des étudiants.</p>
                         </div>
                     </div>
+                    <div className="teacher_planning_filters">
+                        <label htmlFor="teacher-course">Filtrer par cours</label>
+                        <select
+                            id="teacher-course"
+                            value={courseId}
+                            onChange={(event) => setCourseId(event.target.value)}
+                        >
+                            <option value="">Tous les cours</option>
+                            {[...courses]
+                                .sort((a, b) =>
+                                    a.name.localeCompare(b.name, 'fr', { sensitivity: 'base', numeric: true }),
+                                )
+                                .map((course) => (
+                                    <option key={course.id} value={course.id}>
+                                        {course.name.toLocaleUpperCase('fr-FR')}
+                                    </option>
+                                ))}
+                        </select>
+                    </div>
                 </aside>
                 <div className="card student_calendar">
                     <MonthCalendar
                         mode="teacher"
+                        courseId={courseId}
                         teacherId={user.id}
-                        showLegend={false}
                         refresh={refresh}
                         onSelect={setSelected}
                     />
@@ -76,6 +102,8 @@ export default function TeacherDashboard({ user }: { user: { id: string; firstNa
                             {student.sessions && (
                                 <span className="muted teacher_student_sessions">
                                     {student.sessions.remaining} sur {student.sessions.total}
+                                    <br />
+                                    {student.sessions.remaining > 1 ? 'séances restantes' : 'séance restante'}
                                 </span>
                             )}
                         </div>

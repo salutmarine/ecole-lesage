@@ -18,7 +18,6 @@ await writeFile(
 await rm(path.join(target, 'lib/store.test.ts'), { force: true })
 await symlink(path.join(root, 'node_modules'), path.join(target, 'node_modules'))
 await mkdir(path.join(target, 'components'), { recursive: true })
-await cp(path.join(root, 'components/font-toggle.tsx'), path.join(target, 'components/font-toggle.tsx'))
 await mkdir(path.join(target, 'data'), { recursive: true })
 await cp(path.join(root, 'data/lesage/catalogue.json'), path.join(target, 'data/catalogue.json'))
 for (const name of ['month-calendar', 'booking-actions', 'side-panel', 'toast']) {
@@ -34,15 +33,11 @@ for (const name of ['course-levels', 'student-availability'])
     await cp(path.join(root, `lib/${name}.ts`), path.join(target, `lib/${name}.ts`))
 const basePath = process.env.PAGES_BASE_PATH ?? '/ecole-lesage'
 await mkdir(path.join(target, 'public/fonts'), { recursive: true })
-await cp(path.join(root, 'assets/fonts/abchanel'), path.join(target, 'public/fonts/abchanel'), { recursive: true })
 await cp(
     path.join(root, 'assets/fonts/NotoSansJP-Regular.otf'),
     path.join(target, 'public/fonts/NotoSansJP-Regular.otf'),
 )
-const stylesheet = (await readFile(path.join(root, 'app/globals.scss'), 'utf8')).replace(
-    /src:\s*url\('https:\/\/fonts\.chanel\.com\/k\/ABChanel2022-(\w+)\.woff2'\)[^;]+;/g,
-    (_, weight) => `src: url('${basePath}/fonts/abchanel/${weight}.woff2') format('woff2');`,
-)
+const stylesheet = await readFile(path.join(root, 'app/globals.scss'), 'utf8')
 await writeFile(path.join(target, 'app/globals.scss'), stylesheet)
 for (const name of ['admin-dashboard', 'admin-forms', 'student-credits', 'student-booking', 'agenda-export']) {
     let source = await readFile(path.join(root, `app/admin/${name}.tsx`), 'utf8')

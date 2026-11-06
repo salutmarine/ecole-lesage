@@ -58,7 +58,20 @@ function studentFor(state: State, entitlementId: string) {
 }
 export function calendarSlots(state: State) {
     hydrate(state)
-    const entitlements = remaining(state)
+    const now = new Date()
+    const entitlements = state.entitlements.map((entitlement) => ({
+        ...entitlement,
+        remaining: Math.max(
+            0,
+            entitlement.total -
+                state.bookings.filter(
+                    (booking) =>
+                        booking.entitlementId === entitlement.id &&
+                        booking.status !== 'CANCELLED' &&
+                        new Date(booking.endsAt) <= now,
+                ).length,
+        ),
+    }))
     return state.slots.map((slot) => ({
         ...slot,
         teacher: displayTeacher(state, slot.teacher),
@@ -81,12 +94,15 @@ export function calendarSlots(state: State) {
                         .filter(
                             (entitlement) =>
                                 (entitlement.userId ?? studentId) === person.id &&
-                                entitlement.courseId === slot.courseId,
+                                entitlement.courseId === slot.courseId &&
+                                entitlement.status === 'ACTIVE' &&
+                                new Date(entitlement.purchaseDate) <= new Date() &&
+                                new Date(entitlement.expiresAt) > new Date(),
                         )
                         .reduce(
                             (summary, entitlement) => ({
                                 total: summary.total + entitlement.total,
-                                remaining: summary.remaining + entitlement.remaining,
+                                remaining: summary.remaining + Math.max(0, entitlement.remaining),
                             }),
                             { total: 0, remaining: 0 },
                         ),
@@ -183,7 +199,16 @@ export function teacherProps(state: State, past: boolean) {
                     }
                 }),
         }))
-    return { user, slots, past }
+    const courses = data.courses
+        .filter(
+            (course) =>
+                course.defaultTeacherId === user.id ||
+                state.slots.some(
+                    (slot) => slot.courseId === course.id && slot.teacher === `${user.firstName} ${user.lastName}`,
+                ),
+        )
+        .map((course) => ({ id: course.id, name: course.name }))
+    return { user, slots, past, courses }
 }
 type Payload = Partial<Course & Person> & {
     id?: string

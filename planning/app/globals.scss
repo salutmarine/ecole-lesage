@@ -1,67 +1,48 @@
-@import url('https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,100..900;1,100..900&family=Manrope:wght@200..800&display=swap');
-
-@font-face {
-    font-family: 'abchanel-2022';
-    src:
-        url('https://fonts.chanel.com/k/ABChanel2022-ExtraLight.woff2') format('woff2'),
-        url('https://fonts.chanel.com/k/ABChanel2022-ExtraLight.woff') format('woff'),
-        url('https://fonts.chanel.com/k/ABChanel2022-ExtraLight.ttf') format('truetype');
-    font-style: normal;
-    font-weight: 200;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'abchanel-2022';
-    src:
-        url('https://fonts.chanel.com/k/ABChanel2022-Light.woff2') format('woff2'),
-        url('https://fonts.chanel.com/k/ABChanel2022-Light.woff') format('woff'),
-        url('https://fonts.chanel.com/k/ABChanel2022-Light.ttf') format('truetype');
-    font-style: normal;
-    font-weight: 300;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'abchanel-2022';
-    src:
-        url('https://fonts.chanel.com/k/ABChanel2022-Regular.woff2') format('woff2'),
-        url('https://fonts.chanel.com/k/ABChanel2022-Regular.woff') format('woff'),
-        url('https://fonts.chanel.com/k/ABChanel2022-Regular.ttf') format('truetype');
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'abchanel-2022';
-    src:
-        url('https://fonts.chanel.com/k/ABChanel2022-SemiBold.woff2') format('woff2'),
-        url('https://fonts.chanel.com/k/ABChanel2022-SemiBold.woff') format('woff'),
-        url('https://fonts.chanel.com/k/ABChanel2022-SemiBold.ttf') format('truetype');
-    font-style: normal;
-    font-weight: 600;
-    font-display: swap;
-}
-
-:root[data-font='geist'] {
-    font-family: 'Geist', sans-serif;
-}
-
-:root[data-font='manrope'] {
-    font-family: 'Manrope', sans-serif;
-}
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
 
 :root {
+    // Couleurs communes
     --ink: #242323;
     --muted: #888888;
     --line: #e5e5e5;
-    --paper: #F6F6F6;
-    --accent: #0A0A0A;
-    --waouh: #2c5489;
-    --light: #eff5fc;
+    --paper: #f6f6f6;
+    --accent: #0a0a0a;
+    --primary: #2c5489;
+    --surface: #fff;
+    --secondary-border: #9e9e9e21;
+    --secondary-background: #eeeeee;
+    --danger-border: #edcbca;
+    --danger-background: #fdf4f5;
+    --danger-text: #c12120;
+    --border-hover: #aaaaaa;
+    --error-text: #b64b4b;
+    --line-strong: #ddd;
+    --text-subtle: #777;
+    --text-faint: #cccccc;
+
+    // Statuts des créneaux et légendes
+    --session-blue-background: #e7f0fc;
+    --session-blue-accent: #2c64a0;
+    --session-green-background: #e4f1e7;
+    --session-green-text: #285436;
+    --session-green-accent: #347547;
+    --session-gray-text: #9f9f9f;
+    --legend-booked-border: #b9dac4;
+    --legend-full-border: #656e78;
+
+    // Panneaux, listes et notifications
+    --panel-shadow-color: #0002;
+    --backdrop: #0006;
+    --toast-text: #333;
+    --toast-shadow-color: #00000014;
+
+    // Niveaux des cours
+    --level-initiation: #fff0b3;
+    --level-perfectionnement: #f5cd47;
+    --level-specialisation: #d9a514;
+    --level-text: #624600;
     --shadow: 0 8px 30px rgba(31, 48, 36, 0.045);
-    font-family: 'abchanel-2022', sans-serif;
+    font-family: 'Manrope', sans-serif;
     color: var(--ink);
     background: var(--paper);
 }
@@ -120,7 +101,7 @@ h2 {
 .topbar {
     height: 55px;
     border-bottom: 1px solid var(--line);
-    background: #fff;
+    background: var(--surface);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -133,33 +114,9 @@ h2 {
     }
 }
 
-.font_toggle {
-    display: inline-flex;
-    flex-shrink: 0;
-    padding: 3px;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    gap: 2px;
-
-    button {
-        border: 0;
-        border-radius: 999px;
-        padding: 5px 9px;
-        background: transparent;
-        color: var(--muted);
-        font-size: 11px;
-        cursor: pointer;
-
-        &[aria-pressed='true'] {
-            background: var(--accent);
-            color: #fff;
-        }
-    }
-}
-
 .breadcrumbs {
     font-size: 12px;
-    color: #888888;
+    color: var(--muted);
 }
 
 .wrap {
@@ -168,7 +125,7 @@ h2 {
     padding: 20px 40px 80px;
 }
 .card {
-    background: #fff;
+    background: var(--surface);
     border-radius: 18px;
     padding: 20px;
     margin-bottom: 20px;
@@ -179,7 +136,7 @@ h2 {
     text-decoration: none;
     border: 0;
     background: var(--ink);
-    color: #fff;
+    color: var(--surface);
     padding: 6px 10px;
     border-radius: 999px;
     font-size: 12px;
@@ -204,19 +161,19 @@ h2 {
         opacity: 0.4;
         cursor: not-allowed;
     }
-    &:focus-visible{
+    &:focus-visible {
         outline: none;
     }
 }
 .secondary {
-    border: 1px solid #9e9e9e21;
-    background: #eeeeee !important;
-    color: #111111 !important;
+    border: 1px solid var(--secondary-border);
+    background: var(--secondary-background) !important;
+    color: var(--accent) !important;
 }
 .danger {
-    border: 1px solid #edcbca;
-    background: #fdf4f5 !important;
-    color: #c12120 !important;
+    border: 1px solid var(--danger-border);
+    background: var(--danger-background) !important;
+    color: var(--danger-text) !important;
 }
 .muted {
     color: var(--muted);
@@ -224,20 +181,20 @@ h2 {
     font-weight: 200;
 }
 .slot {
-    border: 1px solid #e8e8e8;
-    background: #ffffff;
+    border: 1px solid var(--line);
+    background: var(--surface);
     border-radius: 12px;
     padding: 15px;
     margin: 10px 0;
     &:hover {
-        border-color: #aaaaaa;
+        border-color: var(--border-hover);
     }
 }
 input,
 select {
     display: block;
     width: 100%;
-    background: #ffffff;
+    background: var(--surface);
     border: 1px solid var(--line);
     color: var(--ink);
     padding: 8px 12px;
@@ -265,7 +222,7 @@ label {
     display: block;
 }
 .error {
-    color: #b64b4b;
+    color: var(--error-text);
 }
 .login {
     &_wrap {
@@ -274,9 +231,9 @@ label {
     }
     &_field_group {
         overflow: hidden;
-        border: 1px solid #ddd;
+        border: 1px solid var(--line-strong);
         border-radius: 18px;
-        background: #fff;
+        background: var(--surface);
     }
     &_field {
         position: relative;
@@ -288,7 +245,7 @@ label {
             left: 24px;
             right: 24px;
             height: 1px;
-            background: #ddd;
+            background: var(--line-strong);
         }
         input {
             width: 100%;
@@ -316,7 +273,7 @@ label {
             left: 24px;
             right: 24px;
             transform: translateY(-50%);
-            color: #777;
+            color: var(--text-subtle);
             font-size: 16px;
             font-weight: 400;
             pointer-events: none;
@@ -325,11 +282,11 @@ label {
                 transform 160ms ease,
                 font-size 160ms ease;
             span {
-                color: #ba292b;
+                color: var(--danger-text);
             }
         }
         &.is_invalid input {
-            box-shadow: inset 0 0 0 2px #ba292b;
+            box-shadow: inset 0 0 0 2px var(--danger-text);
         }
         &:first-child input {
             border-radius: 17px 17px 0 0;
@@ -348,7 +305,7 @@ label {
     text-transform: uppercase;
     font-size: 9px;
     letter-spacing: 1.5px;
-    color: #cccccc;
+    color: var(--text-faint);
     font-weight: 600;
     margin-bottom: 7px;
 }
@@ -359,9 +316,8 @@ label {
     margin: 10px 0 4px;
 }
 .hero_panel {
-    //background: linear-gradient(343deg, #e2e9f3 0%, #eff1f6 100%);
-    background-color: #242323;
-    color: #fff;
+    background-color: var(--ink);
+    color: var(--surface);
     border-radius: 18px;
     padding: 25px;
     margin-bottom: 20px;
@@ -383,6 +339,7 @@ label {
         background-size: contain;
         opacity: 0.03;
         pointer-events: none;
+        filter: brightness(0.5) invert(1);
     }
     h1 {
         margin: 4px 0 7px;
@@ -392,10 +349,10 @@ label {
         font-size: 13px;
         margin: 0;
         font-weight: 100;
-        color: #EEEEEE;
+        color: var(--secondary-background);
     }
     .section_kicker {
-        color: #DDDDDD;
+        color: var(--line-strong);
     }
     > * {
         position: relative;
@@ -465,7 +422,7 @@ label {
         border: 1px solid var(--line);
         border-radius: 12px;
         overflow: hidden;
-        background: white;
+        background: var(--surface);
     }
     &_weekday {
         text-align: center;
@@ -486,7 +443,7 @@ label {
         }
     }
     &_empty {
-        background: #fafafa;
+        background: var(--paper);
     }
     &_day {
         font-size: 12px;
@@ -536,19 +493,19 @@ label {
         opacity: 0.75;
     }
     &_event_blue {
-        --session-background: #e7f0fc;
-        --session-text: #234d7a;
-        --session-accent: #2c64a0;
+        --session-background: var(--session-blue-background);
+        --session-text: var(--primary);
+        --session-accent: var(--session-blue-accent);
     }
     &_event_green {
-        --session-background: #e4f1e7;
-        --session-text: #285436;
-        --session-accent: #347547;
+        --session-background: var(--session-green-background);
+        --session-text: var(--session-green-text);
+        --session-accent: var(--session-green-accent);
     }
     &_event_gray {
-        --session-background: #eceef0;
-        --session-text: #555d65;
-        --session-accent: #656e78;
+        --session-background: var(--paper);
+        --session-text: var(--session-gray-text);
+        --session-accent: var(--session-gray-text);
     }
     &_event_blue,
     &_event_green,
@@ -569,7 +526,7 @@ label {
         align-items: center;
         gap: 5px;
         background: var(--session-accent);
-        color: #fff;
+        color: var(--surface);
         border-radius: 999px;
         padding: 3px 6px;
         font-size: 10px;
@@ -584,7 +541,7 @@ label {
         gap: 18px;
         margin-top: 12px;
         font-size: 11px;
-        color: #777;
+        color: var(--text-subtle);
 
         span {
             display: inline-flex;
@@ -599,21 +556,17 @@ label {
         border-radius: 3px;
         flex-shrink: 0;
     }
-    &_legend_available {
-        background: #e7f0fc;
-        border: 1px solid #2c64a0;
+    &_legend_blue {
+        background: var(--session-blue-background);
+        border: 1px solid var(--session-blue-accent);
     }
-    &_legend_unavailable {
-        background: #ededed;
-        border: 1px solid #d5d5d5;
+    &_legend_green {
+        background: var(--session-green-background);
+        border: 1px solid var(--session-green-accent);
     }
-    &_legend_booked {
-        background: #e6f4ea;
-        border: 1px solid #b9dac4;
-    }
-    &_legend_full {
-        background: #e4f1e7;
-        border: 1px solid #347547;
+    &_legend_gray {
+        background: var(--paper);
+        border: 1px solid var(--session-gray-text);
     }
 }
 .subtle_rule {
@@ -714,7 +667,7 @@ label {
     top: 20px;
     min-width: 0;
     overflow: hidden;
-    background: #fff;
+    background: var(--surface);
     border-radius: 18px;
     box-shadow: var(--shadow);
 
@@ -736,7 +689,7 @@ label {
     }
 }
 .admin_sidebar {
-    background: #fff;
+    background: var(--surface);
     border: 0;
     border-radius: 0 0 18px 18px;
     padding: 20px;
@@ -755,7 +708,7 @@ label {
         font-size: 14px;
         font-weight: 400;
         &[aria-current='page'] {
-            background: #f0f0f0;
+            background: var(--secondary-background);
             color: var(--ink);
             font-weight: 600;
         }
@@ -862,7 +815,7 @@ label {
     position: sticky;
     top: 20px;
     overflow: hidden;
-    background: #fff;
+    background: var(--surface);
     border-radius: 18px;
     box-shadow: var(--shadow);
 
@@ -894,8 +847,8 @@ label {
         margin: 0 20px 20px;
         padding: 13px 20px;
         border-radius: 999px;
-        background: var(--waouh);
-        color: #fff;
+        background: var(--accent);
+        color: var(--surface);
     }
 }
 .student_entitlement {
@@ -930,8 +883,8 @@ label {
     justify-content: space-between;
     gap: 16px;
     border: 0;
-    background: var(--waouh);
-    color: #fff;
+    background: var(--accent);
+    color: var(--surface);
     text-align: left;
     font: inherit;
     font-weight: 600;
@@ -979,11 +932,11 @@ label {
     max-height: 100dvh;
     border: 0;
     padding: 0;
-    background: white;
+    background: var(--surface);
     color: var(--ink);
-    box-shadow: -16px 0 60px #0002;
+    box-shadow: -16px 0 60px var(--panel-shadow-color);
     &::backdrop {
-        background: #0006;
+        background: var(--backdrop);
     }
     h2 {
         margin-top: 10px;
@@ -1010,8 +963,8 @@ label {
     position: absolute;
     right: 15px;
     top: 15px;
-    background: #f0f0f0;
-    color: #111;
+    background: var(--secondary-background);
+    color: var(--accent);
     font-size: 25px;
     padding: 0;
     border-radius: 100%;
@@ -1091,7 +1044,7 @@ label {
 .course_list_item {
     cursor: pointer;
     &:hover {
-        background: #f3f5f2;
+        background: var(--paper);
     }
 }
 
@@ -1110,11 +1063,11 @@ label {
     max-width: min(460px, calc(100vw - 40px));
     min-height: 66px;
     padding: 18px 22px;
-    color: #333;
-    background: #fff;
-    border: 1px solid #e0e0e0;
+    color: var(--toast-text);
+    background: var(--surface);
+    border: 1px solid var(--line);
     border-radius: 24px;
-    box-shadow: 0 8px 28px #00000014;
+    box-shadow: 0 8px 28px var(--toast-shadow-color);
     font-size: 13px;
     line-height: 1.5;
     overflow-wrap: anywhere;
@@ -1124,7 +1077,7 @@ label {
     flex-shrink: 0;
 }
 .toast_error .toast_icon {
-    color: #ba292b;
+    color: var(--danger-text);
 }
 @keyframes toast-enter {
     from {
@@ -1153,7 +1106,7 @@ label {
 .student_credit_form {
     margin-top: 20px;
     padding-top: 20px;
-    border-top: 1px solid #dce5dc;
+    border-top: 1px solid var(--line);
     fieldset {
         border: 0;
         padding: 0;
@@ -1187,8 +1140,8 @@ label {
     }
 }
 .student_status_badge {
-    background: #edf2ec;
-    color: #244b36;
+    background: var(--session-green-background);
+    color: var(--session-green-text);
     padding: 4px 10px;
     border-radius: 20px;
     font-size: 11px;
@@ -1215,22 +1168,20 @@ label {
     font-weight: 600;
     white-space: normal;
     overflow-wrap: anywhere;
-    background: #fff0cf;
-    color: #79500c;
+    background: var(--level-initiation);
+    color: var(--level-text);
     &_perfectionnement {
-        background: #fbe1e9;
-        color: #882c50;
+        background: var(--level-perfectionnement);
     }
     &_specialisation {
-        background: #f2e7f5;
-        color: #713b7e;
+        background: var(--level-specialisation);
     }
 }
 
 .profile_assignments {
     margin: 24px 0;
     padding: 20px;
-    border: 1px solid #dce5dc;
+    border: 1px solid var(--line);
     border-radius: 12px;
     h3 {
         margin-top: 0;
@@ -1258,7 +1209,7 @@ label {
     margin: 0;
     > li {
         padding: 10px 0;
-        border-top: 1px solid #dce5dc;
+        border-top: 1px solid var(--line);
     }
     p {
         margin: 0;
@@ -1331,11 +1282,6 @@ label {
     }
 }
 
-.month_shell[data-mode='student'] .month_legend_full {
-    background: #eceef0;
-    border-color: #656e78;
-}
-
 .admin_planning_filters {
     min-width: 0;
     padding: 4px 12px 12px;
@@ -1389,8 +1335,8 @@ label {
 }
 
 .month_event_gray > .month_event_level {
-    background: #dedfe2;
-    color: #555d65;
+    background: var(--line);
+    color: var(--session-gray-text);
 }
 
 .slot_student_result_details {
@@ -1404,4 +1350,25 @@ label {
     margin-right: 10px;
     font-size: 24px;
     line-height: 1;
+}
+
+.teacher_planning_filters {
+    padding: 20px;
+    select {
+        margin-bottom: 0;
+    }
+}
+
+.student_profile_link {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: inherit;
+    text-align: left;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
 }

@@ -329,7 +329,6 @@ export default function StudentDashboard({ entitlements, bookings }: { entitleme
                 <div className="card student_calendar">
                     <MonthCalendar
                         mode="student"
-                        showLegend={false}
                         canReserveSlot={(slot) => !!entitlementFor(slot)}
                         bookedSlotIds={reservations
                             .filter((b) => b.status === 'BOOKED' || b.status === 'COMPLETED')
