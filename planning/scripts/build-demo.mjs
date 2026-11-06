@@ -57,12 +57,7 @@ await writeFile(
     path.join(target, 'components/attendance-control.tsx'),
     attendance.replace("'use client'", "'use client'\nimport { demoFetch as fetch } from '@/lib/store'"),
 )
-const teacher = await readFile(path.join(root, 'app/teacher/page.tsx'), 'utf8')
-await writeFile(
-    path.join(target, 'components/teacher-dashboard.tsx'),
-    "'use client'\nimport Link from '@/lib/navigation'\nimport AttendanceControl from './attendance-control'\nimport { courseLevels } from '@/lib/course-levels'\nimport type { teacherProps } from '@/lib/admin-store'\nexport default function TeacherDashboard({past,slots,user}: ReturnType<typeof teacherProps>) {\n" +
-        teacher.slice(teacher.indexOf('    return (')),
-)
+await cp(path.join(root, 'app/teacher/teacher-dashboard.tsx'), path.join(target, 'components/teacher-dashboard.tsx'))
 let login = await readFile(path.join(root, 'app/page.tsx'), 'utf8')
 login =
     "'use client'\nimport { useState, type FormEvent } from 'react'\nimport { router } from '@/lib/navigation'\n" +

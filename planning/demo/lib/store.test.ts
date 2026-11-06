@@ -1,9 +1,14 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { createState, mutateBooking, remaining, demoFetch } from './store'
+import { availableEntitlement } from '../../lib/student-availability'
 function scenario() {
     const state = createState(new Date(), false)
-    const slot = state.slots.find((s) => new Date(s.startsAt).getTime() > Date.now() + 7 * 86400000)!
+    const slot = state.slots.find(
+        (s) =>
+            new Date(s.startsAt).getTime() > Date.now() + 7 * 86400000 &&
+            state.entitlements.some((entitlement) => entitlement.courseId === s.courseId),
+    )!
     const credit = state.entitlements.find((e) => e.courseId === slot.courseId)!
     return { state, slot, credit }
 }
@@ -17,7 +22,7 @@ test('la démo étudiante démarre avec les cours et réservations attendus', ()
         state.entitlements
             .filter((entitlement) => studentEntitlementIds.includes(entitlement.id))
             .map((entitlement) => entitlement.course),
-        ['DECOUVERTE AIGUILLE : CŒUR BAROQUE', 'HAUTE COUTURE'],
+        ['DECOUVERTE AIGUILLE : CŒUR BAROQUE', 'HAUTE COUTURE', 'BRODERIE AU RUBAN : NIVEAU 2'],
     )
     assert.deepEqual(
         studentBookings.map((booking) => booking.course),
@@ -37,6 +42,23 @@ test('la démo étudiante démarre avec les cours et réservations attendus', ()
         .map((booking) => state.entitlements.find((item) => item.id === booking.entitlementId)?.userId)
     assert.equal(coutureStudents.length, couture.capacity)
     assert.equal(new Set(coutureStudents).size, couture.capacity)
+    const ribbon = state.slots.find((slot) => {
+        const date = new Date(slot.startsAt)
+        return slot.course === 'BRODERIE AU RUBAN : NIVEAU 2' && date.getDay() === 1 && date.getDate() === 21
+    })!
+    const ribbonBookings = state.bookings.filter((booking) => booking.slotId === ribbon.id)
+    const ribbonEntitlement = state.entitlements.find(
+        (entitlement) =>
+            (entitlement.userId ?? 'student-demo') === 'student-demo' && entitlement.courseId === ribbon.courseId,
+    )
+    assert.equal(ribbon.reserved, ribbon.capacity)
+    assert.equal(ribbonBookings.length, ribbon.capacity)
+    assert.equal(new Set(ribbonBookings.map((booking) => booking.entitlementId)).size, ribbon.capacity)
+    assert.equal(availableEntitlement(remaining(state), ribbon)?.id, ribbonEntitlement?.id)
+    assert.equal(
+        studentBookings.some((booking) => booking.slotId === ribbon.id),
+        false,
+    )
     assert.ok(state.slots.some((slot) => slot.reserved === 0))
     assert.ok(state.slots.some((slot) => slot.capacity - slot.reserved === 2))
     assert.ok(state.slots.some((slot) => slot.capacity - slot.reserved === 3))

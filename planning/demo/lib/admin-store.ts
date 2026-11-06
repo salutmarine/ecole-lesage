@@ -4,9 +4,9 @@ export function hydrate(state: State) {
     state.people ??= [
         {
             id: studentId,
-            firstName: 'Élève',
-            lastName: 'Démo',
-            email: 'eleve@example.test',
+            firstName: 'Louis',
+            lastName: 'Dubois',
+            email: 'louis.dubois@example.test',
             phone: null,
             language: 'fr',
             role: 'STUDENT',
@@ -72,6 +72,8 @@ export function calendarSlots(state: State) {
                     name: `${person.firstName} ${person.lastName}`,
                     email: person.email,
                     status: b.status,
+                    attendance: b.attendance as 'UNMARKED' | 'PRESENT' | 'ABSENT',
+                    phone: person.phone,
                     bookingId: b.id,
                 }
             }),

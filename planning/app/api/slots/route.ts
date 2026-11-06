@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
     const from = new Date(y, m - 1, 1),
         to = new Date(y, m, 1)
     const slots = await db.slot.findMany({
-        where: { startsAt: { gte: from, lt: to } },
+        where: { startsAt: { gte: from, lt: to }, ...(user.role === 'TEACHER' ? { teacherId: user.id } : {}) },
         include: {
             course: true,
             teacher: { select: { firstName: true, lastName: true } },
@@ -20,12 +20,13 @@ export async function GET(req: NextRequest) {
             bookings: {
                 where: {
                     status: { in: ['BOOKED', 'COMPLETED'] },
-                    ...(user.role === 'ADMIN' ? {} : { id: { in: [] } }),
+                    ...(user.role !== 'STUDENT' ? {} : { id: { in: [] } }),
                 },
                 select: {
                     id: true,
                     status: true,
-                    user: { select: { id: true, firstName: true, lastName: true, email: true } },
+                    attendance: true,
+                    user: { select: { id: true, firstName: true, lastName: true, email: true, phone: true } },
                 },
                 orderBy: [{ user: { lastName: 'asc' } }, { user: { firstName: 'asc' } }],
             },
@@ -79,11 +80,13 @@ export async function GET(req: NextRequest) {
             teacherId: s.teacherId,
             teacher: s.teacher ? `${s.teacher.firstName} ${s.teacher.lastName}` : null,
             reserved: s._count.bookings,
-            ...(user.role === 'ADMIN'
+            ...(user.role !== 'STUDENT'
                 ? {
                       students: s.bookings.map((booking) => ({
                           bookingId: booking.id,
                           status: booking.status,
+                          attendance: booking.attendance,
+                          phone: booking.user.phone,
                           id: booking.user.id,
                           name: `${booking.user.firstName} ${booking.user.lastName}`,
                           email: booking.user.email,

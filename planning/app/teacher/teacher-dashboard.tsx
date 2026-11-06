@@ -1,0 +1,81 @@
+'use client'
+import { useState } from 'react'
+import { CalendarSlot, MonthCalendar, dateLabel } from '@/components/month-calendar'
+import SidePanel from '@/components/side-panel'
+import AttendanceControl from './attendance-control'
+
+export default function TeacherDashboard({ user }: { user: { id: string; firstName: string; lastName: string } }) {
+    const [selected, setSelected] = useState<CalendarSlot | null>(null)
+    const [refresh, setRefresh] = useState(0)
+    function close() {
+        setSelected(null)
+        setRefresh((value) => value + 1)
+    }
+    return (
+        <>
+            <div className="student_workspace">
+                <aside className="student_summary">
+                    <div className="hero_panel">
+                        <div>
+                            <div className="section_kicker">Professeur</div>
+                            <h1>Mon agenda</h1>
+                            <p>
+                                {user.firstName} {user.lastName}
+                            </p>
+                            <p>Consultez vos séances et faites l’appel des étudiants.</p>
+                        </div>
+                    </div>
+                </aside>
+                <div className="card student_calendar">
+                    <MonthCalendar
+                        mode="teacher"
+                        teacherId={user.id}
+                        showLegend={false}
+                        refresh={refresh}
+                        onSelect={setSelected}
+                    />
+                </div>
+            </div>
+            {selected && (
+                <SidePanel titleId="teacher-session-title" busy={false} onClose={close}>
+                    <span className="section_kicker">Ma séance</span>
+                    <h2 id="teacher-session-title">{selected.course}</h2>
+                    <dl className="admin_settings">
+                        <div>
+                            <dt>Début</dt>
+                            <dd>{dateLabel(selected.startsAt)}</dd>
+                        </div>
+                        <div>
+                            <dt>Fin</dt>
+                            <dd>{dateLabel(selected.endsAt)}</dd>
+                        </div>
+                        <div>
+                            <dt>Inscrits</dt>
+                            <dd>
+                                {selected.reserved} sur {selected.capacity}
+                            </dd>
+                        </div>
+                    </dl>
+                    <h3>Liste des étudiants</h3>
+                    <p className="muted">Cochez les étudiants présents pour faire l’appel.</p>
+                    {!selected.students?.length && <p className="muted">Aucun étudiant inscrit à cette séance.</p>}
+                    {selected.students?.map((student) => (
+                        <div className="slot" key={student.bookingId}>
+                            <AttendanceControl
+                                bookingId={student.bookingId}
+                                initialAttendance={student.attendance ?? 'UNMARKED'}
+                                studentName={student.name}
+                                canEdit={selected.teacherId === user.id}
+                            />
+                            {student.phone && (
+                                <a className="btn secondary" href={`tel:${student.phone}`}>
+                                    Appeler
+                                </a>
+                            )}
+                        </div>
+                    ))}
+                </SidePanel>
+            )}
+        </>
+    )
+}

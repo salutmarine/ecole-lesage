@@ -22,7 +22,7 @@ export type Course = {
     bookingDelayHours: number
 }
 export const sourceCatalogue = catalogue
-export const STORAGE_KEY = 'lesage-pages-demo-v4'
+export const STORAGE_KEY = 'lesage-pages-demo-v6'
 export type Slot = {
     id: string
     courseId: string
@@ -61,7 +61,7 @@ export type Entitlement = {
     status: string
 }
 export type State = {
-    version: 4
+    version: 6
     slots: Slot[]
     entitlements: Entitlement[]
     bookings: Booking[]
@@ -72,6 +72,7 @@ export function createState(now = new Date(), withDemoBookings = true): State {
     const courses = [
         catalogue.find((c) => c.name === 'DECOUVERTE AIGUILLE : CŒUR BAROQUE')!,
         catalogue.find((c) => c.name === 'HAUTE COUTURE')!,
+        catalogue.find((c) => c.name === 'BRODERIE AU RUBAN : NIVEAU 2')!,
     ]
     const entitlements: Entitlement[] = courses.map((c, i) => ({
         id: `credit-${i}`,
@@ -103,9 +104,9 @@ export function createState(now = new Date(), withDemoBookings = true): State {
     const people: Person[] = [
         {
             id: 'student-demo',
-            firstName: 'Élève',
-            lastName: 'Démo',
-            email: 'eleve@example.test',
+            firstName: 'Louis',
+            lastName: 'Dubois',
+            email: 'louis.dubois@example.test',
             phone: null,
             language: 'fr',
             role: 'STUDENT',
@@ -175,6 +176,17 @@ export function createState(now = new Date(), withDemoBookings = true): State {
         slots.forEach((slot, index) => {
             slot.reserved = occupancy[index % occupancy.length]
         })
+        const ribbonSlot = slots.find((slot) => {
+            const date = new Date(slot.startsAt)
+            return date > now && date.getDay() === 1 && date.getDate() === 21
+        })
+        if (ribbonSlot) {
+            const ribbonCourse = courses[2]
+            ribbonSlot.courseId = 'course-2'
+            ribbonSlot.course = ribbonCourse.name
+            ribbonSlot.level = ribbonCourse.level as Slot['level']
+            ribbonSlot.reserved = ribbonSlot.capacity
+        }
         const heartSlot = slots.find(
             (slot) => slot.course === 'DECOUVERTE AIGUILLE : CŒUR BAROQUE' && new Date(slot.startsAt) > now,
         )
@@ -221,7 +233,7 @@ export function createState(now = new Date(), withDemoBookings = true): State {
             }
         })
     }
-    return { version: 4, entitlements, slots, bookings, people }
+    return { version: 6, entitlements, slots, bookings, people }
 }
 let current: State | undefined
 export function loadState(): State {
@@ -231,7 +243,7 @@ export function loadState(): State {
         if (raw) {
             const parsed = JSON.parse(raw) as State
             if (
-                parsed.version === 4 &&
+                parsed.version === 6 &&
                 Array.isArray(parsed.slots) &&
                 Array.isArray(parsed.entitlements) &&
                 Array.isArray(parsed.bookings) &&

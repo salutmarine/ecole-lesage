@@ -35,7 +35,7 @@ export default function Demo() {
             ? 'Je suis un administrateur'
             : view === 'teacher'
               ? 'Je suis le professeur Louise Bernard'
-              : 'Je suis l’étudiant Élève Démo'
+              : 'Je suis l’étudiant Louis Dubois'
     return (
         <div className="app_shell app_shell_no_sidebar">
             <div className="main_area">

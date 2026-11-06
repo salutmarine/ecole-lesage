@@ -125,18 +125,20 @@ export default function AdminDashboard({
     const [durationMinutes, setDurationMinutes] = useState(courses[0]?.durationMinutes ?? 180)
     const [teacherId, setTeacherId] = useState(courses[0]?.defaultTeacherId ?? '')
     const eligible = selected
-        ? students.flatMap((s) =>
-              s.entitlements
-                  .filter(
-                      (e) =>
-                          e.courseId === selected.courseId &&
-                          e.status === 'ACTIVE' &&
-                          e.remaining > 0 &&
-                          new Date(e.purchaseDate) <= new Date(selected.startsAt) &&
-                          new Date(e.expiresAt) > new Date(selected.startsAt),
-                  )
-                  .map((e) => ({ student: s, entitlement: e })),
-          )
+        ? students
+              .filter((s) => !selected.students?.some((item) => item.id === s.id))
+              .flatMap((s) =>
+                  s.entitlements
+                      .filter(
+                          (e) =>
+                              e.courseId === selected.courseId &&
+                              e.status === 'ACTIVE' &&
+                              e.remaining > 0 &&
+                              new Date(e.purchaseDate) <= new Date(selected.startsAt) &&
+                              new Date(e.expiresAt) > new Date(selected.startsAt),
+                      )
+                      .map((e) => ({ student: s, entitlement: e })),
+              )
         : []
     const canAdd =
         selected &&
@@ -172,8 +174,24 @@ export default function AdminDashboard({
             })
             const data = await response.json()
             if (!response.ok) throw Error(data.error || 'Ajout impossible.')
-            setSelected(null)
-            setStudentSearchOpen(false)
+            setSelected((current) =>
+                current
+                    ? {
+                          ...current,
+                          reserved: current.reserved + 1,
+                          students: [
+                              ...(current.students ?? []),
+                              {
+                                  id: choice.student.id,
+                                  name: choice.student.name,
+                                  email: choice.student.email,
+                                  status: 'BOOKED',
+                                  bookingId: data.id,
+                              },
+                          ],
+                      }
+                    : current,
+            )
             setStudentSearch('')
             setRefresh((n) => n + 1)
             router.refresh()
@@ -1111,15 +1129,13 @@ export default function AdminDashboard({
                         ).toLocaleString('fr-FR')}{' '}
                         h{selected.teacher && ` · Professeur : ${selected.teacher}`}
                     </p>
-                    <p>
-                        <strong>
-                            {Math.max(0, selected.capacity - selected.reserved)}{' '}
-                            {selected.capacity - selected.reserved === 1 ? 'place restante' : 'places restantes'}
-                        </strong>{' '}
-                        sur {selected.capacity}
-                    </p>
                     <hr className="subtle_rule" />
-                    <h3>Étudiants de la séance</h3>
+                    <h3>
+                        Étudiants de la séance –{' '}
+                        {selected.reserved >= selected.capacity
+                            ? 'Complet'
+                            : `${selected.reserved}/${selected.capacity}`}
+                    </h3>
                     {selected.students?.length ? (
                         <ul className="slot_registered_students" aria-label="Étudiants inscrits">
                             {selected.students.map((student) => (
@@ -1143,7 +1159,7 @@ export default function AdminDashboard({
                         <p className="muted">Aucun étudiant inscrit à cette séance.</p>
                     )}
                     <button
-                        className="btn"
+                        className="btn btn-medium"
                         type="button"
                         disabled={busy || !canAdd}
                         aria-expanded={studentSearchOpen}

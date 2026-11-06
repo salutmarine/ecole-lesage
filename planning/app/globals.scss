@@ -58,7 +58,8 @@
     --line: #e5e5e5;
     --paper: #f7f7f7;
     --accent: #0a0a0a;
-    --waouh: #191926;
+    --waouh: #2c5489;
+    --light: #eff5fc;
     --shadow: 0 8px 30px rgba(31, 48, 36, 0.045);
     font-family: 'abchanel-2022', sans-serif;
     color: var(--ink);
@@ -150,7 +151,7 @@ h2 {
         cursor: pointer;
 
         &[aria-pressed='true'] {
-            background: var(--ink);
+            background: var(--waouh);
             color: #fff;
         }
 
@@ -381,8 +382,8 @@ label {
     margin: 10px 0 4px;
 }
 .hero_panel {
-    background: var(--waouh);
-    color: white;
+    background: linear-gradient(343deg, #e2e9f3 0%, #eff1f6 100%);
+    color: var(--accent);
     border-radius: 18px;
     padding: 25px;
     margin-bottom: 20px;
@@ -395,14 +396,14 @@ label {
     &:after {
         content: '';
         position: absolute;
-        right: -12px;
-        top: 85%;
-        width: 200px;
-        height: 200px;
-        background: url('./icon.svg') center / contain no-repeat;
-        filter: brightness(0) invert(1);
-        opacity: 0.09;
-        transform: translateY(-50%) rotate(-8deg);
+        right: -20px;
+        bottom: -90px;
+        width: 230px;
+        height: 230px;
+        background-image: url('./icon.svg');
+        background-repeat: no-repeat;
+        background-size: contain;
+        opacity: 0.03;
         pointer-events: none;
     }
     h1 {
@@ -411,12 +412,12 @@ label {
     }
     p {
         font-size: 13px;
-        color: #eeeeee;
+        //color: #eeeeee;
         margin: 0;
         font-weight: 100;
     }
     .section_kicker {
-        color: #dddddd;
+        color: var(--accent);
     }
     > * {
         position: relative;
@@ -495,7 +496,7 @@ label {
     &_weekday {
         text-align: center;
         padding: 12px 3px;
-        background: #f6f6f6;
+        background: var(--light);
         font-size: 11px;
         font-weight: 600;
         border-bottom: 1px solid var(--line);
@@ -526,15 +527,28 @@ label {
     &_event {
         width: 100%;
         min-width: 0;
-        text-align: left !important;
-        background: var(--waouh) !important;
-        color: white !important;
-        border-radius: 6px !important;
-        padding: 7px !important;
-        font-weight: 400 !important;
+        text-align: left;
+        background: var(--light);
+        color: var(--accent);
+        border-radius: 6px;
+        padding: 7px;
+        font-weight: 400;
         display: flex;
         flex-direction: column;
         gap: 3px;
+        position: relative;
+        padding-left: 18px;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            bottom: 10px;
+            left: 7px;
+            width: 3px;
+            border-radius: 999px;
+            background: #1687d9;
+        }
     }
     &_event_time {
         font-size: 10px;
@@ -551,47 +565,51 @@ label {
         opacity: 0.75;
     }
     &_event_disabled {
-        color: #fff !important;
-        opacity: 0.4;
+        background-color: var(--paper);
+        color: #929297;
         cursor: not-allowed;
+
+        &::before {
+            background: #b8b8bc;
+        }
     }
     &_event_booked {
-        background: #205c35 !important;
-        color: #fff !important;
+        background: #eaf4e7 !important;
 
         &:disabled {
             opacity: 1;
         }
+        &::before {
+            background: #32721d;
+        }
     }
     &_event_full {
-        background: linear-gradient(135deg, #5f471b 0%, #9b742b 52%, #c49a48 100%) !important;
-        color: #fff !important;
+        background: #d0b27b;
         opacity: 1;
         cursor: not-allowed;
+
+        &::before {
+            background: #9d804a;
+        }
     }
     &_event_badge {
         align-self: flex-start;
-        background: #205c35;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        background: #32721d;
         color: #fff;
         border-radius: 999px;
         padding: 3px 6px;
         font-size: 10px;
         font-weight: 600;
-        border: 1px solid #669175;
+        span {
+            position: relative;
+        }
     }
     &_event_badge_full {
-        background: #d5aa53;
-        color: #2e210b;
-        border-color: #f0d38f;
-    }
-    &_event_level_border_initiation {
-        border-left: 4px solid #77a879 !important;
-    }
-    &_event_level_border_perfectionnement {
-        border-left: 4px solid #789ace !important;
-    }
-    &_event_level_border_specialisation {
-        border-left: 4px solid #b783c2 !important;
+        background: #9d804a;
+        color: #fff;
     }
     &_legend {
         display: flex;
@@ -626,21 +644,8 @@ label {
         border: 1px solid #b9dac4;
     }
     &_legend_full {
-        background: linear-gradient(135deg, #72551f, #d5aa53);
+        background: #d0b27b;
         border: 1px solid #b58a39;
-    }
-    &_legend_level {
-        width: 4px;
-        border-radius: 999px;
-    }
-    &_legend_level_initiation {
-        background: #77a879;
-    }
-    &_legend_level_perfectionnement {
-        background: #789ace;
-    }
-    &_legend_level_specialisation {
-        background: #b783c2;
     }
 }
 .subtle_rule {
@@ -1041,8 +1046,8 @@ label {
         margin: 0 20px 20px;
         padding: 13px 20px;
         border-radius: 999px;
-        background: #f0f0f0;
-        color: var(--ink);
+        background: var(--waouh);
+        color: #fff;
     }
 }
 .student_entitlement {
