@@ -41,7 +41,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
                                             fillRule="evenodd"
                                         />
                                     </svg>
-                                    <span>école lesage</span>
+                                    <span>École Lesage</span>
                                 </Link>
                             </div>
                             <div className="topbar_right">

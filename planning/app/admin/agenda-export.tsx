@@ -1,4 +1,5 @@
 'use client'
+import DatePicker from '@/components/date-picker'
 import { useState } from 'react'
 import { agendaPeriod, parisDate, type AgendaMode } from '@/lib/agenda-period'
 export default function AgendaExport() {
@@ -72,13 +73,7 @@ export default function AgendaExport() {
                     <label htmlFor="agenda-export-date">
                         {mode === 'day' ? 'Date à exporter' : 'Choisir un jour de la semaine à exporter'}
                     </label>
-                    <input
-                        id="agenda-export-date"
-                        type="date"
-                        value={date}
-                        onChange={(event) => setDate(event.target.value)}
-                        required
-                    />
+                    <DatePicker id="agenda-export-date" value={date} onChange={setDate} required />
                     {preview && (
                         <p className="muted">
                             {preview}

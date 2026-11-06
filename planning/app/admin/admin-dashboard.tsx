@@ -1,4 +1,5 @@
 'use client'
+import DatePicker from '@/components/date-picker'
 import { Fragment, useEffect, useState } from 'react'
 import SidePanel from '@/components/side-panel'
 import Toast, { ToastMessage } from '@/components/toast'
@@ -103,6 +104,7 @@ export default function AdminDashboard({
     const [editingCourse, setEditingCourse] = useState<Course | null>(null)
     const [courseError, setCourseError] = useState('')
     const [courseBusy, setCourseBusy] = useState(false)
+    const [creatingSlot, setCreatingSlot] = useState(false)
     const [editingSlot, setEditingSlot] = useState<CalendarSlot | null>(null)
     const [slotError, setSlotError] = useState('')
     const [selectedTeacher, setSelectedTeacher] = useState<Teacher | null>(null)
@@ -128,6 +130,18 @@ export default function AdminDashboard({
         [capacity, setCapacity] = useState(courses[0]?.capacity ?? 12)
     const [durationMinutes, setDurationMinutes] = useState(courses[0]?.durationMinutes ?? 180)
     const [teacherId, setTeacherId] = useState(courses[0]?.defaultTeacherId ?? '')
+    function openCreateSlot(date?: string) {
+        setEditingSlot(null)
+        setSelected(null)
+        setStart(date ? `${date}T09:00` : '')
+        setCourseId(courses[0]?.id ?? '')
+        setDurationMinutes(courses[0]?.durationMinutes ?? 180)
+        setTeacherId(courses[0]?.defaultTeacherId ?? '')
+        setCapacity(courses[0]?.capacity ?? 12)
+        setSlotError('')
+        setMessage('')
+        setCreatingSlot(true)
+    }
     const eligible = selected
         ? students
               .filter((s) => !selected.students?.some((item) => item.id === s.id))
@@ -233,10 +247,10 @@ export default function AdminDashboard({
             router.refresh()
             router.push('/admin/planning')
             notify(editingSlot ? 'Séance modifiée avec succès.' : 'Créneau créé avec succès.')
+            setCreatingSlot(false)
             setEditingSlot(null)
         } catch (e) {
-            if (editingSlot) setSlotError(e instanceof Error ? e.message : 'Erreur')
-            else setMessage(e instanceof Error ? e.message : 'Erreur')
+            setSlotError(e instanceof Error ? e.message : 'Erreur')
         } finally {
             setBusy(false)
         }
@@ -424,15 +438,8 @@ export default function AdminDashboard({
                     </option>
                 ))}
             </select>
-            <label>Date et heure de début</label>
-            <input
-                type="datetime-local"
-                value={start}
-                onChange={(e) => {
-                    setStart(e.target.value)
-                }}
-                required
-            />
+            <label htmlFor="slot-start">Date et heure de début</label>
+            <DatePicker id="slot-start" withTime value={start} onChange={setStart} required />
             <label htmlFor="slot-duration">Durée (en heures)</label>
             <input
                 id="slot-duration"
@@ -555,8 +562,11 @@ export default function AdminDashboard({
                     {section === 'slots' && !editingSlot && (
                         <div className="admin_create">
                             <div className="card">
-                                <h2>Créer un créneau</h2>
-                                {slotForm}
+                                <h2>Gestion des créneaux</h2>
+                                <p>Ajoutez un créneau en choisissant le cours, la date et le professeur.</p>
+                                <button type="button" className="btn" onClick={() => openCreateSlot()}>
+                                    Ajouter un créneau
+                                </button>
                             </div>
                         </div>
                     )}
@@ -565,6 +575,7 @@ export default function AdminDashboard({
                             <div className="card">
                                 <MonthCalendar
                                     mode="admin"
+                                    onCreateSlot={openCreateSlot}
                                     courseId={planningCourseId}
                                     teacherId={planningTeacherId}
                                     refresh={refresh}
@@ -1136,6 +1147,27 @@ export default function AdminDashboard({
                             {courseError}
                         </p>
                     )}
+                </SidePanel>
+            )}
+            {creatingSlot && (
+                <SidePanel
+                    titleId="admin-create-slot-title"
+                    busy={busy}
+                    onClose={() => {
+                        setCreatingSlot(false)
+                        setSlotError('')
+                    }}
+                >
+                    <div id="admin-create-slot-panel">
+                        <span className="section_kicker">Gestion des créneaux</span>
+                        <h2 id="admin-create-slot-title">Ajouter un créneau</h2>
+                        {slotForm}
+                        {slotError && (
+                            <p className="error" role="alert">
+                                {slotError}
+                            </p>
+                        )}
+                    </div>
                 </SidePanel>
             )}
             {editingSlot && (

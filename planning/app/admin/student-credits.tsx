@@ -1,4 +1,5 @@
 'use client'
+import DatePicker from '@/components/date-picker'
 import { useState } from 'react'
 import StudentBooking from './student-booking'
 
@@ -162,10 +163,9 @@ export default function StudentCredits({
                         {action === 'add-course' && (
                             <>
                                 <label htmlFor="credit-expiry">Valable jusqu’au</label>
-                                <input
+                                <DatePicker
                                     id="credit-expiry"
                                     name="expiresAt"
-                                    type="date"
                                     min={localDate(new Date())}
                                     defaultValue={localDate(defaultExpiry)}
                                     required

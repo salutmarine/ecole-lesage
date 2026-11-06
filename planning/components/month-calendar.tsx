@@ -35,6 +35,7 @@ export function MonthCalendar({
     mode,
     courseId,
     onSelect,
+    onCreateSlot,
     refresh,
     bookedSlotIds = [],
     canReserve = true,
@@ -46,6 +47,7 @@ export function MonthCalendar({
     teacherId?: string
     courseId?: string
     onSelect: (slot: CalendarSlot) => void
+    onCreateSlot?: (date: string) => void
     refresh: number
     bookedSlotIds?: string[]
     canReserve?: boolean
@@ -150,7 +152,9 @@ export function MonthCalendar({
                             ? 'Vos séances réservées, disponibles et complètes pour vos cours sont affichées.'
                             : mode === 'teacher'
                               ? 'Cliquez sur une séance pour consulter les inscrits et faire l’appel.'
-                              : 'Cliquez sur un créneau pour voir les places disponibles.'}
+                              : onCreateSlot
+                                ? 'Cliquez sur un créneau pour le consulter, ou double-cliquez dans une zone vide d’une date pour en créer un.'
+                                : 'Cliquez sur un créneau pour voir les places disponibles.'}
                     </p>
                 </div>
                 <div className="month_controls">
@@ -238,7 +242,39 @@ export function MonthCalendar({
                     </div>
                 ))}
                 {cells.map((day, i) => (
-                    <div key={i} className={'month_cell ' + (!day ? 'month_empty' : '')} role="gridcell">
+                    <div
+                        key={i}
+                        className={'month_cell ' + (!day ? 'month_empty' : '')}
+                        role="gridcell"
+                        tabIndex={day && mode === 'admin' && onCreateSlot ? 0 : undefined}
+                        aria-label={
+                            day && mode === 'admin' && onCreateSlot
+                                ? `${day} ${month.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })} : double-cliquez ou appuyez sur Entrée pour ajouter un créneau`
+                                : undefined
+                        }
+                        onDoubleClick={(event) => {
+                            if (
+                                !day ||
+                                mode !== 'admin' ||
+                                !onCreateSlot ||
+                                (event.target as HTMLElement).closest('button')
+                            )
+                                return
+                            onCreateSlot(`${key}-${String(day).padStart(2, '0')}`)
+                        }}
+                        onKeyDown={(event) => {
+                            if (
+                                event.target !== event.currentTarget ||
+                                !day ||
+                                mode !== 'admin' ||
+                                !onCreateSlot ||
+                                !['Enter', ' '].includes(event.key)
+                            )
+                                return
+                            event.preventDefault()
+                            onCreateSlot(`${key}-${String(day).padStart(2, '0')}`)
+                        }}
+                    >
                         {day && (
                             <>
                                 <div className="month_day">{day}</div>
