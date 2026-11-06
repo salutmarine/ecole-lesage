@@ -138,7 +138,7 @@ export function MonthCalendar({
         return map
     }, [slots, mode, canReserve, bookedSlotIds, canReserveSlot, courseId, teacherId])
     return (
-        <div className="month_shell">
+        <div className="month_shell" data-mode={mode}>
             <div className="month_toolbar">
                 <div>
                     <h2>Calendrier des séances</h2>
@@ -239,21 +239,18 @@ export function MonthCalendar({
                                             s.reserved >= s.capacity ||
                                             new Date(s.startsAt) <= new Date() ||
                                             !match
+                                        const color =
+                                            booked || (mode !== 'student' && full)
+                                                ? 'green'
+                                                : full ||
+                                                    (mode === 'student' ? disabled : new Date(s.endsAt) <= new Date())
+                                                  ? 'gray'
+                                                  : 'blue'
                                         return (
                                             <button
                                                 type="button"
                                                 key={s.id}
-                                                className={
-                                                    'btn ' +
-                                                    ('month_event ' +
-                                                        (booked
-                                                            ? 'month_event_booked'
-                                                            : full
-                                                              ? 'month_event_full'
-                                                              : disabled
-                                                                ? 'month_event_disabled'
-                                                                : ''))
-                                                }
+                                                className={`btn month_event month_event_${color}`}
                                                 disabled={mode === 'student' && !booked && disabled}
                                                 onClick={() => onSelect(s)}
                                                 title={`${s.course} · ${availability}${booked ? ' · Déjà réservé' : ''}`}
@@ -312,10 +309,12 @@ export function MonthCalendar({
             {showLegend && (
                 <div className="month_legend" aria-label="Légende des créneaux">
                     <span>
-                        <i className="month_legend_swatch month_legend_available" aria-hidden="true" /> Disponible
+                        <i className="month_legend_swatch month_legend_available" aria-hidden="true" />{' '}
+                        {mode === 'student' ? 'Réservation possible' : 'À venir · Places libres'}
                     </span>
                     <span>
-                        <i className="month_legend_swatch month_legend_unavailable" aria-hidden="true" /> Indisponible
+                        <i className="month_legend_swatch month_legend_unavailable" aria-hidden="true" />{' '}
+                        {mode === 'student' ? 'Indisponible' : 'Passée · Incomplète'}
                     </span>
                     <span>
                         <i className="month_legend_swatch month_legend_full" aria-hidden="true" /> Complet

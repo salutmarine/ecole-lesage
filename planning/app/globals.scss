@@ -564,32 +564,32 @@ label {
         font-size: 9px;
         opacity: 0.75;
     }
-    &_event_disabled {
-        background-color: var(--paper);
-        color: #929297;
-        cursor: not-allowed;
-
-        &::before {
-            background: #b8b8bc;
-        }
+    &_event_blue {
+        --session-background: #e7f0fc;
+        --session-text: #234d7a;
+        --session-accent: #2c64a0;
     }
-    &_event_booked {
-        background: #eaf4e7 !important;
-
-        &:disabled {
-            opacity: 1;
-        }
-        &::before {
-            background: #32721d;
-        }
+    &_event_green {
+        --session-background: #e4f1e7;
+        --session-text: #285436;
+        --session-accent: #347547;
     }
-    &_event_full {
-        background: #d0b27b;
+    &_event_gray {
+        --session-background: #eceef0;
+        --session-text: #555d65;
+        --session-accent: #656e78;
+    }
+    &_event_blue,
+    &_event_green,
+    &_event_gray {
+        background: var(--session-background);
+        color: var(--session-text);
         opacity: 1;
-        cursor: not-allowed;
-
         &::before {
-            background: #9d804a;
+            background: var(--session-accent);
+        }
+        &:disabled {
+            cursor: not-allowed;
         }
     }
     &_event_badge {
@@ -597,7 +597,7 @@ label {
         display: inline-flex;
         align-items: center;
         gap: 5px;
-        background: #32721d;
+        background: var(--session-accent);
         color: #fff;
         border-radius: 999px;
         padding: 3px 6px;
@@ -608,7 +608,7 @@ label {
         }
     }
     &_event_badge_full {
-        background: #9d804a;
+        background: var(--session-accent);
         color: #fff;
     }
     &_legend {
@@ -633,7 +633,8 @@ label {
         flex-shrink: 0;
     }
     &_legend_available {
-        background: var(--waouh);
+        background: #e7f0fc;
+        border: 1px solid #2c64a0;
     }
     &_legend_unavailable {
         background: #ededed;
@@ -644,8 +645,8 @@ label {
         border: 1px solid #b9dac4;
     }
     &_legend_full {
-        background: #d0b27b;
-        border: 1px solid #b58a39;
+        background: #e4f1e7;
+        border: 1px solid #347547;
     }
 }
 .subtle_rule {
@@ -1414,11 +1415,11 @@ label {
     font-weight: 600;
     white-space: normal;
     overflow-wrap: anywhere;
-    background: #e7f0e5;
-    color: #285331;
+    background: #fff0cf;
+    color: #79500c;
     &_perfectionnement {
-        background: #e6edf8;
-        color: #294c7b;
+        background: #fbe1e9;
+        color: #882c50;
     }
     &_specialisation {
         background: #f2e7f5;
@@ -1547,4 +1548,9 @@ label {
         margin-left: 0;
         text-align: left;
     }
+}
+
+.month_shell[data-mode='student'] .month_legend_full {
+    background: #eceef0;
+    border-color: #656e78;
 }
