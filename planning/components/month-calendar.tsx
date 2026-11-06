@@ -261,7 +261,7 @@ export function MonthCalendar({
                                                     </span>
                                                 )}
                                                 {full && !booked && (
-                                                    <span className="month_event_badge month_event_badge_full">
+                                                    <span className="month_event_badge">
                                                         <svg
                                                             width="12"
                                                             height="12"

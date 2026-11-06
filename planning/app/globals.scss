@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Forum&family=Geist:ital,wght@0,100..900;1,100..900&family=Manrope:wght@200..800&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,100..900;1,100..900&family=Manrope:wght@200..800&display=swap');
 
 @font-face {
     font-family: 'abchanel-2022';
@@ -276,15 +276,6 @@ label {
         max-width: 600px;
         margin: 9vh auto;
     }
-    &_group_title {
-        padding: 0 24px;
-        margin: 36px 0 16px;
-        color: #555;
-        font-size: 14px;
-        font-weight: 600;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-    }
     &_field_group {
         overflow: hidden;
         border: 1px solid #ddd;
@@ -351,16 +342,6 @@ label {
             border-radius: 0 0 17px 17px;
         }
     }
-    &_hint {
-        padding: 0 24px;
-        margin: 16px 0 24px;
-        color: #555;
-        font-size: 12px;
-        line-height: 1.7;
-    }
-    &_submit {
-        width: 100%;
-    }
 }
 @media (prefers-reduced-motion: reduce) {
     .login_field label {
@@ -412,7 +393,6 @@ label {
     }
     p {
         font-size: 13px;
-        //color: #eeeeee;
         margin: 0;
         font-weight: 100;
     }
@@ -528,8 +508,6 @@ label {
         width: 100%;
         min-width: 0;
         text-align: left;
-        background: var(--light);
-        color: var(--accent);
         border-radius: 6px;
         padding: 7px;
         font-weight: 400;
@@ -547,7 +525,6 @@ label {
             left: 7px;
             width: 3px;
             border-radius: 999px;
-            background: #1687d9;
         }
     }
     &_event_time {
@@ -607,10 +584,6 @@ label {
             position: relative;
         }
     }
-    &_event_badge_full {
-        background: var(--session-accent);
-        color: #fff;
-    }
     &_legend {
         display: flex;
         flex-wrap: wrap;
@@ -653,38 +626,6 @@ label {
     border: 0;
     border-top: 1px solid var(--line);
     margin: 24px 0;
-}
-.session_occupancy {
-    margin-bottom: 18px;
-
-    label {
-        margin-bottom: 8px;
-    }
-
-    progress {
-        display: block;
-        width: 100%;
-        height: 10px;
-        appearance: none;
-        border: 0;
-        border-radius: 999px;
-        overflow: hidden;
-        background: var(--line);
-
-        &::-webkit-progress-bar {
-            background: var(--line);
-        }
-
-        &::-webkit-progress-value {
-            background: var(--accent);
-            border-radius: 999px;
-        }
-
-        &::-moz-progress-bar {
-            background: var(--accent);
-            border-radius: 999px;
-        }
-    }
 }
 
 .reservation_row {
@@ -758,72 +699,9 @@ label {
     }
 }
 
-.teacher_workspace {
-    display: grid;
-    grid-template-columns: 300px minmax(0, 1fr);
-    gap: 24px;
-    align-items: start;
-}
-.teacher_sidebar {
-    position: sticky;
-    top: 20px;
-    overflow: hidden;
-    background: #fff;
-    border-radius: 30px;
-    box-shadow: var(--shadow);
-
-    .hero_panel {
-        margin: 0;
-        padding: 20px;
-        border-radius: 18px 18px 0 0;
-        align-items: flex-start;
-
-        h1 {
-            margin: 10px 0;
-            font-size: 26px;
-            font-weight: 800;
-        }
-        p {
-            font-size: 14px;
-            font-weight: 400;
-        }
-    }
-    .attendance_views {
-        display: grid;
-        gap: 12px;
-        margin: 0;
-        padding: 20px;
-
-        .btn {
-            width: 100%;
-            padding: 10px 20px;
-            border-radius: 999px;
-            background: transparent;
-            color: var(--ink);
-            text-align: left;
-            font-size: 14px;
-            font-weight: 400;
-
-            &[aria-current='page'] {
-                background: #f0f0f0;
-                color: var(--ink);
-                font-weight: 600;
-            }
-            &:focus-visible {
-                outline: 2px solid var(--ink);
-                outline-offset: 3px;
-            }
-        }
-    }
-}
-.teacher_content {
-    min-width: 0;
-}
 .admin_sidebar_column,
-.student_summary,
-.teacher_sidebar {
+.student_summary {
     .hero_panel {
-        padding: 20px;
         h1 {
             font-size: 23px;
             overflow-wrap: anywhere;
@@ -893,13 +771,6 @@ label {
         }
     }
 }
-.admin_sidebar_title {
-    padding: 0 12px;
-    font-size: 11px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
 .admin_content {
     min-width: 0;
 }
@@ -920,13 +791,6 @@ label {
     }
 }
 @media (max-width: 850px) {
-    .teacher_workspace {
-        grid-template-columns: 1fr;
-        gap: 18px;
-    }
-    .teacher_sidebar {
-        position: static;
-    }
     .admin_workspace {
         grid-template-columns: 1fr;
         gap: 18px;
@@ -962,13 +826,6 @@ label {
     gap: 10px;
     flex-wrap: wrap;
     margin-bottom: 22px;
-}
-.attendance_row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    flex-wrap: wrap;
 }
 .attendance_control {
     min-width: 170px;
@@ -1075,36 +932,6 @@ label {
         margin-bottom: 0;
     }
 }
-.student_booking_row {
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-    width: 100%;
-    text-align: left;
-    background: transparent;
-    color: var(--ink);
-    border-radius: 0;
-    border: none;
-    border-bottom: 1px solid var(--line);
-    padding: 16px 0;
-    font-weight: 400;
-    cursor: pointer;
-
-    strong {
-        font-size: 14px;
-    }
-
-    span {
-        font-size: 12px;
-    }
-    &:last-child {
-        border-bottom: 0;
-    }
-    &:focus-visible {
-        outline: 2px solid var(--ink);
-        outline-offset: 4px;
-    }
-}
 
 .student_reservations_cta {
     width: 100%;
@@ -1147,9 +974,6 @@ label {
     }
     .booking_actions {
         margin-top: 14px;
-    }
-    .form_actions {
-        flex-wrap: wrap;
     }
 }
 .student_reservation_past {
@@ -1328,16 +1152,6 @@ label {
     }
 }
 
-.student_sort {
-    border: 0;
-    padding: 0;
-    background: transparent;
-    color: inherit;
-    font: inherit;
-    font-weight: inherit;
-    cursor: pointer;
-}
-
 .student_credit_tools {
     margin-top: 24px;
 }
@@ -1505,25 +1319,6 @@ label {
     input[type='date'] {
         max-width: 320px;
     }
-}
-
-.teacher_session_heading {
-    margin-bottom: 20px;
-    h2 {
-        margin-bottom: 8px;
-        font-size: 18px;
-    }
-}
-.teacher_session_date {
-    margin-bottom: 10px;
-    color: var(--muted);
-    font-size: 12px;
-    font-weight: 300;
-}
-
-.month_event_disabled .month_event_level {
-    background: #dedede;
-    color: #777;
 }
 
 .student_list_row {
