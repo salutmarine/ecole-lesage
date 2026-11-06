@@ -20,7 +20,7 @@ await symlink(path.join(root, 'node_modules'), path.join(target, 'node_modules')
 await mkdir(path.join(target, 'components'), { recursive: true })
 await mkdir(path.join(target, 'data'), { recursive: true })
 await cp(path.join(root, 'data/lesage/catalogue.json'), path.join(target, 'data/catalogue.json'))
-for (const name of ['month-calendar', 'booking-actions', 'side-panel', 'toast']) {
+for (const name of ['month-calendar', 'date-picker', 'booking-actions', 'side-panel', 'toast']) {
     let source = await readFile(path.join(root, `components/${name}.tsx`), 'utf8')
     if (source.includes('fetch('))
         source = source.replace("'use client'", "'use client'\nimport { demoFetch as fetch } from '@/lib/store'")
