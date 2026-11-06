@@ -123,6 +123,8 @@ export function MonthCalendar({
         const map = new Map<number, CalendarSlot[]>()
         for (const s of slots) {
             if (mode === 'teacher' && s.teacherId !== teacherId) continue
+            if (mode === 'admin' && ((courseId && s.courseId !== courseId) || (teacherId && s.teacherId !== teacherId)))
+                continue
             if (
                 mode === 'student' &&
                 !bookedSlotIds.includes(s.id) &&
@@ -209,6 +211,11 @@ export function MonthCalendar({
             <p className="muted" role="status" style={{ minHeight: '1.5em', margin: 0 }}>
                 {loading ? 'Chargement du calendrier…' : '\u00a0'}
             </p>
+            {!loading && !error && mode === 'admin' && (courseId || teacherId) && byDay.size === 0 && (
+                <p className="muted" role="status">
+                    Aucune séance ne correspond aux filtres pour ce mois.
+                </p>
+            )}
             <div className="month_grid" role="grid" aria-label="Calendrier mensuel">
                 {week.map((d) => (
                     <div className="month_weekday" key={d}>

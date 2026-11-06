@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import SidePanel from '@/components/side-panel'
 import Toast, { ToastMessage } from '@/components/toast'
 import BookingActions, { type MovedBooking } from '@/components/booking-actions'
@@ -66,6 +66,8 @@ export default function AdminDashboard({
     courses: Course[]
     teachers: Teacher[]
 }) {
+    const [planningCourseId, setPlanningCourseId] = useState('')
+    const [planningTeacherId, setPlanningTeacherId] = useState('')
     const [courseLevel, setCourseLevel] = useState<CourseLevel>('INITIATION')
     const visibleCourses = courses.filter((course) => course.level === courseLevel)
     const [studentSort, setStudentSort] = useState<{ field: 'lastName' | 'firstName' | 'recent'; direction: 1 | -1 }>({
@@ -494,23 +496,55 @@ export default function AdminDashboard({
                     <aside className="admin_sidebar">
                         <nav aria-label="Navigation administrateur">
                             {sections.map((item) => (
-                                <Link
-                                    className="btn"
-                                    href={item.href}
-                                    prefetch={false}
-                                    key={item.id}
-                                    aria-current={section === item.id ? 'page' : undefined}
-                                    aria-controls="admin-content"
-                                    onClick={() => {
-                                        if (item.id === 'slots') {
-                                            setEditingSlot(null)
-                                            setStart('')
-                                        }
-                                        setMessage('')
-                                    }}
-                                >
-                                    {item.label}
-                                </Link>
+                                <Fragment key={item.id}>
+                                    <Link
+                                        className="btn"
+                                        href={item.href}
+                                        prefetch={false}
+                                        key={item.id}
+                                        aria-current={section === item.id ? 'page' : undefined}
+                                        aria-controls="admin-content"
+                                        onClick={() => {
+                                            if (item.id === 'slots') {
+                                                setEditingSlot(null)
+                                                setStart('')
+                                            }
+                                            setMessage('')
+                                        }}
+                                    >
+                                        {item.label}
+                                    </Link>
+                                    {item.id === 'planning' && section === 'planning' && (
+                                        <div className="admin_planning_filters">
+                                            <label htmlFor="planning-course">Filtrer par cours</label>
+                                            <select
+                                                id="planning-course"
+                                                value={planningCourseId}
+                                                onChange={(event) => setPlanningCourseId(event.target.value)}
+                                            >
+                                                <option value="">Tous les cours</option>
+                                                {courses.map((course) => (
+                                                    <option key={course.id} value={course.id}>
+                                                        {course.name}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                            <label htmlFor="planning-teacher">Filtrer par professeur</label>
+                                            <select
+                                                id="planning-teacher"
+                                                value={planningTeacherId}
+                                                onChange={(event) => setPlanningTeacherId(event.target.value)}
+                                            >
+                                                <option value="">Tous les professeurs</option>
+                                                {teachers.map((teacher) => (
+                                                    <option key={teacher.id} value={teacher.id}>
+                                                        {teacher.name}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    )}
+                                </Fragment>
                             ))}
                         </nav>
                     </aside>
@@ -529,6 +563,8 @@ export default function AdminDashboard({
                             <div className="card">
                                 <MonthCalendar
                                     mode="admin"
+                                    courseId={planningCourseId}
+                                    teacherId={planningTeacherId}
                                     showLegend={false}
                                     refresh={refresh}
                                     onSelect={(slot) => {
@@ -1120,6 +1156,11 @@ export default function AdminDashboard({
                     </div>
                     <span className="section_kicker">Détail du créneau</span>
                     <h2 id="admin-slot-title">{selected.course}</h2>
+                    {selected.level && (
+                        <span className={`month_event_level month_event_level_${selected.level.toLowerCase()}`}>
+                            {courseLevels[selected.level]}
+                        </span>
+                    )}
                     <p>{dateLabel(selected.startsAt)}</p>
                     <p className="muted">
                         Durée :{' '}
@@ -1159,7 +1200,7 @@ export default function AdminDashboard({
                         <p className="muted">Aucun étudiant inscrit à cette séance.</p>
                     )}
                     <button
-                        className="btn btn-medium"
+                        className="btn"
                         type="button"
                         disabled={busy || !canAdd}
                         aria-expanded={studentSearchOpen}

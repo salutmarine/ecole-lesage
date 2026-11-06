@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { courseLevels } from '@/lib/course-levels'
 import SidePanel from '@/components/side-panel'
 import Toast from '@/components/toast'
 import BookingActions, { type MovedBooking } from '@/components/booking-actions'
@@ -376,6 +377,11 @@ export default function StudentDashboard({ entitlements, bookings }: { entitleme
                 <SidePanel titleId="reserve-panel-title" busy={busy} onClose={() => setSelected(null)}>
                     <span className="section_kicker">Réserver une séance</span>
                     <h2 id="reserve-panel-title">{selected.course}</h2>
+                    {selected.level && (
+                        <span className={`month_event_level month_event_level_${selected.level.toLowerCase()}`}>
+                            {courseLevels[selected.level]}
+                        </span>
+                    )}
                     <dl className="admin_settings">
                         <div>
                             <dt>Début</dt>

@@ -1011,6 +1011,14 @@ label {
     position: relative;
     padding: 55px 30px 30px;
     min-height: 100%;
+
+    #admin-slot-title{
+        margin-bottom: 10px;
+    }
+
+    .month_event_level{
+        margin-bottom: 10px;
+    }
 }
 .sidepanel_close {
     position: absolute;
@@ -1348,4 +1356,18 @@ label {
 .month_shell[data-mode='student'] .month_legend_full {
     background: #eceef0;
     border-color: #656e78;
+}
+
+.admin_planning_filters {
+    min-width: 0;
+    padding: 4px 12px 12px;
+    border-bottom: 1px solid var(--line);
+    select {
+        margin: 8px 0 16px;
+    }
+}
+@media (max-width: 850px) {
+    .admin_planning_filters {
+        grid-column: 1 / -1;
+    }
 }

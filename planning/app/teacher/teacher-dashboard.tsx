@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { courseLevels } from '@/lib/course-levels'
 import { CalendarSlot, MonthCalendar, dateLabel } from '@/components/month-calendar'
 import SidePanel from '@/components/side-panel'
 import AttendanceControl from './attendance-control'
@@ -40,6 +41,11 @@ export default function TeacherDashboard({ user }: { user: { id: string; firstNa
                 <SidePanel titleId="teacher-session-title" busy={false} onClose={close}>
                     <span className="section_kicker">Ma séance</span>
                     <h2 id="teacher-session-title">{selected.course}</h2>
+                    {selected.level && (
+                        <span className={`month_event_level month_event_level_${selected.level.toLowerCase()}`}>
+                            {courseLevels[selected.level]}
+                        </span>
+                    )}
                     <dl className="admin_settings">
                         <div>
                             <dt>Début</dt>
