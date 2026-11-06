@@ -53,11 +53,11 @@
 }
 
 :root {
-    --ink: #171717;
+    --ink: #242323;
     --muted: #888888;
     --line: #e5e5e5;
-    --paper: #f7f7f7;
-    --accent: #0a0a0a;
+    --paper: #F6F6F6;
+    --accent: #0A0A0A;
     --waouh: #2c5489;
     --light: #eff5fc;
     --shadow: 0 8px 30px rgba(31, 48, 36, 0.045);
@@ -154,11 +154,6 @@ h2 {
             background: var(--accent);
             color: #fff;
         }
-
-        &:focus-visible {
-            outline: 2px solid var(--ink);
-            outline-offset: 2px;
-        }
     }
 }
 
@@ -174,18 +169,16 @@ h2 {
 }
 .card {
     background: #fff;
-    border: 1px solid var(--line);
     border-radius: 18px;
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: var(--shadow);
 }
 .btn {
     cursor: pointer;
     display: inline-block;
     text-decoration: none;
     border: 0;
-    background: var(--accent);
+    background: var(--ink);
     color: #fff;
     padding: 6px 10px;
     border-radius: 999px;
@@ -210,6 +203,9 @@ h2 {
     &:disabled {
         opacity: 0.4;
         cursor: not-allowed;
+    }
+    &:focus-visible{
+        outline: none;
     }
 }
 .secondary {
@@ -363,8 +359,9 @@ label {
     margin: 10px 0 4px;
 }
 .hero_panel {
-    background: linear-gradient(343deg, #e2e9f3 0%, #eff1f6 100%);
-    color: var(--accent);
+    //background: linear-gradient(343deg, #e2e9f3 0%, #eff1f6 100%);
+    background-color: #242323;
+    color: #fff;
     border-radius: 18px;
     padding: 25px;
     margin-bottom: 20px;
@@ -395,9 +392,10 @@ label {
         font-size: 13px;
         margin: 0;
         font-weight: 100;
+        color: #EEEEEE;
     }
     .section_kicker {
-        color: var(--accent);
+        color: #DDDDDD;
     }
     > * {
         position: relative;
@@ -459,10 +457,6 @@ label {
             flex-shrink: 0;
             padding: 0;
             border-radius: 50%;
-            &:focus-visible {
-                outline: 2px solid var(--ink);
-                outline-offset: 3px;
-            }
         }
     }
     &_grid {
@@ -476,7 +470,7 @@ label {
     &_weekday {
         text-align: center;
         padding: 12px 3px;
-        background: var(--light);
+        background: var(--paper);
         font-size: 11px;
         font-weight: 600;
         border-bottom: 1px solid var(--line);
@@ -765,10 +759,6 @@ label {
             color: var(--ink);
             font-weight: 600;
         }
-        &:focus-visible {
-            outline: 2px solid var(--ink);
-            outline-offset: 3px;
-        }
     }
 }
 .admin_content {
@@ -950,10 +940,6 @@ label {
     &:hover {
         filter: brightness(1.12);
     }
-    &:focus-visible {
-        outline: 2px solid var(--ink);
-        outline-offset: 3px;
-    }
 }
 .student_reservations_section {
     margin-top: 28px;
@@ -1107,10 +1093,6 @@ label {
     &:hover {
         background: #f3f5f2;
     }
-    &:focus-visible {
-        outline: 2px solid currentColor;
-        outline-offset: 3px;
-    }
 }
 
 .admin_toast_region {
@@ -1189,10 +1171,6 @@ label {
         &::after {
             content: '+';
             margin-left: auto;
-        }
-        &:focus-visible {
-            outline: 2px solid currentColor;
-            outline-offset: 4px;
         }
     }
     &[open] > summary::after {
