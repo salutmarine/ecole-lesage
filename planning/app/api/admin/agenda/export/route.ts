@@ -39,7 +39,9 @@ export async function GET(req: NextRequest) {
                 endsAt: slot.endsAt,
                 course: slot.course?.name || 'Cours non attribué',
                 level: slot.course?.level ?? null,
-                teacher: slot.teacher ? `${slot.teacher.firstName} ${slot.teacher.lastName}` : null,
+                teacher: slot.teacher
+                    ? `${slot.teacher.firstName} ${slot.teacher.lastName.toLocaleUpperCase('fr-FR')}`
+                    : null,
                 capacity: slot.capacity,
                 blocked: slot.blocked,
                 students: slot.bookings.map((booking) => booking.user),

@@ -76,7 +76,7 @@ textarea {
 }
 strong,
 b {
-    font-weight: 800;
+    font-weight: 700;
 }
 body {
     margin: 0;
@@ -1012,11 +1012,11 @@ label {
     padding: 55px 30px 30px;
     min-height: 100%;
 
-    #admin-slot-title{
+    #admin-slot-title {
         margin-bottom: 10px;
     }
 
-    .month_event_level{
+    .month_event_level {
         margin-bottom: 10px;
     }
 }
@@ -1370,4 +1370,32 @@ label {
     .admin_planning_filters {
         grid-column: 1 / -1;
     }
+}
+.admin_course_details {
+    width: 100%;
+    min-width: 0;
+}
+.admin_course_heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    strong {
+        overflow-wrap: anywhere;
+    }
+    .month_event_level {
+        flex-shrink: 0;
+    }
+}
+
+.teacher_student_row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+.teacher_student_sessions {
+    margin-left: auto;
+    text-align: right;
 }

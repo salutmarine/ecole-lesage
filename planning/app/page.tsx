@@ -44,7 +44,8 @@ export default async function Login({ searchParams }: { searchParams: Promise<{ 
                             Mot de passe <span aria-hidden="true">*</span>
                         </label>
                     </div>
-                </div><br/>
+                </div>
+                <br />
                 {error && errors[error] && <Toast message={errors[error]} />}
                 <button className="btn btn-large" type="submit">
                     Se connecter

@@ -89,6 +89,7 @@ export function TeacherForm({
                 id="teacher-last-name"
                 name="lastName"
                 defaultValue={teacher?.lastName}
+                style={{ textTransform: 'uppercase' }}
                 autoComplete="family-name"
                 required
                 maxLength={100}
@@ -184,7 +185,14 @@ export function CourseTemplateForm({
         >
             {!course && <h2>Créer un cours</h2>}
             <label htmlFor="template-name">Nom du cours</label>
-            <input id="template-name" name="name" defaultValue={course?.name} required maxLength={200} />
+            <input
+                id="template-name"
+                name="name"
+                style={{ textTransform: 'uppercase' }}
+                defaultValue={course?.name}
+                required
+                maxLength={200}
+            />
             <label htmlFor="template-level">Niveau</label>
             <select id="template-level" name="level" defaultValue={course?.level ?? 'INITIATION'} required>
                 {Object.entries(courseLevels).map(([value, label]) => (
@@ -333,6 +341,7 @@ export function StudentForm({
                 id={`${formId}-last-name`}
                 name="lastName"
                 defaultValue={student?.lastName}
+                style={{ textTransform: 'uppercase' }}
                 maxLength={100}
                 required
             />

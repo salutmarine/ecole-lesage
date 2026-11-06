@@ -37,7 +37,9 @@ export default async function Page() {
                 slotId: b.slotId,
                 entitlementId: b.entitlementId,
                 endsAt: b.slot.endsAt.toISOString(),
-                teacher: b.slot.teacher ? `${b.slot.teacher.firstName} ${b.slot.teacher.lastName}` : null,
+                teacher: b.slot.teacher
+                    ? `${b.slot.teacher.firstName} ${b.slot.teacher.lastName.toLocaleUpperCase('fr-FR')}`
+                    : null,
                 course: b.course.name,
                 date: b.slot.startsAt.toISOString(),
                 status: b.status,

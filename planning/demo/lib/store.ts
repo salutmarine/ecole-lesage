@@ -374,7 +374,13 @@ export async function demoFetch(input: string, init?: RequestInit): Promise<Resp
             result = response
             if (init?.method && init.method !== 'GET') saveState(state)
         }
-        return Response.json(result)
+        const { displayTeacher } = await import('./admin-store')
+        return new Response(
+            JSON.stringify(result, (key, value) =>
+                key === 'teacher' && typeof value === 'string' ? displayTeacher(state, value) : value,
+            ),
+            { headers: { 'Content-Type': 'application/json' } },
+        )
     } catch (error) {
         return Response.json({ error: error instanceof Error ? error.message : 'Erreur' }, { status: 400 })
     }

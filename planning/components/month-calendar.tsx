@@ -18,6 +18,7 @@ export type CalendarSlot = {
         id: string
         name: string
         email: string
+        sessions?: { total: number; remaining: number }
         phone?: string | null
         attendance?: 'UNMARKED' | 'PRESENT' | 'ABSENT'
     }[]
@@ -260,7 +261,7 @@ export function MonthCalendar({
                                                 className={`btn month_event month_event_${color}`}
                                                 disabled={mode === 'student' && !booked && disabled}
                                                 onClick={() => onSelect(s)}
-                                                title={`${s.course} · ${availability}${booked ? ' · Déjà réservé' : ''}`}
+                                                title={`${s.course.toLocaleUpperCase('fr-FR')} · ${availability}${booked ? ' · Déjà réservé' : ''}`}
                                             >
                                                 {booked && (
                                                     <span className="month_event_badge">
@@ -294,7 +295,9 @@ export function MonthCalendar({
                                                         minute: '2-digit',
                                                     })}
                                                 </span>
-                                                <span className="month_event_name">{s.course}</span>
+                                                <span className="month_event_name">
+                                                    {s.course.toLocaleUpperCase('fr-FR')}
+                                                </span>
                                                 {s.level && (
                                                     <span
                                                         className={`month_event_level month_event_level_${s.level.toLowerCase()}`}

@@ -41,7 +41,9 @@ export async function GET(req: NextRequest) {
                         id: slot.id,
                         startsAt: slot.startsAt.toISOString(),
                         endsAt: slot.endsAt.toISOString(),
-                        teacher: slot.teacher ? `${slot.teacher.firstName} ${slot.teacher.lastName}` : null,
+                        teacher: slot.teacher
+                            ? `${slot.teacher.firstName} ${slot.teacher.lastName.toLocaleUpperCase('fr-FR')}`
+                            : null,
                     })
                 }
                 return available

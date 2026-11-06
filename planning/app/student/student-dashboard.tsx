@@ -51,7 +51,7 @@ function BookingPanel({
     return (
         <SidePanel titleId="booking-panel-title" busy={busy} onClose={onClose}>
             <span className="section_kicker">Ma réservation</span>
-            <h2 id="booking-panel-title">{booking.course}</h2>
+            <h2 id="booking-panel-title">{booking.course.toLocaleUpperCase('fr-FR')}</h2>
             <dl className="admin_settings">
                 <div>
                     <dt>Statut</dt>
@@ -157,7 +157,7 @@ function ReservationsPanel({
                     return (
                         <article className="student_reservation_card" key={booking.id}>
                             <div>
-                                <strong>{booking.course}</strong>
+                                <strong>{booking.course.toLocaleUpperCase('fr-FR')}</strong>
                                 <p>{dateLabel(booking.date)}</p>
                                 <p className="muted">{booking.teacher || 'Professeur non attribué'}</p>
                             </div>
@@ -183,7 +183,7 @@ function ReservationsPanel({
                 {past.map((booking) => (
                     <article className="student_reservation_card student_reservation_past" key={booking.id}>
                         <div>
-                            <strong>{booking.course}</strong>
+                            <strong>{booking.course.toLocaleUpperCase('fr-FR')}</strong>
                             <p>{dateLabel(booking.date)}</p>
                             <p className="muted">
                                 {booking.status === 'CANCELLED' ? 'Annulée' : 'Terminée'}
@@ -303,7 +303,7 @@ export default function StudentDashboard({ entitlements, bookings }: { entitleme
                         {items.length === 0 && <p className="muted">Aucun cours acheté.</p>}
                         {items.map((e) => (
                             <div className="student_entitlement" key={e.id}>
-                                <strong>{e.course}</strong>
+                                <strong>{e.course.toLocaleUpperCase('fr-FR')}</strong>
                                 <div className="metric_value">
                                     {e.remaining}{' '}
                                     <span>
@@ -376,7 +376,7 @@ export default function StudentDashboard({ entitlements, bookings }: { entitleme
             {selected && current && (
                 <SidePanel titleId="reserve-panel-title" busy={busy} onClose={() => setSelected(null)}>
                     <span className="section_kicker">Réserver une séance</span>
-                    <h2 id="reserve-panel-title">{selected.course}</h2>
+                    <h2 id="reserve-panel-title">{selected.course.toLocaleUpperCase('fr-FR')}</h2>
                     {selected.level && (
                         <span className={`month_event_level month_event_level_${selected.level.toLowerCase()}`}>
                             {courseLevels[selected.level]}

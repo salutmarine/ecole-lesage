@@ -49,7 +49,9 @@ export async function GET(req: NextRequest) {
                         startsAt: slot.startsAt.toISOString(),
                         endsAt: slot.endsAt.toISOString(),
                         places: slot.capacity - slot._count.bookings,
-                        teacher: slot.teacher ? `${slot.teacher.firstName} ${slot.teacher.lastName}` : null,
+                        teacher: slot.teacher
+                            ? `${slot.teacher.firstName} ${slot.teacher.lastName.toLocaleUpperCase('fr-FR')}`
+                            : null,
                     })
                 }
                 return available

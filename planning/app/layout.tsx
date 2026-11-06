@@ -14,9 +14,9 @@ export default async function Layout({ children }: { children: React.ReactNode }
 
     const breadcrumb =
         user?.role === 'TEACHER'
-            ? `Je suis le professeur ${user.firstName} ${user.lastName}`
+            ? `Je suis le professeur ${user.firstName} ${user.lastName.toLocaleUpperCase('fr-FR')}`
             : user?.role === 'STUDENT'
-              ? `Je suis l’étudiant ${user.firstName} ${user.lastName}`
+              ? `Je suis l’étudiant ${user.firstName} ${user.lastName.toLocaleUpperCase('fr-FR')}`
               : user?.role === 'ADMIN'
                 ? 'Je suis un administrateur'
                 : ''

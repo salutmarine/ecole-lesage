@@ -68,8 +68,10 @@ export default function AdminDashboard({
 }) {
     const [planningCourseId, setPlanningCourseId] = useState('')
     const [planningTeacherId, setPlanningTeacherId] = useState('')
-    const [courseLevel, setCourseLevel] = useState<CourseLevel>('INITIATION')
-    const visibleCourses = courses.filter((course) => course.level === courseLevel)
+    const [courseLevel, setCourseLevel] = useState<CourseLevel | null>(null)
+    const visibleCourses = courses
+        .filter((course) => courseLevel === null || course.level === courseLevel)
+        .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base', numeric: true }))
     const [studentSort, setStudentSort] = useState<{ field: 'lastName' | 'firstName' | 'recent'; direction: 1 | -1 }>({
         field: 'recent',
         direction: -1,
@@ -316,7 +318,7 @@ export default function AdminDashboard({
             !student ||
             studentBusy ||
             !confirm(
-                `Supprimer ${student.firstName} ${student.lastName}, ses achats et tout son historique de réservations ? Cette suppression concerne uniquement le planning.`,
+                `Supprimer ${student.firstName} ${student.lastName.toLocaleUpperCase('fr-FR')}, ses achats et tout son historique de réservations ? Cette suppression concerne uniquement le planning.`,
             )
         )
             return
@@ -345,7 +347,7 @@ export default function AdminDashboard({
             !editingCourse ||
             courseBusy ||
             !confirm(
-                `Supprimer définitivement le cours « ${editingCourse.name} », ses créneaux, les achats et toutes les réservations associés ? Cette action est irréversible.`,
+                `Supprimer définitivement le cours « ${editingCourse.name.toLocaleUpperCase('fr-FR')} », ses créneaux, les achats et toutes les réservations associés ? Cette action est irréversible.`,
             )
         )
             return
@@ -418,7 +420,7 @@ export default function AdminDashboard({
                 <option value="">Choisir un modèle de cours</option>
                 {courses.map((c) => (
                     <option value={c.id} key={c.id}>
-                        {c.name}
+                        {c.name.toLocaleUpperCase('fr-FR')}
                     </option>
                 ))}
             </select>
@@ -525,7 +527,7 @@ export default function AdminDashboard({
                                                 <option value="">Tous les cours</option>
                                                 {courses.map((course) => (
                                                     <option key={course.id} value={course.id}>
-                                                        {course.name}
+                                                        {course.name.toLocaleUpperCase('fr-FR')}
                                                     </option>
                                                 ))}
                                             </select>
@@ -628,7 +630,7 @@ export default function AdminDashboard({
                                             role="button"
                                             tabIndex={0}
                                             aria-haspopup="dialog"
-                                            aria-label={`Voir la fiche de ${s.firstName} ${s.lastName}`}
+                                            aria-label={`Voir la fiche de ${s.firstName} ${s.lastName.toLocaleUpperCase('fr-FR')}`}
                                             onClick={() => {
                                                 setStudent(s)
                                                 setEditingStudent(false)
@@ -654,7 +656,9 @@ export default function AdminDashboard({
                                                 {nextSession ? (
                                                     <>
                                                         <span>{dateLabel(nextSession.startsAt)}</span>
-                                                        <span className="muted">{nextSession.course}</span>
+                                                        <span className="muted">
+                                                            {nextSession.course.toLocaleUpperCase('fr-FR')}
+                                                        </span>
                                                     </>
                                                 ) : (
                                                     <span className="muted">Aucune séance à venir</span>
@@ -720,7 +724,11 @@ export default function AdminDashboard({
                                             type="button"
                                             className={courseLevel === value ? 'btn' : 'btn secondary'}
                                             aria-pressed={courseLevel === value}
-                                            onClick={() => setCourseLevel(value as CourseLevel)}
+                                            onClick={() =>
+                                                setCourseLevel((current) =>
+                                                    current === value ? null : (value as CourseLevel),
+                                                )
+                                            }
                                         >
                                             {label}
                                         </button>
@@ -742,7 +750,7 @@ export default function AdminDashboard({
                                         key={course.id}
                                         role="button"
                                         tabIndex={0}
-                                        aria-label={`Modifier ou supprimer le cours ${course.name}`}
+                                        aria-label={`Modifier ou supprimer le cours ${course.name.toLocaleUpperCase('fr-FR')}`}
                                         aria-haspopup="dialog"
                                         onClick={() => {
                                             setEditingCourse(course)
@@ -758,15 +766,20 @@ export default function AdminDashboard({
                                             }
                                         }}
                                     >
-                                        <div>
-                                            <strong>{course.name}</strong>
-                                            <div>
+                                        <div className="admin_course_details">
+                                            <div className="admin_course_heading">
+                                                <strong>{course.name.toLocaleUpperCase('fr-FR')}</strong>
                                                 <span
                                                     className={`month_event_level month_event_level_${course.level.toLowerCase()}`}
                                                 >
                                                     {courseLevels[course.level]}
                                                 </span>
                                             </div>
+                                            <p className="muted">
+                                                Professeur :{' '}
+                                                {teachers.find((t) => t.id === course.defaultTeacherId)?.name ??
+                                                    'Non défini'}
+                                            </p>
                                             <p className="muted">
                                                 Durée totale :{' '}
                                                 {(course.totalDurationMinutes / 60).toLocaleString('fr-FR')} h
@@ -781,11 +794,6 @@ export default function AdminDashboard({
                                                     ? 'désactivé'
                                                     : `J-${course.reminderDays}`}{' '}
                                                 · Annulation jusqu’à {course.cancellationHours} h avant le cours
-                                            </p>
-                                            <p className="muted">
-                                                Professeur :{' '}
-                                                {teachers.find((t) => t.id === course.defaultTeacherId)?.name ??
-                                                    'Non défini'}
                                             </p>
                                         </div>
                                     </div>
@@ -818,7 +826,7 @@ export default function AdminDashboard({
                             <dl className="admin_settings">
                                 <div>
                                     <dt>Nom</dt>
-                                    <dd>{selectedTeacher.lastName}</dd>
+                                    <dd>{selectedTeacher.lastName.toLocaleUpperCase('fr-FR')}</dd>
                                 </div>
                                 <div>
                                     <dt>Prénom</dt>
@@ -837,7 +845,9 @@ export default function AdminDashboard({
                                         {teacherDetails.nextSession ? (
                                             <>
                                                 <strong>{dateLabel(teacherDetails.nextSession.startsAt)}</strong>
-                                                <span>{teacherDetails.nextSession.course}</span>
+                                                <span>
+                                                    {teacherDetails.nextSession.course.toLocaleUpperCase('fr-FR')}
+                                                </span>
                                             </>
                                         ) : (
                                             <p className="muted">Aucune séance à venir planifiée.</p>
@@ -850,7 +860,7 @@ export default function AdminDashboard({
                                             {teacherDetails.assignedCourses.map((course) => (
                                                 <li key={course.id}>
                                                     <div className="student_purchase_heading">
-                                                        <strong>{course.name}</strong>
+                                                        <strong>{course.name.toLocaleUpperCase('fr-FR')}</strong>
                                                         <span
                                                             className={`month_event_level month_event_level_${course.level.toLowerCase()}`}
                                                         >
@@ -899,7 +909,7 @@ export default function AdminDashboard({
                 <SidePanel titleId="admin-student-title" busy={studentBusy} onClose={() => setStudent(null)}>
                     <span className="section_kicker">{editingStudent ? 'Modifier un étudiant' : 'Fiche étudiant'}</span>
                     <h2 id="admin-student-title">
-                        {student.firstName} {student.lastName}
+                        {student.firstName} {student.lastName.toLocaleUpperCase('fr-FR')}
                     </h2>
                     {editingStudent ? (
                         <StudentForm
@@ -914,7 +924,7 @@ export default function AdminDashboard({
                             <dl className="admin_settings">
                                 <div>
                                     <dt>Nom</dt>
-                                    <dd>{student.lastName}</dd>
+                                    <dd>{student.lastName.toLocaleUpperCase('fr-FR')}</dd>
                                 </div>
                                 <div>
                                     <dt>Prénom</dt>
@@ -952,7 +962,7 @@ export default function AdminDashboard({
                             {nextStudentSession ? (
                                 <>
                                     <strong>{dateLabel(nextStudentSession.startsAt)}</strong>
-                                    <span>{nextStudentSession.course}</span>
+                                    <span>{nextStudentSession.course.toLocaleUpperCase('fr-FR')}</span>
                                 </>
                             ) : (
                                 <p className="muted">Aucune séance à venir réservée.</p>
@@ -966,7 +976,7 @@ export default function AdminDashboard({
                                 <li key={e.id}>
                                     <details className="student_purchase">
                                         <summary className="student_purchase_heading">
-                                            <strong>{e.course}</strong>
+                                            <strong>{e.course.toLocaleUpperCase('fr-FR')}</strong>
                                             <span className="student_status_badge">
                                                 {e.status === 'SUSPENDED'
                                                     ? 'Suspendu'
@@ -1002,7 +1012,7 @@ export default function AdminDashboard({
                                                     {e.bookings.map((booking) => (
                                                         <li key={booking.id}>
                                                             <strong>{dateLabel(booking.startsAt)}</strong> ·{' '}
-                                                            {booking.course}
+                                                            {booking.course.toLocaleUpperCase('fr-FR')}
                                                             <span className="muted">
                                                                 {' '}
                                                                 ·{' '}
@@ -1101,7 +1111,7 @@ export default function AdminDashboard({
             {editingCourse && (
                 <SidePanel titleId="admin-course-title" busy={courseBusy} onClose={() => setEditingCourse(null)}>
                     <span className="section_kicker">Modifier un cours</span>
-                    <h2 id="admin-course-title">{editingCourse.name}</h2>
+                    <h2 id="admin-course-title">{editingCourse.name.toLocaleUpperCase('fr-FR')}</h2>
                     <CourseTemplateForm
                         onNotify={notify}
                         key={editingCourse.id}
@@ -1140,7 +1150,7 @@ export default function AdminDashboard({
                     }}
                 >
                     <span className="section_kicker">Modifier une séance</span>
-                    <h2 id="admin-edit-slot-title">{editingSlot.course}</h2>
+                    <h2 id="admin-edit-slot-title">{editingSlot.course.toLocaleUpperCase('fr-FR')}</h2>
                     {slotForm}
                     {slotError && (
                         <p className="error" role="alert">
@@ -1155,7 +1165,7 @@ export default function AdminDashboard({
                         {toast && <ToastMessage key={toast.id} message={toast.message} />}
                     </div>
                     <span className="section_kicker">Détail du créneau</span>
-                    <h2 id="admin-slot-title">{selected.course}</h2>
+                    <h2 id="admin-slot-title">{selected.course.toLocaleUpperCase('fr-FR')}</h2>
                     {selected.level && (
                         <span className={`month_event_level month_event_level_${selected.level.toLowerCase()}`}>
                             {courseLevels[selected.level]}
@@ -1185,6 +1195,7 @@ export default function AdminDashboard({
                                     <span className="muted">{student.email}</span>
                                     {student.status === 'BOOKED' && (
                                         <BookingActions
+                                            compact
                                             bookingId={student.bookingId}
                                             busy={busy}
                                             onBusyChange={setBusy}

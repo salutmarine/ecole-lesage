@@ -58,8 +58,10 @@ function studentFor(state: State, entitlementId: string) {
 }
 export function calendarSlots(state: State) {
     hydrate(state)
+    const entitlements = remaining(state)
     return state.slots.map((slot) => ({
         ...slot,
+        teacher: displayTeacher(state, slot.teacher),
         teacherId:
             hydrate(state).people.find((p) => p.role === 'TEACHER' && `${p.firstName} ${p.lastName}` === slot.teacher)
                 ?.id ?? null,
@@ -69,12 +71,25 @@ export function calendarSlots(state: State) {
                 const person = studentFor(state, b.entitlementId)!
                 return {
                     id: person.id,
-                    name: `${person.firstName} ${person.lastName}`,
+                    name: `${person.firstName} ${person.lastName.toLocaleUpperCase('fr-FR')}`,
                     email: person.email,
                     status: b.status,
                     attendance: b.attendance as 'UNMARKED' | 'PRESENT' | 'ABSENT',
                     phone: person.phone,
                     bookingId: b.id,
+                    sessions: entitlements
+                        .filter(
+                            (entitlement) =>
+                                (entitlement.userId ?? studentId) === person.id &&
+                                entitlement.courseId === slot.courseId,
+                        )
+                        .reduce(
+                            (summary, entitlement) => ({
+                                total: summary.total + entitlement.total,
+                                remaining: summary.remaining + entitlement.remaining,
+                            }),
+                            { total: 0, remaining: 0 },
+                        ),
                 }
             }),
     }))
@@ -85,7 +100,7 @@ export function adminProps(state: State) {
         .filter((p) => p.role === 'STUDENT')
         .map((p) => ({
             ...p,
-            name: `${p.firstName} ${p.lastName}`,
+            name: `${p.firstName} ${p.lastName.toLocaleUpperCase('fr-FR')}`,
             lastBookingAt:
                 state.bookings
                     .filter((b) => studentFor(state, b.entitlementId)?.id === p.id)
@@ -116,7 +131,7 @@ export function adminProps(state: State) {
                 .sort((a, b) => a.startsAt.localeCompare(b.startsAt))
             return {
                 ...p,
-                name: `${p.firstName} ${p.lastName}`,
+                name: `${p.firstName} ${p.lastName.toLocaleUpperCase('fr-FR')}`,
                 nextSession: slots[0] ? { startsAt: slots[0].startsAt, course: slots[0].course } : null,
                 assignedCourses: data.courses
                     .filter((c) => c.defaultTeacherId === p.id || slots.some((s) => s.courseId === c.id))
@@ -413,4 +428,12 @@ export async function adminRequest(state: State, url: URL, init?: RequestInit): 
         })
     }
     throw Error('Action indisponible dans la démo.')
+}
+
+export function displayTeacher(state: State, name: string | null) {
+    if (!name) return name
+    const teacher = hydrate(state).people.find(
+        (person) => person.role === 'TEACHER' && `${person.firstName} ${person.lastName}` === name,
+    )
+    return teacher ? `${teacher.firstName} ${teacher.lastName.toLocaleUpperCase('fr-FR')}` : name
 }

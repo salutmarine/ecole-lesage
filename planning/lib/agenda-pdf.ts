@@ -127,7 +127,7 @@ export async function createAgendaPdf(
             y -= 7
             lastDay = day
         }
-        text(`${time(session.startsAt)} – ${time(session.endsAt)} · ${session.course}`, 12)
+        text(`${time(session.startsAt)} – ${time(session.endsAt)} · ${session.course.toLocaleUpperCase('fr-FR')}`, 12)
         text(
             `${session.level ? `${courseLevels[session.level]} · ` : ''}Professeur : ${session.teacher || 'Non attribué'}`,
             9,
@@ -146,7 +146,7 @@ export async function createAgendaPdf(
         tableHeader()
         for (const student of session.students) {
             const cells = [
-                `${student.lastName} ${student.firstName}`,
+                `${student.lastName.toLocaleUpperCase('fr-FR')} ${student.firstName}`,
                 student.language,
                 student.email,
                 student.phone || '—',
@@ -154,7 +154,7 @@ export async function createAgendaPdf(
             const rowHeight = Math.max(...cells.map((cell) => cell.length)) * 13 + 12
             if (y - rowHeight < 48) {
                 addPage()
-                text(`${session.course} (suite)`, 11)
+                text(`${session.course.toLocaleUpperCase('fr-FR')} (suite)`, 11)
                 tableHeader()
             }
             let x = margin

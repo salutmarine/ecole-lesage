@@ -25,6 +25,7 @@ export default function BookingActions({
     onNotify,
     canManage = true,
     showCancel = true,
+    compact = false,
 }: {
     bookingId: string
     busy: boolean
@@ -35,6 +36,7 @@ export default function BookingActions({
     onNotify?: (message: string) => void
     canManage?: boolean
     showCancel?: boolean
+    compact?: boolean
 }) {
     const fieldId = useId()
     const [moving, setMoving] = useState(false)
@@ -98,7 +100,7 @@ export default function BookingActions({
             <div className="form_actions">
                 <button
                     type="button"
-                    className="btn btn-medium secondary"
+                    className={`btn${compact ? '' : ' btn-medium'} secondary`}
                     disabled={busy || !canManage}
                     aria-expanded={moving}
                     onClick={() => setMoving((value) => !value)}
@@ -108,9 +110,9 @@ export default function BookingActions({
                 {showCancel && (
                     <button
                         type="button"
-                        className="btn btn-medium danger"
+                        className={`btn${compact ? '' : ' btn-medium'} danger`}
                         disabled={busy || !canManage}
-                        onClick={() => onCancelRequest ? onCancelRequest() : void change('DELETE')}
+                        onClick={() => (onCancelRequest ? onCancelRequest() : void change('DELETE'))}
                     >
                         Annuler la réservation
                     </button>

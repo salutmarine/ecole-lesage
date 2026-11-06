@@ -48,7 +48,7 @@ export default async function AdminPage({ section }: { section: AdminSection }) 
             section={section}
             students={students.map((s) => ({
                 id: s.id,
-                name: `${s.firstName} ${s.lastName}`,
+                name: `${s.firstName} ${s.lastName.toLocaleUpperCase('fr-FR')}`,
                 email: s.email,
                 firstName: s.firstName,
                 lastName: s.lastName,
@@ -78,7 +78,7 @@ export default async function AdminPage({ section }: { section: AdminSection }) 
                 id: teacher.id,
                 firstName: teacher.firstName,
                 lastName: teacher.lastName,
-                name: `${teacher.firstName} ${teacher.lastName}`,
+                name: `${teacher.firstName} ${teacher.lastName.toLocaleUpperCase('fr-FR')}`,
                 email: teacher.email,
                 nextSession: teacher.teachingSlots[0]
                     ? {

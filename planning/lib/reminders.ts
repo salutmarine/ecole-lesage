@@ -61,12 +61,15 @@ export async function sendReminders() {
                         dateStyle: 'full',
                         timeStyle: 'short',
                     })
-                    const title = booking.slot.course?.name || 'Votre cours'
+                    const title = (booking.slot.course?.name || 'Votre cours').toLocaleUpperCase('fr-FR')
                     const info = await transport.sendMail({
                         from: MAIL_FROM,
-                        to: { name: `${booking.user.firstName} ${booking.user.lastName}`, address: booking.user.email },
+                        to: {
+                            name: `${booking.user.firstName} ${booking.user.lastName.toLocaleUpperCase('fr-FR')}`,
+                            address: booking.user.email,
+                        },
                         subject: `Rappel de votre séance : ${title}`,
-                        text: `Bonjour ${booking.user.firstName},\n\nVotre séance « ${title} » aura lieu le ${date} (heure de Paris).\n${booking.slot.teacher ? `Professeur : ${booking.slot.teacher.firstName} ${booking.slot.teacher.lastName}.\n` : ''}\nÀ bientôt,\nL’École Lesage`,
+                        text: `Bonjour ${booking.user.firstName},\n\nVotre séance « ${title} » aura lieu le ${date} (heure de Paris).\n${booking.slot.teacher ? `Professeur : ${booking.slot.teacher.firstName} ${booking.slot.teacher.lastName.toLocaleUpperCase('fr-FR')}.\n` : ''}\nÀ bientôt,\nL’École Lesage`,
                     })
                     if (!info.accepted?.length) throw Error('Email refusé par le serveur SMTP.')
                     await tx.booking.update({

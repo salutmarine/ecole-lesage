@@ -7,7 +7,7 @@ import Brand from '@/components/brand'
 import FontToggle from '@/components/font-toggle'
 import DemoLogin from '@/components/demo-login'
 import { adminSections } from '@/lib/admin-navigation'
-import { adminProps, teacherProps, hydrate } from '@/lib/admin-store'
+import { adminProps, teacherProps, hydrate, displayTeacher } from '@/lib/admin-store'
 import { loadState, resetState, remaining, type State } from '@/lib/store'
 import { router } from '@/lib/navigation'
 export default function Demo() {
@@ -34,8 +34,8 @@ export default function Demo() {
         view === 'admin'
             ? 'Je suis un administrateur'
             : view === 'teacher'
-              ? 'Je suis le professeur Louise Bernard'
-              : 'Je suis l’étudiant Louis Dubois'
+              ? 'Je suis le professeur Louise BERNARD'
+              : 'Je suis l’étudiant Louis DUBOIS'
     return (
         <div className="app_shell app_shell_no_sidebar">
             <div className="main_area">
@@ -66,11 +66,13 @@ export default function Demo() {
                             entitlements={remaining(state).filter(
                                 (e) => (e.userId ?? 'student-demo') === 'student-demo',
                             )}
-                            bookings={state.bookings.filter(
-                                (b) =>
-                                    (state.entitlements.find((e) => e.id === b.entitlementId)?.userId ??
-                                        'student-demo') === 'student-demo',
-                            )}
+                            bookings={state.bookings
+                                .filter(
+                                    (b) =>
+                                        (state.entitlements.find((e) => e.id === b.entitlementId)?.userId ??
+                                            'student-demo') === 'student-demo',
+                                )
+                                .map((booking) => ({ ...booking, teacher: displayTeacher(state, booking.teacher) }))}
                         />
                     ) : view === 'teacher' ? (
                         <TeacherDashboard

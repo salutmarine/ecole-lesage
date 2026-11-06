@@ -113,7 +113,7 @@ export default function StudentBooking({
                     <option value="">Choisir un cours</option>
                     {eligible.map((e) => (
                         <option key={e.id} value={e.id}>
-                            {e.course} · {e.remaining} séance(s) restante(s) · jusqu’au{' '}
+                            {e.course.toLocaleUpperCase('fr-FR')} · {e.remaining} séance(s) restante(s) · jusqu’au{' '}
                             {new Date(e.expiresAt).toLocaleDateString('fr-FR')}
                         </option>
                     ))}

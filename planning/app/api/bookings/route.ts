@@ -47,7 +47,9 @@ export async function PATCH(req: NextRequest) {
             endsAt: booking.slot.endsAt.toISOString(),
             status: booking.status,
             cancellationHours: booking.slot.course?.cancellationHours ?? 48,
-            teacher: booking.slot.teacher ? `${booking.slot.teacher.firstName} ${booking.slot.teacher.lastName}` : null,
+            teacher: booking.slot.teacher
+                ? `${booking.slot.teacher.firstName} ${booking.slot.teacher.lastName.toLocaleUpperCase('fr-FR')}`
+                : null,
         })
     } catch (error) {
         return NextResponse.json(

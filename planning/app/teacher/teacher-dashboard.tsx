@@ -21,7 +21,7 @@ export default function TeacherDashboard({ user }: { user: { id: string; firstNa
                             <div className="section_kicker">Professeur</div>
                             <h1>Mon agenda</h1>
                             <p>
-                                {user.firstName} {user.lastName}
+                                {user.firstName} {user.lastName.toLocaleUpperCase('fr-FR')}
                             </p>
                             <p>Consultez vos séances et faites l’appel des étudiants.</p>
                         </div>
@@ -40,7 +40,7 @@ export default function TeacherDashboard({ user }: { user: { id: string; firstNa
             {selected && (
                 <SidePanel titleId="teacher-session-title" busy={false} onClose={close}>
                     <span className="section_kicker">Ma séance</span>
-                    <h2 id="teacher-session-title">{selected.course}</h2>
+                    <h2 id="teacher-session-title">{selected.course.toLocaleUpperCase('fr-FR')}</h2>
                     {selected.level && (
                         <span className={`month_event_level month_event_level_${selected.level.toLowerCase()}`}>
                             {courseLevels[selected.level]}
@@ -66,17 +66,17 @@ export default function TeacherDashboard({ user }: { user: { id: string; firstNa
                     <p className="muted">Cochez les étudiants présents pour faire l’appel.</p>
                     {!selected.students?.length && <p className="muted">Aucun étudiant inscrit à cette séance.</p>}
                     {selected.students?.map((student) => (
-                        <div className="slot" key={student.bookingId}>
+                        <div className="slot teacher_student_row" key={student.bookingId}>
                             <AttendanceControl
                                 bookingId={student.bookingId}
                                 initialAttendance={student.attendance ?? 'UNMARKED'}
                                 studentName={student.name}
                                 canEdit={selected.teacherId === user.id}
                             />
-                            {student.phone && (
-                                <a className="btn secondary" href={`tel:${student.phone}`}>
-                                    Appeler
-                                </a>
+                            {student.sessions && (
+                                <span className="muted teacher_student_sessions">
+                                    {student.sessions.remaining} sur {student.sessions.total}
+                                </span>
                             )}
                         </div>
                     ))}

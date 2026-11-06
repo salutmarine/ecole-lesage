@@ -138,13 +138,13 @@ export default function StudentCredits({
                             {action === 'add-course'
                                 ? courses.map((c) => (
                                       <option key={c.id} value={c.id}>
-                                          {c.name}
+                                          {c.name.toLocaleUpperCase('fr-FR')}
                                       </option>
                                   ))
                                 : eligible.map((e) => (
                                       <option key={e.id} value={e.id}>
-                                          {e.course} · {e.remaining} restante(s) · valable jusqu’au{' '}
-                                          {new Date(e.expiresAt).toLocaleDateString('fr-FR')}
+                                          {e.course.toLocaleUpperCase('fr-FR')} · {e.remaining} restante(s) · valable
+                                          jusqu’au {new Date(e.expiresAt).toLocaleDateString('fr-FR')}
                                       </option>
                                   ))}
                         </select>

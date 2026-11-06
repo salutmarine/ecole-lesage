@@ -26,7 +26,22 @@ export async function GET(req: NextRequest) {
                     id: true,
                     status: true,
                     attendance: true,
-                    user: { select: { id: true, firstName: true, lastName: true, email: true, phone: true } },
+                    user: {
+                        select: {
+                            id: true,
+                            firstName: true,
+                            lastName: true,
+                            email: true,
+                            phone: true,
+                            entitlements: {
+                                select: {
+                                    courseId: true,
+                                    totalSessions: true,
+                                    _count: { select: { bookings: { where: { status: { not: 'CANCELLED' } } } } },
+                                },
+                            },
+                        },
+                    },
                 },
                 orderBy: [{ user: { lastName: 'asc' } }, { user: { firstName: 'asc' } }],
             },
@@ -78,7 +93,7 @@ export async function GET(req: NextRequest) {
             cancellationHours: s.course?.cancellationHours ?? 48,
             blocked: s.blocked,
             teacherId: s.teacherId,
-            teacher: s.teacher ? `${s.teacher.firstName} ${s.teacher.lastName}` : null,
+            teacher: s.teacher ? `${s.teacher.firstName} ${s.teacher.lastName.toLocaleUpperCase('fr-FR')}` : null,
             reserved: s._count.bookings,
             ...(user.role !== 'STUDENT'
                 ? {
@@ -88,8 +103,19 @@ export async function GET(req: NextRequest) {
                           attendance: booking.attendance,
                           phone: booking.user.phone,
                           id: booking.user.id,
-                          name: `${booking.user.firstName} ${booking.user.lastName}`,
+                          name: `${booking.user.firstName} ${booking.user.lastName.toLocaleUpperCase('fr-FR')}`,
                           email: booking.user.email,
+                          sessions: booking.user.entitlements
+                              .filter((entitlement) => entitlement.courseId === s.courseId)
+                              .reduce(
+                                  (summary, entitlement) => ({
+                                      total: summary.total + entitlement.totalSessions,
+                                      remaining:
+                                          summary.remaining +
+                                          Math.max(0, entitlement.totalSessions - entitlement._count.bookings),
+                                  }),
+                                  { total: 0, remaining: 0 },
+                              ),
                       })),
                   }
                 : {}),
