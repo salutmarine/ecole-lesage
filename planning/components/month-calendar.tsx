@@ -156,6 +156,16 @@ export function MonthCalendar({
                 <div className="month_controls">
                     <button
                         type="button"
+                        className="btn secondary month_today"
+                        onClick={() => {
+                            const today = new Date()
+                            setMonth(new Date(today.getFullYear(), today.getMonth(), 1))
+                        }}
+                    >
+                        Aujourd’hui
+                    </button>
+                    <button
+                        type="button"
                         className="btn secondary"
                         onClick={() => setMonth((d) => new Date(d.getFullYear(), d.getMonth() - 1, 1))}
                         aria-label="Mois précédent"
@@ -298,6 +308,8 @@ export function MonthCalendar({
                                                 <span className="month_event_name">
                                                     {s.course.toLocaleUpperCase('fr-FR')}
                                                 </span>
+                                                {s.teacher && <span className="month_event_places">{s.teacher}</span>}
+                                                {!full && <span className="month_event_places">{availability}</span>}
                                                 {s.level && (
                                                     <span
                                                         className={`month_event_level month_event_level_${s.level.toLowerCase()}`}
@@ -305,8 +317,6 @@ export function MonthCalendar({
                                                         {courseLevels[s.level]}
                                                     </span>
                                                 )}
-                                                {s.teacher && <span className="month_event_places">{s.teacher}</span>}
-                                                {!full && <span className="month_event_places">{availability}</span>}
                                             </button>
                                         )
                                     })}

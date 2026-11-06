@@ -1192,7 +1192,6 @@ export default function AdminDashboard({
                             {selected.students.map((student) => (
                                 <li key={student.bookingId}>
                                     <strong>{student.name}</strong>
-                                    <span className="muted">{student.email}</span>
                                     {student.status === 'BOOKED' && (
                                         <BookingActions
                                             compact
@@ -1251,9 +1250,16 @@ export default function AdminDashboard({
                                         aria-label={`Ajouter ${student.name} au cours`}
                                         onClick={() => addStudent(entitlement.id)}
                                     >
-                                        <strong>{student.name}</strong>
-                                        <span>{student.email}</span>
-                                        <small>{entitlement.remaining} séance(s) restante(s) · Ajouter</small>
+                                        <span className="slot_student_result_details">
+                                            <strong>{student.name}</strong>
+                                            <small>
+                                                {entitlement.remaining}{' '}
+                                                {entitlement.remaining > 1 ? 'séances restantes' : 'séance restante'}
+                                            </small>
+                                        </span>
+                                        <span className="slot_student_result_add" aria-hidden="true">
+                                            +
+                                        </span>
                                     </button>
                                 ))}
                             </div>
