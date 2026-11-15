@@ -174,10 +174,10 @@ export function CourseTemplateForm({
                     level: data.get('level'),
                     durationMinutes: Number(data.get('durationHours')) * 60,
                     totalDurationMinutes: Number(data.get('totalDurationHours')) * 60,
-                    capacity: Number(data.get('capacity')),
+                    capacity: course?.capacity ?? 12,
                     reminderDays: data.get('reminderDays') === '' ? null : Number(data.get('reminderDays')),
                     cancellationHours: Number(data.get('cancellationHours')),
-                    defaultTeacherId: data.get('defaultTeacherId') || null,
+                    defaultTeacherId: course?.defaultTeacherId ?? null,
                     minGapHours: Number(data.get('minGapHours')),
                     bookingDelayHours: Number(data.get('bookingDelayHours')),
                 })
@@ -223,26 +223,6 @@ export function CourseTemplateForm({
                 defaultValue={(course?.totalDurationMinutes ?? 180) / 60}
                 required
             />
-            <label htmlFor="template-capacity">Capacité d’accueil</label>
-            <input
-                id="template-capacity"
-                name="capacity"
-                type="number"
-                min={1}
-                max={100}
-                step={1}
-                defaultValue={course?.capacity ?? 12}
-                required
-            />
-            <label htmlFor="template-teacher">Professeur par défaut</label>
-            <select id="template-teacher" name="defaultTeacherId" defaultValue={course?.defaultTeacherId ?? ''}>
-                <option value="">Aucun professeur par défaut</option>
-                {teachers.map((teacher) => (
-                    <option key={teacher.id} value={teacher.id}>
-                        {teacher.name}
-                    </option>
-                ))}
-            </select>
             <label htmlFor="template-booking-delay">
                 Délai minimum avant de prendre rendez-vous après l’achat (en heures)
             </label>

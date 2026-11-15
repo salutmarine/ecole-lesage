@@ -37,7 +37,7 @@ export async function GET(req: NextRequest) {
                 id: slot.id,
                 startsAt: slot.startsAt,
                 endsAt: slot.endsAt,
-                course: slot.course?.name || 'Cours non attribué',
+                course: 'Séance',
                 level: slot.course?.level ?? null,
                 teacher: slot.teacher
                     ? `${slot.teacher.firstName} ${slot.teacher.lastName.toLocaleUpperCase('fr-FR')}`

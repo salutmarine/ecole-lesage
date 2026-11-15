@@ -1,3 +1,4 @@
+import { agendaPeriod } from '../../lib/agenda-period'
 import { sourceCatalogue, remaining, validateSlot, mutateBooking, type State, type Person, type Course } from './store'
 const studentId = 'student-demo'
 export function hydrate(state: State) {
@@ -74,7 +75,54 @@ export function calendarSlots(state: State) {
     }))
     return state.slots.map((slot) => ({
         ...slot,
-        teacher: displayTeacher(state, slot.teacher),
+        course: 'Séance',
+        blocked:
+            slot.blocked ||
+            !!state.blockouts?.some(
+                (block) =>
+                    new Date(block.startsAt) < new Date(slot.endsAt) &&
+                    new Date(block.endsAt) > new Date(slot.startsAt),
+            ),
+        teachers: [
+            ...new Map(
+                [
+                    ...(slot.teacherIds ?? []).map((id) => ({
+                        id,
+                        name: displayTeacher(state, dataTeacherName(state, id)),
+                    })),
+                    ...state.bookings
+                        .filter(
+                            (booking) =>
+                                booking.slotId === slot.id && booking.status !== 'CANCELLED' && booking.teacherId,
+                        )
+                        .map((booking) => ({
+                            id: booking.teacherId!,
+                            name: displayTeacher(state, dataTeacherName(state, booking.teacherId)),
+                        })),
+                    ...hydrate(state)
+                        .people.filter(
+                            (person) =>
+                                person.role === 'TEACHER' && `${person.firstName} ${person.lastName}` === slot.teacher,
+                        )
+                        .map((person) => ({ id: person.id, name: displayTeacher(state, slot.teacher) })),
+                ].map((teacher) => [teacher.id, teacher]),
+            ).values(),
+        ],
+        teacher:
+            [
+                ...new Set(
+                    [
+                        ...(slot.teacherIds ?? []).map((id) => displayTeacher(state, dataTeacherName(state, id))),
+                        ...state.bookings
+                            .filter(
+                                (booking) =>
+                                    booking.slotId === slot.id && booking.status !== 'CANCELLED' && booking.teacherId,
+                            )
+                            .map((booking) => displayTeacher(state, dataTeacherName(state, booking.teacherId))),
+                        displayTeacher(state, slot.teacher),
+                    ].filter(Boolean),
+                ),
+            ].join(', ') || null,
         teacherId:
             hydrate(state).people.find((p) => p.role === 'TEACHER' && `${p.firstName} ${p.lastName}` === slot.teacher)
                 ?.id ?? null,
@@ -90,11 +138,17 @@ export function calendarSlots(state: State) {
                     attendance: b.attendance as 'UNMARKED' | 'PRESENT' | 'ABSENT',
                     phone: person.phone,
                     bookingId: b.id,
+                    teacherId: b.teacherId ?? null,
+                    teacher: displayTeacher(state, dataTeacherName(state, b.teacherId)),
+                    entitlementId: b.entitlementId,
+                    level: hydrate(state).courses.find(
+                        (course) => course.id === state.entitlements.find((e) => e.id === b.entitlementId)?.courseId,
+                    )?.level,
+                    course: state.entitlements.find((e) => e.id === b.entitlementId)?.course,
                     sessions: entitlements
                         .filter(
                             (entitlement) =>
                                 (entitlement.userId ?? studentId) === person.id &&
-                                entitlement.courseId === slot.courseId &&
                                 entitlement.status === 'ACTIVE' &&
                                 new Date(entitlement.purchaseDate) <= new Date() &&
                                 new Date(entitlement.expiresAt) > new Date(),
@@ -143,72 +197,159 @@ export function adminProps(state: State) {
         .filter((p) => p.role === 'TEACHER')
         .map((p) => {
             const slots = state.slots
-                .filter((s) => s.teacher === `${p.firstName} ${p.lastName}` && new Date(s.endsAt) > new Date())
+                .filter(
+                    (s) =>
+                        !s.blocked &&
+                        state.bookings.some(
+                            (booking) =>
+                                booking.slotId === s.id && booking.teacherId === p.id && booking.status !== 'CANCELLED',
+                        ),
+                )
                 .sort((a, b) => a.startsAt.localeCompare(b.startsAt))
             return {
                 ...p,
                 name: `${p.firstName} ${p.lastName.toLocaleUpperCase('fr-FR')}`,
-                nextSession: slots[0] ? { startsAt: slots[0].startsAt, course: slots[0].course } : null,
-                assignedCourses: data.courses
-                    .filter((c) => c.defaultTeacherId === p.id || slots.some((s) => s.courseId === c.id))
-                    .map((c) => ({
-                        id: c.id,
-                        name: c.name,
-                        level: c.level,
-                        nextSessionAt: slots.find((s) => s.courseId === c.id)?.startsAt ?? null,
-                    })),
+                nextSession: slots.find((slot) => new Date(slot.endsAt) > new Date())
+                    ? { startsAt: slots.find((slot) => new Date(slot.endsAt) > new Date())!.startsAt, course: 'Séance' }
+                    : null,
+                assignedSessions: slots.map((slot) => ({
+                    id: slot.id,
+                    startsAt: slot.startsAt,
+                    endsAt: slot.endsAt,
+                    studentCount: new Set(
+                        state.bookings
+                            .filter(
+                                (booking) =>
+                                    booking.slotId === slot.id &&
+                                    booking.teacherId === p.id &&
+                                    booking.status !== 'CANCELLED',
+                            )
+                            .map((booking) => studentFor(state, booking.entitlementId)?.id),
+                    ).size,
+                    courses: [
+                        ...new Map(
+                            state.bookings
+                                .filter(
+                                    (booking) =>
+                                        booking.slotId === slot.id &&
+                                        booking.teacherId === p.id &&
+                                        booking.status !== 'CANCELLED',
+                                )
+                                .flatMap((booking) => {
+                                    const entitlement = state.entitlements.find((e) => e.id === booking.entitlementId)
+                                    const course = data.courses.find((course) => course.id === entitlement?.courseId)
+                                    return course
+                                        ? [
+                                              [
+                                                  course.id,
+                                                  { id: course.id, name: course.name, level: course.level },
+                                              ] as const,
+                                          ]
+                                        : []
+                                }),
+                        ).values(),
+                    ],
+                })),
             }
         })
     return { students, courses: data.courses, teachers }
 }
-export function teacherProps(state: State, past: boolean) {
+function dataTeacherName(state: State, teacherId?: string | null) {
+    const teacher = hydrate(state).people.find((person) => person.id === teacherId && person.role === 'TEACHER')
+    return teacher ? `${teacher.firstName} ${teacher.lastName}` : ''
+}
+export function teacherProps(state: State, _past = false) {
+    const user = hydrate(state).people.find(
+        (person) => person.id === state.demoTeacherId && person.role === 'TEACHER',
+    ) ??
+        hydrate(state).people.find((person) => person.role === 'TEACHER') ?? {
+            id: 'no-teacher',
+            firstName: '',
+            lastName: '',
+        }
+    return { user }
+}
+export function teacherSessions(state: State, date: string, next = false) {
+    const { from, to } = agendaPeriod(date, 'day')
     const data = hydrate(state)
-    const user = data.people.find((p) => p.role === 'TEACHER') ?? { id: 'no-teacher', firstName: '', lastName: '' }
-    const slots = state.slots
-        .filter(
-            (s) =>
-                s.teacher === `${user.firstName} ${user.lastName}` &&
-                (past ? new Date(s.endsAt) < new Date() : new Date(s.endsAt) >= new Date()),
-        )
-        .sort((a, b) => (past ? -1 : 1) * a.startsAt.localeCompare(b.startsAt))
-        .slice(0, 100)
-        .map((s) => ({
-            ...s,
-            startsAt: new Date(s.startsAt),
-            endsAt: new Date(s.endsAt),
-            teacherId: user.id,
-            course: data.courses.find((c) => c.id === s.courseId) ?? null,
-            bookings: state.bookings
-                .filter((b) => b.slotId === s.id && ['BOOKED', 'COMPLETED'].includes(b.status))
-                .map((b) => {
-                    const person = studentFor(state, b.entitlementId)!
+    let slots = state.slots.filter((slot) => new Date(slot.startsAt) >= from && new Date(slot.startsAt) < to)
+    const hasStudents = (slot: State['slots'][number]) =>
+        state.bookings.some((booking) => booking.slotId === slot.id && booking.status === 'BOOKED')
+    if (next && !slots.some((slot) => !slot.blocked && new Date(slot.endsAt) > new Date() && hasStudents(slot))) {
+        const upcoming = state.slots
+            .filter(
+                (slot) =>
+                    new Date(slot.startsAt) >= to &&
+                    new Date(slot.endsAt) > new Date() &&
+                    !slot.blocked &&
+                    hasStudents(slot),
+            )
+            .sort((a, b) => a.startsAt.localeCompare(b.startsAt))
+            .slice(0, 1)
+        if (upcoming.length) slots = upcoming
+    }
+    return slots
+        .sort((a, b) => a.startsAt.localeCompare(b.startsAt))
+        .map((slot) => ({
+            id: slot.id,
+            startsAt: slot.startsAt,
+            endsAt: slot.endsAt,
+            capacity: slot.capacity,
+            blocked: slot.blocked,
+            students: state.bookings
+                .filter((booking) => booking.slotId === slot.id && booking.status !== 'CANCELLED')
+                .map((booking) => {
+                    const person = studentFor(state, booking.entitlementId)!
+                    const entitlement = state.entitlements.find((item) => item.id === booking.entitlementId)!
+                    const course = data.courses.find((course) => course.id === entitlement.courseId)
                     return {
-                        ...b,
-                        attendance: b.attendance as 'UNMARKED' | 'PRESENT' | 'ABSENT',
-                        courseId: s.courseId,
-                        user: {
-                            ...person,
-                            entitlements: remaining(state)
-                                .filter((e) => (e.userId ?? studentId) === person.id)
-                                .map((e) => ({
-                                    courseId: e.courseId,
-                                    totalSessions: e.total,
-                                    _count: { bookings: e.total - e.remaining },
-                                })),
-                        },
+                        bookingId: booking.id,
+                        sessionNumber:
+                            1 +
+                            state.bookings.filter(
+                                (other) =>
+                                    other.entitlementId === booking.entitlementId &&
+                                    other.status !== 'CANCELLED' &&
+                                    new Date(other.date) < new Date(slot.startsAt),
+                            ).length,
+                        totalSessions: entitlement.total,
+                        name: `${person.firstName} ${person.lastName.toLocaleUpperCase('fr-FR')}`,
+                        courseId: entitlement.courseId,
+                        course: entitlement.course,
+                        level: course?.level ?? 'INITIATION',
+                        teacherId: booking.teacherId ?? null,
+                        teacher: displayTeacher(state, dataTeacherName(state, booking.teacherId)),
+                        attendance: booking.attendance,
+                        status: booking.status,
                     }
                 }),
         }))
-    const courses = data.courses
-        .filter(
-            (course) =>
-                course.defaultTeacherId === user.id ||
-                state.slots.some(
-                    (slot) => slot.courseId === course.id && slot.teacher === `${user.firstName} ${user.lastName}`,
-                ),
-        )
-        .map((course) => ({ id: course.id, name: course.name }))
-    return { user, slots, past, courses }
+}
+export function assignDemoStudents(
+    state: State,
+    teacherId: string,
+    slotId: string,
+    bookingIds: string[],
+    release = false,
+) {
+    if (!hydrate(state).people.some((person) => person.id === teacherId && person.role === 'TEACHER'))
+        throw Error('Professeur inconnu.')
+    if (!Array.isArray(bookingIds) || bookingIds.length === 0 || bookingIds.length > 100)
+        throw Error('Sélection invalide.')
+    const ids = [...new Set(bookingIds)]
+    const slot = state.slots.find((slot) => slot.id === slotId)
+    if (!slot || slot.blocked || new Date(slot.endsAt) <= new Date())
+        throw Error('Ce créneau est indisponible ou terminé.')
+    const bookings = state.bookings.filter(
+        (booking) => ids.includes(booking.id) && booking.slotId === slotId && booking.status === 'BOOKED',
+    )
+    if (bookings.length !== ids.length) throw Error('Une inscription a été annulée ou déplacée.')
+    if (bookings.some((booking) => (release ? booking.teacherId !== teacherId : !!booking.teacherId)))
+        throw Error('Un élève est déjà pris en charge par un professeur.')
+    if (release && bookings.some((booking) => booking.attendance !== 'UNMARKED'))
+        throw Error('Un élève déjà pointé ne peut pas être libéré.')
+    bookings.forEach((booking) => (booking.teacherId = release ? null : teacherId))
+    return { count: bookings.length }
 }
 type Payload = Partial<Course & Person> & {
     id?: string
@@ -221,18 +362,37 @@ type Payload = Partial<Course & Person> & {
     startsAt?: string
     endsAt?: string
     teacherId?: string
+    teacherIds?: string[]
     action?: string
     sessions?: number
     expiresAt?: string
+    bookingIds?: string[]
+    release?: boolean
 }
 export async function adminRequest(state: State, url: URL, init?: RequestInit): Promise<unknown> {
     const data = hydrate(state)
     const method = init?.method ?? 'GET'
     const body = JSON.parse(String(init?.body ?? '{}')) as Payload
     const path = url.pathname
+    if (path === '/api/teacher/sessions')
+        return teacherSessions(state, url.searchParams.get('date') ?? '', url.searchParams.get('next') === '1')
+    if (path === '/api/teacher/assignments')
+        return assignDemoStudents(
+            state,
+            teacherProps(state).user.id,
+            body.slotId ?? '',
+            body.bookingIds ?? [],
+            body.release,
+        )
     if (path === '/api/teacher/attendance') {
         const b = state.bookings.find((b) => b.id === body.bookingId)
-        if (!b || !['UNMARKED', 'PRESENT', 'ABSENT'].includes(body.attendance ?? '')) throw Error('Pointage invalide.')
+        if (
+            !b ||
+            b.teacherId !== teacherProps(state).user.id ||
+            !['BOOKED', 'COMPLETED'].includes(b.status) ||
+            !['UNMARKED', 'PRESENT', 'ABSENT'].includes(body.attendance ?? '')
+        )
+            throw Error('Pointage invalide.')
         b.attendance = body.attendance!
         return { attendance: b.attendance }
     }
@@ -248,6 +408,33 @@ export async function adminRequest(state: State, url: URL, init?: RequestInit): 
             })
             .map((s) => ({ ...s, places: s.capacity - s.reserved }))
     if (path === '/api/admin/entitlements') {
+        const owned = state.entitlements.find(
+            (e) => e.id === body.entitlementId && (e.userId ?? studentId) === body.userId,
+        )
+        if (method === 'DELETE') {
+            if (!owned) throw Error('Cours de l’étudiant introuvable.')
+            state.bookings
+                .filter((booking) => booking.entitlementId === owned.id && booking.status === 'BOOKED')
+                .forEach((booking) => {
+                    const slot = state.slots.find((slot) => slot.id === booking.slotId)
+                    if (slot) slot.reserved = Math.max(0, slot.reserved - 1)
+                })
+            state.bookings = state.bookings.filter((booking) => booking.entitlementId !== owned.id)
+            state.entitlements = state.entitlements.filter((e) => e.id !== owned.id)
+            return { id: owned.id }
+        }
+        if (body.action === 'set-sessions') {
+            if (!owned) throw Error('Cours de l’étudiant introuvable.')
+            const used = state.bookings.filter(
+                (booking) => booking.entitlementId === owned.id && booking.status !== 'CANCELLED',
+            ).length
+            if (!Number.isInteger(body.sessions) || body.sessions! < used || body.sessions! > 100000)
+                throw Error(`Le total doit être au moins de ${used} séances.`)
+            owned.total = body.sessions!
+            return adminProps(state)
+                .students.flatMap((student) => student.entitlements)
+                .find((e) => e.id === owned.id)
+        }
         if (!Number.isInteger(body.sessions) || body.sessions! < 1) throw Error('Nombre de séances invalide.')
         let credit = state.entitlements.find((e) => e.id === body.entitlementId)
         if (body.action === 'add-course') {
@@ -284,11 +471,13 @@ export async function adminRequest(state: State, url: URL, init?: RequestInit): 
             return { ok: true }
         }
         const course = data.courses.find((c) => c.id === body.courseId)
-        const teacher = data.people.find((p) => p.id === body.teacherId && p.role === 'TEACHER')
+        const teacherIds = [...new Set(body.teacherIds ?? (body.teacherId ? [body.teacherId] : []))]
+        if (teacherIds.some((id) => !data.people.some((person) => person.id === id && person.role === 'TEACHER')))
+            throw Error('Professeur inconnu.')
         const start = Date.parse(body.startsAt ?? ''),
             end = Date.parse(body.endsAt ?? '')
         if (
-            !course ||
+            (body.courseId && !course) ||
             !Number.isFinite(start) ||
             !Number.isFinite(end) ||
             start >= end ||
@@ -297,34 +486,42 @@ export async function adminRequest(state: State, url: URL, init?: RequestInit): 
         )
             throw Error('Créneau invalide.')
         if (body.capacity! < (previous?.reserved ?? 0)) throw Error('La capacité est inférieure au nombre d’inscrits.')
-        if (
-            teacher &&
-            state.slots.some(
-                (s) =>
-                    s.id !== previous?.id &&
-                    s.teacher === `${teacher.firstName} ${teacher.lastName}` &&
-                    Date.parse(s.startsAt) < end &&
-                    Date.parse(s.endsAt) > start,
+        for (const teacherId of teacherIds) {
+            const teacher = data.people.find((person) => person.id === teacherId)!
+            if (
+                state.slots.some(
+                    (slot) =>
+                        slot.id !== previous?.id &&
+                        Date.parse(slot.startsAt) < end &&
+                        Date.parse(slot.endsAt) > start &&
+                        ((slot.teacherIds ?? []).includes(teacherId) ||
+                            slot.teacher === `${teacher.firstName} ${teacher.lastName}` ||
+                            state.bookings.some(
+                                (booking) =>
+                                    booking.slotId === slot.id &&
+                                    booking.teacherId === teacherId &&
+                                    booking.status !== 'CANCELLED',
+                            )),
+                )
             )
-        )
-            throw Error('Le professeur a déjà un cours à cet horaire.')
+                throw Error('Un professeur a déjà une séance à cet horaire.')
+        }
         const slot = {
             id: previous?.id ?? crypto.randomUUID(),
-            courseId: course.id,
-            course: course.name,
-            level: course.level,
+            courseId: course?.id ?? null,
+            course: course?.name ?? 'Séance',
+            level: course?.level,
             startsAt: body.startsAt!,
             endsAt: body.endsAt!,
-            teacher: teacher ? `${teacher.firstName} ${teacher.lastName}` : '',
+            teacherIds,
+            teacher: '',
             capacity: body.capacity!,
             reserved: previous?.reserved ?? 0,
             blocked: false,
-            cancellationHours: course.cancellationHours,
+            cancellationHours: course?.cancellationHours ?? 48,
         }
         if (method === 'PATCH') {
             if (!previous) throw Error('Séance introuvable.')
-            if (previous.reserved && previous.courseId !== slot.courseId)
-                throw Error('Ce cours comporte des inscriptions.')
             Object.assign(previous, slot)
             state.bookings
                 .filter((b) => b.slotId === slot.id)
@@ -397,6 +594,10 @@ export async function adminRequest(state: State, url: URL, init?: RequestInit): 
                     })
                 state.entitlements = state.entitlements.filter((e) => !ids.includes(e.id))
             } else {
+                state.bookings
+                    .filter((booking) => booking.teacherId === previous.id)
+                    .forEach((booking) => (booking.teacherId = null))
+                state.slots.forEach((slot) => (slot.teacherIds = slot.teacherIds?.filter((id) => id !== previous.id)))
                 state.slots
                     .filter((s) => s.teacher === `${previous.firstName} ${previous.lastName}`)
                     .forEach((s) => (s.teacher = ''))
@@ -438,6 +639,7 @@ export async function adminRequest(state: State, url: URL, init?: RequestInit): 
             .filter((s) => new Date(s.startsAt) < period.to && new Date(s.endsAt) > period.from)
             .map((s) => ({
                 ...s,
+                level: s.level ?? null,
                 startsAt: new Date(s.startsAt),
                 endsAt: new Date(s.endsAt),
                 students: state.bookings

@@ -5,6 +5,7 @@ import SidePanel from '@/components/side-panel'
 import Toast, { ToastMessage } from '@/components/toast'
 import BookingActions, { type MovedBooking } from '@/components/booking-actions'
 import StudentCredits from './student-credits'
+import StudentCourseActions from './student-course-actions'
 import { courseLevels, type CourseLevel } from '@/lib/course-levels'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -54,7 +55,44 @@ type Teacher = {
     lastName: string
     email: string
     nextSession: { startsAt: string; course: string } | null
-    assignedCourses: { id: string; name: string; level: CourseLevel; nextSessionAt: string | null }[]
+    assignedSessions: {
+        id: string
+        startsAt: string
+        endsAt: string
+        studentCount: number
+        courses: { id: string; name: string; level: CourseLevel }[]
+    }[]
+}
+function teacherSessionLabel(session: Teacher['assignedSessions'][number]) {
+    const day = new Date(session.startsAt).toLocaleDateString('fr-FR', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        timeZone: 'Europe/Paris',
+    })
+    const time = (value: string) =>
+        new Date(value).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' })
+    return `${day.charAt(0).toUpperCase() + day.slice(1)} de ${time(session.startsAt)} à ${time(session.endsAt)} · ${session.studentCount} ${session.studentCount === 1 ? 'élève' : 'élèves'}`
+}
+function TeacherSessionCourses({ session }: { session: Teacher['assignedSessions'][number] }) {
+    return session.courses.length === 0 ? (
+        <p className="muted">Aucun cours prévu.</p>
+    ) : (
+        <>
+            {session.courses.map((course) => (
+                <div key={course.id} className="slot_student_course_heading">
+                    <span className="slot_student_course_name">
+                        <span aria-hidden="true">➔ </span>
+                        {course.name.toLocaleUpperCase('fr-FR')}
+                    </span>
+                    <span className={`month_event_level month_event_level_${course.level.toLowerCase()}`}>
+                        {courseLevels[course.level]}
+                    </span>
+                </div>
+            ))}
+        </>
+    )
 }
 export default function AdminDashboard({
     section,
@@ -109,6 +147,10 @@ export default function AdminDashboard({
     const [slotError, setSlotError] = useState('')
     const [selectedTeacher, setSelectedTeacher] = useState<Teacher | null>(null)
     const teacherDetails = teachers.find((teacher) => teacher.id === selectedTeacher?.id) ?? selectedTeacher
+    const nextTeacherSession = teacherDetails?.assignedSessions
+        .filter((session) => new Date(session.endsAt) > new Date())
+        .sort((a, b) => new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime())[0]
+
     const [editingTeacher, setEditingTeacher] = useState(false)
     const [teacherBusy, setTeacherBusy] = useState(false)
     const [teacherError, setTeacherError] = useState('')
@@ -126,18 +168,16 @@ export default function AdminDashboard({
         .filter((booking) => booking.status === 'BOOKED' && new Date(booking.startsAt).getTime() > Date.now())
         .sort((a, b) => new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime())[0]
     const [start, setStart] = useState(''),
-        [courseId, setCourseId] = useState(courses[0]?.id || ''),
-        [capacity, setCapacity] = useState(courses[0]?.capacity ?? 12)
-    const [durationMinutes, setDurationMinutes] = useState(courses[0]?.durationMinutes ?? 180)
-    const [teacherId, setTeacherId] = useState(courses[0]?.defaultTeacherId ?? '')
+        [capacity, setCapacity] = useState(12)
+    const [durationMinutes, setDurationMinutes] = useState(180)
+    const [teacherIds, setTeacherIds] = useState<string[]>([])
     function openCreateSlot(date?: string) {
         setEditingSlot(null)
         setSelected(null)
         setStart(date ? `${date}T09:00` : '')
-        setCourseId(courses[0]?.id ?? '')
-        setDurationMinutes(courses[0]?.durationMinutes ?? 180)
-        setTeacherId(courses[0]?.defaultTeacherId ?? '')
-        setCapacity(courses[0]?.capacity ?? 12)
+        setDurationMinutes(180)
+        setTeacherIds([])
+        setCapacity(12)
         setSlotError('')
         setMessage('')
         setCreatingSlot(true)
@@ -149,7 +189,6 @@ export default function AdminDashboard({
                   s.entitlements
                       .filter(
                           (e) =>
-                              e.courseId === selected.courseId &&
                               e.status === 'ACTIVE' &&
                               e.remaining > 0 &&
                               new Date(e.purchaseDate) <= new Date(selected.startsAt) &&
@@ -169,11 +208,9 @@ export default function AdminDashboard({
             .replace(/[\u0300-\u036f]/g, '')
             .toLocaleLowerCase('fr-FR')
             .trim()
-    const matchingStudents = eligible
-        .filter((item, index, all) => all.findIndex((other) => other.student.id === item.student.id) === index)
-        .filter(({ student }) =>
-            normalizeSearch(`${student.name} ${student.email}`).includes(normalizeSearch(studentSearch)),
-        )
+    const matchingStudents = eligible.filter(({ student }) =>
+        normalizeSearch(`${student.name} ${student.email}`).includes(normalizeSearch(studentSearch)),
+    )
     async function addStudent(entitlementId: string) {
         const choice = eligible.find((item) => item.entitlement.id === entitlementId)
         if (!selected || !choice || !canAdd || busy) return
@@ -205,6 +242,9 @@ export default function AdminDashboard({
                                   email: choice.student.email,
                                   status: 'BOOKED',
                                   bookingId: data.id,
+                                  entitlementId: choice.entitlement.id,
+                                  course: choice.entitlement.course,
+                                  level: courses.find((course) => course.id === choice.entitlement.courseId)?.level,
                               },
                           ],
                       }
@@ -234,10 +274,10 @@ export default function AdminDashboard({
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     id: editingSlot?.id,
-                    courseId,
+                    courseId: null,
                     startsAt: d.toISOString(),
                     endsAt: new Date(d.getTime() + durationMinutes * 60000).toISOString(),
-                    teacherId: teacherId || undefined,
+                    teacherIds,
                     capacity,
                 }),
             })
@@ -286,13 +326,29 @@ export default function AdminDashboard({
                 : null,
         )
         setSelected((current) =>
-            current && current.students?.some((item) => item.bookingId === id)
+            current && moved?.slotId === current.id
                 ? {
                       ...current,
-                      reserved: Math.max(0, current.reserved - 1),
-                      students: current.students.filter((item) => item.bookingId !== id),
+                      students: current.students?.map((item) =>
+                          item.bookingId === id
+                              ? {
+                                    ...item,
+                                    course: moved.course,
+                                    entitlementId: moved.entitlementId,
+                                    level: moved.level,
+                                    teacherId: moved.teacherId,
+                                    teacher: moved.teacher,
+                                }
+                              : item,
+                      ),
                   }
-                : current,
+                : current && current.students?.some((item) => item.bookingId === id)
+                  ? {
+                        ...current,
+                        reserved: Math.max(0, current.reserved - 1),
+                        students: current.students.filter((item) => item.bookingId !== id),
+                    }
+                  : current,
         )
         setRefresh((n) => n + 1)
         router.refresh()
@@ -316,7 +372,7 @@ export default function AdminDashboard({
             })
             const data = await response.json()
             if (!response.ok) throw Error(data.error || 'Suppression impossible.')
-            if (teacherId === selectedTeacher.id) setTeacherId('')
+            setTeacherIds((current) => current.filter((id) => id !== selectedTeacher.id))
             setSelectedTeacher(null)
             router.refresh()
             setRefresh((n) => n + 1)
@@ -375,7 +431,6 @@ export default function AdminDashboard({
             })
             const data = await response.json()
             if (!response.ok) throw Error(data.error || 'Suppression impossible.')
-            if (courseId === editingCourse.id) setCourseId('')
             setEditingCourse(null)
             setRefresh((n) => n + 1)
             router.refresh()
@@ -417,27 +472,6 @@ export default function AdminDashboard({
     }
     const slotForm = (
         <form onSubmit={create}>
-            <label>Nom du cours</label>
-            <select
-                required
-                value={courseId}
-                onChange={(e) => {
-                    setCourseId(e.target.value)
-                    const template = courses.find((course) => course.id === e.target.value)
-                    if (!editingSlot) {
-                        setDurationMinutes(template?.durationMinutes ?? 180)
-                        setTeacherId(template?.defaultTeacherId ?? '')
-                        setCapacity(template?.capacity ?? 12)
-                    }
-                }}
-            >
-                <option value="">Choisir un modèle de cours</option>
-                {courses.map((c) => (
-                    <option value={c.id} key={c.id}>
-                        {c.name.toLocaleUpperCase('fr-FR')}
-                    </option>
-                ))}
-            </select>
             <label htmlFor="slot-start">Date et heure de début</label>
             <DatePicker id="slot-start" withTime value={start} onChange={setStart} required />
             <label htmlFor="slot-duration">Durée (en heures)</label>
@@ -451,15 +485,27 @@ export default function AdminDashboard({
                 value={durationMinutes / 60}
                 onChange={(e) => setDurationMinutes(Number(e.target.value) * 60)}
             />
-            <label htmlFor="slot-teacher">Professeur</label>
-            <select id="slot-teacher" value={teacherId} onChange={(e) => setTeacherId(e.target.value)}>
-                <option value="">Sans professeur pour le moment</option>
-                {teachers.map((t) => (
-                    <option key={t.id} value={t.id}>
-                        {t.name}
-                    </option>
+            <fieldset className="slot_teacher_choices">
+                <legend>Professeurs</legend>
+                {teachers.length === 0 && <p className="muted">Aucun professeur disponible.</p>}
+                {teachers.map((teacher) => (
+                    <label className="attendance_checkbox" key={teacher.id}>
+                        <input
+                            type="checkbox"
+                            checked={teacherIds.includes(teacher.id)}
+                            onChange={(event) =>
+                                setTeacherIds((current) =>
+                                    event.target.checked
+                                        ? [...current, teacher.id]
+                                        : current.filter((id) => id !== teacher.id),
+                                )
+                            }
+                        />
+                        <span>{teacher.name}</span>
+                    </label>
                 ))}
-            </select>
+                {teacherIds.length === 0 && <p className="muted">Professeurs à définir</p>}
+            </fieldset>
             <label>Capacité d’accueil</label>
             <input
                 type="number"
@@ -469,7 +515,7 @@ export default function AdminDashboard({
                 onChange={(e) => setCapacity(Number(e.target.value))}
                 required
             />
-            <button className="btn btn-medium" disabled={busy || !courseId} type="submit">
+            <button className="btn btn-medium" disabled={busy} type="submit">
                 {editingSlot ? 'Enregistrer les modifications' : 'Créer le créneau'}
             </button>
             {editingSlot && (
@@ -563,10 +609,11 @@ export default function AdminDashboard({
                         <div className="admin_create">
                             <div className="card">
                                 <h2>Gestion des créneaux</h2>
-                                <p>Ajoutez un créneau en choisissant le cours, la date et le professeur.</p>
-                                <button type="button" className="btn" onClick={() => openCreateSlot()}>
-                                    Ajouter un créneau
-                                </button>
+                                <p>
+                                    Ajoutez un créneau ouvert à tous les cours en choisissant la date, le nombre de
+                                    places et le professeur.
+                                </p>
+                                {slotForm}
                             </div>
                         </div>
                     )}
@@ -786,17 +833,12 @@ export default function AdminDashboard({
                                                 </span>
                                             </div>
                                             <p className="muted">
-                                                Professeur :{' '}
-                                                {teachers.find((t) => t.id === course.defaultTeacherId)?.name ??
-                                                    'Non défini'}
-                                            </p>
-                                            <p className="muted">
                                                 Durée totale :{' '}
                                                 {(course.totalDurationMinutes / 60).toLocaleString('fr-FR')} h
                                             </p>
                                             <p className="muted">
                                                 {(course.durationMinutes / 60).toLocaleString('fr-FR')} h / séance ·{' '}
-                                                {course.capacity} places · Délai : {course.minGapHours} h
+                                                Délai : {course.minGapHours} h
                                             </p>
                                             <p className="muted">
                                                 Rappel :{' '}
@@ -835,58 +877,58 @@ export default function AdminDashboard({
                         <>
                             <dl className="admin_settings">
                                 <div>
-                                    <dt>Nom</dt>
-                                    <dd>{selectedTeacher.lastName.toLocaleUpperCase('fr-FR')}</dd>
-                                </div>
-                                <div>
-                                    <dt>Prénom</dt>
-                                    <dd>{selectedTeacher.firstName}</dd>
-                                </div>
-                                <div>
                                     <dt>Email</dt>
                                     <dd>{selectedTeacher.email}</dd>
                                 </div>
                             </dl>
                             {teacherDetails && (
-                                <section className="profile_assignments">
-                                    <h3>Cours attribués</h3>
+                                <>
                                     <div className="profile_next_session">
                                         <span className="section_kicker">Prochaine séance attribuée</span>
-                                        {teacherDetails.nextSession ? (
+                                        {nextTeacherSession ? (
                                             <>
-                                                <strong>{dateLabel(teacherDetails.nextSession.startsAt)}</strong>
-                                                <span>
-                                                    {teacherDetails.nextSession.course.toLocaleUpperCase('fr-FR')}
-                                                </span>
+                                                <strong>{teacherSessionLabel(nextTeacherSession)}</strong>
+                                                <TeacherSessionCourses session={nextTeacherSession} />
                                             </>
                                         ) : (
                                             <p className="muted">Aucune séance à venir planifiée.</p>
                                         )}
                                     </div>
-                                    {teacherDetails.assignedCourses.length === 0 ? (
-                                        <p className="muted">Aucun cours attribué.</p>
-                                    ) : (
-                                        <ul className="profile_assigned_courses">
-                                            {teacherDetails.assignedCourses.map((course) => (
-                                                <li key={course.id}>
-                                                    <div className="student_purchase_heading">
-                                                        <strong>{course.name.toLocaleUpperCase('fr-FR')}</strong>
-                                                        <span
-                                                            className={`month_event_level month_event_level_${course.level.toLowerCase()}`}
-                                                        >
-                                                            {courseLevels[course.level]}
-                                                        </span>
-                                                    </div>
+                                    {(['upcoming', 'past'] as const).map((period) => {
+                                        const sessions = teacherDetails.assignedSessions
+                                            .filter((session) =>
+                                                period === 'upcoming'
+                                                    ? new Date(session.endsAt) > new Date()
+                                                    : new Date(session.endsAt) <= new Date(),
+                                            )
+                                            .sort((a, b) =>
+                                                period === 'upcoming'
+                                                    ? new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime()
+                                                    : new Date(b.startsAt).getTime() - new Date(a.startsAt).getTime(),
+                                            )
+                                        return (
+                                            <div key={period} className="profile_assignments">
+                                                <h3>{period === 'upcoming' ? 'Séances à venir' : 'Séances passées'}</h3>
+                                                {sessions.length === 0 ? (
                                                     <p className="muted">
-                                                        {course.nextSessionAt
-                                                            ? `Prochaine séance : ${dateLabel(course.nextSessionAt)}`
-                                                            : 'Aucune séance à venir pour ce cours.'}
+                                                        {period === 'upcoming'
+                                                            ? 'Aucune séance à venir.'
+                                                            : 'Aucune séance passée.'}
                                                     </p>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    )}
-                                </section>
+                                                ) : (
+                                                    <ul className="profile_assigned_courses">
+                                                        {sessions.map((session) => (
+                                                            <li key={session.id}>
+                                                                <strong>{teacherSessionLabel(session)}</strong>
+                                                                <TeacherSessionCourses session={session} />
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                )}
+                                            </div>
+                                        )
+                                    })}
+                                </>
                             )}
                             <div className="form_actions">
                                 <button
@@ -933,14 +975,6 @@ export default function AdminDashboard({
                         <div>
                             <dl className="admin_settings">
                                 <div>
-                                    <dt>Nom</dt>
-                                    <dd>{student.lastName.toLocaleUpperCase('fr-FR')}</dd>
-                                </div>
-                                <div>
-                                    <dt>Prénom</dt>
-                                    <dd>{student.firstName}</dd>
-                                </div>
-                                <div>
                                     <dt>Email</dt>
                                     <dd>{student.email}</dd>
                                 </div>
@@ -965,131 +999,273 @@ export default function AdminDashboard({
                     <div className="admin_toast_region" role="status" aria-live="polite" aria-atomic="true">
                         {toast && <ToastMessage key={toast.id} message={toast.message} />}
                     </div>
-                    <div className="profile_assignments">
-                        <h3>Ses cours et séances</h3>
-                        <div className="profile_next_session">
-                            <span className="section_kicker">Prochaine séance réservée</span>
-                            {nextStudentSession ? (
-                                <>
-                                    <strong>{dateLabel(nextStudentSession.startsAt)}</strong>
-                                    <span>{nextStudentSession.course.toLocaleUpperCase('fr-FR')}</span>
-                                </>
-                            ) : (
-                                <p className="muted">Aucune séance à venir réservée.</p>
+                    {!editingStudent && (
+                        <div className="profile_assignments">
+                            <h3>Ses cours et séances</h3>
+                            <div className="profile_next_session">
+                                <span className="section_kicker">Prochaine séance réservée</span>
+                                {nextStudentSession ? (
+                                    <>
+                                        <strong>{dateLabel(nextStudentSession.startsAt)}</strong>
+                                        <span>{nextStudentSession.course.toLocaleUpperCase('fr-FR')}</span>
+                                    </>
+                                ) : (
+                                    <p className="muted">Aucune séance à venir réservée.</p>
+                                )}
+                            </div>
+                            {student.entitlements.length === 0 && (
+                                <p className="muted">Aucun cours attribué. Ajoutez son premier cours pour commencer.</p>
+                            )}
+                            <ul className="profile_assigned_courses">
+                                {student.entitlements
+                                    .slice()
+                                    .sort(
+                                        (a, b) =>
+                                            Number(a.remaining <= 0) - Number(b.remaining <= 0) ||
+                                            new Date(a.expiresAt).getTime() - new Date(b.expiresAt).getTime(),
+                                    )
+                                    .map((e) => (
+                                        <li key={e.id}>
+                                            <details className="student_purchase">
+                                                <summary className="student_purchase_heading">
+                                                    <strong>{e.course.toLocaleUpperCase('fr-FR')}</strong>
+                                                    <span
+                                                        className={`month_event_level month_event_level_${(courses.find((course) => course.id === e.courseId)?.level ?? 'INITIATION').toLowerCase()}`}
+                                                    >
+                                                        {
+                                                            courseLevels[
+                                                                courses.find((course) => course.id === e.courseId)
+                                                                    ?.level ?? 'INITIATION'
+                                                            ]
+                                                        }
+                                                    </span>
+                                                    <span
+                                                        className={`student_status_badge${e.status !== 'SUSPENDED' && new Date(e.expiresAt) > new Date() && e.remaining <= 0 ? ' student_status_badge_exhausted' : ''}`}
+                                                    >
+                                                        {e.status === 'SUSPENDED'
+                                                            ? 'Suspendu'
+                                                            : new Date(e.expiresAt) <= new Date()
+                                                              ? 'Expiré'
+                                                              : e.remaining <= 0
+                                                                ? 'Épuisé'
+                                                                : 'Actif'}
+                                                    </span>
+                                                </summary>
+                                                {!editingStudent && (
+                                                    <StudentCourseActions
+                                                        userId={student.id}
+                                                        entitlement={e}
+                                                        busy={studentBusy}
+                                                        onBusyChange={setStudentBusy}
+                                                        onNotify={notify}
+                                                        onUpdated={(updated) => {
+                                                            setStudent((current) =>
+                                                                current
+                                                                    ? {
+                                                                          ...current,
+                                                                          entitlements: current.entitlements.map(
+                                                                              (item) =>
+                                                                                  item.id === updated.id
+                                                                                      ? updated
+                                                                                      : item,
+                                                                          ),
+                                                                      }
+                                                                    : null,
+                                                            )
+                                                            setRefresh((value) => value + 1)
+                                                            router.refresh()
+                                                        }}
+                                                        onDeleted={(id) => {
+                                                            setStudent((current) =>
+                                                                current
+                                                                    ? {
+                                                                          ...current,
+                                                                          entitlements: current.entitlements.filter(
+                                                                              (item) => item.id !== id,
+                                                                          ),
+                                                                      }
+                                                                    : null,
+                                                            )
+                                                            setRefresh((value) => value + 1)
+                                                            router.refresh()
+                                                        }}
+                                                    />
+                                                )}
+                                                <dl className="admin_settings">
+                                                    <div>
+                                                        <dt>Date d’attribution</dt>
+                                                        <dd>{new Date(e.purchaseDate).toLocaleDateString('fr-FR')}</dd>
+                                                    </div>
+                                                    <div>
+                                                        <dt>Valable jusqu’au</dt>
+                                                        <dd>{new Date(e.expiresAt).toLocaleDateString('fr-FR')}</dd>
+                                                    </div>
+                                                    <div>
+                                                        <dt>Séances restantes</dt>
+                                                        <dd>
+                                                            {Math.max(0, e.remaining)} sur {e.total}
+                                                        </dd>
+                                                    </div>
+                                                </dl>
+                                                {(['upcoming', 'past'] as const).map((period) => {
+                                                    const bookings = e.bookings
+                                                        .filter((booking) =>
+                                                            period === 'upcoming'
+                                                                ? new Date(booking.endsAt) > new Date()
+                                                                : new Date(booking.endsAt) <= new Date(),
+                                                        )
+                                                        .sort((a, b) =>
+                                                            period === 'upcoming'
+                                                                ? new Date(a.startsAt).getTime() -
+                                                                  new Date(b.startsAt).getTime()
+                                                                : new Date(b.startsAt).getTime() -
+                                                                  new Date(a.startsAt).getTime(),
+                                                        )
+                                                    if (period === 'past' && bookings.length === 0) return null
+                                                    return (
+                                                        <section key={period} className="student_history_details">
+                                                            <h4>
+                                                                {period === 'upcoming'
+                                                                    ? 'Séances à venir'
+                                                                    : 'Séances passées'}
+                                                            </h4>
+                                                            {bookings.length === 0 ? (
+                                                                <p className="muted">
+                                                                    {period === 'upcoming'
+                                                                        ? 'Aucune séance à venir.'
+                                                                        : 'Aucune séance passée.'}
+                                                                </p>
+                                                            ) : (
+                                                                <ul className="student_booking_history">
+                                                                    {bookings.map((booking) => (
+                                                                        <li key={booking.id}>
+                                                                            {period === 'upcoming' ? (
+                                                                                <strong>
+                                                                                    {new Date(
+                                                                                        booking.startsAt,
+                                                                                    ).toLocaleDateString('fr-FR', {
+                                                                                        weekday: 'long',
+                                                                                        day: 'numeric',
+                                                                                        month: 'long',
+                                                                                        year: 'numeric',
+                                                                                        timeZone: 'Europe/Paris',
+                                                                                    })}{' '}
+                                                                                    de{' '}
+                                                                                    {new Date(
+                                                                                        booking.startsAt,
+                                                                                    ).toLocaleTimeString('fr-FR', {
+                                                                                        hour: '2-digit',
+                                                                                        minute: '2-digit',
+                                                                                        timeZone: 'Europe/Paris',
+                                                                                    })}{' '}
+                                                                                    à{' '}
+                                                                                    {new Date(
+                                                                                        booking.endsAt,
+                                                                                    ).toLocaleTimeString('fr-FR', {
+                                                                                        hour: '2-digit',
+                                                                                        minute: '2-digit',
+                                                                                        timeZone: 'Europe/Paris',
+                                                                                    })}
+                                                                                </strong>
+                                                                            ) : (
+                                                                                <>
+                                                                                    <strong>
+                                                                                        {dateLabel(booking.startsAt)}
+                                                                                    </strong>{' '}
+                                                                                    ·{' '}
+                                                                                    {booking.course.toLocaleUpperCase(
+                                                                                        'fr-FR',
+                                                                                    )}
+                                                                                </>
+                                                                            )}
+                                                                            {(booking.status === 'CANCELLED' ||
+                                                                                booking.attendance === 'PRESENT' ||
+                                                                                booking.attendance === 'ABSENT' ||
+                                                                                booking.status === 'COMPLETED' ||
+                                                                                new Date(booking.endsAt) <=
+                                                                                    new Date()) && (
+                                                                                <span className="muted">
+                                                                                    {' '}
+                                                                                    ·{' '}
+                                                                                    {booking.status === 'CANCELLED'
+                                                                                        ? 'Annulée'
+                                                                                        : booking.attendance ===
+                                                                                            'PRESENT'
+                                                                                          ? 'Présent'
+                                                                                          : booking.attendance ===
+                                                                                              'ABSENT'
+                                                                                            ? 'Absent'
+                                                                                            : booking.status ===
+                                                                                                'COMPLETED'
+                                                                                              ? 'Terminée'
+                                                                                              : new Date(
+                                                                                                      booking.endsAt,
+                                                                                                  ) < new Date()
+                                                                                                ? 'Passée · Présence non renseignée'
+                                                                                                : ''}
+                                                                                </span>
+                                                                            )}
+                                                                            {booking.status === 'BOOKED' && (
+                                                                                <BookingActions
+                                                                                    compact
+                                                                                    bookingId={booking.id}
+                                                                                    busy={studentBusy}
+                                                                                    onBusyChange={setStudentBusy}
+                                                                                    onNotify={notify}
+                                                                                    onMoved={(moved) =>
+                                                                                        updateIndividualBooking(
+                                                                                            booking.id,
+                                                                                            moved,
+                                                                                        )
+                                                                                    }
+                                                                                    onCancelled={() =>
+                                                                                        updateIndividualBooking(
+                                                                                            booking.id,
+                                                                                        )
+                                                                                    }
+                                                                                />
+                                                                            )}
+                                                                        </li>
+                                                                    ))}
+                                                                </ul>
+                                                            )}
+                                                        </section>
+                                                    )
+                                                })}
+                                            </details>
+                                        </li>
+                                    ))}
+                            </ul>
+                            {!editingStudent && (
+                                <StudentCredits
+                                    key={student.id}
+                                    userId={student.id}
+                                    courses={courses}
+                                    entitlements={student.entitlements}
+                                    busy={studentBusy}
+                                    onBusyChange={setStudentBusy}
+                                    onNotify={notify}
+                                    onUpdated={(entitlement) => {
+                                        setStudent((current) =>
+                                            current
+                                                ? {
+                                                      ...current,
+                                                      entitlements: current.entitlements.some(
+                                                          (e) => e.id === entitlement.id,
+                                                      )
+                                                          ? current.entitlements.map((e) =>
+                                                                e.id === entitlement.id ? entitlement : e,
+                                                            )
+                                                          : [entitlement, ...current.entitlements],
+                                                  }
+                                                : null,
+                                        )
+                                        router.refresh()
+                                    }}
+                                />
                             )}
                         </div>
-                        {student.entitlements.length === 0 && (
-                            <p className="muted">Aucun cours attribué. Ajoutez son premier cours pour commencer.</p>
-                        )}
-                        <ul className="profile_assigned_courses">
-                            {student.entitlements.map((e) => (
-                                <li key={e.id}>
-                                    <details className="student_purchase">
-                                        <summary className="student_purchase_heading">
-                                            <strong>{e.course.toLocaleUpperCase('fr-FR')}</strong>
-                                            <span className="student_status_badge">
-                                                {e.status === 'SUSPENDED'
-                                                    ? 'Suspendu'
-                                                    : new Date(e.expiresAt) <= new Date()
-                                                      ? 'Expiré'
-                                                      : e.remaining <= 0
-                                                        ? 'Épuisé'
-                                                        : 'Actif'}
-                                            </span>
-                                        </summary>
-                                        <dl className="admin_settings">
-                                            <div>
-                                                <dt>Date d’attribution</dt>
-                                                <dd>{new Date(e.purchaseDate).toLocaleDateString('fr-FR')}</dd>
-                                            </div>
-                                            <div>
-                                                <dt>Valable jusqu’au</dt>
-                                                <dd>{new Date(e.expiresAt).toLocaleDateString('fr-FR')}</dd>
-                                            </div>
-                                            <div>
-                                                <dt>Séances restantes</dt>
-                                                <dd>
-                                                    {Math.max(0, e.remaining)} sur {e.total}
-                                                </dd>
-                                            </div>
-                                        </dl>
-                                        {e.bookings.length === 0 ? (
-                                            <p className="muted">Aucune séance réservée.</p>
-                                        ) : (
-                                            <details className="student_history_details">
-                                                <summary>Historique · {e.bookings.length} séance(s)</summary>
-                                                <ul className="student_booking_history">
-                                                    {e.bookings.map((booking) => (
-                                                        <li key={booking.id}>
-                                                            <strong>{dateLabel(booking.startsAt)}</strong> ·{' '}
-                                                            {booking.course.toLocaleUpperCase('fr-FR')}
-                                                            <span className="muted">
-                                                                {' '}
-                                                                ·{' '}
-                                                                {booking.status === 'CANCELLED'
-                                                                    ? 'Annulée'
-                                                                    : booking.attendance === 'PRESENT'
-                                                                      ? 'Présent'
-                                                                      : booking.attendance === 'ABSENT'
-                                                                        ? 'Absent'
-                                                                        : booking.status === 'COMPLETED'
-                                                                          ? 'Terminée'
-                                                                          : new Date(booking.endsAt) < new Date()
-                                                                            ? 'Passée · Présence non renseignée'
-                                                                            : 'À venir'}
-                                                            </span>
-                                                            {booking.status === 'BOOKED' && (
-                                                                <BookingActions
-                                                                    bookingId={booking.id}
-                                                                    busy={studentBusy}
-                                                                    onBusyChange={setStudentBusy}
-                                                                    onNotify={notify}
-                                                                    onMoved={(moved) =>
-                                                                        updateIndividualBooking(booking.id, moved)
-                                                                    }
-                                                                    onCancelled={() =>
-                                                                        updateIndividualBooking(booking.id)
-                                                                    }
-                                                                />
-                                                            )}
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            </details>
-                                        )}
-                                    </details>
-                                </li>
-                            ))}
-                        </ul>
-                        {!editingStudent && (
-                            <StudentCredits
-                                key={student.id}
-                                userId={student.id}
-                                courses={courses}
-                                entitlements={student.entitlements}
-                                busy={studentBusy}
-                                onBusyChange={setStudentBusy}
-                                onNotify={notify}
-                                onUpdated={(entitlement) => {
-                                    setStudent((current) =>
-                                        current
-                                            ? {
-                                                  ...current,
-                                                  entitlements: current.entitlements.some(
-                                                      (e) => e.id === entitlement.id,
-                                                  )
-                                                      ? current.entitlements.map((e) =>
-                                                            e.id === entitlement.id ? entitlement : e,
-                                                        )
-                                                      : [entitlement, ...current.entitlements],
-                                              }
-                                            : null,
-                                    )
-                                    router.refresh()
-                                }}
-                            />
-                        )}
-                    </div>
+                    )}
                     {!editingStudent && (
                         <div className="form_actions">
                             <button
@@ -1196,12 +1372,8 @@ export default function AdminDashboard({
                         {toast && <ToastMessage key={toast.id} message={toast.message} />}
                     </div>
                     <span className="section_kicker">Détail du créneau</span>
-                    <h2 id="admin-slot-title">{selected.course.toLocaleUpperCase('fr-FR')}</h2>
-                    {selected.level && (
-                        <span className={`month_event_level month_event_level_${selected.level.toLowerCase()}`}>
-                            {courseLevels[selected.level]}
-                        </span>
-                    )}
+                    <h2 id="admin-slot-title">Séance</h2>
+
                     <p>{dateLabel(selected.startsAt)}</p>
                     <p className="muted">
                         Durée :{' '}
@@ -1209,7 +1381,7 @@ export default function AdminDashboard({
                             (new Date(selected.endsAt).getTime() - new Date(selected.startsAt).getTime()) /
                             3600000
                         ).toLocaleString('fr-FR')}{' '}
-                        h{selected.teacher && ` · Professeur : ${selected.teacher}`}
+                        h · {selected.teacher || 'Professeur à définir'}
                     </p>
                     <hr className="subtle_rule" />
                     <h3>
@@ -1237,10 +1409,68 @@ export default function AdminDashboard({
                                     >
                                         {student.name}
                                     </button>
+                                    <p className="muted">{student.teacher || 'Professeur à définir'}</p>
+                                    <div className="slot_student_courses">
+                                        {students
+                                            .find((item) => item.id === student.id)
+                                            ?.entitlements.filter(
+                                                (entitlement) => entitlement.id === student.entitlementId,
+                                            )
+                                            .map((entitlement) => {
+                                                const level = courses.find(
+                                                    (course) => course.id === entitlement.courseId,
+                                                )?.level
+                                                const precedingSessions = entitlement.bookings.filter(
+                                                    (booking) =>
+                                                        booking.id !== student.bookingId &&
+                                                        booking.status !== 'CANCELLED' &&
+                                                        new Date(booking.startsAt) < new Date(selected.startsAt),
+                                                ).length
+                                                const sessionNumber = precedingSessions + 1
+                                                return (
+                                                    <div key={entitlement.id} className="slot_student_course">
+                                                        <div className="slot_student_course_heading">
+                                                            <span className="slot_student_course_name">
+                                                                {entitlement.course}{' '}
+                                                                <span className="muted" style={{ fontSize: '14px' }}>
+                                                                    ({sessionNumber}/{entitlement.total})
+                                                                </span>
+                                                            </span>
+                                                            {level && (
+                                                                <span
+                                                                    className={`month_event_level month_event_level_${level.toLowerCase()}`}
+                                                                >
+                                                                    {courseLevels[level]}
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                )
+                                            })}
+                                    </div>
                                     {student.status === 'BOOKED' && (
                                         <BookingActions
                                             compact
                                             bookingId={student.bookingId}
+                                            currentSlotId={selected.id}
+                                            currentEntitlementId={student.entitlementId}
+                                            currentTeacherId={student.teacherId}
+                                            teacherOptions={teachers}
+                                            courseOptions={students
+                                                .find((item) => item.id === student.id)
+                                                ?.entitlements.filter(
+                                                    (ent) =>
+                                                        ent.id === student.entitlementId ||
+                                                        (ent.status === 'ACTIVE' &&
+                                                            ent.remaining > 0 &&
+                                                            new Date(ent.expiresAt) > new Date()),
+                                                )
+                                                .map((ent) => ({
+                                                    id: ent.id,
+                                                    course: ent.course,
+                                                    level: courses.find((course) => course.id === ent.courseId)?.level,
+                                                }))}
+
                                             busy={busy}
                                             onBusyChange={setBusy}
                                             onNotify={notify}
@@ -1288,7 +1518,7 @@ export default function AdminDashboard({
                             <div className="slot_student_results" aria-label="Étudiants disponibles" aria-busy={busy}>
                                 {matchingStudents.map(({ student, entitlement }) => (
                                     <button
-                                        key={student.id}
+                                        key={entitlement.id}
                                         className="slot_student_result"
                                         type="button"
                                         disabled={busy}
@@ -1298,7 +1528,14 @@ export default function AdminDashboard({
                                         <span className="slot_student_result_details">
                                             <strong>{student.name}</strong>
                                             <small>
-                                                {entitlement.remaining}{' '}
+                                                {entitlement.course} ·{' '}
+                                                {
+                                                    courseLevels[
+                                                        courses.find((course) => course.id === entitlement.courseId)
+                                                            ?.level ?? 'INITIATION'
+                                                    ]
+                                                }{' '}
+                                                · {entitlement.remaining}{' '}
                                                 {entitlement.remaining > 1 ? 'séances restantes' : 'séance restante'}
                                             </small>
                                         </span>
@@ -1311,7 +1548,7 @@ export default function AdminDashboard({
                             {matchingStudents.length === 0 && (
                                 <p className="muted" role="status">
                                     {eligible.length === 0
-                                        ? 'Aucun étudiant ne dispose de séances valides pour ce cours.'
+                                        ? 'Aucun étudiant ne dispose de séances valides.'
                                         : 'Aucun étudiant ne correspond à votre recherche.'}
                                 </p>
                             )}
@@ -1332,10 +1569,12 @@ export default function AdminDashboard({
                                 const date = new Date(selected.startsAt)
                                 const local = new Date(date.getTime() - date.getTimezoneOffset() * 60000)
                                 setStart(local.toISOString().slice(0, 16))
-                                setCourseId(selected.courseId ?? '')
                                 setDurationMinutes((new Date(selected.endsAt).getTime() - date.getTime()) / 60000)
                                 setCapacity(selected.capacity)
-                                setTeacherId(selected.teacherId ?? '')
+                                setTeacherIds(
+                                    selected.teachers?.map((teacher) => teacher.id) ??
+                                        (selected.teacherId ? [selected.teacherId] : []),
+                                )
                                 setEditingSlot(selected)
                                 setSelected(null)
                                 setMessage('')

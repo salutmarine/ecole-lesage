@@ -25,6 +25,7 @@ export default async function Page() {
                 id: e.id,
                 courseId: e.courseId,
                 course: e.course.name,
+                level: e.course.level,
                 total: e.totalSessions,
                 bookingDelayHours: e.course.bookingDelayHours,
                 remaining: e.totalSessions - e.bookings.filter((b) => b.status !== 'CANCELLED').length,

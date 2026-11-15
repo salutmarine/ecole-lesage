@@ -10,16 +10,16 @@ await cp(path.join(root, 'demo'), target, { recursive: true })
 await cp(path.join(root, 'app/icon.svg'), path.join(target, 'app/icon.svg'))
 await writeFile(
     path.join(target, 'lib/store.ts'),
-    (await readFile(path.join(target, 'lib/store.ts'), 'utf8')).replace(
-        '../../data/lesage/catalogue.json',
-        '@/data/catalogue.json',
-    ),
+    (await readFile(path.join(target, 'lib/store.ts'), 'utf8'))
+        .replace('../../data/lesage/catalogue.json', '@/data/catalogue.json')
+        .replace('../../data/lesage/local-demo.json', '@/data/local-demo.json'),
 )
 await rm(path.join(target, 'lib/store.test.ts'), { force: true })
 await symlink(path.join(root, 'node_modules'), path.join(target, 'node_modules'))
 await mkdir(path.join(target, 'components'), { recursive: true })
 await mkdir(path.join(target, 'data'), { recursive: true })
 await cp(path.join(root, 'data/lesage/catalogue.json'), path.join(target, 'data/catalogue.json'))
+await cp(path.join(root, 'data/lesage/local-demo.json'), path.join(target, 'data/local-demo.json'))
 for (const name of ['month-calendar', 'date-picker', 'booking-actions', 'side-panel', 'toast']) {
     let source = await readFile(path.join(root, `components/${name}.tsx`), 'utf8')
     if (source.includes('fetch('))
@@ -29,8 +29,15 @@ for (const name of ['month-calendar', 'date-picker', 'booking-actions', 'side-pa
 let dashboard = await readFile(path.join(root, 'app/student/student-dashboard.tsx'), 'utf8')
 dashboard = dashboard.replace("'use client'", "'use client'\nimport { demoFetch as fetch } from '@/lib/store'")
 await writeFile(path.join(target, 'components/student-dashboard.tsx'), dashboard)
-for (const name of ['course-levels', 'student-availability'])
+for (const name of ['course-levels', 'student-availability', 'teacher-sessions'])
     await cp(path.join(root, `lib/${name}.ts`), path.join(target, `lib/${name}.ts`))
+await writeFile(
+    path.join(target, 'lib/admin-store.ts'),
+    (await readFile(path.join(target, 'lib/admin-store.ts'), 'utf8')).replace(
+        '../../lib/agenda-period',
+        './agenda-period',
+    ),
+)
 const basePath = process.env.PAGES_BASE_PATH ?? '/ecole-lesage'
 await mkdir(path.join(target, 'public/fonts'), { recursive: true })
 await cp(
@@ -39,7 +46,14 @@ await cp(
 )
 const stylesheet = await readFile(path.join(root, 'app/globals.scss'), 'utf8')
 await writeFile(path.join(target, 'app/globals.scss'), stylesheet)
-for (const name of ['admin-dashboard', 'admin-forms', 'student-credits', 'student-booking', 'agenda-export']) {
+for (const name of [
+    'admin-dashboard',
+    'admin-forms',
+    'student-credits',
+    'student-course-actions',
+    'student-booking',
+    'agenda-export',
+]) {
     let source = await readFile(path.join(root, `app/admin/${name}.tsx`), 'utf8')
     source = source
         .replace("'use client'", "'use client'\nimport { demoFetch as fetch } from '@/lib/store'")
@@ -52,7 +66,15 @@ await writeFile(
     path.join(target, 'components/attendance-control.tsx'),
     attendance.replace("'use client'", "'use client'\nimport { demoFetch as fetch } from '@/lib/store'"),
 )
-await cp(path.join(root, 'app/teacher/teacher-dashboard.tsx'), path.join(target, 'components/teacher-dashboard.tsx'))
+for (const name of ['teacher-dashboard', 'teacher-day-organizer']) {
+    await writeFile(
+        path.join(target, `components/${name}.tsx`),
+        (await readFile(path.join(root, `app/teacher/${name}.tsx`), 'utf8')).replace(
+            "'use client'",
+            "'use client'\nimport { demoFetch as fetch } from '@/lib/store'",
+        ),
+    )
+}
 let login = await readFile(path.join(root, 'app/page.tsx'), 'utf8')
 login =
     "'use client'\nimport { useState, type FormEvent } from 'react'\nimport { router } from '@/lib/navigation'\n" +

@@ -33,11 +33,14 @@ export default async function AdminPage({ section }: { section: AdminSection }) 
                 firstName: true,
                 lastName: true,
                 email: true,
-                defaultCourses: { select: { id: true, name: true, level: true }, orderBy: { name: 'asc' } },
-                teachingSlots: {
-                    where: { startsAt: { gte: now }, blocked: false },
-                    orderBy: { startsAt: 'asc' },
-                    select: { startsAt: true, course: { select: { id: true, name: true, level: true } } },
+                teachingBookings: {
+                    where: { status: { in: ['BOOKED', 'COMPLETED'] }, slot: { blocked: false } },
+                    orderBy: { slot: { startsAt: 'asc' } },
+                    select: {
+                        userId: true,
+                        slot: { select: { id: true, startsAt: true, endsAt: true } },
+                        course: { select: { id: true, name: true, level: true } },
+                    },
                 },
             },
             orderBy: { lastName: 'asc' },
@@ -80,28 +83,33 @@ export default async function AdminPage({ section }: { section: AdminSection }) 
                 lastName: teacher.lastName,
                 name: `${teacher.firstName} ${teacher.lastName.toLocaleUpperCase('fr-FR')}`,
                 email: teacher.email,
-                nextSession: teacher.teachingSlots[0]
+                nextSession: teacher.teachingBookings.find((booking) => booking.slot.endsAt > now)
                     ? {
-                          startsAt: teacher.teachingSlots[0].startsAt.toISOString(),
-                          course: teacher.teachingSlots[0].course?.name ?? 'Cours non attribué',
+                          startsAt: teacher.teachingBookings
+                              .find((booking) => booking.slot.endsAt > now)!
+                              .slot.startsAt.toISOString(),
+                          course: 'Séance',
                       }
                     : null,
-                assignedCourses: [
-                    ...new Map(
-                        [
-                            ...teacher.defaultCourses,
-                            ...teacher.teachingSlots.flatMap((slot) => (slot.course ? [slot.course] : [])),
-                        ].map((course) => [course.id, course]),
-                    ).values(),
-                ]
-                    .sort((a, b) => a.name.localeCompare(b.name, 'fr'))
-                    .map((course) => ({
-                        ...course,
-                        nextSessionAt:
-                            teacher.teachingSlots
-                                .find((slot) => slot.course?.id === course.id)
-                                ?.startsAt.toISOString() ?? null,
-                    })),
+                assignedSessions: [
+                    ...new Map(teacher.teachingBookings.map((booking) => [booking.slot.id, booking.slot])).values(),
+                ].map((slot) => ({
+                    id: slot.id,
+                    startsAt: slot.startsAt.toISOString(),
+                    endsAt: slot.endsAt.toISOString(),
+                    studentCount: new Set(
+                        teacher.teachingBookings
+                            .filter((booking) => booking.slot.id === slot.id)
+                            .map((booking) => booking.userId),
+                    ).size,
+                    courses: [
+                        ...new Map(
+                            teacher.teachingBookings
+                                .filter((booking) => booking.slot.id === slot.id)
+                                .map((booking) => [booking.course.id, booking.course]),
+                        ).values(),
+                    ].sort((a, b) => a.name.localeCompare(b.name, 'fr')),
+                })),
             }))}
             courses={courses.map((c) => ({
                 id: c.id,

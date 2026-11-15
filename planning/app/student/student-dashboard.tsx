@@ -1,13 +1,14 @@
 'use client'
 import { useState } from 'react'
-import { courseLevels } from '@/lib/course-levels'
+import { courseLevels, type CourseLevel } from '@/lib/course-levels'
 import SidePanel from '@/components/side-panel'
 import Toast from '@/components/toast'
 import BookingActions, { type MovedBooking } from '@/components/booking-actions'
 import { CalendarSlot, MonthCalendar, dateLabel } from '@/components/month-calendar'
-import { availableEntitlement } from '@/lib/student-availability'
+import { availableEntitlement, reservationUnavailableReason } from '@/lib/student-availability'
 type Ent = {
     id: string
+    level?: CourseLevel
     courseId: string
     course: string
     total: number
@@ -81,10 +82,7 @@ function BookingPanel({
                         h
                     </dd>
                 </div>
-                <div>
-                    <dt>Professeur</dt>
-                    <dd>{booking.teacher || 'Non attribué'}</dd>
-                </div>
+
                 {entitlement && (
                     <>
                         <div>
@@ -159,7 +157,6 @@ function ReservationsPanel({
                             <div>
                                 <strong>{booking.course.toLocaleUpperCase('fr-FR')}</strong>
                                 <p>{dateLabel(booking.date)}</p>
-                                <p className="muted">{booking.teacher || 'Professeur non attribué'}</p>
                             </div>
                             <BookingActions
                                 bookingId={booking.id}
@@ -185,10 +182,7 @@ function ReservationsPanel({
                         <div>
                             <strong>{booking.course.toLocaleUpperCase('fr-FR')}</strong>
                             <p>{dateLabel(booking.date)}</p>
-                            <p className="muted">
-                                {booking.status === 'CANCELLED' ? 'Annulée' : 'Terminée'}
-                                {booking.teacher ? ` · ${booking.teacher}` : ''}
-                            </p>
+                            <p className="muted">{booking.status === 'CANCELLED' ? 'Annulée' : 'Terminée'}</p>
                         </div>
                     </article>
                 ))}
@@ -204,6 +198,7 @@ export default function StudentDashboard({ entitlements, bookings }: { entitleme
         [refresh, setRefresh] = useState(0),
         [busy, setBusy] = useState(false),
         [message, setMessage] = useState('')
+    const [errorRevision, setErrorRevision] = useState(0)
     const [openedBookingId, setOpenedBookingId] = useState<string | null>(null)
     const [reservationsOpen, setReservationsOpen] = useState(false)
     const [successToast, setSuccessToast] = useState<{ id: number; message: string } | null>(null)
@@ -211,7 +206,9 @@ export default function StudentDashboard({ entitlements, bookings }: { entitleme
     function entitlementFor(slot: CalendarSlot) {
         return availableEntitlement(items, slot)
     }
-    const current = selected ? entitlementFor(selected) : undefined
+    const [selectedEntitlementId, setSelectedEntitlementId] = useState('')
+    const eligibleCourses = selected ? items.filter((item) => !!availableEntitlement([item], selected)) : []
+    const current = eligibleCourses.find((item) => item.id === selectedEntitlementId)
     async function reserve() {
         if (!selected || !current) return
         setBusy(true)
@@ -243,19 +240,21 @@ export default function StudentDashboard({ entitlements, bookings }: { entitleme
                 },
             ])
             setSelected(null)
+            setSelectedEntitlementId('')
             setRefresh((n) => n + 1)
             setSuccessToast((previous) => ({
                 id: (previous?.id ?? 0) + 1,
-                message: 'Votre réservation est confirmée.',
+                message: 'Réservation confirmée',
             }))
         } catch (e) {
+            setErrorRevision((value) => value + 1)
             setMessage(e instanceof Error ? e.message : 'Erreur')
         } finally {
             setBusy(false)
         }
     }
     async function cancel(id: string) {
-        if (busy || !confirm('Annuler cette réservation ?')) return
+        if (busy) return
         setBusy(true)
         setMessage('')
         try {
@@ -270,6 +269,8 @@ export default function StudentDashboard({ entitlements, bookings }: { entitleme
             setReservations((old) => old.map((x) => (x.id === id ? { ...x, status: 'CANCELLED' } : x)))
             if (b)
                 setItems((old) => old.map((e) => (e.id === b.entitlementId ? { ...e, remaining: e.remaining + 1 } : e)))
+            setOpenedBookingId(null)
+            setReservationsOpen(false)
             setRefresh((n) => n + 1)
             setSuccessToast((previous) => ({ id: (previous?.id ?? 0) + 1, message: 'Réservation annulée.' }))
         } catch (e) {
@@ -304,6 +305,7 @@ export default function StudentDashboard({ entitlements, bookings }: { entitleme
                         {items.map((e) => (
                             <div className="student_entitlement" key={e.id}>
                                 <strong>{e.course.toLocaleUpperCase('fr-FR')}</strong>
+                                {e.level && <span className="student_status_badge">{courseLevels[e.level]}</span>}
                                 <div className="metric_value">
                                     {e.remaining}{' '}
                                     <span>
@@ -329,7 +331,13 @@ export default function StudentDashboard({ entitlements, bookings }: { entitleme
                 <div className="card student_calendar">
                     <MonthCalendar
                         mode="student"
+                        allowUnavailableSelection
                         canReserveSlot={(slot) => !!entitlementFor(slot)}
+                        bookedSlotCourses={Object.fromEntries(
+                            reservations
+                                .filter((booking) => booking.status === 'BOOKED' || booking.status === 'COMPLETED')
+                                .map((booking) => [booking.slotId, booking.course]),
+                        )}
                         bookedSlotIds={reservations
                             .filter((b) => b.status === 'BOOKED' || b.status === 'COMPLETED')
                             .map((b) => b.slotId)}
@@ -341,7 +349,14 @@ export default function StudentDashboard({ entitlements, bookings }: { entitleme
                             if (booking) {
                                 setOpenedBookingId(booking.id)
                                 setMessage('')
-                            } else if (entitlementFor(slot)) {
+                            } else {
+                                const reason = reservationUnavailableReason(items, slot)
+                                if (reason) {
+                                    setErrorRevision((value) => value + 1)
+                                    setMessage(reason)
+                                    return
+                                }
+                                setSelectedEntitlementId('')
                                 setSelected(slot)
                                 setMessage('')
                             }
@@ -371,16 +386,13 @@ export default function StudentDashboard({ entitlements, bookings }: { entitleme
                     onBusyChange={setBusy}
                 />
             )}
-            {message && <Toast message={message} variant="error" />}
-            {selected && current && (
+            {message && !selected && <Toast key={errorRevision} message={message} variant="error" />}
+            {selected && (
                 <SidePanel titleId="reserve-panel-title" busy={busy} onClose={() => setSelected(null)}>
+                    {message && <Toast key={errorRevision} message={message} variant="error" />}
                     <span className="section_kicker">Réserver une séance</span>
-                    <h2 id="reserve-panel-title">{selected.course.toLocaleUpperCase('fr-FR')}</h2>
-                    {selected.level && (
-                        <span className={`month_event_level month_event_level_${selected.level.toLowerCase()}`}>
-                            {courseLevels[selected.level]}
-                        </span>
-                    )}
+                    <h2 id="reserve-panel-title">Séance</h2>
+
                     <dl className="admin_settings">
                         <div>
                             <dt>Début</dt>
@@ -400,10 +412,7 @@ export default function StudentDashboard({ entitlements, bookings }: { entitleme
                                 h
                             </dd>
                         </div>
-                        <div>
-                            <dt>Professeur</dt>
-                            <dd>{selected.teacher || 'Non attribué'}</dd>
-                        </div>
+
                         <div>
                             <dt>Places disponibles</dt>
                             <dd>
@@ -411,12 +420,31 @@ export default function StudentDashboard({ entitlements, bookings }: { entitleme
                             </dd>
                         </div>
                     </dl>
-                    <p className="muted">
-                        {current.remaining === 1
-                            ? 'Cette réservation utilisera votre dernière séance disponible.'
-                            : `Cette réservation utilisera une de vos ${current.remaining} séances disponibles.`}
-                    </p>
-                    <button className="btn btn-medium" type="button" onClick={reserve} disabled={busy}>
+                    <label htmlFor="reservation-course">Cours à suivre pendant cette séance</label>
+                    <select
+                        id="reservation-course"
+                        value={selectedEntitlementId}
+                        disabled={busy}
+                        required
+                        onChange={(event) => setSelectedEntitlementId(event.target.value)}
+                    >
+                        <option value="">Choisir un cours acheté</option>
+                        {eligibleCourses.map((course) => (
+                            <option key={course.id} value={course.id}>
+                                {course.course}
+                                {course.level ? ` · ${courseLevels[course.level]}` : ''} · {course.remaining} séance(s)
+                                disponible(s)
+                            </option>
+                        ))}
+                    </select>
+                    {current && (
+                        <p className="muted">
+                            {current.remaining === 1
+                                ? 'Cette réservation utilisera votre dernière séance disponible.'
+                                : `Cette réservation utilisera une de vos ${current.remaining} séances disponibles.`}
+                        </p>
+                    )}
+                    <button className="btn btn-medium" type="button" onClick={reserve} disabled={busy || !current}>
                         {busy ? 'Réservation…' : 'Confirmer la réservation'}
                     </button>
                 </SidePanel>

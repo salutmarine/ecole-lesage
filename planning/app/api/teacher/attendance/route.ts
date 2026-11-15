@@ -13,7 +13,7 @@ export async function PATCH(req: NextRequest) {
     try {
         const { bookingId, attendance } = schema.parse(await req.json())
         const result = await db.booking.updateMany({
-            where: { id: bookingId, status: { in: ['BOOKED', 'COMPLETED'] }, slot: { teacherId: actor.id } },
+            where: { id: bookingId, status: { in: ['BOOKED', 'COMPLETED'] }, teacherId: actor.id },
             data: { attendance },
         })
         if (!result.count)

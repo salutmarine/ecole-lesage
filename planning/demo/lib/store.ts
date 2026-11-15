@@ -1,4 +1,5 @@
 import catalogue from '../../data/lesage/catalogue.json'
+import localDemo from '../../data/lesage/local-demo.json'
 export type Person = {
     id: string
     firstName: string
@@ -6,12 +7,12 @@ export type Person = {
     email: string
     phone: string | null
     language: string
-    role: 'STUDENT' | 'TEACHER'
+    role: 'STUDENT' | 'TEACHER' | 'ADMIN'
 }
 export type Course = {
     id: string
     name: string
-    level: Slot['level']
+    level: NonNullable<Slot['level']>
     durationMinutes: number
     totalDurationMinutes: number
     capacity: number
@@ -22,12 +23,13 @@ export type Course = {
     bookingDelayHours: number
 }
 export const sourceCatalogue = catalogue
-export const STORAGE_KEY = 'lesage-pages-demo-v6'
+export const STORAGE_KEY = `lesage-pages-demo-v6-${localDemo.snapshotId}`
 export type Slot = {
+    teacherIds?: string[]
     id: string
-    courseId: string
+    courseId: string | null
     course: string
-    level: 'INITIATION' | 'PERFECTIONNEMENT' | 'SPECIALISATION'
+    level?: 'INITIATION' | 'PERFECTIONNEMENT' | 'SPECIALISATION'
     teacher: string
     startsAt: string
     endsAt: string
@@ -37,6 +39,7 @@ export type Slot = {
     blocked: boolean
 }
 export type Booking = {
+    teacherId?: string | null
     id: string
     slotId: string
     entitlementId: string
@@ -62,6 +65,10 @@ export type Entitlement = {
 }
 export type State = {
     version: 6
+    snapshotId?: string
+    demoStudentId?: string
+    demoTeacherId?: string
+    blockouts?: { id: string; startsAt: string; endsAt: string; reason: string | null }[]
     slots: Slot[]
     entitlements: Entitlement[]
     bookings: Booking[]
@@ -233,7 +240,28 @@ export function createState(now = new Date(), withDemoBookings = true): State {
             }
         })
     }
+    if (withDemoBookings) {
+        const teachers = people.filter((person) => person.role === 'TEACHER')
+        slots.forEach((slot, index) => {
+            // Teachers are assigned to enrolled students; keep some sessions unassigned.
+            slot.teacher = ''
+            const teacher = index % 5 === 0 ? undefined : teachers[index % teachers.length]
+            bookings
+                .filter((booking) => booking.slotId === slot.id)
+                .forEach((booking) => {
+                    booking.teacherId = teacher?.id ?? null
+                    booking.teacher = teacher ? `${teacher.firstName} ${teacher.lastName}` : null
+                    if (booking.status === 'COMPLETED' && teacher) booking.attendance = 'PRESENT'
+                })
+        })
+    }
     return { version: 6, entitlements, slots, bookings, people }
+}
+export function initialState(): State {
+    return structuredClone(localDemo) as State
+}
+export function demoStudentId(state: State) {
+    return state.demoStudentId ?? 'student-demo'
 }
 let current: State | undefined
 export function loadState(): State {
@@ -246,15 +274,14 @@ export function loadState(): State {
                 parsed.version === 6 &&
                 Array.isArray(parsed.slots) &&
                 Array.isArray(parsed.entitlements) &&
-                Array.isArray(parsed.bookings) &&
-                parsed.slots.some((s) => new Date(s.startsAt).getTime() > Date.now())
+                Array.isArray(parsed.bookings)
             )
                 current = parsed
         }
     } catch {
         /* Browsers may disable persistence. The demo still works in memory. */
     }
-    return (current ??= createState())
+    return (current ??= initialState())
 }
 export function saveState(state: State) {
     current = state
@@ -265,7 +292,7 @@ export function saveState(state: State) {
     }
 }
 export function resetState() {
-    const state = createState()
+    const state = initialState()
     saveState(state)
     return state
 }
@@ -278,10 +305,19 @@ export function remaining(state: State) {
 export function validateSlot(state: State, entitlementId: string, slotId: string, excluding?: string) {
     const slot = state.slots.find((s) => s.id === slotId)
     const credit = remaining(state).find((e) => e.id === entitlementId)
-    if (!slot || !credit || slot.courseId !== credit.courseId) throw Error('Choisissez une séance du même cours.')
+    if (!slot || !credit) throw Error('Créneau ou crédit introuvable.')
+    if (
+        state.blockouts?.some(
+            (block) =>
+                new Date(block.startsAt) < new Date(slot.endsAt) && new Date(block.endsAt) > new Date(slot.startsAt),
+        )
+    )
+        throw Error('Une indisponibilité bloque ce créneau.')
     if (slot.blocked || new Date(slot.startsAt).getTime() <= Date.now()) throw Error('Ce créneau est indisponible.')
-    if (slot.reserved >= slot.capacity) throw Error('Ce créneau est complet.')
-    if (!excluding && credit.remaining <= 0) throw Error('Vous n’avez plus de séances disponibles.')
+    const existing = state.bookings.find((booking) => booking.id === excluding)
+    if (slot.reserved - (existing?.slotId === slot.id ? 1 : 0) >= slot.capacity) throw Error('Ce créneau est complet.')
+    if (credit.remaining + (existing?.entitlementId === credit.id ? 1 : 0) <= 0)
+        throw Error('Vous n’avez plus de séances disponibles.')
     if (new Date(slot.startsAt) >= new Date(credit.expiresAt)) throw Error('Ce crédit a expiré.')
     const conflict = state.bookings.some(
         (b) =>
@@ -298,7 +334,7 @@ export function validateSlot(state: State, entitlementId: string, slotId: string
 export function mutateBooking(
     state: State,
     method: string,
-    body: { id?: string; slotId?: string; entitlementId?: string },
+    body: { id?: string; slotId?: string; entitlementId?: string; teacherId?: string | null },
 ): Booking | { ok: boolean } {
     if (method === 'POST') {
         const slot = validateSlot(state, body.entitlementId ?? '', body.slotId ?? '')
@@ -320,10 +356,59 @@ export function mutateBooking(
     }
     const booking = state.bookings.find((b) => b.id === body.id)
     if (!booking || booking.status !== 'BOOKED') throw Error('Réservation introuvable ou déjà annulée.')
+    if (method === 'PATCH' && body.entitlementId) {
+        const oldCredit = state.entitlements.find((item) => item.id === booking.entitlementId)!
+        const credit = state.entitlements.find((item) => item.id === body.entitlementId)
+        if (!credit || (credit.userId ?? 'student-demo') !== (oldCredit.userId ?? 'student-demo'))
+            throw Error('Cours de l’étudiant introuvable.')
+        const targetId = body.slotId || booking.slotId
+        const target = validateSlot(state, credit.id, targetId, booking.id)
+        const teacher = body.teacherId
+            ? state.people?.find((person) => person.id === body.teacherId && person.role === 'TEACHER')
+            : undefined
+        if (body.teacherId && !teacher) throw Error('Professeur inconnu.')
+        if (
+            teacher &&
+            state.slots.some(
+                (slot) =>
+                    slot.id !== targetId &&
+                    new Date(slot.startsAt) < new Date(target.endsAt) &&
+                    new Date(slot.endsAt) > new Date(target.startsAt) &&
+                    ((slot.teacherIds ?? []).includes(teacher.id) ||
+                        slot.teacher === `${teacher.firstName} ${teacher.lastName}` ||
+                        state.bookings.some(
+                            (item) =>
+                                item.slotId === slot.id && item.teacherId === teacher.id && item.status !== 'CANCELLED',
+                        )),
+            )
+        )
+            throw Error('Ce professeur a déjà une séance à cet horaire.')
+
+        if (targetId !== booking.slotId) {
+            booking.teacherId = null
+            state.slots.find((slot) => slot.id === booking.slotId)!.reserved--
+            target.reserved++
+            Object.assign(booking, {
+                slotId: target.id,
+                date: target.startsAt,
+                endsAt: target.endsAt,
+                teacher: target.teacher,
+            })
+        }
+        if (booking.entitlementId !== credit.id) booking.teacherId = null
+        booking.entitlementId = credit.id
+        booking.course = credit.course
+        if (body.teacherId !== undefined) {
+            booking.teacherId = body.teacherId
+            booking.teacher = teacher ? `${teacher.firstName} ${teacher.lastName.toLocaleUpperCase('fr-FR')}` : null
+        }
+        return Object.assign(booking, { level: state.courses?.find((course) => course.id === credit.courseId)?.level })
+    }
     if (new Date(booking.date).getTime() - Date.now() < booking.cancellationHours * 3600000)
         throw Error('Le délai de modification de 48 h est dépassé.')
     const previous = state.slots.find((s) => s.id === booking.slotId)!
     if (method === 'DELETE') {
+        booking.teacherId = null
         booking.status = 'CANCELLED'
         previous.reserved--
         return { ok: true }
@@ -334,6 +419,7 @@ export function mutateBooking(
     slot.reserved++
     Object.assign(booking, {
         slotId: slot.id,
+        teacherId: null,
         course: slot.course,
         date: slot.startsAt,
         endsAt: slot.endsAt,
@@ -356,9 +442,14 @@ export async function demoFetch(input: string, init?: RequestInit): Promise<Resp
             const booking = state.bookings.find((b) => b.id === url.searchParams.get('bookingId'))
             if (!booking) throw Error('Réservation introuvable.')
             result = state.slots.filter((s) => {
-                if (s.id === booking.slotId) return false
+                if (s.id === booking.slotId && !url.searchParams.has('entitlementId')) return false
                 try {
-                    validateSlot(state, booking.entitlementId, s.id, booking.id)
+                    validateSlot(
+                        state,
+                        url.searchParams.get('entitlementId') || booking.entitlementId,
+                        s.id,
+                        booking.id,
+                    )
                     return true
                 } catch {
                     return false

@@ -27,7 +27,6 @@ export async function GET(req: NextRequest) {
                     throw Error('Cours de l’étudiant indisponible.')
                 const candidates = await tx.slot.findMany({
                     where: {
-                        courseId: entitlement.courseId,
                         blocked: false,
                         startsAt: { gt: new Date(), gte: entitlement.purchaseDate, lt: entitlement.expiresAt },
                     },

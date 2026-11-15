@@ -1,12 +1,13 @@
 'use client'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { courseLevels, type CourseLevel } from '@/lib/course-levels'
+import { type CourseLevel } from '@/lib/course-levels'
 export type CalendarSlot = {
     id: string
     courseId: string | null
     course: string
     level?: CourseLevel | null
     teacherId?: string | null
+    teachers?: { id: string; name: string }[]
     teacher?: string | null
     startsAt: string
     endsAt: string
@@ -14,6 +15,11 @@ export type CalendarSlot = {
     capacity: number
     students?: {
         status: string
+        teacherId?: string | null
+        teacher?: string | null
+        entitlementId?: string
+        course?: string
+        level?: CourseLevel
         bookingId: string
         id: string
         name: string
@@ -38,7 +44,9 @@ export function MonthCalendar({
     onCreateSlot,
     refresh,
     bookedSlotIds = [],
+    bookedSlotCourses = {},
     canReserve = true,
+    allowUnavailableSelection = false,
     canReserveSlot,
     showLegend = true,
     teacherId,
@@ -50,7 +58,9 @@ export function MonthCalendar({
     onCreateSlot?: (date: string) => void
     refresh: number
     bookedSlotIds?: string[]
+    bookedSlotCourses?: Record<string, string>
     canReserve?: boolean
+    allowUnavailableSelection?: boolean
     canReserveSlot?: (slot: CalendarSlot) => boolean
     showLegend?: boolean
 }) {
@@ -125,23 +135,23 @@ export function MonthCalendar({
     const byDay = useMemo(() => {
         const map = new Map<number, CalendarSlot[]>()
         for (const s of slots) {
-            if (mode === 'teacher' && (s.teacherId !== teacherId || (courseId && s.courseId !== courseId))) continue
-            if (mode === 'admin' && ((courseId && s.courseId !== courseId) || (teacherId && s.teacherId !== teacherId)))
+            if (
+                mode === 'teacher' &&
+                ((teacherId && !s.teachers?.some((teacher) => teacher.id === teacherId)) ||
+                    (courseId && s.courseId !== courseId))
+            )
                 continue
             if (
-                mode === 'student' &&
-                !bookedSlotIds.includes(s.id) &&
-                (!canReserve ||
-                    s.blocked ||
-                    new Date(s.startsAt) <= new Date() ||
-                    !(canReserveSlot ? canReserveSlot(s) : s.courseId === courseId))
+                mode === 'admin' &&
+                ((courseId && s.courseId !== courseId) ||
+                    (teacherId && !s.teachers?.some((teacher) => teacher.id === teacherId)))
             )
                 continue
             const day = new Date(s.startsAt).getDate()
             map.set(day, [...(map.get(day) || []), s])
         }
         return map
-    }, [slots, mode, canReserve, bookedSlotIds, canReserveSlot, courseId, teacherId])
+    }, [slots, mode, courseId, teacherId])
     return (
         <div className="month_shell" data-mode={mode}>
             <div className="month_toolbar">
@@ -149,7 +159,7 @@ export function MonthCalendar({
                     <h2>Calendrier des séances</h2>
                     <p className="muted">
                         {mode === 'student'
-                            ? 'Vos séances réservées, disponibles et complètes pour vos cours sont affichées.'
+                            ? 'Vos séances réservées, disponibles et complètes sont affichées.'
                             : mode === 'teacher'
                               ? 'Cliquez sur une séance pour consulter les inscrits et faire l’appel.'
                               : onCreateSlot
@@ -281,15 +291,14 @@ export function MonthCalendar({
                                 <div className="month_events">
                                     {(byDay.get(day) || []).map((s) => {
                                         const booked = mode === 'student' && bookedSlotIds.includes(s.id)
+                                        const sessionName = booked ? bookedSlotCourses[s.id] || 'Séance' : 'Séance'
                                         const available = Math.max(0, s.capacity - s.reserved)
                                         const full = available === 0
                                         const availability =
                                             available === 0
                                                 ? 'Complet'
                                                 : `${available} / ${s.capacity} ${available === 1 ? 'place libre' : 'places libres'}`
-                                        const match =
-                                            mode !== 'student' ||
-                                            (canReserveSlot ? canReserveSlot(s) : s.courseId === courseId)
+                                        const match = mode !== 'student' || (canReserveSlot ? canReserveSlot(s) : true)
                                         const disabled =
                                             booked ||
                                             !canReserve ||
@@ -298,20 +307,26 @@ export function MonthCalendar({
                                             new Date(s.startsAt) <= new Date() ||
                                             !match
                                         const color =
-                                            booked || (mode !== 'student' && full)
-                                                ? 'green'
-                                                : full ||
-                                                    (mode === 'student' ? disabled : new Date(s.endsAt) <= new Date())
-                                                  ? 'gray'
-                                                  : 'blue'
+                                            new Date(s.endsAt) <= new Date()
+                                                ? 'gray'
+                                                : booked || (mode !== 'student' && full)
+                                                  ? 'green'
+                                                  : full || (mode === 'student' && disabled)
+                                                    ? 'gray'
+                                                    : 'blue'
                                         return (
                                             <button
                                                 type="button"
                                                 key={s.id}
                                                 className={`btn month_event month_event_${color}`}
-                                                disabled={mode === 'student' && !booked && disabled}
+                                                disabled={
+                                                    mode === 'student' &&
+                                                    !booked &&
+                                                    disabled &&
+                                                    !allowUnavailableSelection
+                                                }
                                                 onClick={() => onSelect(s)}
-                                                title={`${s.course.toLocaleUpperCase('fr-FR')} · ${availability}${booked ? ' · Déjà réservé' : ''}`}
+                                                title={`${sessionName} · ${availability}${booked ? ' · Déjà réservé' : ''}`}
                                             >
                                                 {booked && (
                                                     <span className="month_event_badge">
@@ -345,18 +360,13 @@ export function MonthCalendar({
                                                         minute: '2-digit',
                                                     })}
                                                 </span>
-                                                <span className="month_event_name">
-                                                    {s.course.toLocaleUpperCase('fr-FR')}
-                                                </span>
-                                                {s.teacher && <span className="month_event_places">{s.teacher}</span>}
-                                                {!full && <span className="month_event_places">{availability}</span>}
-                                                {s.level && (
-                                                    <span
-                                                        className={`month_event_level month_event_level_${s.level.toLowerCase()}`}
-                                                    >
-                                                        {courseLevels[s.level]}
+                                                <span className="month_event_name">{sessionName}</span>
+                                                {mode !== 'student' && (
+                                                    <span className="month_event_places">
+                                                        {s.teacher || 'Professeur à définir'}
                                                     </span>
                                                 )}
+                                                {!full && <span className="month_event_places">{availability}</span>}
                                             </button>
                                         )
                                     })}

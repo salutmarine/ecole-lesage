@@ -3,12 +3,14 @@ import { requireRole } from '@/lib/auth'
 import { db } from '@/lib/db'
 import { z } from 'zod'
 import { validateBooking } from '@/lib/booking'
+import { validateSlotTeachers } from '@/lib/slot-teachers'
 const schema = z.object({
-    courseId: z.string().min(1),
+    courseId: z.string().min(1).nullable().default(null),
     startsAt: z.string().datetime(),
     endsAt: z.string().datetime(),
     capacity: z.number().int().min(1).max(100),
     teacherId: z.string().min(1).optional(),
+    teacherIds: z.array(z.string().min(1)).max(100).optional(),
     entitlementId: z.string().min(1).optional(),
 })
 export async function POST(req: NextRequest) {
@@ -21,23 +23,16 @@ export async function POST(req: NextRequest) {
         const minutes = (end.getTime() - start.getTime()) / 60000
         if (minutes < 15 || minutes > 720 || minutes % 15 !== 0)
             throw Error('La durée doit être comprise entre 15 minutes et 12 heures, par pas de 15 minutes.')
-        const course = await db.course.findUnique({ where: { id: d.courseId } })
-        if (!course) throw Error('Cours inconnu')
+        if (d.courseId && !(await db.course.findUnique({ where: { id: d.courseId } }))) throw Error('Cours inconnu')
         const slot = await db.$transaction(
             async (tx) => {
-                if (d.teacherId) {
-                    await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${d.teacherId}))`
-                    const teacher = await tx.user.findUnique({ where: { id: d.teacherId } })
-                    if (!teacher || teacher.role !== 'TEACHER') throw Error('Professeur inconnu.')
-                    const overlap = await tx.slot.findFirst({
-                        where: { teacherId: d.teacherId, startsAt: { lt: end }, endsAt: { gt: start } },
-                    })
-                    if (overlap) throw Error('Ce professeur a déjà un cours à cet horaire.')
-                }
+                const teacherIds = [...new Set(d.teacherIds ?? (d.teacherId ? [d.teacherId] : []))].sort()
+                await validateSlotTeachers(tx, teacherIds, start, end)
                 const created = await tx.slot.create({
                     data: {
                         courseId: d.courseId,
-                        teacherId: d.teacherId,
+                        teacherId: null,
+                        teachers: { connect: teacherIds.map((id) => ({ id })) },
                         startsAt: start,
                         endsAt: end,
                         capacity: d.capacity,
@@ -55,7 +50,7 @@ export async function POST(req: NextRequest) {
                         data: {
                             userId: entitlement.userId,
                             entitlementId: entitlement.id,
-                            courseId: d.courseId,
+                            courseId: entitlement.courseId,
                             slotId: created.id,
                         },
                     })
@@ -92,21 +87,10 @@ export async function PATCH(req: NextRequest) {
                 const reserved = current.bookings.filter((b) => b.status === 'BOOKED')
                 if (d.capacity < reserved.length)
                     throw Error('La capacité ne peut pas être inférieure au nombre de réservations.')
-                if (!(await tx.course.findUnique({ where: { id: d.courseId } }))) throw Error('Cours inconnu.')
-                if (d.teacherId) {
-                    await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${d.teacherId}))`
-                    const teacher = await tx.user.findUnique({ where: { id: d.teacherId } })
-                    if (!teacher || teacher.role !== 'TEACHER') throw Error('Professeur inconnu.')
-                    const overlap = await tx.slot.findFirst({
-                        where: {
-                            id: { not: d.id },
-                            teacherId: d.teacherId,
-                            startsAt: { lt: end },
-                            endsAt: { gt: start },
-                        },
-                    })
-                    if (overlap) throw Error('Ce professeur a déjà un cours à cet horaire.')
-                }
+                if (d.courseId && !(await tx.course.findUnique({ where: { id: d.courseId } })))
+                    throw Error('Cours inconnu.')
+                const teacherIds = [...new Set(d.teacherIds ?? (d.teacherId ? [d.teacherId] : []))].sort()
+                await validateSlotTeachers(tx, teacherIds, start, end, d.id)
                 const updated = await tx.slot.update({
                     where: { id: d.id },
                     data: {
@@ -114,13 +98,10 @@ export async function PATCH(req: NextRequest) {
                         startsAt: start,
                         endsAt: end,
                         capacity: d.capacity,
-                        teacherId: d.teacherId ?? null,
+                        teacherId: null,
+                        teachers: { set: teacherIds.map((id) => ({ id })) },
                     },
                 })
-                if (d.courseId !== current.courseId) {
-                    // Keep the purchased entitlement while reflecting the session's new course.
-                    await tx.booking.updateMany({ where: { slotId: d.id }, data: { courseId: d.courseId } })
-                }
                 if (moved) {
                     for (const booking of reserved) {
                         await validateBooking(tx, booking.userId, booking.entitlementId, d.id, booking.id, true, true)

@@ -25,6 +25,12 @@ export const studentSchema = teacherSchema.extend({
 
 export const entitlementAdjustmentSchema = z.discriminatedUnion('action', [
     z.object({
+        action: z.literal('set-sessions'),
+        userId: z.string().min(1),
+        entitlementId: z.string().min(1),
+        sessions: z.number().int().min(0).max(100000),
+    }),
+    z.object({
         action: z.literal('add-course'),
         userId: z.string().min(1),
         courseId: z.string().min(1),

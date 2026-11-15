@@ -7,7 +7,7 @@ import Brand from '@/components/brand'
 import DemoLogin from '@/components/demo-login'
 import { adminSections } from '@/lib/admin-navigation'
 import { adminProps, teacherProps, hydrate, displayTeacher } from '@/lib/admin-store'
-import { loadState, resetState, remaining, type State } from '@/lib/store'
+import { loadState, resetState, remaining, demoStudentId, type State } from '@/lib/store'
 import { router } from '@/lib/navigation'
 export default function Demo() {
     const [state, setState] = useState<State | null>(null)
@@ -29,12 +29,15 @@ export default function Demo() {
     const isLogin = route === '/' || route === '/login'
     const view = route.startsWith('/student') ? 'student' : route.startsWith('/teacher') ? 'teacher' : 'admin'
     const section = adminSections.find((s) => s.href === route)?.id ?? 'planning'
+    const studentId = state ? demoStudentId(state) : ''
+    const student = state?.people?.find((person) => person.id === studentId)
+    const teacher = state ? teacherProps(state).user : null
     const breadcrumb =
         view === 'admin'
             ? 'Je suis un administrateur'
             : view === 'teacher'
-              ? 'Je suis le professeur Louise BERNARD'
-              : 'Je suis l’étudiant Louis DUBOIS'
+              ? `Je suis le professeur ${teacher?.firstName ?? ''} ${teacher?.lastName.toLocaleUpperCase('fr-FR') ?? ''}`
+              : `Je suis l’étudiant ${student?.firstName ?? ''} ${student?.lastName.toLocaleUpperCase('fr-FR') ?? ''}`
     return (
         <div className="app_shell app_shell_no_sidebar">
             <div className="main_area">
@@ -61,14 +64,17 @@ export default function Demo() {
                     ) : view === 'student' ? (
                         <StudentDashboard
                             key={`student-${revision}`}
-                            entitlements={remaining(state).filter(
-                                (e) => (e.userId ?? 'student-demo') === 'student-demo',
-                            )}
+                            entitlements={remaining(state)
+                                .filter((e) => (e.userId ?? studentId) === studentId)
+                                .map((e) => ({
+                                    ...e,
+                                    level: hydrate(state).courses.find((course) => course.id === e.courseId)?.level,
+                                }))}
                             bookings={state.bookings
                                 .filter(
                                     (b) =>
                                         (state.entitlements.find((e) => e.id === b.entitlementId)?.userId ??
-                                            'student-demo') === 'student-demo',
+                                            studentId) === studentId,
                                 )
                                 .map((booking) => ({ ...booking, teacher: displayTeacher(state, booking.teacher) }))}
                         />

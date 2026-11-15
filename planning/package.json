@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "private": true,
     "scripts": {
+        "predev": "prisma generate",
         "dev": "next dev",
         "build": "prisma generate && next build",
         "start": "next start",
@@ -10,8 +11,10 @@
         "db:seed": "tsx prisma/seed.ts",
         "db:studio": "prisma studio",
         "prettier": "prettier . -w -c",
+        "export:demo": "node --env-file=.env --import tsx scripts/export-static-demo.ts",
         "build:demo": "node scripts/build-demo.mjs",
-        "test:demo": "tsx --test demo/lib/store.test.ts"
+        "test:demo": "tsx --test demo/lib/store.test.ts",
+        "test:teacher": "node --env-file=.env --import tsx --test tests/teacher-assignment.test.ts"
     },
     "dependencies": {
         "@pdf-lib/fontkit": "^1.1.1",

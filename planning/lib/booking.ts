@@ -24,9 +24,6 @@ export async function validateBooking(
     if (!ent || ent.userId !== userId || ent.status !== 'ACTIVE')
         throw Error('Droit de réservation introuvable ou suspendu.')
     if (!slot || slot.blocked) throw Error('Créneau indisponible.')
-    // Only an administrator editing an existing reservation may retain its original purchase.
-    if (slot.courseId !== ent.courseId && !(adminOverride && excludeBookingId && preservePurchasedCourse))
-        throw Error('Ce créneau ne correspond pas au cours acheté.')
     if (slot.startsAt >= slot.endsAt) throw Error('Créneau invalide.')
     if (slot.startsAt < new Date()) throw Error('Le créneau est passé.')
     if (slot.startsAt >= ent.expiresAt) throw Error('Le cours a expiré.')

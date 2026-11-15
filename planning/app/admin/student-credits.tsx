@@ -89,18 +89,6 @@ export default function StudentCredits({
                 <button
                     type="button"
                     className="btn secondary"
-                    disabled={busy || eligible.length === 0}
-                    aria-expanded={action === 'add-sessions'}
-                    onClick={() => {
-                        setAction('add-sessions')
-                        setError('')
-                    }}
-                >
-                    Ajouter des séances
-                </button>
-                <button
-                    type="button"
-                    className="btn secondary"
                     disabled={busy || !eligible.some((e) => e.remaining > 0)}
                     aria-expanded={action === 'book-session'}
                     onClick={() => {

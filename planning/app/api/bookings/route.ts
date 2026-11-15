@@ -36,19 +36,30 @@ export async function PATCH(req: NextRequest) {
     const actor = await requireRole(['STUDENT', 'ADMIN'])
     if (!actor) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
     try {
-        const { id, slotId } = z.object({ id: z.string().min(1), slotId: z.string().min(1) }).parse(await req.json())
-        const booking = await moveBooking(actor, id, slotId)
+        const { id, slotId, entitlementId, teacherId } = z
+            .object({
+                id: z.string().min(1),
+                slotId: z.string().min(1),
+                entitlementId: z.string().min(1).optional(),
+                teacherId: z.string().min(1).nullable().optional(),
+            })
+            .parse(await req.json())
+        if ((entitlementId !== undefined || teacherId !== undefined) && actor.role !== 'ADMIN')
+            return NextResponse.json({ error: 'Non autorisé' }, { status: 403 })
+        const booking = await moveBooking(actor, id, slotId, entitlementId, teacherId)
         return NextResponse.json({
             id: booking.id,
             slotId: booking.slotId,
             entitlementId: booking.entitlementId,
-            course: booking.slot.course?.name ?? booking.course.name,
+            course: booking.course.name,
+            level: booking.course.level,
             date: booking.slot.startsAt.toISOString(),
             endsAt: booking.slot.endsAt.toISOString(),
             status: booking.status,
             cancellationHours: booking.slot.course?.cancellationHours ?? 48,
-            teacher: booking.slot.teacher
-                ? `${booking.slot.teacher.firstName} ${booking.slot.teacher.lastName.toLocaleUpperCase('fr-FR')}`
+            teacherId: booking.teacherId,
+            teacher: booking.teacher
+                ? `${booking.teacher.firstName} ${booking.teacher.lastName.toLocaleUpperCase('fr-FR')}`
                 : null,
         })
     } catch (error) {

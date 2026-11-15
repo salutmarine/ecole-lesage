@@ -43,6 +43,8 @@ model User {
   bookings       Booking[]
   defaultCourses Course[]      @relation("CourseTeacher")
   teachingSlots  Slot[]        @relation("SlotTeacher")
+  plannedSlots Slot[] @relation("SlotTeachers")
+  teachingBookings Booking[]   @relation("BookingTeacher")
   createdAt      DateTime      @default(now())
 }
 
@@ -106,6 +108,7 @@ model Slot {
   teacherId String?
   teacher   User?   @relation("SlotTeacher", fields: [teacherId], references: [id])
 
+  teachers User[] @relation("SlotTeachers")
   bookings  Booking[]
   createdAt DateTime  @default(now())
 
@@ -127,6 +130,8 @@ model Booking {
   slotId          String
   status          BookingStatus    @default(BOOKED)
   attendance      AttendanceStatus @default(UNMARKED)
+  teacherId       String?
+  teacher         User?            @relation("BookingTeacher", fields: [teacherId], references: [id], onDelete: SetNull)
   reminderSentFor DateTime?
   user            User             @relation(fields: [userId], references: [id])
   course          Course           @relation(fields: [courseId], references: [id])
@@ -135,6 +140,7 @@ model Booking {
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt
 
+  @@index([teacherId, slotId])
   @@index([slotId, status])
   @@index([entitlementId, status])
 }

@@ -12,10 +12,13 @@ export async function GET(req: NextRequest) {
         const result = await db.$transaction(
             async (tx) => {
                 const booking = await managedBooking(tx, id, actor)
+                const entitlementId =
+                    actor.role === 'ADMIN'
+                        ? req.nextUrl.searchParams.get('entitlementId') || booking.entitlementId
+                        : booking.entitlementId
                 const slots = await tx.slot.findMany({
                     where: {
-                        id: { not: booking.slotId },
-                        courseId: booking.courseId,
+                        ...(actor.role === 'ADMIN' ? {} : { id: { not: booking.slotId } }),
                         blocked: false,
                         startsAt: { gt: new Date() },
                     },
@@ -28,7 +31,7 @@ export async function GET(req: NextRequest) {
                         await validateBooking(
                             tx,
                             booking.userId,
-                            booking.entitlementId,
+                            entitlementId,
                             slot.id,
                             id,
                             actor.role === 'ADMIN',

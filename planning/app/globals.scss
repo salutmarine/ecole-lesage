@@ -1076,6 +1076,11 @@ label {
 .toast_icon {
     flex-shrink: 0;
 }
+.toast_error {
+    color: var(--danger-text);
+    background: var(--danger-background);
+    border-color: var(--danger-border);
+}
 .toast_error .toast_icon {
     color: var(--danger-text);
 }
@@ -1102,6 +1107,9 @@ label {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
+}
+.student_credit_balance {
+    margin-bottom: 20px;
 }
 .student_credit_form {
     margin-top: 20px;
@@ -1135,24 +1143,39 @@ label {
     justify-content: space-between;
     gap: 12px;
     align-items: center;
-    h4 {
+    h4,
+    .month_event_level {
         margin: 0;
     }
 }
 .student_status_badge {
+    display: inline-block;
+    align-self: flex-start;
     background: var(--session-green-background);
     color: var(--session-green-text);
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 11px;
+    padding: 3px 7px;
+    border-radius: 12px;
+    font-size: 10px;
+    line-height: 1.4;
+    font-weight: 600;
     white-space: nowrap;
+}
+.student_status_badge_exhausted {
+    background: var(--danger-background);
+    color: var(--danger-text);
 }
 .student_history_details {
     font-size: 12px;
     line-height: 1.5;
-    summary {
-        cursor: pointer;
-        font-weight: 600;
+    margin-top: 20px;
+    h4 {
+        margin-bottom: 8px;
+        font-size: 14px;
+    }
+    .student_booking_history {
+        list-style: none;
+        padding: 0;
+        margin: 0;
     }
 }
 
@@ -1185,6 +1208,7 @@ label {
     border-radius: 12px;
     h3 {
         margin-top: 0;
+        font-size: 16px;
     }
 }
 .profile_next_session {
@@ -1235,6 +1259,20 @@ label {
         border-radius: 8px;
         overflow-wrap: anywhere;
     }
+}
+
+.slot_student_courses {
+    display: grid;
+    gap: 12px;
+}
+.slot_student_course_heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+.slot_student_course_name {
+    font-size: 14px;
 }
 
 .booking_actions {
@@ -1551,4 +1589,107 @@ label {
 .month_cell:focus-visible {
     outline: 2px solid var(--ink);
     outline-offset: -2px;
+}
+
+.teacher_dispatch {
+    display: grid;
+    gap: 20px;
+    h1 {
+        margin: 8px 0;
+    }
+}
+.teacher_dispatch_header,
+.teacher_dispatch_footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.teacher_dispatch_date {
+    min-width: 210px;
+}
+.teacher_dispatch_slots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+.teacher_dispatch_slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    white-space: normal;
+    padding: 6px 20px 9px;
+}
+.teacher_dispatch_roster h2 {
+    margin-top: 0;
+}
+.teacher_dispatch_filters {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin: 20px 0;
+    > div {
+        flex: 1 1 180px;
+        min-width: 0;
+    }
+    select {
+        margin-bottom: 0;
+    }
+}
+.teacher_dispatch_students {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    > li {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 20px 0;
+        border-bottom: 1px solid var(--line);
+    }
+}
+.teacher_dispatch_student {
+    flex: 1 1 250px;
+    min-width: 0;
+    .attendance_checkbox > span {
+        font-size: 16px;
+        font-weight: 700;
+    }
+}
+.teacher_dispatch_course {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 8px;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+.teacher_dispatch_owner {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+.teacher_dispatch_footer {
+    margin-top: 20px;
+}
+
+.slot_teacher_choices {
+    border: 0;
+    padding: 0;
+    margin: 0 0 20px;
+    min-width: 0;
+    legend {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+    .attendance_checkbox {
+        margin: 8px 0;
+    }
 }

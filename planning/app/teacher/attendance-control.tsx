@@ -48,13 +48,15 @@ export default function AttendanceControl({
                     checked={attendance === 'PRESENT'}
                     disabled={busy || !canEdit}
                     onChange={(e) => void mark(e.target.checked ? 'PRESENT' : 'ABSENT')}
-                    aria-describedby={`${id}-status`}
+                    aria-describedby={attendance === 'UNMARKED' ? undefined : `${id}-status`}
                 />
                 <span>{studentName}</span>
             </label>
-            <span className="muted attendance_status" id={`${id}-status`}>
-                {attendance === 'PRESENT' ? 'Présent' : attendance === 'ABSENT' ? 'Absent' : 'Non pointé'}
-            </span>
+            {attendance !== 'UNMARKED' && (
+                <span className="muted attendance_status" id={`${id}-status`}>
+                    {attendance === 'PRESENT' ? 'Présent' : 'Absent'}
+                </span>
+            )}
             {toastVersion > 0 && <Toast key={toastVersion} message="Pointage enregistré." variant="success" />}
             {busy && <p role="status">Enregistrement…</p>}
             {message && (
