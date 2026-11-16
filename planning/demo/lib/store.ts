@@ -10,6 +10,9 @@ export type Person = {
     role: 'STUDENT' | 'TEACHER' | 'ADMIN'
 }
 export type Course = {
+    wooProductId?: number | null
+    sessionsCount?: number
+    validityMonths?: number
     id: string
     name: string
     level: NonNullable<Slot['level']>
@@ -342,7 +345,7 @@ export function mutateBooking(
             id: crypto.randomUUID(),
             slotId: slot.id,
             entitlementId: body.entitlementId!,
-            course: slot.course,
+            course: state.entitlements.find((credit) => credit.id === body.entitlementId)!.course,
             date: slot.startsAt,
             endsAt: slot.endsAt,
             teacher: slot.teacher,

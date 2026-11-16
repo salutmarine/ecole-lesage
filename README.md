@@ -15,7 +15,6 @@ permettent de choisir un rôle, avec un mot de passe prérempli sans vérificati
 Aucun compte réel ni connexion à un service externe n’est nécessaire. Les réservations et les pointages de la démonstration sont
 conservés dans le `localStorage` du navigateur et ne sont jamais partagés entre
 visiteurs. Le stockage désactivé est pris en charge en mémoire jusqu’au rechargement.
-Le bouton « Réinitialiser ma démo » restaure les données de départ.
 
 La démo réutilise les composants et styles de l’application locale : espaces
 administrateur, étudiant et professeur, formulaires de gestion, calendrier, pointage
@@ -28,7 +27,7 @@ réservations, pointages, attributions de professeurs et indisponibilités. Les
 identifiants et les liens entre les données sont conservés. Le choix des comptes
 étudiant et professeur reprend les comptes de démonstration de la base locale.
 Chaque nouvel instantané utilise une clé de stockage distincte pour apparaître dès
-la publication ; « Réinitialiser ma démo » restaure cet instantané.
+la publication.
 
 Pour actualiser les données avant publication :
 

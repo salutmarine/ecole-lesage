@@ -54,6 +54,63 @@ async function mirror(directory) {
       continue;
     }
     let text = await readFile(source, "utf8");
+    if (relative === "assets/platform/portal-entry.mjs") {
+      text = await readFile(
+        path.join(showcase, "assets/platform/showcase-portal.mjs"),
+        "utf8",
+      );
+    }
+    if (relative === "assets/platform/main.mjs") {
+      text =
+        "import {mountCourseCalendar} from '../course-calendar.mjs';\n" + text;
+      text = text
+        .replace("if(view==='shop')view='catalog';", "if(view==='shop')view='catalog';if(['cart','checkout','confirmation'].includes(view))return portalUrl(view,params,language);")
+        .replace(
+          "new Set(['catalog','product'])",
+          "new Set(['catalog','product','cart','checkout','confirmation'])",
+        )
+        .replace(
+          "view='checkout';",
+          "view=query.has('confirmation')?'confirmation':'checkout';",
+        )
+        .replace(
+          "return {lang:lang(),view,gift:",
+          "return {lang:lang(),view,orderId:query.get('confirmation'),gift:",
+        )
+        .replace(
+          "cleanup=mountShop(main,store,options);loading.hidden=true;",
+          "cleanup=mountShop(main,store,options);const stopShop=cleanup;const stopCalendar=options.view==='product'?mountCourseCalendar(main,store,options.productKey):()=>{};cleanup=()=>{stopCalendar();stopShop?.();};loading.hidden=true;",
+        );
+    }
+    if (relative === "assets/platform/shop.mjs") {
+      text = text
+        .replace(/<p class="shop-demo-note">[\s\S]*?<\/p>/g, "")
+        .replace(/<p class="shop-payment-caption">[\s\S]*?<\/p>/g, "")
+        .replace(
+          /  function availabilityPreview\(p\)\{[\s\S]*?(?=  function renderProduct\(\))/,
+          "  function availabilityPreview(){return '';}\n",
+        )
+        .replace("Confirmer ma commande de démonstration", "Payer pour de faux")
+        .replace("Retrouver mes cours", "Accéder au planning pour réserver")
+        .replace(
+          "Commande de démonstration confirmée",
+          "Paiement fictif confirmé",
+        );
+    }
+    if (/\.(html|css|m?js)$/.test(entry.name))
+      text = text.replace(/\bArial\b/gi, "Manrope");
+    if (relative === "assets/ui.js") {
+      text = text.replace(
+        /  \/\/ Local cookie preferences[\s\S]*?(?=  \/\/ Escape closes)/,
+        "",
+      );
+    }
+    if (relative === "assets/replica.css") {
+      text = text.replace(
+        /\.replica-cookie-overlay[\s\S]*?(?=\.woocommerce-info)/,
+        "",
+      );
+    }
     if (entry.name === "catalog.json") {
       const catalog = JSON.parse(text);
       for (const course of catalog) {
@@ -68,16 +125,14 @@ async function mirror(directory) {
       }
       text = JSON.stringify(catalog);
     }
-    if (entry.name === "portal-entry.mjs") {
-      text = text.replace(
-        "const lang = languages.has(language) ? language : 'fr';",
-        "return window.Showcase.planning;",
-      );
-    }
     if (/\.(m?js)$/.test(entry.name) && entry.name !== "brand-loading.mjs")
       text = text.replaceAll("location.pathname", "window.Showcase.pathname()");
     text = rebase(text);
     if (entry.name.endsWith(".html")) {
+      text = text.replace(
+        /<div\b[^>]*class=["'][^"']*\bheader-language\b[^"']*["'][^>]*>[\s\S]*?<\/div>/g,
+        "",
+      );
       text = text.replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, (script) =>
         script.includes("/cdn-cgi/challenge-platform/") ? "" : script,
       );
@@ -86,16 +141,51 @@ async function mirror(directory) {
         "",
       );
       text = text.replace(/<head([^>]*)>/i, `<head$1>${boot}`);
+      text = text.replace(
+        "</head>",
+        `<link rel="stylesheet" href="${showcaseBase}/assets/customizations.css"></head>`,
+      );
       // Every account entry belongs to the existing planning, never to the copied ESPACE.
-      text = text
-        .replaceAll(`${showcaseBase}/fr/espace/`, `${planningBase}/`)
-        .replaceAll(`${showcaseBase}/fr/panier/`, `${planningBase}/`);
+      text = text.replaceAll(`${showcaseBase}/fr/espace/`, `${planningBase}/`);
     }
     await writeFile(target, text);
   }
 }
 for (const directory of ["fr", "assets", "wp-content"])
   await mirror(path.join(showcase, directory));
+
+const shopPage = await readFile(
+  path.join(output, "showcase/fr/boutique/index.html"),
+  "utf8",
+);
+for (const route of ["panier", "commande"]) {
+  const folder = path.join(output, "showcase/fr", route);
+  await mkdir(folder, { recursive: true });
+  await writeFile(path.join(folder, "index.html"), shopPage);
+}
+const planningSnapshot = JSON.parse(
+  await readFile(
+    path.join(root, "planning/data/lesage/local-demo.json"),
+    "utf8",
+  ),
+);
+await writeFile(
+  path.join(output, "showcase/assets/planning-availability.json"),
+  JSON.stringify({
+    storageKey: `lesage-pages-demo-v6-${planningSnapshot.snapshotId}`,
+    slots: planningSnapshot.slots.map(
+      ({ id, startsAt, endsAt, capacity, reserved, blocked }) => ({
+        id,
+        startsAt,
+        endsAt,
+        capacity,
+        reserved,
+        blocked,
+      }),
+    ),
+    blockouts: planningSnapshot.blockouts,
+  }),
+);
 
 // The original server redirects product aliases to the public catalogue detail.
 const catalog = JSON.parse(

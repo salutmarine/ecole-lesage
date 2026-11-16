@@ -5,14 +5,34 @@ Copie statique du site de référence : https://ecole-lesage-refonte.mothzer.cha
 Les pages HTML françaises, les textes, les 25 cours du catalogue, les images,
 le film, les feuilles de style et les modules de navigation sont conservés dans ce
 dossier. Le miroir contient 331 URL françaises publiques, dont les fiches de cours
-et les entrées du lexique. Les pages **ESPACE**, panier et commande ne sont pas
-récupérées. Les liens vers cet espace mènent au planning existant.
+et les entrées du lexique. Les pages **ESPACE** ne sont pas récupérées.
+Le panier et la commande sont des pages statiques propres à cette démonstration.
 
 Les fichiers téléchargés restent séparés du code du planning. La construction
 adapte les chemins au préfixe GitHub Pages, retire les liens de langues étrangères
 et les scripts techniques injectés par l’hébergeur source. Les alias des fiches de
 cours renvoient au détail dans le catalogue. Les formulaires restent des interactions
 de démonstration locales, comme sur le site source.
+
+## Achat fictif et réservation
+
+« Ajouter au panier » ouvre le panier, puis le checkout permet de payer pour de
+faux, sans carte bancaire, prestataire de paiement ni appel à la base réelle.
+La confirmation propose d’ouvrir directement le planning avec le profil étudiant
+et les crédits du cours acheté. Les commandes et paniers sont enregistrés dans
+`lesage.showcase.commerce.v1` dans le navigateur. L’import des achats dans le
+planning est idempotent : recharger la page ne rajoute pas de crédits.
+
+Les fiches de cours proposent un calendrier public alimenté par l’instantané local
+du planning et, s’il existe, son état de démonstration dans le navigateur. Il exclut
+les créneaux complets, bloqués, passés, en indisponibilité ou incompatibles avec
+le délai après achat. Choisir une séance avant achat conserve ce choix jusqu’au
+planning, où l’élève doit confirmer la réservation. Aucune place n’est bloquée
+par un panier ou par un paiement fictif.
+
+Les achats restent dans le navigateur et ne sont jamais créés en PostgreSQL.
+Les fichiers publics de disponibilités ne contiennent que les horaires,
+capacités et indisponibilités, sans les noms ni les coordonnées des élèves.
 
 ## Construire et prévisualiser
 

@@ -5299,11 +5299,11 @@
       "entitlementId": "cmw22gqgo0001jvsenviawd0f",
       "slotId": "demo-winter-2026-11-24-3",
       "status": "BOOKED",
-      "attendance": "UNMARKED",
+      "attendance": "PRESENT",
       "teacherId": "cmw219lwb0002jvfxfwnokz8x",
       "reminderSentFor": null,
       "createdAt": "2026-11-04T12:18:11.551Z",
-      "updatedAt": "2026-11-16T09:24:58.656Z",
+      "updatedAt": "2026-11-16T10:44:52.730Z",
       "course": "NIVEAU 4 : ANNEES 40",
       "date": "2026-11-24T13:00:00.000Z",
       "endsAt": "2026-11-24T16:00:00.000Z",
@@ -5735,7 +5735,7 @@
       "teacherId": null,
       "reminderSentFor": null,
       "createdAt": "2026-11-06T12:07:58.652Z",
-      "updatedAt": "2026-11-16T09:24:58.656Z",
+      "updatedAt": "2026-11-16T10:44:43.165Z",
       "course": "BRODERIE AU RUBAN : NIVEAU 2",
       "date": "2026-11-24T13:00:00.000Z",
       "endsAt": "2026-11-24T16:00:00.000Z",
@@ -5804,14 +5804,14 @@
       "slotId": "demo-winter-2026-11-24-3",
       "status": "BOOKED",
       "attendance": "UNMARKED",
-      "teacherId": null,
+      "teacherId": "cmw219lwb0002jvfxfwnokz8x",
       "reminderSentFor": null,
       "createdAt": "2026-11-13T20:14:15.870Z",
-      "updatedAt": "2026-11-16T09:24:58.656Z",
+      "updatedAt": "2026-11-16T10:44:23.480Z",
       "course": "DECOUVERTE AIGUILLE : IRIS",
       "date": "2026-11-24T13:00:00.000Z",
       "endsAt": "2026-11-24T16:00:00.000Z",
-      "teacher": null,
+      "teacher": "Camille Moreau",
       "cancellationHours": 48
     },
     {
@@ -10767,5 +10767,5 @@
   ],
   "blockouts": [],
   "webhookEvents": [],
-  "snapshotId": "5b7a18a566029002"
+  "snapshotId": "35ae38ab0ed48848"
 }

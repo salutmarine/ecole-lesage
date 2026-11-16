@@ -27,6 +27,7 @@ jobs:
         working-directory: planning
       - run: npm run test:demo
         working-directory: planning
+      - run: node --test showcase/tests/commerce.test.mjs
       - run: node showcase/scripts/build-site.mjs
         env:
           PAGES_BASE_PATH: /${{ github.event.repository.name }}

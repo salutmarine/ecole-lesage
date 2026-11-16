@@ -50,8 +50,10 @@ export function MonthCalendar({
     canReserveSlot,
     showLegend = true,
     teacherId,
+    initialDate,
 }: {
     mode: 'admin' | 'student' | 'teacher'
+    initialDate?: string
     teacherId?: string
     courseId?: string
     onSelect: (slot: CalendarSlot) => void
@@ -65,7 +67,7 @@ export function MonthCalendar({
     showLegend?: boolean
 }) {
     const [month, setMonth] = useState(() => {
-        const d = new Date()
+        const d = initialDate ? new Date(initialDate) : new Date()
         return new Date(d.getFullYear(), d.getMonth(), 1)
     })
     const cache = useRef(new Map<string, Promise<CalendarSlot[]>>())
@@ -169,7 +171,13 @@ export function MonthCalendar({
                 </div>
                 <div className="month_controls">
                     {mode === 'admin' && onCreateSlot && (
-                        <button type="button" className="btn btn-plus" aria-label="Ajouter un créneau" title="Ajouter un créneau" onClick={() => onCreateSlot('')}>
+                        <button
+                            type="button"
+                            className="btn btn-plus"
+                            aria-label="Ajouter un créneau"
+                            title="Ajouter un créneau"
+                            onClick={() => onCreateSlot('')}
+                        >
                             +
                         </button>
                     )}

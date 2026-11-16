@@ -191,10 +191,20 @@ function ReservationsPanel({
     )
 }
 
-export default function StudentDashboard({ entitlements, bookings }: { entitlements: Ent[]; bookings: Booking[] }) {
+export default function StudentDashboard({
+    entitlements,
+    bookings,
+    initialSlot,
+    initialEntitlementId,
+}: {
+    entitlements: Ent[]
+    bookings: Booking[]
+    initialSlot?: CalendarSlot
+    initialEntitlementId?: string
+}) {
     const [items, setItems] = useState(entitlements),
         [reservations, setReservations] = useState(bookings),
-        [selected, setSelected] = useState<CalendarSlot | null>(null),
+        [selected, setSelected] = useState<CalendarSlot | null>(initialSlot ?? null),
         [refresh, setRefresh] = useState(0),
         [busy, setBusy] = useState(false),
         [message, setMessage] = useState('')
@@ -206,7 +216,7 @@ export default function StudentDashboard({ entitlements, bookings }: { entitleme
     function entitlementFor(slot: CalendarSlot) {
         return availableEntitlement(items, slot)
     }
-    const [selectedEntitlementId, setSelectedEntitlementId] = useState('')
+    const [selectedEntitlementId, setSelectedEntitlementId] = useState(initialEntitlementId || '')
     const eligibleCourses = selected ? items.filter((item) => !!availableEntitlement([item], selected)) : []
     const current = eligibleCourses.find((item) => item.id === selectedEntitlementId)
     async function reserve() {
@@ -330,6 +340,7 @@ export default function StudentDashboard({ entitlements, bookings }: { entitleme
                 </aside>
                 <div className="card student_calendar">
                     <MonthCalendar
+                        initialDate={initialSlot?.startsAt}
                         mode="student"
                         allowUnavailableSelection
                         canReserveSlot={(slot) => !!entitlementFor(slot)}

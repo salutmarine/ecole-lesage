@@ -48,7 +48,7 @@ for source in (ROOT / 'showcase/assets').rglob('*'):
             check(match[1], source)
     if source.suffix == '.css':
         for match in re.finditer(r'''url\(\s*["']?([^\s)'";]+)''', source.read_text()): check(match[1], source)
-for excluded in ('espace', 'account', 'panier', 'commande'):
+for excluded in ('espace', 'account'):
     if (ROOT / 'showcase/fr' / excluded).exists(): errors.add(('showcase/fr', 'Excluded section: ' + excluded))
 catalog_file = ROOT / 'showcase/assets/platform/catalog.json'
 def check_catalog(value):

@@ -1,0 +1,149 @@
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("./fonts/manrope-latin-ext.woff2") format("woff2");
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("./fonts/manrope-latin.woff2") format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+.header-top > .lesage-wordmark {
+  grid-column: 2;
+  grid-row: 1;
+}
+.header-top > .header-actions {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.showcase-course-calendar {
+  margin: 48px 0;
+  padding: 28px;
+  border: 1px solid #dedbd6;
+  border-radius: 5px;
+}
+.showcase-calendar-open {
+  border: 0;
+  background: transparent;
+  padding: 12px 0;
+  margin-top: 8px;
+  min-height: 44px;
+}
+.showcase-course-calendar h2 {
+  font-size: 24px;
+  font-weight: 500;
+  margin: 0 0 12px;
+}
+.showcase-course-calendar > p {
+  color: #6d6d6d;
+  line-height: 1.7;
+}
+.showcase-course-calendar summary {
+  cursor: pointer;
+  padding: 16px 0;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+.showcase-calendar-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 16px 0;
+}
+.showcase-calendar-nav h3 {
+  text-transform: capitalize;
+  font-size: 19px;
+  font-weight: 500;
+}
+.showcase-calendar-nav button {
+  border: 1px solid #dedbd6;
+  background: white;
+  min-width: 44px;
+  min-height: 44px;
+}
+.showcase-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+}
+.showcase-calendar-grid > span {
+  text-align: center;
+  padding: 8px 0;
+  font-size: 12px;
+  color: #6d6d6d;
+}
+.showcase-calendar-grid > button {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 4px;
+  min-height: 68px;
+  padding: 6px 2px;
+  background: #f6f5f2;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+.showcase-calendar-grid > button:disabled {
+  background: white;
+  color: #b1aea8;
+}
+.showcase-calendar-grid > button[aria-pressed="true"] {
+  background: #181818;
+  color: white;
+}
+.showcase-calendar-grid small {
+  font-size: 10px;
+}
+.showcase-calendar-sessions {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+.showcase-calendar-sessions li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px;
+  background: #f6f5f2;
+}
+.showcase-calendar-sessions li > div {
+  display: grid;
+  gap: 6px;
+}
+.showcase-calendar-sessions span {
+  font-size: 12px;
+  color: #6d6d6d;
+}
+@media (max-width: 600px) {
+  .showcase-course-calendar {
+    padding: 16px;
+  }
+  .showcase-calendar-grid {
+    gap: 2px;
+  }
+  .showcase-calendar-grid small {
+    font-size: 8px;
+  }
+  .showcase-calendar-sessions .shop-button {
+    width: 100%;
+    font-size: 10px;
+  }
+}

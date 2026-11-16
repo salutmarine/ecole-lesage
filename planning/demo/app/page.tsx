@@ -7,16 +7,32 @@ import Brand from '@/components/brand'
 import DemoLogin from '@/components/demo-login'
 import { adminSections } from '@/lib/admin-navigation'
 import { adminProps, teacherProps, hydrate, displayTeacher } from '@/lib/admin-store'
-import { loadState, resetState, remaining, demoStudentId, type State } from '@/lib/store'
+import { loadState, saveState, remaining, demoStudentId, type State } from '@/lib/store'
+import { importShowcasePurchases, SHOWCASE_COMMERCE_KEY } from '@/lib/showcase-purchases'
 import { router } from '@/lib/navigation'
 export default function Demo() {
     const [state, setState] = useState<State | null>(null)
     const [route, setRoute] = useState('/')
-    const [revision, setRevision] = useState(0)
+    const [revision] = useState(0)
+    const [purchaseTarget, setPurchaseTarget] = useState<{ slotId?: string; entitlementId?: string }>({})
     useEffect(() => {
         function update() {
             setRoute(window.location.hash.slice(1) || '/')
-            setState(structuredClone(hydrate(loadState())))
+            const next = structuredClone(hydrate(loadState()))
+            try {
+                const query = new URLSearchParams(window.location.search)
+                const target = importShowcasePurchases(
+                    next,
+                    JSON.parse(localStorage.getItem(SHOWCASE_COMMERCE_KEY) || 'null'),
+                    query.get('showcaseOrder'),
+                )
+                if (target.studentId)
+                    setPurchaseTarget({ ...target, slotId: query.get('showcaseSlot') || target.slotId })
+                saveState(next)
+            } catch {
+                /* Keep the existing demo usable when browser storage is unavailable. */
+            }
+            setState(next)
         }
         update()
         window.addEventListener('hashchange', update)
@@ -69,6 +85,8 @@ export default function Demo() {
                     ) : view === 'student' ? (
                         <StudentDashboard
                             key={`student-${revision}`}
+                            initialSlot={state.slots.find((slot) => slot.id === purchaseTarget.slotId)}
+                            initialEntitlementId={purchaseTarget.entitlementId}
                             entitlements={remaining(state)
                                 .filter((e) => (e.userId ?? studentId) === studentId)
                                 .map((e) => ({
@@ -92,21 +110,6 @@ export default function Demo() {
                         <AdminDashboard key={`admin-${section}-${revision}`} section={section} {...adminProps(state)} />
                     )}
                 </main>
-                {!isLogin && (
-                    <footer className="wrap">
-                        <button
-                            className="btn secondary"
-                            onClick={() => {
-                                if (confirm('Effacer vos réservations et réinitialiser cette démo ?')) {
-                                    setState(hydrate(resetState()))
-                                    setRevision((n) => n + 1)
-                                }
-                            }}
-                        >
-                            Réinitialiser ma démo
-                        </button>
-                    </footer>
-                )}
             </div>
         </div>
     )

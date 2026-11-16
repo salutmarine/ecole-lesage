@@ -3,6 +3,98 @@ import assert from 'node:assert/strict'
 import { createState, mutateBooking, remaining, demoFetch } from './store'
 import { availableEntitlement, reservationUnavailableReason } from '../../lib/student-availability'
 import { slotOccurrences } from '../../lib/slot-recurrence'
+import { importShowcasePurchases } from './showcase-purchases'
+
+test('un achat showcase ajoute les crédits au bon étudiant une seule fois sans réserver automatiquement', async () => {
+    const { initialState } = await import('./store')
+    const state = initialState(),
+        before = state.bookings.length
+    const buyer = { id: 'showcase-student-test', firstName: 'Marie', lastName: 'Démo', email: 'achat@example.test' }
+    const slot = state.slots.find(
+        (slot) =>
+            !slot.blocked && slot.reserved < slot.capacity && +new Date(slot.startsAt) > Date.now() + 72 * 3600000,
+    )!
+    const order = {
+        id: 'achat-test',
+        status: 'PAID_DEMO',
+        createdAt: new Date().toISOString(),
+        studentId: buyer.id,
+        buyer,
+        items: [{ productKey: '2579', productId: '2579', qty: 2 }],
+        preferredSlotId: slot.id,
+        preferredProductKey: '2579',
+    }
+    const envelope = { version: 1, orders: [order], activeStudentId: buyer.id }
+    const target = importShowcasePurchases(state, envelope, order.id)
+    assert.equal(state.demoStudentId, buyer.id)
+    assert.equal(target.slotId, slot.id)
+    const credit = state.entitlements.find((item) => item.id === target.entitlementId)!
+    assert.equal(credit.userId, buyer.id)
+    assert.equal(credit.total, 2)
+    assert.equal(credit.bookingDelayHours, 72)
+    assert.equal(state.bookings.length, before)
+    mutateBooking(state, 'POST', { slotId: slot.id, entitlementId: credit.id })
+    importShowcasePurchases(state, envelope, order.id)
+    assert.equal(state.entitlements.filter((item) => item.id === credit.id).length, 1)
+    assert.equal(remaining(state).find((item) => item.id === credit.id)!.remaining, 1)
+    assert.equal(state.bookings.length, before + 1)
+})
+
+test('un achat cadeau attribue le cours au bénéficiaire et le cours absent du snapshot reste réservable', async () => {
+    const { initialState } = await import('./store')
+    const state = initialState()
+    const buyer = { id: 'showcase-student-buyer', firstName: 'Acheteur', lastName: 'Démo', email: 'buyer@example.test' }
+    const beneficiary = { ...buyer, id: 'showcase-student-beneficiary', firstName: 'Élève', email: 'gift@example.test' }
+    importShowcasePurchases(
+        state,
+        {
+            version: 1,
+            orders: [
+                {
+                    id: 'gift',
+                    status: 'PAID_DEMO',
+                    createdAt: new Date().toISOString(),
+                    studentId: buyer.id,
+                    buyer,
+                    beneficiary,
+                    items: [{ productKey: '1683', productId: '1683', qty: 1 }],
+                },
+            ],
+        },
+        'gift',
+    )
+    const credit = state.entitlements.find((item) => item.id === 'showcase:gift:1683')!
+    assert.equal(credit.userId, beneficiary.id)
+    assert.equal(credit.total, 50)
+    assert.ok(state.courses!.some((course) => course.id === credit.courseId))
+    assert.equal(state.demoStudentId, beneficiary.id)
+})
+
+test('un panier impayé ou une commande invalide ne donne aucun droit dans le planning', async () => {
+    const { initialState } = await import('./store')
+    const state = initialState(),
+        before = structuredClone(state)
+    const buyer = { id: 'showcase-student-invalid', firstName: 'Test', lastName: 'Démo', email: 'test@example.test' }
+    importShowcasePurchases(
+        state,
+        {
+            version: 1,
+            cart: [{ productKey: '2579', qty: 1 }],
+            orders: [
+                {
+                    id: 'invalid',
+                    status: 'PAID_DEMO',
+                    createdAt: new Date().toISOString(),
+                    studentId: buyer.id,
+                    buyer,
+                    items: [{ productKey: 'inconnu', productId: 'inconnu', qty: 1 }],
+                },
+            ],
+        },
+        'invalid',
+    )
+    assert.deepEqual(state, before)
+})
 
 test('les répétitions gardent l’heure de Paris et respectent la fréquence et la fin incluse', () => {
     const weekly = slotOccurrences('2027-03-22T08:00:00Z', '2027-03-22T11:00:00Z', {

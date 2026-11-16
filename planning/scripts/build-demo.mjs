@@ -103,6 +103,7 @@ await writeFile(
 )
 for (const name of ['admin-navigation', 'student-summary', 'agenda-period', 'slot-recurrence'])
     await cp(path.join(root, `lib/${name}.ts`), path.join(target, `lib/${name}.ts`))
+await cp(path.join(root, 'demo/lib/showcase-purchases.ts'), path.join(target, 'lib/showcase-purchases.ts'))
 let pdf = await readFile(path.join(root, 'lib/agenda-pdf.ts'), 'utf8')
 pdf = pdf
     .replace("import { readFile } from 'node:fs/promises'", '')
