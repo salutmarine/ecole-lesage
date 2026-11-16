@@ -7,11 +7,11 @@ export function portalLanguage() {
 }
 export function portalUrl(view = "", params = {}) {
   const base = window.Showcase.base;
-  if (view === "cart") return `${base}/fr/panier/`;
+  if (view === "cart") return `${base}/panier/`;
   if (view === "checkout")
-    return `${base}/fr/commande/${params.gift ? "?gift=1" : ""}`;
+    return `${base}/commande/${params.gift ? "?gift=1" : ""}`;
   if (view === "confirmation")
-    return `${base}/fr/commande/?confirmation=${encodeURIComponent(params.orderId || "")}`;
+    return `${base}/commande/?confirmation=${encodeURIComponent(params.orderId || "")}`;
   const data = readCommerce();
   const order = data.orders.at(-1);
   return order
@@ -27,7 +27,7 @@ export function portalDestination(href) {
   }
   if (url.origin !== location.origin) return null;
   const path = url.pathname.replace(window.Showcase.base, "");
-  if (/^\/fr\/(espace|account)\/?$/.test(path)) return portalUrl();
+  if (/^\/(?:fr\/)?(espace|account)\/?$/.test(path)) return portalUrl();
   return null;
 }
 export function portalCartQuantity() {

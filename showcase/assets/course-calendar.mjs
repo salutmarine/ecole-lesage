@@ -42,19 +42,42 @@ export function reservableSessions(planning, product, now = new Date()) {
 export function mountCourseCalendar(root, store, productKey) {
   const product = store.product(productKey);
   if (!product) return () => {};
-  const section = document.createElement("section");
-  section.className = "showcase-course-calendar";
+  const section = document.createElement("dialog");
+  section.id = "showcase-calendar-panel";
+  section.className = "showcase-course-calendar showcase-calendar-panel";
+  section.setAttribute("aria-labelledby", "showcase-calendar-title");
   section.innerHTML =
-    '<h2>Les séances réservables</h2><p>Consultez les disponibilités avant d’acheter votre cours. Les horaires sont indiqués à l’heure de Paris.</p><details><summary>Voir le calendrier des séances</summary><div data-calendar-content aria-live="polite"><p>Chargement du calendrier…</p></div></details>';
-  root.querySelector(".shop-detail")?.after(section);
+    '<button type="button" class="showcase-calendar-close" data-calendar-close aria-label="Fermer le calendrier" autofocus>×</button><header class="showcase-calendar-heading"><span class="showcase-calendar-kicker">Réserver une séance</span><h2 id="showcase-calendar-title">Les séances réservables</h2><p class="showcase-calendar-subtitle">Consultez les disponibilités avant d’acheter votre cours. Les horaires sont indiqués à l’heure de Paris.</p></header><div data-calendar-content aria-live="polite"><p>Chargement du calendrier…</p></div>';
+  document.body.append(section);
   const opener = document.createElement("button");
   opener.type = "button";
   opener.className = "shop-text-link showcase-calendar-open";
   opener.textContent = "Voir les séances réservables";
+  opener.setAttribute("aria-haspopup", "dialog");
+  opener.setAttribute("aria-controls", section.id);
+  opener.setAttribute("aria-expanded", "false");
+  let previousOverflow = null;
+  function restore() {
+    if (previousOverflow !== null) {
+      document.body.style.overflow = previousOverflow;
+      previousOverflow = null;
+    }
+    opener.setAttribute("aria-expanded", "false");
+  }
+  function close() {
+    if (section.open) section.close();
+    restore();
+  }
   opener.addEventListener("click", () => {
-    section.querySelector("details").open = true;
-    section.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (section.open) return;
+    previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    opener.focus({ preventScroll: true });
+    section.showModal();
+    opener.setAttribute("aria-expanded", "true");
   });
+  section.addEventListener("close", restore);
+  window.addEventListener("pagehide", close);
   root.querySelector("[data-purchase-main]")?.after(opener);
   let disposed = false,
     planning,
@@ -130,11 +153,28 @@ export function mountCourseCalendar(root, store, productKey) {
     if (!disposed) render();
   }
   section.addEventListener("click", (event) => {
+    if (event.target === section) {
+      const bounds = section.getBoundingClientRect();
+      if (
+        event.clientX < bounds.left ||
+        event.clientX > bounds.right ||
+        event.clientY < bounds.top ||
+        event.clientY > bounds.bottom
+      )
+        close();
+    }
     const target = event.target.closest("button");
     if (!target) return;
+    if (target.hasAttribute("data-calendar-close")) {
+      close();
+      return;
+    }
     if (target.dataset.calendarDay) {
       day = target.dataset.calendarDay;
       render();
+      content
+        .querySelector(`[data-calendar-day="${day}"]`)
+        ?.focus({ preventScroll: true });
     }
     if (target.dataset.calendarShift) {
       const value = new Date(`${month}-01T12:00:00Z`);
@@ -154,6 +194,9 @@ export function mountCourseCalendar(root, store, productKey) {
           )
         : `${month}-01`;
       render();
+      content
+        .querySelector("button:not(:disabled)")
+        ?.focus({ preventScroll: true });
     }
     if (target.dataset.calendarBuy) {
       try {
@@ -190,6 +233,8 @@ export function mountCourseCalendar(root, store, productKey) {
   return () => {
     disposed = true;
     controller.abort();
+    close();
+    window.removeEventListener("pagehide", close);
     section.remove();
     opener.remove();
   };

@@ -15,6 +15,11 @@ ROOT = Path(__file__).resolve().parents[1]
 EXCLUDED = re.compile(r'^/fr/(?:espace|account|mon-compte|administration|professeur|panier|commande)(?:/|$)')
 TEXT_EXTENSIONS = {'.css', '.js', '.mjs', '.json', '.svg', '.html'}
 records = {}
+ASSET_RELOCATIONS = [
+    ('/wp-content/uploads/sites/4/2024/11/certificat-lesage.pdf', '/assets/documents/certificat-lesage.pdf'),
+    ('/wp-content/themes/ecolelesage/assets/img/', '/assets/images/brand/'),
+    ('/wp-content/uploads/sites/4/', '/assets/images/'),
+]
 failures = {}
 seen = set()
 
@@ -39,10 +44,18 @@ def canonical(value, parent):
     url = urllib.parse.urlsplit(urllib.parse.urljoin(ORIGIN + parent, value.replace('&amp;', '&')))
     if url.netloc != urllib.parse.urlsplit(ORIGIN).netloc or not acceptable(url.path): return None
     # Public catalogue query parameters are rendered locally from catalog.json.
-    return urllib.parse.unquote(url.path)
+    path = urllib.parse.unquote(url.path)
+    for original, local in ASSET_RELOCATIONS:
+        if path.startswith(local): return original + path[len(local):]
+    return path
 
 def destination(path):
-    result = ROOT / path.lstrip('/')
+    local = path
+    for original, replacement in ASSET_RELOCATIONS:
+        if local.startswith(original):
+            local = replacement + local[len(original):]
+            break
+    result = ROOT / (local[len('/fr/'):] if local.startswith('/fr/') else local.lstrip('/'))
     if path.endswith('/'): result /= 'index.html'
     return result
 

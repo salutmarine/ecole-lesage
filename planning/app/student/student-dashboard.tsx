@@ -338,7 +338,17 @@ export default function StudentDashboard({
                         }}
                     >
                         <span>Voir mes réservations</span>
-                        <span aria-hidden="true">→</span>
+                        <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            aria-hidden="true"
+                            focusable="false"
+                            style={{ flexShrink: 0 }}
+                        >
+                            <path d="M4 12h15m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="1.4" />
+                        </svg>
                     </button>
                 </aside>
                 <div className="card student_calendar">

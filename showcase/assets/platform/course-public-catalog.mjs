@@ -1,7 +1,7 @@
 import {normaliseCourseDefinitions,COURSE_CATEGORY_LABELS} from './course-definitions.mjs';
 
 const LANGUAGES=['fr','en','ja'];
-const FALLBACK_IMAGE='/wp-content/themes/ecolelesage/assets/img/logo-lesage.svg';
+const FALLBACK_IMAGE='/assets/images/brand/logo-lesage.svg';
 const record=value=>!!value&&typeof value==='object'&&!Array.isArray(value);
 const keyValid=value=>typeof value==='string'&&/^[a-z0-9][a-z0-9-]{0,39}$/.test(value);
 const integer=(value,min,max)=>Number.isInteger(value)&&value>=min&&value<=max;

@@ -29,33 +29,113 @@
   grid-row: 1;
 }
 
+:root {
+  --planning-paper: #f6f6f6;
+  --planning-secondary-background: #eeeeee;
+  --planning-card-radius: 18px;
+  --planning-line: #e5e5e5;
+  --planning-muted: #888888;
+  --planning-ink: #242323;
+  --warm: var(--planning-paper);
+  --shop-paper: var(--planning-paper);
+  --editorial-paper: var(--planning-paper);
+}
+.shop-decision {
+  border-radius: var(--planning-card-radius);
+  background: var(--planning-paper);
+}
+.shop-detail-purchase .shop-button,
+.shop-detail-copy .showcase-calendar-open {
+  width: 100%;
+}
+.shop-detail-purchase .shop-button {
+  justify-content: space-between;
+}
+.shop-detail-copy .showcase-calendar-open {
+  display: flex;
+  justify-content: center;
+}
 .showcase-course-calendar {
-  margin: 48px 0;
-  padding: 28px;
-  border: 1px solid #dedbd6;
-  border-radius: 5px;
+  position: fixed;
+  inset: 0 0 0 auto;
+  width: 50vw;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 55px 30px 30px;
+  border: 0;
+  border-left: 1px solid var(--planning-line);
+  border-radius: 0;
+  background: #fff;
+  color: var(--planning-ink);
+  font-family: "Manrope", sans-serif;
+  overflow: auto;
+  overscroll-behavior: contain;
+  box-shadow: -12px 0 40px #0000001a;
+}
+.showcase-course-calendar::backdrop {
+  background: #0006;
+}
+.showcase-calendar-heading {
+  margin-bottom: 24px;
+}
+.showcase-calendar-kicker {
+  display: block;
+  text-transform: uppercase;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: #cccccc;
+  font-weight: 600;
+  margin-bottom: 7px;
+}
+.showcase-calendar-subtitle {
+  color: var(--planning-muted);
+  line-height: 1.7;
+}
+.showcase-calendar-close {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 100%;
+  background: var(--planning-secondary-background);
+  color: #0a0a0a;
+  font: inherit;
+  font-size: 25px;
+  font-weight: 200;
+  line-height: 34px;
+  transition: transform 0.2s ease-out;
+}
+.showcase-calendar-close:hover {
+  transform: scale(1.02);
 }
 .showcase-calendar-open {
-  border: 0;
-  background: transparent;
-  padding: 12px 0;
+  border: 1px solid var(--planning-line);
+  border-radius: 5px;
+  background: var(--planning-paper);
+  color: var(--planning-ink);
+  padding: 12px 18px;
   margin-top: 8px;
   min-height: 44px;
+  text-decoration: none;
+}
+.showcase-calendar-open:hover {
+  background: var(--planning-secondary-background);
 }
 .showcase-course-calendar h2 {
-  font-size: 24px;
+  font-size: 25px;
   font-weight: 500;
-  margin: 0 0 12px;
+  margin: 10px 0 12px;
 }
 .showcase-course-calendar > p {
   color: #6d6d6d;
   line-height: 1.7;
-}
-.showcase-course-calendar summary {
-  cursor: pointer;
-  padding: 16px 0;
-  text-decoration: underline;
-  text-underline-offset: 5px;
 }
 .showcase-calendar-nav {
   display: flex;
@@ -93,7 +173,7 @@
   gap: 4px;
   min-height: 68px;
   padding: 6px 2px;
-  background: #f6f5f2;
+  background: var(--planning-paper);
   border: 1px solid transparent;
   border-radius: 4px;
 }
@@ -122,7 +202,7 @@
   flex-wrap: wrap;
   gap: 16px;
   padding: 16px;
-  background: #f6f5f2;
+  background: var(--planning-paper);
 }
 .showcase-calendar-sessions li > div {
   display: grid;
@@ -132,9 +212,14 @@
   font-size: 12px;
   color: #6d6d6d;
 }
+@media (max-width: 800px) {
+  .showcase-course-calendar {
+    width: 100vw;
+  }
+}
 @media (max-width: 600px) {
   .showcase-course-calendar {
-    padding: 16px;
+    padding: 55px 16px 16px;
   }
   .showcase-calendar-grid {
     gap: 2px;

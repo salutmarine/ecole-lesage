@@ -36,7 +36,7 @@ class Links(HTMLParser):
             for candidate in attrs['srcset'].split(','):
                 if candidate.strip(): check(candidate.strip().split()[0], self.source)
 
-pages = list((ROOT / 'showcase/fr').rglob('*.html'))
+pages = list((ROOT / 'showcase').rglob('*.html'))
 for page in pages:
     text = page.read_text()
     Links(page).feed(text)
@@ -49,7 +49,9 @@ for source in (ROOT / 'showcase/assets').rglob('*'):
     if source.suffix == '.css':
         for match in re.finditer(r'''url\(\s*["']?([^\s)'";]+)''', source.read_text()): check(match[1], source)
 for excluded in ('espace', 'account'):
-    if (ROOT / 'showcase/fr' / excluded).exists(): errors.add(('showcase/fr', 'Excluded section: ' + excluded))
+    if (ROOT / 'showcase' / excluded).exists(): errors.add(('showcase', 'Excluded section: ' + excluded))
+if (ROOT / 'showcase/fr').exists(): errors.add(('showcase/fr', 'Unexpected language directory'))
+if (ROOT / 'showcase/wp-content').exists(): errors.add(('showcase/wp-content', 'Unexpected WordPress directory'))
 catalog_file = ROOT / 'showcase/assets/platform/catalog.json'
 def check_catalog(value):
     if isinstance(value, dict):

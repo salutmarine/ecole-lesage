@@ -118,7 +118,7 @@ export function mountShop(root, store, options={}) {
   function renderNotice(){const node=root.querySelector('[data-shop-notice]');if(!node)return;node.hidden=!notice;node.innerHTML=notice?`<span>${escapeHtml(notice)}</span>${link('cart',escapeHtml(t.viewCart),{},'shop-notice-link')}<button type="button" class="shop-notice-close" data-shop-action="dismiss" aria-label="${escapeHtml(t.close)}">×</button>`:'';}
   const noticeMarkup=()=>`<div class="shop-notice" role="status" aria-live="polite" data-shop-notice ${notice?'':'hidden'}></div><p class="shop-error" role="alert" data-shop-error ${error?'':'hidden'}>${escapeHtml(error)}</p>`;
   function image(p,cls='',eager=false) {
-    const src=safeUrl(variant(p).image||p?.image||'/wp-content/uploads/sites/4/woocommerce-placeholder.png');
+    const src=safeUrl(variant(p).image||p?.image||'/assets/images/woocommerce-placeholder.png');
     return `<img class="${cls}" src="${escapeHtml(src)}" alt="${escapeHtml(name(p))}" loading="${eager?'eager':'lazy'}" decoding="async">`;
   }
   const categoryLabel=p=>t[p?.category]||t.initiation;
