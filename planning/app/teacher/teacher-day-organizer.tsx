@@ -12,12 +12,14 @@ export default function TeacherDayOrganizer({
     onDateChange,
     initialSlotId,
     onUpdated,
+    onBackToCalendar,
 }: {
     user: { id: string; firstName: string; lastName: string }
     date: string
     onDateChange: (date: string) => void
     initialSlotId?: string
     onUpdated?: () => void
+    onBackToCalendar: () => void
 }) {
     const [fallbackFrom, setFallbackFrom] = useState('')
     const [fallbackDate, setFallbackDate] = useState('')
@@ -374,7 +376,10 @@ export default function TeacherDayOrganizer({
                                 >
                                     {busy
                                         ? 'Enregistrement…'
-                                        : `Prendre en charge ${checked.length} ${checked.length === 1 ? 'élève' : 'élèves'}`}
+                                        : `Prendre en charge ${checked.length} ${checked.length <= 1 ? 'élève' : 'élèves'}`}
+                                </button>
+                                <button type="button" className="btn btn-medium secondary" onClick={onBackToCalendar}>
+                                    Retour au calendrier
                                 </button>
                             </div>
                         </section>

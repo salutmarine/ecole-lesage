@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { courseLevels } from '@/lib/course-levels'
 import { parisDate } from '@/lib/agenda-period'
-import { MonthCalendar, dateLabel, type CalendarSlot } from '@/components/month-calendar'
+import { MonthCalendar, type CalendarSlot } from '@/components/month-calendar'
 import SidePanel from '@/components/side-panel'
 import DatePicker from '@/components/date-picker'
 import AttendanceControl from './attendance-control'
@@ -82,6 +82,10 @@ export default function TeacherDashboard({ user }: { user: { id: string; firstNa
                             onDateChange={setOrganizerDate}
                             initialSlotId={organizerTarget.slotId}
                             onUpdated={() => setRefresh((value) => value + 1)}
+                            onBackToCalendar={() => {
+                                setView('calendar')
+                                setRefresh((value) => value + 1)
+                            }}
                         />
                     )}
                 </div>
@@ -90,30 +94,37 @@ export default function TeacherDashboard({ user }: { user: { id: string; firstNa
                 <SidePanel titleId="teacher-session-title" busy={false} onClose={close}>
                     <span className="section_kicker">Détail du créneau</span>
                     <h2 id="teacher-session-title">Séance</h2>
-                    <dl className="admin_settings">
-                        <div>
-                            <dt>Début</dt>
-                            <dd>{dateLabel(selected.startsAt)}</dd>
-                        </div>
-                        <div>
-                            <dt>Fin</dt>
-                            <dd>{dateLabel(selected.endsAt)}</dd>
-                        </div>
-                        <div>
-                            <dt>Inscrits</dt>
-                            <dd>
-                                {selected.reserved} sur {selected.capacity}
-                                {selected.reserved >= selected.capacity ? ' · Complet' : ''}
-                            </dd>
-                        </div>
-                        {selected.blocked && (
-                            <div>
-                                <dt>Statut</dt>
-                                <dd>Créneau bloqué</dd>
-                            </div>
-                        )}
-                    </dl>
-                    <h3>Étudiants de la séance</h3>
+                    <p>
+                        {new Date(selected.startsAt).toLocaleDateString('fr-FR', {
+                            dateStyle: 'full',
+                            timeZone: 'Europe/Paris',
+                        })}{' '}
+                        de{' '}
+                        {new Date(selected.startsAt).toLocaleTimeString('fr-FR', {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            timeZone: 'Europe/Paris',
+                        })}{' '}
+                        à{' '}
+                        {new Date(selected.endsAt).toLocaleTimeString('fr-FR', {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            timeZone: 'Europe/Paris',
+                        })}
+                    </p>
+                    <p className="muted">
+                        Durée :{' '}
+                        {(
+                            (new Date(selected.endsAt).getTime() - new Date(selected.startsAt).getTime()) /
+                            3600000
+                        ).toLocaleString('fr-FR')}{' '}
+                        h
+                    </p>
+                    {selected.blocked && <p className="muted">Créneau bloqué</p>}
+                    <hr className="subtle_rule" />
+                    <h3>
+                        Étudiants de la séance - {selected.reserved}/{selected.capacity}
+                    </h3>
                     {!selected.students?.length && <p className="muted">Aucun étudiant inscrit à cette séance.</p>}
                     <ul className="slot_registered_students">
                         {selected.students?.map((student) => (

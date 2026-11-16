@@ -121,7 +121,7 @@ async function main() {
             const d = new Date(today)
             d.setDate(d.getDate() + i)
             if (d.getDay() === 0 || d.getDay() === 6) continue
-            for (const h of [9, 13]) {
+            for (const h of [9, 14]) {
                 const start = new Date(d)
                 start.setHours(h, 0, 0, 0)
                 const end = new Date(start)

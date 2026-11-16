@@ -89,23 +89,17 @@ export default function Demo() {
                 </main>
                 {!isLogin && (
                     <footer className="wrap">
-                        <details>
-                            <summary className="muted">Démo autonome · Données propres à ce navigateur</summary>
-                            <p className="muted">
-                                Les réservations sont fictives et ne sont pas partagées entre visiteurs.
-                            </p>
-                            <button
-                                className="btn secondary"
-                                onClick={() => {
-                                    if (confirm('Effacer vos réservations et réinitialiser cette démo ?')) {
-                                        setState(hydrate(resetState()))
-                                        setRevision((n) => n + 1)
-                                    }
-                                }}
-                            >
-                                Réinitialiser ma démo
-                            </button>
-                        </details>
+                        <button
+                            className="btn secondary"
+                            onClick={() => {
+                                if (confirm('Effacer vos réservations et réinitialiser cette démo ?')) {
+                                    setState(hydrate(resetState()))
+                                    setRevision((n) => n + 1)
+                                }
+                            }}
+                        >
+                            Réinitialiser ma démo
+                        </button>
                     </footer>
                 )}
             </div>

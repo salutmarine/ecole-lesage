@@ -333,11 +333,12 @@ test('le calendrier regroupe sans doublons les professeurs affectés et les pris
     const first = hydrate(state).people.find((person) => person.role === 'TEACHER')!
     const second = { ...first, id: 'second-professeur', firstName: 'Second', email: 'second-prof@example.test' }
     state.people!.push(second)
+    const startsAt = Math.max(Date.now(), ...state.slots.map((item) => Date.parse(item.endsAt))) + 60 * 86400000
     const created = (await adminRequest(state, new URL('/api/admin/slots', 'https://demo.invalid'), {
         method: 'POST',
         body: JSON.stringify({
-            startsAt: new Date(Date.now() + 60 * 86400000).toISOString(),
-            endsAt: new Date(Date.now() + 60 * 86400000 + 3 * 3600000).toISOString(),
+            startsAt: new Date(startsAt).toISOString(),
+            endsAt: new Date(startsAt + 3 * 3600000).toISOString(),
             capacity: 8,
             teacherIds: [first.id, second.id],
         }),
