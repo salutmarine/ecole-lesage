@@ -1,0 +1,166 @@
+/* Public dialogs retain their own navigation and native dialog behavior. */
+.site-menu-dialog,
+.home-finder-dialog,
+.lesage-shop .shop-filter-dialog {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* The menu keeps its existing width and typography; only its body scrolls. */
+.site-menu-dialog[open] {
+  overflow: hidden;
+}
+.site-menu-dialog .site-menu-head {
+  position: relative;
+  flex: 0 0 auto;
+  padding-top: max(16px, env(safe-area-inset-top));
+}
+.site-menu-dialog .site-menu-content {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-bottom: calc(24px + env(safe-area-inset-bottom));
+  -webkit-overflow-scrolling: touch;
+}
+
+/* The course guide remains a centered dialog, with an independent body. */
+.home-finder-dialog {
+  width: min(620px, calc(100% - 48px));
+  border-radius: 5px;
+  background: #fff;
+  overflow: hidden;
+}
+.home-finder-dialog[open] {
+  display: flex;
+  flex-direction: column;
+}
+.home-finder-dialog .home-finder-header {
+  position: relative;
+  flex: 0 0 auto;
+  padding: 20px 24px 12px;
+}
+.home-finder-dialog .home-finder-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 24px 24px;
+  -webkit-overflow-scrolling: touch;
+}
+.home-finder-dialog h2 {
+  margin: 18px 0 24px;
+  font: 400 28px/1.25 Arial, Helvetica, sans-serif;
+  letter-spacing: -.02em;
+  text-transform: none;
+  overflow-wrap: anywhere;
+}
+.home-finder-dialog .home-finder-step,
+.home-finder-dialog .home-finder-header .home-eyebrow {
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.home-finder-dialog .home-finder-option {
+  border: 0;
+  border-radius: 5px;
+  background: #f9f9f9;
+}
+.home-finder-dialog .home-finder-option:has(input:checked) {
+  background: #eeede9;
+}
+.home-finder-dialog .home-finder-option small {
+  font-size: 12px;
+}
+.home-finder-dialog .home-finder-result h3 {
+  font: 500 16px/1.45 Arial, Helvetica, sans-serif;
+}
+.home-finder-dialog .home-finder-actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  margin-top: 24px;
+  padding: 16px 0 max(16px, env(safe-area-inset-bottom));
+  background: #fff;
+  flex-wrap: wrap;
+}
+.home-finder-dialog .home-finder-actions button {
+  min-height: 46px;
+  border-radius: 5px;
+  font-size: 14px;
+  max-width: 100%;
+  white-space: normal;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Filter fields already have a separate scrolling body and a fixed footer. */
+@media (max-width: 800px) {
+  .lesage-shop .shop-filter-dialog {
+    width: 100%;
+    max-width: 620px;
+    border-radius: 5px 5px 0 0;
+    background: #fff;
+  }
+  .lesage-shop .shop-filter-dialog .shop-filter-sheet-header h2 {
+    font: 400 28px/1.25 Arial, Helvetica, sans-serif;
+    letter-spacing: -.02em;
+    text-transform: none;
+  }
+  .lesage-shop .shop-filter-dialog .shop-filter-group + .shop-filter-group {
+    margin-top: 24px;
+  }
+  .lesage-shop .shop-filter-dialog .shop-filter-group legend {
+    color: #181818;
+    font: 400 16px/1.45 Arial, Helvetica, sans-serif;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  .lesage-shop .shop-filter-dialog .shop-filter-option {
+    min-height: 46px;
+    padding: 10px 12px;
+    border: 0;
+    border-radius: 5px;
+    background: #f9f9f9;
+    font-size: 16px;
+    line-height: 1.45;
+  }
+  .lesage-shop .shop-filter-dialog .shop-filter-option.is-selected {
+    background: #181818;
+    color: #fff;
+    box-shadow: none;
+  }
+  .lesage-shop .shop-filter-dialog .shop-filter-sheet-footer button {
+    min-height: 46px;
+    border-radius: 5px;
+    font-size: 16px;
+    min-width: 0;
+    white-space: normal;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  .lesage-shop .shop-filter-dialog :is(input:not([type=radio]), select, textarea) {
+    border: 0;
+    border-radius: 5px;
+    background: #f9f9f9;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 650px) {
+  .home-finder-dialog {
+    width: 100%;
+    border-radius: 5px 5px 0 0;
+  }
+  .home-finder-dialog .home-finder-header {
+    padding: 12px 18px 8px;
+  }
+  .home-finder-dialog .home-finder-body {
+    padding: 0 18px 16px;
+  }
+  .home-finder-dialog .home-finder-option strong,
+  .home-finder-dialog .home-finder-actions button,
+  .home-finder-dialog :is(input:not([type=radio]), select, textarea) {
+    font-size: 16px;
+  }
+}

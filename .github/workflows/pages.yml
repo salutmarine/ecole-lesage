@@ -2,7 +2,7 @@ name: Démo GitHub Pages
 on:
   push:
     branches: [main]
-    paths: ["planning/**", ".github/workflows/pages.yml"]
+    paths: ["planning/**", "showcase/**", ".github/workflows/pages.yml"]
   workflow_dispatch:
 permissions:
   contents: read
@@ -27,13 +27,15 @@ jobs:
         working-directory: planning
       - run: npm run test:demo
         working-directory: planning
-      - run: npm run build:demo
-        working-directory: planning
+      - run: node showcase/scripts/build-site.mjs
+        env:
+          PAGES_BASE_PATH: /${{ github.event.repository.name }}
+      - run: python3 showcase/scripts/verify.py
         env:
           PAGES_BASE_PATH: /${{ github.event.repository.name }}
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: planning/.pages-build/out
+          path: showcase/.site-build
   deploy:
     environment:
       name: github-pages

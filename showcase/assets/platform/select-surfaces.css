@@ -1,0 +1,29 @@
+/* Shared chevron spacing. Keep native listboxes and custom select values intact. */
+:is(#lesage-crm-hub-proposal,.lesage-shop,.editorial-body,.site-dialogs,.ls-workspace,.demo-profile) select:not([multiple]):not([size]):not(.ui-select-native):not([data-date-month]):not([data-date-year]),
+:is(#lesage-crm-hub-proposal,.lesage-shop,.editorial-body,.site-dialogs,.ls-workspace,.demo-profile) select[size="1"]:not([multiple]):not(.ui-select-native):not([data-date-month]):not([data-date-year]){
+  -webkit-appearance:none;
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='m7 10 5 5 5-5' stroke='%23555' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 16px center;
+  background-size:16px 16px;
+  padding-right:48px;
+}
+:is(#lesage-crm-hub-proposal,.lesage-shop,.editorial-body,.site-dialogs,.ls-workspace,.demo-profile) select:disabled:not([multiple]):not([size]):not(.ui-select-native):not([data-date-month]):not([data-date-year]),
+:is(#lesage-crm-hub-proposal,.lesage-shop,.editorial-body,.site-dialogs,.ls-workspace,.demo-profile) select[size="1"]:disabled:not([multiple]):not(.ui-select-native):not([data-date-month]):not([data-date-year]){
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='m7 10 5 5 5-5' stroke='%23aaa' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+/* Calendar captions need a smaller inset to fit both selectors on a phone. */
+:is(.ls-date-popover,#lesage-crm-hub-proposal .ls-date-popover) .ls-date-caption select{
+  -webkit-appearance:none;
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='m7 10 5 5 5-5' stroke='%23555' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 8px center;
+  background-size:12px 12px;
+  padding-right:24px;
+}
+
+/* Existing custom controls already render an SVG; give it space, no second icon. */
+:is(#lesage-crm-hub-proposal,.lesage-shop,.editorial-body,.site-dialogs,.ls-workspace,.demo-profile) :is(.ls-select-trigger,.ui-select-trigger){padding-right:16px}

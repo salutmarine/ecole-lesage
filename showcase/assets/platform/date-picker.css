@@ -1,0 +1,33 @@
+/* Calendar date picker: same compact month grid as the supplied component. */
+.ls-date-picker{position:relative;display:block;min-width:0;width:100%;margin-top:8px}
+input.ls-date-native[type=date],#lesage-crm-hub-proposal input.ls-date-native[type=date]{position:absolute!important;width:1px!important;height:1px!important;min-height:0!important;padding:0!important;margin:0!important;opacity:0!important;clip-path:inset(50%)!important;overflow:hidden!important;pointer-events:none!important}
+:is(.ls-date-trigger,#lesage-crm-hub-proposal .ls-date-trigger){display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;min-height:48px;padding:13px 15px;border:0;border-radius:5px;background:#f9f9f9;color:#222;box-shadow:none;font:400 14px/1.5 Arial,Helvetica,sans-serif;text-align:left;cursor:pointer}
+:is(.ls-date-trigger,#lesage-crm-hub-proposal .ls-date-trigger)>svg{flex:none;width:16px;height:16px}
+:is(.ls-date-trigger,#lesage-crm-hub-proposal .ls-date-trigger):disabled{color:#999;cursor:not-allowed}
+:is(.ls-date-trigger,#lesage-crm-hub-proposal .ls-date-trigger):focus-visible,:is(.ls-date-popover,#lesage-crm-hub-proposal .ls-date-popover) :is(button,select):focus-visible{outline:2px solid #8b8274;outline-offset:2px}
+:is(.ls-date-popover,#lesage-crm-hub-proposal .ls-date-popover){box-sizing:border-box;position:fixed;inset:auto;margin:0;max-width:calc(100vw - 24px);max-height:calc(100dvh - 24px);overflow:auto;z-index:10000;padding:14px;border:0;border-radius:5px;background:#fff;color:#222;box-shadow:0 12px 55px #00000026;font:400 14px/1.5 Arial,Helvetica,sans-serif;overscroll-behavior:contain}
+:is(.ls-date-popover,#lesage-crm-hub-proposal .ls-date-popover) *{box-sizing:border-box}
+:is(.ls-date-popover,#lesage-crm-hub-proposal .ls-date-popover)::backdrop{background:transparent}
+.ls-date-head{display:flex;align-items:center;gap:5px;padding-bottom:10px}
+.ls-date-caption{display:flex;align-items:center;justify-content:center;gap:4px;flex:1;min-width:0}
+:is(.ls-date-popover,#lesage-crm-hub-proposal .ls-date-popover) .ls-date-caption select{width:auto;min-width:0;max-width:132px;min-height:34px;margin:0;padding:5px 3px;border:0;border-radius:5px;background:#fff;color:#222;box-shadow:none;font:400 14px/1.5 Arial,Helvetica,sans-serif;text-transform:capitalize;cursor:pointer}
+:is(.ls-date-popover,#lesage-crm-hub-proposal .ls-date-popover) .ls-date-nav{display:flex;align-items:center;justify-content:center;flex:none;width:34px;height:34px;min-height:34px;padding:0;border:0;border-radius:5px;background:transparent;color:#555;font:400 26px/1 Arial,Helvetica,sans-serif;cursor:pointer}
+:is(.ls-date-popover,#lesage-crm-hub-proposal .ls-date-popover) .ls-date-nav:hover:not(:disabled){background:#f9f9f9}
+:is(.ls-date-popover,#lesage-crm-hub-proposal .ls-date-popover) .ls-date-nav:disabled{color:#c9c9c5;cursor:default}
+:is(.ls-date-popover,#lesage-crm-hub-proposal .ls-date-popover) table{width:100%;margin:0;border:0;border-collapse:collapse;table-layout:fixed}
+:is(.ls-date-popover,#lesage-crm-hub-proposal .ls-date-popover) :is(th,td){height:38px;padding:0;border:0;text-align:center;background:transparent}
+:is(.ls-date-popover,#lesage-crm-hub-proposal .ls-date-popover) th{height:30px;color:#8c8c87;font:400 11px/1.4 Arial,Helvetica,sans-serif}
+:is(.ls-date-popover,#lesage-crm-hub-proposal .ls-date-popover) .ls-date-day{position:relative;display:flex;align-items:center;justify-content:center;width:100%;height:38px;min-height:38px;margin:0;padding:0;border:0;border-radius:5px;background:transparent;box-shadow:none;color:#222;font:400 13px/1 Arial,Helvetica,sans-serif;cursor:pointer}
+:is(.ls-date-popover,#lesage-crm-hub-proposal .ls-date-popover) .ls-date-day:hover:not(:disabled){background:#f3f3f0}
+:is(.ls-date-popover,#lesage-crm-hub-proposal .ls-date-popover) .ls-date-day.is-outside{color:#8b8b84}
+:is(.ls-date-popover,#lesage-crm-hub-proposal .ls-date-popover) .ls-date-day.is-selected{background:#181818;color:#fff}
+:is(.ls-date-popover,#lesage-crm-hub-proposal .ls-date-popover) .ls-date-day:disabled{color:#c3c3bf;background:transparent;cursor:not-allowed}
+:is(.ls-date-popover,#lesage-crm-hub-proposal .ls-date-popover) .ls-date-day[aria-current=date]::after{position:absolute;bottom:5px;left:calc(50% - 1.5px);width:3px;height:3px;border-radius:50%;background:currentColor;content:''}
+:is(.ls-date-popover,#lesage-crm-hub-proposal .ls-date-popover) .ls-date-availability{margin:10px 3px 0;color:#8a8a83;font:400 11px/1.6 Arial,Helvetica,sans-serif}
+:is(.ls-date-popover,#lesage-crm-hub-proposal .ls-date-popover) .ls-date-foot{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:12px}
+:is(.ls-date-popover,#lesage-crm-hub-proposal .ls-date-popover) .ls-date-foot button{min-height:34px;padding:5px 4px;border:0;border-radius:5px;background:transparent;color:#777;box-shadow:none;font:400 12px/1.5 Arial,Helvetica,sans-serif;cursor:pointer}
+:is(.ls-date-popover,#lesage-crm-hub-proposal .ls-date-popover) .ls-date-foot button:hover{color:#181818}
+.ls-date-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.ls-date-error{display:block;margin-top:7px;color:#8a4234;font:400 12px/1.5 Arial,Helvetica,sans-serif}
+.ls-date-error[hidden]{display:none}
+@media(max-width:620px){:is(.ls-date-trigger,#lesage-crm-hub-proposal .ls-date-trigger){font-size:16px}:is(.ls-date-popover,#lesage-crm-hub-proposal .ls-date-popover) .ls-date-caption select{font-size:16px}:is(.ls-date-popover,#lesage-crm-hub-proposal .ls-date-popover) .ls-date-day{height:40px;min-height:40px;font-size:14px}:is(.ls-date-popover,#lesage-crm-hub-proposal .ls-date-popover) td{height:40px}:is(.ls-date-popover,#lesage-crm-hub-proposal .ls-date-popover) .ls-date-nav,:is(.ls-date-popover,#lesage-crm-hub-proposal .ls-date-popover) .ls-date-foot button{min-height:40px}}

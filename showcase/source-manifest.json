@@ -1,0 +1,2442 @@
+{
+  "source": "https://ecole-lesage-refonte.mothzer.chatgpt.site/fr/",
+  "language": "fr",
+  "excluded": [
+    "ESPACE",
+    "other languages",
+    "checkout"
+  ],
+  "files": [
+    {
+      "path": "/assets/forms.js",
+      "bytes": 20835,
+      "sha256": "d73934ca6c1e7fab1989bc6f12b06e164dbd32d9d597fd772539318ce4c54bd2"
+    },
+    {
+      "path": "/assets/lesage-19m/broderie-01.jpg",
+      "bytes": 136055,
+      "sha256": "7adf369893e04c53860d331d8d62f8b21a020c8f446f25c74cb9296386a03549"
+    },
+    {
+      "path": "/assets/lesage-19m/broderie-02.jpg",
+      "bytes": 75455,
+      "sha256": "432592a0e0ea06057e189583fc00a5c350c34ca35b0cdc5f43b7dd405bf3ac88"
+    },
+    {
+      "path": "/assets/lesage-19m/broderie-04.jpg",
+      "bytes": 54835,
+      "sha256": "2ed58043f37604362a0313afa26cc131e333470b13efce3cef609c55313ea01c"
+    },
+    {
+      "path": "/assets/lesage-19m/broderie-05.jpg",
+      "bytes": 31390,
+      "sha256": "96f71576385ea403daa3f30e77de6489b2c3f7a9700168bd563aa17f3d9a147e"
+    },
+    {
+      "path": "/assets/lesage-19m/broderie-08.jpg",
+      "bytes": 78896,
+      "sha256": "eb709db09126470eaaf362b5d57415104a24882abad5ed1f8437a45e1683d705"
+    },
+    {
+      "path": "/assets/lesage-19m/broderie-09.jpg",
+      "bytes": 102654,
+      "sha256": "3bc3a0ae1cc4c66077013844b353181c545df5cc84e090b7b6e32ca76382c27e"
+    },
+    {
+      "path": "/assets/lesage-19m/logo-interieurs.png",
+      "bytes": 11579,
+      "sha256": "2fd89f0da74acd2db5da86220d34fc9b8446b35ede80e9304c9ec231306723cd"
+    },
+    {
+      "path": "/assets/lesage-19m/logo-maison.png",
+      "bytes": 8968,
+      "sha256": "90929f292f83781fef4123b9e8bc89eca77df19d3d718586f597d63a19767d14"
+    },
+    {
+      "path": "/assets/lesage-19m/textile-01.jpg",
+      "bytes": 76570,
+      "sha256": "be02e7460e28627f429d11fbcad3baf43e1f34f8415360db7f6d8ae5baf32c84"
+    },
+    {
+      "path": "/assets/lesage-19m/textile-02.jpg",
+      "bytes": 95175,
+      "sha256": "3854a9521cc5d98432486cf0bcb2b5dd5277646daa8a4e37dba5be0b6b28e642"
+    },
+    {
+      "path": "/assets/lesage-19m/textile-03.jpg",
+      "bytes": 115049,
+      "sha256": "660ceb0fccd9f4d2f470c69cd68c4811366c596fc307b50cb11ac60d23e78a33"
+    },
+    {
+      "path": "/assets/lesage-film/poster.jpg",
+      "bytes": 111437,
+      "sha256": "a11176643517535284825528c63ba16ec41d55101d5a0c4885c6d556bd0f7737"
+    },
+    {
+      "path": "/assets/lesage-film/teaser-lesage.mp4",
+      "bytes": 25497945,
+      "sha256": "4f7439699fc938303bdda478085f0c2b3c4ac5a75f17826bee7bcca79d497768"
+    },
+    {
+      "path": "/assets/platform/availability.mjs",
+      "bytes": 5478,
+      "sha256": "db2e30e82162f1dd74bf2c992396aaf2154209839fc00452e74431224e43ff71"
+    },
+    {
+      "path": "/assets/platform/backoffice.css",
+      "bytes": 26055,
+      "sha256": "109ba36fdecf8acc6020a6b2d972d5ee5182de4f0cc5925b6a33bfd375481ce1"
+    },
+    {
+      "path": "/assets/platform/brand-loading.css",
+      "bytes": 3526,
+      "sha256": "e9a45cf3052a88ed5dba68be419362b1f3866af5dc85ee342eb6e221b76a3bef"
+    },
+    {
+      "path": "/assets/platform/brand-loading.mjs",
+      "bytes": 5098,
+      "sha256": "6a36b02967f299a745566712be82b4c539432afa7d6cc2c427121460d5551057"
+    },
+    {
+      "path": "/assets/platform/catalog-filter-draft.mjs",
+      "bytes": 1179,
+      "sha256": "ae1d26576b9842e2487d783f26f2a425c83c39d0d6897f7e490f1366ee85c6af"
+    },
+    {
+      "path": "/assets/platform/catalog-mobile.css",
+      "bytes": 9405,
+      "sha256": "7322ca30fe461fe6537f8f9dd8f7d5047db35ef7bea7ccdb9ead7dbd1914508d"
+    },
+    {
+      "path": "/assets/platform/catalog-presentation.css",
+      "bytes": 261,
+      "sha256": "396893672f1ede585d62409ab7c3da280fff749bbccfa22c50a60394606ae798"
+    },
+    {
+      "path": "/assets/platform/catalog.json",
+      "bytes": 876761,
+      "sha256": "5c4a5278f82726f53a77da949e682d6887570a91ab881202e021f4ac7b611d42"
+    },
+    {
+      "path": "/assets/platform/chrome.css",
+      "bytes": 2087,
+      "sha256": "34d8fcd4bab29762d640e452573d1671d95d6ae6ca2f6c3b42576567061e5518"
+    },
+    {
+      "path": "/assets/platform/controls.css",
+      "bytes": 23424,
+      "sha256": "21bd8c7f7861d939f88bdbd14eab55dbbadc5c2279f7ddd118e1e372b894e08f"
+    },
+    {
+      "path": "/assets/platform/controls.mjs",
+      "bytes": 17145,
+      "sha256": "901dada15282f1669467c0eaedd5ffcfca9d530d19702b45a8bcbdfd78304727"
+    },
+    {
+      "path": "/assets/platform/conversion-metrics.css",
+      "bytes": 1873,
+      "sha256": "32e23f8adc129d8334641ab724215268790c911da5d177b43392a121a19f82f1"
+    },
+    {
+      "path": "/assets/platform/conversion-metrics.mjs",
+      "bytes": 11601,
+      "sha256": "9fc4a6f36e5cea7303396c82b29bb560fb8e5261445d4a57b6933606ce123229"
+    },
+    {
+      "path": "/assets/platform/course-definitions.mjs",
+      "bytes": 7009,
+      "sha256": "690013abafd7bca29da13560a79a863e978d8ca8986f0e1e8bb13bd55c0a4f51"
+    },
+    {
+      "path": "/assets/platform/course-public-catalog.mjs",
+      "bytes": 5967,
+      "sha256": "b024eab39c98ac66c425679e8fc8b88475dc2c8b3741cf616ae8fe963e0fe8ee"
+    },
+    {
+      "path": "/assets/platform/date-picker.css",
+      "bytes": 5902,
+      "sha256": "36784d8d9b3d94fd1d7e2edadc3903275305c79e04889cdd6553b3a5fd932d4e"
+    },
+    {
+      "path": "/assets/platform/date-picker.mjs",
+      "bytes": 18698,
+      "sha256": "76352372b07ecd59791e62671c82e30aa94f0a60e9d3372cf216dd0432efed33"
+    },
+    {
+      "path": "/assets/platform/editorial.css",
+      "bytes": 27289,
+      "sha256": "95fc5f8ccfd6d7489a9e0c5a8b976ad3eb821bd9df90bc82cb595b2c02846ac4"
+    },
+    {
+      "path": "/assets/platform/engine.mjs",
+      "bytes": 41535,
+      "sha256": "b32fe10d7b5880f713a13ac27e55141a2cdfae9507f8f045475a0d60fd772373"
+    },
+    {
+      "path": "/assets/platform/film.css",
+      "bytes": 5902,
+      "sha256": "89060ebbdb6cc05fea6e7a8d81d8041b7a4952b0c10bdecc9b2e7545df6ec44d"
+    },
+    {
+      "path": "/assets/platform/film.mjs",
+      "bytes": 4643,
+      "sha256": "d7f81f33c0ec8f2f3f8c0ede09b0eb40f0a7a1d359406aeaf7cda00fc118388d"
+    },
+    {
+      "path": "/assets/platform/footer.css",
+      "bytes": 6174,
+      "sha256": "0ad241bcca1d921183e931607a7086fcfa85c10741727e2e87c1ca3d58c9f7cb"
+    },
+    {
+      "path": "/assets/platform/form-surfaces.css",
+      "bytes": 2380,
+      "sha256": "c1664185fb1a5b6fc390121b27cde128bf7cf3720068bb3432fc629b0ce62eac"
+    },
+    {
+      "path": "/assets/platform/home-conversion-copy.mjs",
+      "bytes": 9538,
+      "sha256": "224c569f8d30ce0face97e63fb5ce9a78ef9ee40a621355ee464454fc47c2632"
+    },
+    {
+      "path": "/assets/platform/home-conversion.css",
+      "bytes": 11445,
+      "sha256": "59e03182d3492ae942f7d11e03a9ef5881d48e89d9b02a72b61f513971d59926"
+    },
+    {
+      "path": "/assets/platform/home-conversion.mjs",
+      "bytes": 6534,
+      "sha256": "7a32803e7f6686766e68a91380b0e289dbe345e837e46b4370933643ef86125e"
+    },
+    {
+      "path": "/assets/platform/home-header.css",
+      "bytes": 3717,
+      "sha256": "44da5cb4d47e037110e3146c1f97616cfd6dad2caa93f01455900e50ba635616"
+    },
+    {
+      "path": "/assets/platform/home-header.mjs",
+      "bytes": 4210,
+      "sha256": "90e13e618a3b09b8ded8942daeac79507c8a74a186b043c842dd608416102fbe"
+    },
+    {
+      "path": "/assets/platform/home-hero.css",
+      "bytes": 3647,
+      "sha256": "6e589cb0ba71e26dd3938c19ca605aaa900e895d4cc16c52fd95abb2a4c1dd95"
+    },
+    {
+      "path": "/assets/platform/home-motion.css",
+      "bytes": 1241,
+      "sha256": "94526c93e407c29eff9ea64e74ac873cf4de8412168eb3500b5ebff7aebd92e3"
+    },
+    {
+      "path": "/assets/platform/home-motion.mjs",
+      "bytes": 6464,
+      "sha256": "af069b0fa66c1b7b53f01cbf1ace17a0c96c4c2da666b0f2f390af27227256fd"
+    },
+    {
+      "path": "/assets/platform/home-parallax.css",
+      "bytes": 974,
+      "sha256": "71c5b8de119662546a53dd5eca262aeb860a95d2259c49f3f869157d5db6c83e"
+    },
+    {
+      "path": "/assets/platform/home-parallax.mjs",
+      "bytes": 6296,
+      "sha256": "475075f8f713ec2879450b6742cfee4dda42a78e46617c136443c2df0307ed66"
+    },
+    {
+      "path": "/assets/platform/home-recommendations.mjs",
+      "bytes": 1929,
+      "sha256": "ca94b2c2ba7eb872563ff211f2385f903e98a13c46c60f417dc66e6293d17fc1"
+    },
+    {
+      "path": "/assets/platform/home.css",
+      "bytes": 9730,
+      "sha256": "28516f698b1723184e4f2d0f581347370aadf7ef34a7c587742ec9b7c3e20770"
+    },
+    {
+      "path": "/assets/platform/main.mjs",
+      "bytes": 7617,
+      "sha256": "0210a42f37192b38b9ee861a1714d236203b821b006e03853e0a714d9969a91b"
+    },
+    {
+      "path": "/assets/platform/maison.css",
+      "bytes": 3652,
+      "sha256": "fbc65dc5c59a2db08bf39ad2a723a57cb86fde1d835a59cab72d8cb5d9ec615c"
+    },
+    {
+      "path": "/assets/platform/navigation.css",
+      "bytes": 4350,
+      "sha256": "889ae7a0be66f0cab15218684eec3894a33480f81065430b66e8752c18103b6c"
+    },
+    {
+      "path": "/assets/platform/navigation.mjs",
+      "bytes": 6829,
+      "sha256": "ed97f511c3e462ecf1e1a89d5817dabcbdac2c16980fdd06316cf72cae8e5f9d"
+    },
+    {
+      "path": "/assets/platform/portal-entry.mjs",
+      "bytes": 7350,
+      "sha256": "0869ea82b989abca7597b1e2873883b563dbc6df4078ed5355838644453fe353"
+    },
+    {
+      "path": "/assets/platform/product-cards.css",
+      "bytes": 1705,
+      "sha256": "e8ddd04602371d64e465900250913e0ca97d13f93459be47ea05e5085706f6df"
+    },
+    {
+      "path": "/assets/platform/profile.css",
+      "bytes": 12824,
+      "sha256": "4d72327f71ed28d1d23e9e77aa4ffd6168740e751b848eea9491d29374791757"
+    },
+    {
+      "path": "/assets/platform/public-panels.css",
+      "bytes": 4310,
+      "sha256": "1b005de95aefa9df6064abe73941e36edd869a305d6e96aaa4c9c4c7c0727045"
+    },
+    {
+      "path": "/assets/platform/purchase-conversion.css",
+      "bytes": 2821,
+      "sha256": "c2c3463fdc3896d5bda4a4713590178d5e84ea52044db9f7398ee24ff39b2ee7"
+    },
+    {
+      "path": "/assets/platform/purchase-conversion.mjs",
+      "bytes": 1345,
+      "sha256": "1ccdb868b15aa3192c0d1aa7fddea2d3ced411af8a07a78f52babf257054e18f"
+    },
+    {
+      "path": "/assets/platform/reservation-policy.mjs",
+      "bytes": 3000,
+      "sha256": "2056000b0d005e69311785e4a53daa50f1bd5ce734d449601b934325f650a95e"
+    },
+    {
+      "path": "/assets/platform/responsive.css",
+      "bytes": 6202,
+      "sha256": "fc076493eaee79df6f74e2267143549d175b081eff6c39df1e440d2a51c33136"
+    },
+    {
+      "path": "/assets/platform/select-surfaces.css",
+      "bytes": 2482,
+      "sha256": "25a4461893f0414206f61a1116d89d99fcbd5c7ff04a6b964b33c0272293bf1a"
+    },
+    {
+      "path": "/assets/platform/session-actions.css",
+      "bytes": 942,
+      "sha256": "ca0fbd793fefbbd08007fe420b0be4dc7f58835db7a6a0d4180fcdffa05550a9"
+    },
+    {
+      "path": "/assets/platform/shell.css",
+      "bytes": 5754,
+      "sha256": "34aafab221585c8be8f32799da8f783273f59151eee5ec55a3748b8382e7b3ab"
+    },
+    {
+      "path": "/assets/platform/shop-state.mjs",
+      "bytes": 2430,
+      "sha256": "0abb4fb39f75ef1292d50df3a9dc336b89370f84f84cabbdee5628f8d7805e09"
+    },
+    {
+      "path": "/assets/platform/shop.css",
+      "bytes": 36762,
+      "sha256": "71019924fd38df426f85aa81faa00b733313859e76a4078c5b515efa60f540c1"
+    },
+    {
+      "path": "/assets/platform/shop.mjs",
+      "bytes": 77273,
+      "sha256": "879f576f8dd78c80faf9b590c94b0e936aafc40db21e79baa502092f77875e77"
+    },
+    {
+      "path": "/assets/platform/site-shell.mjs",
+      "bytes": 7282,
+      "sha256": "0fc6ec477776c343bd6fba203cd1766816ff67bc24c81cb65701cbc5500c73b5"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/constants.js",
+      "bytes": 5833,
+      "sha256": "e47807189ac05a508dfae1e26fc59c9589137485d2f679ae5de2db6d4a519f60"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/lang/en.js",
+      "bytes": 3108,
+      "sha256": "74b3a8e49f55a3c4301a914aa4821e7801bf0b12fa99af3d253e2c357ebc62eb"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/lang/fr.js",
+      "bytes": 3719,
+      "sha256": "e5bbc38904ca7b0b277955c8f718d0c7521d97acdd04e3f2b555630b507279f2"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/media-chrome-button.js",
+      "bytes": 11893,
+      "sha256": "f2733884699470bd1e47421231a513d1eb171b35c68d8ed450ac86b7022acf31"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/media-chrome-range.js",
+      "bytes": 22299,
+      "sha256": "2b4139af220c712648c39dc2a765bdb3bb5ddac9645f1a75edf40c7acb72962e"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/media-container.js",
+      "bytes": 21596,
+      "sha256": "d5f14aec30ff8d1e6b5fd7e694a5cad849c52b12b5355856e37efb4cdce60be2"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/media-control-bar.js",
+      "bytes": 3888,
+      "sha256": "93b019ca620cf5241e23cfd55a9b30d5ca38becbcf1a1454c417a54f69a1f081"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/media-controller.js",
+      "bytes": 36091,
+      "sha256": "414088b45049286d2c7d8ab292703f3f7f2cda3138d22d52893a599138f7b9ec"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/media-fullscreen-button.js",
+      "bytes": 4858,
+      "sha256": "9c57130b77be81235c1421f186e519c6a9cecb1c032f3569a1efe7c45594dab1"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/media-gesture-receiver.js",
+      "bytes": 6491,
+      "sha256": "c6fe0fc235d15e36cadc0724f1af19a9d0048ecd9411cc64c27b0d8e40029acc"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/media-mute-button.js",
+      "bytes": 3967,
+      "sha256": "226a29e7b79f3c4e4b362a7e4dec205133d13021769a110cd272576ad2c1a6fb"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/media-pip-button.js",
+      "bytes": 3312,
+      "sha256": "ee824287967c046bd005af2bc720908bd2616edd3504e0e799897497851bb25b"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/media-play-button.js",
+      "bytes": 2851,
+      "sha256": "645069b7186fd202d35be1df17350d91b3aed5171f2039216ab9db5c8948c4d4"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/media-preview-chapter-display.js",
+      "bytes": 2625,
+      "sha256": "379f80c975d4bd9e20e12c70b6bc6391b8d21d1679c284f8fafd6c2b9b52ded5"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/media-preview-thumbnail.js",
+      "bytes": 7036,
+      "sha256": "a77278466868f1c6170622f7df6938d381056df776f5612e402147fa54d5f4cd"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/media-preview-time-display.js",
+      "bytes": 2228,
+      "sha256": "6ea45babbad16bb4d77258fc4c42140ce5cd367e3e0273f6d73504bc9c1a45df"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/media-seek-backward-button.js",
+      "bytes": 3413,
+      "sha256": "388b13292c62d2b837457bbad6932bec4bd79afbcfb89f72ff0052462f6b0192"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/media-seek-forward-button.js",
+      "bytes": 3393,
+      "sha256": "967b1fe6e1d1057f1f95ffe733e7c05b8180b8e9383d02a7d9376a4f4b8f5afc"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/media-store/media-store.js",
+      "bytes": 12771,
+      "sha256": "057bf636a7405f351b7e928bf391f1ee307f4438d4fce3aa271c12e648733818"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/media-store/request-map.js",
+      "bytes": 8751,
+      "sha256": "c487131c759f7a05274956680d605bf81556031962d1dc1d33b511280203dc8f"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/media-store/state-mediator.js",
+      "bytes": 30508,
+      "sha256": "55f00f1f0b75b19eaa7f805497b3c5c7e496be0ced299ee7689a04e3aaccf610"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/media-store/util.js",
+      "bytes": 3474,
+      "sha256": "021dbb61cad780efbf0dc776f7d711856192f0222f9446ec5571909719e58431"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/media-text-display.js",
+      "bytes": 4953,
+      "sha256": "e1bdca68b4761ee3f5fb284d3f672b1ff9be8c447d2ca85068d136903073a7f2"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/media-time-display.js",
+      "bytes": 10262,
+      "sha256": "025eabdf33530df48a1f0710d6af635c517530401b51b65369fd29c644f0a464"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/media-time-range.js",
+      "bytes": 29600,
+      "sha256": "fd6797ff1a87d995b8b46aa45a8d89e41a9853b633a13bfe4ac71f228ab6b345"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/media-tooltip.js",
+      "bytes": 8036,
+      "sha256": "4558cd556e9702781c7a830cc0374a846d887f5aeeac40e050516531ba57872a"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/media-volume-range.js",
+      "bytes": 3485,
+      "sha256": "e40b568cd84d997f37e214810b88247d2a6be2b2cd77ee38513d6a61c7d9f2f4"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/utils/attribute-token-list.js",
+      "bytes": 3452,
+      "sha256": "8ac03adca6d5ce1fb5ed3ca3f9249f3d3e1185fb0903d5b90de4904c0470cedc"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/utils/captions.js",
+      "bytes": 2938,
+      "sha256": "b18b41e2f5c40e88d059b78104e3206fca65c8646b71791aabca748783850cee"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/utils/element-utils.js",
+      "bytes": 6275,
+      "sha256": "67f564571f9693284bdcb45a7f47e7bef4c905667eba6d647acfd2e52d6c7ef0"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/utils/fullscreen-api.js",
+      "bytes": 3822,
+      "sha256": "c04806b6f4882e3867fd955ba0ce23daae53de3a6f414aec813c68bda0066dec"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/utils/i18n.js",
+      "bytes": 1028,
+      "sha256": "bf11bd6e72649bf7662c5cea563ff77d54fe6f175304a29c0cfc9d22811783fc"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/utils/platform-tests.js",
+      "bytes": 2097,
+      "sha256": "78c88fa1204947eea13e93a842abacc1420ca7c7b7be0b78db70be7deb9ff508"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/utils/range-animation.js",
+      "bytes": 3973,
+      "sha256": "624b30fd162663cb50f3810c301e5e1c72f1202924dbf6b03fb99e8aae6ca04e"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/utils/resize-observer.js",
+      "bytes": 848,
+      "sha256": "139290ae9678a17013dfe355f9a8878f373cf8432119e38ab11d9a11284bfd1f"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/utils/server-safe-globals.js",
+      "bytes": 2288,
+      "sha256": "327350daad15d64d9d907c1249188b1c487b6a82077723f6ea16ebba2861a09a"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/utils/time.js",
+      "bytes": 2712,
+      "sha256": "57117803680abcb3fa5a3d5cd40aa2b68c5ee6c1459121593384a8b8278c19af"
+    },
+    {
+      "path": "/assets/platform/vendor/media-chrome/utils/utils.js",
+      "bytes": 2438,
+      "sha256": "d328cef040ad0c9b433a831e1a599a359b7efcde7455dbeecec443b66e52ee08"
+    },
+    {
+      "path": "/assets/platform/workspace-tabs.css",
+      "bytes": 1594,
+      "sha256": "7735b0bfb046d4359b32341a2a9b62cb3b80d516f15f2ef4d1bd5d264d0de355"
+    },
+    {
+      "path": "/assets/platform/workspace-tabs.mjs",
+      "bytes": 6407,
+      "sha256": "75d1ad2e69ef5c7dddedb718660e11a66e45bde1ced772e1dee75d2f73df3c07"
+    },
+    {
+      "path": "/assets/platform/workspace.css",
+      "bytes": 41813,
+      "sha256": "cf90d390cdf143831c3e24d7b620cafafd1e41d95aff398a92aed68c7e151260"
+    },
+    {
+      "path": "/assets/replica.css",
+      "bytes": 1333,
+      "sha256": "fb20a73cd1f12731860fa44005b54ed307719a1ed12cac063f34d7d1ebd4abde"
+    },
+    {
+      "path": "/assets/ui.js",
+      "bytes": 3244,
+      "sha256": "7b93d6c9fee54c1b986676852a26828bdd176b261dec3e7d4627d9d86599e7a7"
+    },
+    {
+      "path": "/fr/",
+      "bytes": 34280,
+      "sha256": "4811bdf5dc4c89da61ddce644667e45d5c28e195ba8699886a07d12a0f5888db"
+    },
+    {
+      "path": "/fr/boutique/",
+      "bytes": 13896,
+      "sha256": "35818e3a644ac82aa19b8be257d0faff9f2a0f68f4ac8ae5aaab8a536fac941c"
+    },
+    {
+      "path": "/fr/conditions-generales-de-vente/",
+      "bytes": 54606,
+      "sha256": "f62c33312cbb084e5e6e0dda41fd1dc7f1ddb3e22a4316d54e649ecaa6965425"
+    },
+    {
+      "path": "/fr/contact/",
+      "bytes": 15451,
+      "sha256": "fef514200569ad9a51026830710f671dd7cc5770edd2267fec446a3964791239"
+    },
+    {
+      "path": "/fr/courses/annees-2000/",
+      "bytes": 14040,
+      "sha256": "5f75b154504b53f4ca0d5d8535edae1d307b8b010e0a94789536d59e203fe4b9"
+    },
+    {
+      "path": "/fr/courses/annees-20s/",
+      "bytes": 14040,
+      "sha256": "902ab03ec1d3a28fefaf435ab95a3b158c218d4d33b1acb7c5ef3a80f042c5fd"
+    },
+    {
+      "path": "/fr/courses/annees-30s/",
+      "bytes": 14040,
+      "sha256": "2984bb5b437babcd21edabb8c4be2a4227862b3dc215a37d319870b98c9b1bf0"
+    },
+    {
+      "path": "/fr/courses/annees-40s/",
+      "bytes": 14040,
+      "sha256": "bc62293cf75e604024e4bc4d4ef43e00b4e6050f03a41c36c4eac7d4cc22df97"
+    },
+    {
+      "path": "/fr/courses/annees-50s/",
+      "bytes": 14040,
+      "sha256": "d948853eabd66cbcbb1fedd300cf7041cbe0f8a5cf1039c8942467e8336cee8d"
+    },
+    {
+      "path": "/fr/courses/annees-60s/",
+      "bytes": 14040,
+      "sha256": "028b879c6252eeefad6ed324d3457e56d28547c6e16dc1f59bff51e51ce8f404"
+    },
+    {
+      "path": "/fr/courses/annees-80/",
+      "bytes": 14040,
+      "sha256": "3fd72c858b1c13243b928333ff74db9c0b205e3dd99fc1edef23a18baf4f7820"
+    },
+    {
+      "path": "/fr/courses/broderie-de-cannetille/",
+      "bytes": 14006,
+      "sha256": "f2bfb840e5ddc5a6c5dd65ed4b11388fbfd6dbb7b8bdaa8d4c2076050a582b0b"
+    },
+    {
+      "path": "/fr/courses/decouverte-aiguille-coeur-baroque/",
+      "bytes": 14005,
+      "sha256": "0b820f1fb6fb32cc9861355d8191438a8469292959d14f40cdbd021add7a1404"
+    },
+    {
+      "path": "/fr/courses/decouverte-aiguille-fleur-noire/",
+      "bytes": 14003,
+      "sha256": "3a5c67cbc048299ce5ce73233d88f35c51cc2819ae9fef96f51adc592e61283b"
+    },
+    {
+      "path": "/fr/courses/decouverte-aiguille/",
+      "bytes": 13996,
+      "sha256": "9548e64ada6dc6a6374c1dcf1832a04fd8fac7a8a58db547100f246614400de4"
+    },
+    {
+      "path": "/fr/courses/decouverte-crochet-niveau-2-coquelicot/",
+      "bytes": 14010,
+      "sha256": "1b01030bc206604b14f074a1f38918963f6c6b45e4b218d5bef21a03b2de2765"
+    },
+    {
+      "path": "/fr/courses/decouverte-crochet-noeud-blanc/",
+      "bytes": 14011,
+      "sha256": "9c1703aeb2b058c693c9d79d61ab5e4361f9cf70b2566513d76aca21f73654e4"
+    },
+    {
+      "path": "/fr/courses/decouverte-crochet-noeud-noir/",
+      "bytes": 14010,
+      "sha256": "f798a782d82665282fd5c18d11b604c99e10dd5f589a31d2abfc8b1980a2c8fe"
+    },
+    {
+      "path": "/fr/courses/decouverte-de-laiguille/",
+      "bytes": 14012,
+      "sha256": "1b8bffbba8b7f9477866e337789e8af55bf20bd00c1fabf363f55c334f533c50"
+    },
+    {
+      "path": "/fr/courses/decouverte-passementerie-porte-carte/",
+      "bytes": 14009,
+      "sha256": "81ddf58b03d242d07179a761e4476b206dd8845dccf8acf82df103bbd25dc1c8"
+    },
+    {
+      "path": "/fr/courses/fleurs-fruits/",
+      "bytes": 14039,
+      "sha256": "dd121b579638726a950415dca082f443a2fbc31c6322b38b3703c4b3ad7697ab"
+    },
+    {
+      "path": "/fr/courses/initiation-decouverte-crochet/",
+      "bytes": 14013,
+      "sha256": "0731940564ebafacb8fc857e00d2c3c3b21c1de106cacf3bb80d6e22d9442a30"
+    },
+    {
+      "path": "/fr/courses/michonet/",
+      "bytes": 14044,
+      "sha256": "f77fb0f64f190bd772c459ed039bfec29d4eb135273712f383ff662d49e28c76"
+    },
+    {
+      "path": "/fr/courses/points-traditionnels/",
+      "bytes": 14012,
+      "sha256": "098d5328ed153c058013b36edcace60203e66480917220accc77702890ca46e2"
+    },
+    {
+      "path": "/fr/courses/ruban-et-dentelle/",
+      "bytes": 14009,
+      "sha256": "e5687cc236063b58c503d0f63deabacb44fea2d6eac58f7491ad839d2b8a6f94"
+    },
+    {
+      "path": "/fr/courses/ruban-niveau-1-a-laiguille/",
+      "bytes": 14009,
+      "sha256": "e4c15a04384bc74c0409f42ec757d0debe0494122dd3e1da303d88e2cf2b334a"
+    },
+    {
+      "path": "/fr/courses/specialisation-ameublement-broderie-dinterieur/",
+      "bytes": 14025,
+      "sha256": "374681b1509a1d7c012161b9afed442361fcf4305a81c772b962c78c79b46099"
+    },
+    {
+      "path": "/fr/courses/specialisation-haute-couture-et-ameublement-broderie-dinterieur/",
+      "bytes": 14045,
+      "sha256": "a5e1cef4be9494f29fe4ce9eb75d1c7588f1cf31a2ebaca050417152d341c5ae"
+    },
+    {
+      "path": "/fr/courses/specialisation-haute-couture/",
+      "bytes": 14019,
+      "sha256": "c3363a5515b0dc92b9665902f2b112a41cce4019e7900bed58b22c4ea41c0e3b"
+    },
+    {
+      "path": "/fr/lecole/equipe/",
+      "bytes": 15833,
+      "sha256": "dd7c7fe575b5e370134d5877a4787184f5d11992889e2ed84e4e3ec2a4982abb"
+    },
+    {
+      "path": "/fr/lecole/histoire/",
+      "bytes": 17956,
+      "sha256": "dcd47069157e45ea89cd94cfa44eab1d73b2dd399acaf120440f8b448d5a830c"
+    },
+    {
+      "path": "/fr/lecole/partenariats/",
+      "bytes": 17771,
+      "sha256": "50a2951b95d6b98dec11c4201a0e075b9842348ec9b8a5b7be9e6f12fb0d9c7c"
+    },
+    {
+      "path": "/fr/lecole/savoir-faire/",
+      "bytes": 18141,
+      "sha256": "fa47c0aafb87ec06c237fe75023d84b4d8f71ba9da0bd5b44bf14a039a18a04c"
+    },
+    {
+      "path": "/fr/lexique/",
+      "bytes": 121964,
+      "sha256": "4bbc7d2c5232bc5efe9fca13664dc3043cdd144306127b2bddfab4ee575e6396"
+    },
+    {
+      "path": "/fr/lexique/aiguille/",
+      "bytes": 14309,
+      "sha256": "21f289aa14346c95b7f73a58cdc5b4871ba6f4e5e6fae34eb4267f643b576c2a"
+    },
+    {
+      "path": "/fr/lexique/application-de-dentelle/",
+      "bytes": 14459,
+      "sha256": "88a15abf1e76db5457cc898739da47c201a80af2a74ebf3dd5977f108418b625"
+    },
+    {
+      "path": "/fr/lexique/application-de-fausse-fourrure/",
+      "bytes": 14473,
+      "sha256": "fdfa45dbbe916ba4c1463618708d51e37137888b9af5999654f5d9eb5c4e84bf"
+    },
+    {
+      "path": "/fr/lexique/application-de-mousseline-au-point-riche/",
+      "bytes": 14493,
+      "sha256": "a14a32802f752a718983c7f83eaa7fc3c45528da64238347dd0be9f07c1d5fda"
+    },
+    {
+      "path": "/fr/lexique/application-de-mousseline-de-soie/",
+      "bytes": 14528,
+      "sha256": "4fcd34848016c8e1a834c124bf91747dee1444654b2758ea7a6396395a2ee0f6"
+    },
+    {
+      "path": "/fr/lexique/application-de-mousseline/",
+      "bytes": 14472,
+      "sha256": "6343818455e3e7bf04c5a020d3a5bc52ac6ada4210cebbe5421598450de53572"
+    },
+    {
+      "path": "/fr/lexique/application-de-satin-molletonnee/",
+      "bytes": 14479,
+      "sha256": "f536164a5f92aa50039496eed132446c89b0b00dbee7c532118440f9ed4a9cf8"
+    },
+    {
+      "path": "/fr/lexique/application-de-satin/",
+      "bytes": 14447,
+      "sha256": "3146336b343214445f2d87e8fcecaf214326af78d036a0894c3514e015fcf1e5"
+    },
+    {
+      "path": "/fr/lexique/application-de-tissu-or/",
+      "bytes": 14459,
+      "sha256": "a272dc8475a305111953eaf03b13dc59c7980112dd1cfce50f4b28d02b9459cd"
+    },
+    {
+      "path": "/fr/lexique/application-fr/",
+      "bytes": 14327,
+      "sha256": "59738197f12432a024bce9d6a201cc319abac71310a007760e9e8d7b5d650461"
+    },
+    {
+      "path": "/fr/lexique/applications-de-tissu-et-de-cuir/",
+      "bytes": 14560,
+      "sha256": "06538bdc9d0e5b31f86d043e984d519edcd7849a2348aa2b0d7254557d6038cc"
+    },
+    {
+      "path": "/fr/lexique/applying-cabochons-fr/",
+      "bytes": 14415,
+      "sha256": "307cb1537f88b190cc1ec3891ef67b55602d56d8f78bcea0ce58592372e4acb2"
+    },
+    {
+      "path": "/fr/lexique/applying-flowers-fr/",
+      "bytes": 14317,
+      "sha256": "9a6ac4bc22e1da52ea3ba46607f8ec62cfa8d2efab8af77dd5abfb925a5f4994"
+    },
+    {
+      "path": "/fr/lexique/appret/",
+      "bytes": 14447,
+      "sha256": "15de2c1b8e67c5c5704bd4b2c3502a4adc91441c15cad428bae18d1d28ba76cc"
+    },
+    {
+      "path": "/fr/lexique/back-and-forth-and-scaling-fr/",
+      "bytes": 14455,
+      "sha256": "386e01ecfc1a29f6d635af0775619920807841d8ff445e8789420bde0a7dfadb"
+    },
+    {
+      "path": "/fr/lexique/back-and-forth-fr/",
+      "bytes": 14395,
+      "sha256": "ee4626ed2200eb397989eaf0db50895c4057eb5998956930d2e953367f10cd62"
+    },
+    {
+      "path": "/fr/lexique/beads-and-sequins-fr/",
+      "bytes": 14410,
+      "sha256": "b3d6b9749afe01602557e15f108eb223f90f6fa97f0c1ebff077b30fd38c7bda"
+    },
+    {
+      "path": "/fr/lexique/beads-fr/",
+      "bytes": 14423,
+      "sha256": "4cc668f5f5550eb8253cc1fd613bd44ca33c69377ea75b993daef7a95f18d092"
+    },
+    {
+      "path": "/fr/lexique/bourrage-de-coton/",
+      "bytes": 14465,
+      "sha256": "916c188b10b8dce46ae0d5df7f0520d6d657b578335015ad9c8ad251b807f595"
+    },
+    {
+      "path": "/fr/lexique/bourrage-de-molleton-et-de-ganse/",
+      "bytes": 14349,
+      "sha256": "52856f7c4e5fa150cf4db211b254a616d764bf6b17f51d3f56544364be8bb916"
+    },
+    {
+      "path": "/fr/lexique/bourrage-en-coton-au-point-de-boulogne/",
+      "bytes": 14361,
+      "sha256": "a77cc7a099cb9213c2c07432e38e7c0a6ed1df6116947fe5675b7ea6f3a392fa"
+    },
+    {
+      "path": "/fr/lexique/bourrage-en-coton-et-a-lepargne/",
+      "bytes": 14485,
+      "sha256": "8c32463f596fe2d82e167f9297a762ea1f5ae3ef4992ec9e253a8d457de660df"
+    },
+    {
+      "path": "/fr/lexique/bourrage-en-molleton/",
+      "bytes": 14453,
+      "sha256": "c3ef01957dd70f21cd65e4c6c883ae50fce5931a39b0cc8e84763b024ea05b1d"
+    },
+    {
+      "path": "/fr/lexique/bourrage/",
+      "bytes": 14432,
+      "sha256": "ccfe9accca8732c474a6a3a2a34f641436b640b026f18cc8a867decebbcaa51d"
+    },
+    {
+      "path": "/fr/lexique/broderie-de-fil-tendu-a-lepargne/",
+      "bytes": 14487,
+      "sha256": "0ac861c48daca436dda3b0564ead7281a639c245a25a9adcfc9c0df8dc07be40"
+    },
+    {
+      "path": "/fr/lexique/cabochons-and-tassels-fr/",
+      "bytes": 14430,
+      "sha256": "5da0f027156676211177f3168bb8baaf7342076397f29d0129372b583f53a404"
+    },
+    {
+      "path": "/fr/lexique/chenille-posee-au-point-de-boulogne/",
+      "bytes": 14357,
+      "sha256": "12843940c288429593553231b92276aaea649e32b0776d504ba8805bdf3d205a"
+    },
+    {
+      "path": "/fr/lexique/cousu-de-ganse-torsadee-et-de-graine-de-coton/",
+      "bytes": 14505,
+      "sha256": "2b363afae7ff4f303bec7a742a06fa60129c9b0615b0098a1865d5ec41d1dc1e"
+    },
+    {
+      "path": "/fr/lexique/cousu-en-relief/",
+      "bytes": 14308,
+      "sha256": "a854c583a1101c473a87bfb6b1e2035272746a79b9a2c0a2b7e46cb4ebce0550"
+    },
+    {
+      "path": "/fr/lexique/craquele-de-fils/",
+      "bytes": 14470,
+      "sha256": "52aa196f42507b7e1729b6d990e8f6b39246ff5350b7bbb425a625f80541ae7b"
+    },
+    {
+      "path": "/fr/lexique/creation-de-differentes-fleurs-et-de-noeuds-en-relief-fr/",
+      "bytes": 14523,
+      "sha256": "a2344f83a3b24a646e34b7a72a18d973d1e1f26bb203a5f33f09cce6370147de"
+    },
+    {
+      "path": "/fr/lexique/creation-de-differentes-fleurs-et-de-noeuds-en-relief/",
+      "bytes": 14523,
+      "sha256": "0343cb8163a096d71c3de2155ba3c9ec53ecf62079dcbf13a31dc5be2ac2b6c6"
+    },
+    {
+      "path": "/fr/lexique/creation-dune-fleur-en-mousseline/",
+      "bytes": 14534,
+      "sha256": "7ce0bb56fd90cf8dfdbe713791acb617ecd33551e881510d4eb0ee3e53c49f01"
+    },
+    {
+      "path": "/fr/lexique/crochet-luneville/",
+      "bytes": 14495,
+      "sha256": "b431f061ca541c43fedf586591219d99d0c5b981c78fc34f8ac1c8a0c0453eaa"
+    },
+    {
+      "path": "/fr/lexique/cuir-froisse/",
+      "bytes": 14429,
+      "sha256": "aafd50a3a0968a00458b959d39cb640f1a314a7cfea5dd3d7f1bca11bbf205ef"
+    },
+    {
+      "path": "/fr/lexique/cuir-tendu-fr/",
+      "bytes": 14433,
+      "sha256": "e3076f206f3684080805b53754dc6e894a75f6b57639abc68306acc58d381581"
+    },
+    {
+      "path": "/fr/lexique/cuir-tendu/",
+      "bytes": 14383,
+      "sha256": "f07aee6aaa7c5e1d7737ecb3aca92c9abcaecf8512567a378c8265cf9253e406"
+    },
+    {
+      "path": "/fr/lexique/de-paillettes-et-declats/",
+      "bytes": 14341,
+      "sha256": "50468867d499a5fe432a122b8392f0c3e852326a4d5b072cf2c06be585e8b9ba"
+    },
+    {
+      "path": "/fr/lexique/decoupage-du-bourrage-cartonne-a-lemporte-piece/",
+      "bytes": 14521,
+      "sha256": "462f71bd1865290dd1d418dc29cdcfa3000123c6f611673f2bbabcb33fe16ec9"
+    },
+    {
+      "path": "/fr/lexique/demi-point-de-rhodes/",
+      "bytes": 14463,
+      "sha256": "9ca68ff21b21e6fe4b7b624edd4ce0a6919d9999bf01089c7af8be12e6974863"
+    },
+    {
+      "path": "/fr/lexique/demi-point/",
+      "bytes": 14412,
+      "sha256": "96639d62cbcedfb82016613afa41824b6ea7b26a80d8d7d7eb8aba228fd04219"
+    },
+    {
+      "path": "/fr/lexique/demontage/",
+      "bytes": 14434,
+      "sha256": "ce6ca4e87aa1dd8c71853ce2ffce7ef46f13823883d69104d15cc89a979de645"
+    },
+    {
+      "path": "/fr/lexique/different-rhodoid-motif-shapes-fr/",
+      "bytes": 14477,
+      "sha256": "71c2ba6b994f17693f2612490ad6cd038c842c43708abb841f58b367b710ab84"
+    },
+    {
+      "path": "/fr/lexique/double-vermicelle-de-paillettes-et-de-cuvettes/",
+      "bytes": 14699,
+      "sha256": "299093703c368b2e0179c838b5284e0d61f2f7034d4f728779dd45fe1b35a32f"
+    },
+    {
+      "path": "/fr/lexique/drawn-stitch-and-casse-techniques-fr/",
+      "bytes": 14492,
+      "sha256": "0fc8a16dbe0a446a32425d0ae24a2be9d53b48a8dc1b5cf440e35b8509b4cbca"
+    },
+    {
+      "path": "/fr/lexique/fixer-la-laine-au-point-de-boulogne/",
+      "bytes": 14483,
+      "sha256": "648681043aba62080717068463660326d3b5d43b7953f29bea7e8e1f9ba3f871"
+    },
+    {
+      "path": "/fr/lexique/galon-fantaisie/",
+      "bytes": 14443,
+      "sha256": "7270589c0796056df55d82a87cfdc86e9637b8f266dee2c7336508b3ebb8edc0"
+    },
+    {
+      "path": "/fr/lexique/ganse/",
+      "bytes": 14277,
+      "sha256": "49c61934832c196f214ba8628d6eb98675bef52745e7c7ca595f1ab98d32507c"
+    },
+    {
+      "path": "/fr/lexique/habillage-de-cuvettes-et-de-perles/",
+      "bytes": 14481,
+      "sha256": "f06da8e8209cb453a0852d407947956e0c3754ac793c210a8f8573a71ca2d598"
+    },
+    {
+      "path": "/fr/lexique/habillage/",
+      "bytes": 14338,
+      "sha256": "160530c99914e11a2d46cfe63e12cbdd24c02841037ea243511bb737bdd23c5f"
+    },
+    {
+      "path": "/fr/lexique/in-back-and-forth-and-coiled-fr/",
+      "bytes": 14465,
+      "sha256": "894c4f580c7856b1fbcc72f16b9a5b723d00f3a088e382c9b70e2180118d2c1b"
+    },
+    {
+      "path": "/fr/lexique/initiation-au-point-tire/",
+      "bytes": 14463,
+      "sha256": "23aa15d8cfab6966e16881a17ec857e82f279f65f7082625ce8e213dc5036664"
+    },
+    {
+      "path": "/fr/lexique/irregular-or-shaped-fr/",
+      "bytes": 14453,
+      "sha256": "bf2f2b6f4b4922d5619163b54b37a17686ea0c7970100c1e9f8acfd3f45ed7bd"
+    },
+    {
+      "path": "/fr/lexique/jewels-fr/",
+      "bytes": 14355,
+      "sha256": "0b7c40d58e9a51235009cc94ff17ebef57569332bcb95061d1c5485af0f74e97"
+    },
+    {
+      "path": "/fr/lexique/lacet-en-va-et-vient/",
+      "bytes": 14453,
+      "sha256": "1c1a82b3aef82610e04a07f4dc3498f097d4d59d731b8866acb19695eec20db9"
+    },
+    {
+      "path": "/fr/lexique/lame-metal-plastique-raphia/",
+      "bytes": 14416,
+      "sha256": "8db2a798bddda3d4c748b61251027b9d2ea0260e82907953b17bb23b0b1157c7"
+    },
+    {
+      "path": "/fr/lexique/lame-metallique-en-va-et-vient/",
+      "bytes": 14566,
+      "sha256": "61635c2a2f8352189b2237fa05d5ee35632b8c7c741bb946ac79d9e186195d14"
+    },
+    {
+      "path": "/fr/lexique/leaves-fr/",
+      "bytes": 14297,
+      "sha256": "8c5e61fe0caa1c008d675a68d2ac3daba38785f22e9edce7b68f55e16938c94a"
+    },
+    {
+      "path": "/fr/lexique/ligne-de-perles-en-discontinu/",
+      "bytes": 14523,
+      "sha256": "6415158a82a6deaa67ba45f86e6b935e4f349f747712143823437182875399da"
+    },
+    {
+      "path": "/fr/lexique/ligne-de-tubes-perles-et-paillettes/",
+      "bytes": 14357,
+      "sha256": "e397717fd56719a7f70dc1a1727602c2ef802a2cd1732681a4820e2a28782bae"
+    },
+    {
+      "path": "/fr/lexique/lignes-de-micro-tubes/",
+      "bytes": 14510,
+      "sha256": "98985cae2913a1e1091bdf663337ce2ab3372af072b6cd6a16908a9050376040"
+    },
+    {
+      "path": "/fr/lexique/lignes-de-tubes-et-de-perles/",
+      "bytes": 14535,
+      "sha256": "9f2b95088cdd21e5b3984245f5cf66638910fad8173692f1f9878a3c55837187"
+    },
+    {
+      "path": "/fr/lexique/lignes-fantaisies-de-paillettes-superposees-de-perles/",
+      "bytes": 14521,
+      "sha256": "5545470e13ec32cdde10a26f141d28fdaa1827d8771301640322700e7a37ee17"
+    },
+    {
+      "path": "/fr/lexique/lines-of-tubes-fr/",
+      "bytes": 14395,
+      "sha256": "493cd254a9d705ab04894232f7a147578f263a417b6f8997215c70787101edec"
+    },
+    {
+      "path": "/fr/lexique/maintien-de-bourrage-en-molleton/",
+      "bytes": 14547,
+      "sha256": "334c834631e277d853adf5a15f98299f29ecb63711f4dbe3690e8d8657cdefa5"
+    },
+    {
+      "path": "/fr/lexique/maintien-de-chenille-par-un-point-tire-facon-point-de-boulogne/",
+      "bytes": 14755,
+      "sha256": "da1f7d3f5c03fb148f0ffe7ab50fef16398240197c1c2a20bb3ff86780fcc043"
+    },
+    {
+      "path": "/fr/lexique/maintien-dun-lacet-par-un-point-tire-irregulier/",
+      "bytes": 14517,
+      "sha256": "67060ee74a74e67933b1e8a225850fc06d5c8a48b5c5416e10d46dced465b989"
+    },
+    {
+      "path": "/fr/lexique/metier-a-broder/",
+      "bytes": 14445,
+      "sha256": "39e35f30c3ddd61bdac2760d878a5ec96f7c9ce7224dcc04de59bfde69f012a7"
+    },
+    {
+      "path": "/fr/lexique/montage-de-la-broche/",
+      "bytes": 14325,
+      "sha256": "478a79a13ff74c503a7281e262f154f41580c02a11a33b5c2dacfd277727fbbb"
+    },
+    {
+      "path": "/fr/lexique/montage-du-metier-a-broder/",
+      "bytes": 14469,
+      "sha256": "99ed8c26dd24edb5198d6fdcaebc073d6e4449cd2fa490a8fc99ed80c9ca3119"
+    },
+    {
+      "path": "/fr/lexique/montage/",
+      "bytes": 14401,
+      "sha256": "36fe4d5857a579fabda0045ceedfa03f71f42f3314d19c64c18b3e589ed8ed36"
+    },
+    {
+      "path": "/fr/lexique/mousse-double-vermicelle-de-perles-et-de-paillettes/",
+      "bytes": 14519,
+      "sha256": "4a4bf490525959bf769e09d62c89bb8deb35e95c52d58e364db1c9c9c5360b69"
+    },
+    {
+      "path": "/fr/lexique/noeuds-suivis/",
+      "bytes": 14438,
+      "sha256": "a177c42dd5e7c6ba5fed67652aa0f96624db99930b82c51cfb75628b08999c97"
+    },
+    {
+      "path": "/fr/lexique/paillettes-a-lecaille/",
+      "bytes": 14518,
+      "sha256": "5e01173cfa10c25e465722f18b9ba4cfab2981bf45b6775889823bbd1b592c4c"
+    },
+    {
+      "path": "/fr/lexique/passe-evide-en-fil-precious-metal-effect/",
+      "bytes": 14694,
+      "sha256": "989e9103f3d305153b696a6359a6fb0a4d8e939690b25742a9dcd94dbf30dff8"
+    },
+    {
+      "path": "/fr/lexique/passe-evide/",
+      "bytes": 14391,
+      "sha256": "4ce03b4f4be711657fab871f682f1d9d11a7442f0c813ae1886c07427bd6628f"
+    },
+    {
+      "path": "/fr/lexique/passe-plat-de-chenille/",
+      "bytes": 14459,
+      "sha256": "154f3e08af4b0ea49d937d298fce167f60d3c0d677bc7435e7eca3d1719548d3"
+    },
+    {
+      "path": "/fr/lexique/passe-plat-droit-en-fil-de-soie/",
+      "bytes": 14585,
+      "sha256": "1c7fa520d8cdda447e785aa55f063753bc061b8a4a01968cbfc9aec6e61e0bec"
+    },
+    {
+      "path": "/fr/lexique/passe-plat-elague-dans-des-formes-complexes/",
+      "bytes": 14626,
+      "sha256": "e52a86d829f5973064f094e95c1dbdb97d27a28f3cef1fce90747c3716ad58c2"
+    },
+    {
+      "path": "/fr/lexique/passe-plat-en-chenille-et-en-coton/",
+      "bytes": 14355,
+      "sha256": "96b46bb8e199f5e92e256ae811bbcc0ecad07b6adab0a90c9641c122b8237945"
+    },
+    {
+      "path": "/fr/lexique/passe-plat-sur-bourrage-en-coton-perle/",
+      "bytes": 14365,
+      "sha256": "1c34bb59906ae6c4d1873630ee92e05121729605977f99dde3563256988ea506"
+    },
+    {
+      "path": "/fr/lexique/passe-plat-sur-bourrage-fr/",
+      "bytes": 14461,
+      "sha256": "90530fc3cdef6437d407cd2d467bd109b5ecdf7f4098f4798039221730d3d102"
+    },
+    {
+      "path": "/fr/lexique/passe-plat-sur-bourrage/",
+      "bytes": 14461,
+      "sha256": "fe8f1abaa5b90680a8242a05fa66b4aecfbf09754bda48e6682f3ede0251bc19"
+    },
+    {
+      "path": "/fr/lexique/passe-plat/",
+      "bytes": 14383,
+      "sha256": "65c12aebd384077367ac80aed0bffd345f76ca4a72f89466b99152ff381011e2"
+    },
+    {
+      "path": "/fr/lexique/passe-remordu/",
+      "bytes": 14514,
+      "sha256": "01cc1886a26292cca1eebabebd39db53f11249ec5f2c79c33da202da302b42c8"
+    },
+    {
+      "path": "/fr/lexique/peinture-repartie-en-touches-finales-legeres/",
+      "bytes": 14379,
+      "sha256": "567352db5de50c3192115b4e80c81bb771f652244fa1b544700b96fb329b1f11"
+    },
+    {
+      "path": "/fr/lexique/petals-fr/",
+      "bytes": 14297,
+      "sha256": "17bf2c364489e6af68b4dec57620b726dc8834723dbb269cb715a2c31a508e3c"
+    },
+    {
+      "path": "/fr/lexique/pistils-and-beads-fr/",
+      "bytes": 14319,
+      "sha256": "d7792d10d20e7c701ec0cdd682676829b1d4aa18b55ac562fb32e67d46f4bfea"
+    },
+    {
+      "path": "/fr/lexique/placement-of-gems-and-bursts-2/",
+      "bytes": 14341,
+      "sha256": "3779564dd130d3b0fc210682cd1d2d961dbb244479526c2b2c9544014f976707"
+    },
+    {
+      "path": "/fr/lexique/plisse-de-ruban/",
+      "bytes": 14443,
+      "sha256": "06ae0c39289b4430adff12b8eb27b67bcba55e9569926ca1bc6cc87c2a460bd1"
+    },
+    {
+      "path": "/fr/lexique/point-abeille-inverse/",
+      "bytes": 14454,
+      "sha256": "aa2563541c42731e5169f611a49d7f7c059a59b49464549ba163aeffeb1bf2f6"
+    },
+    {
+      "path": "/fr/lexique/point-araignee/",
+      "bytes": 14505,
+      "sha256": "c15e2c542888a948afba889e1eee5f9a35a3fa0432fa595ad3d2142c3c6d2a66"
+    },
+    {
+      "path": "/fr/lexique/point-aretes/",
+      "bytes": 14519,
+      "sha256": "31d9e88a5331f261954097daf84c33dc54a1d38ca566b4c1240ef8476a837661"
+    },
+    {
+      "path": "/fr/lexique/point-daraignee-surjete/",
+      "bytes": 14600,
+      "sha256": "874393a93a1262653fa71a5a33bbfc5cbd1e8341897154b385877bb94c5761d8"
+    },
+    {
+      "path": "/fr/lexique/point-darret-fr/",
+      "bytes": 14445,
+      "sha256": "2d99fc7440e5e2aaba7588b50b16dc0a3dea2316dfc7c5098582a9ba86ba6dc7"
+    },
+    {
+      "path": "/fr/lexique/point-darret/",
+      "bytes": 14445,
+      "sha256": "eda105065d92408466c36417c0e37ba03c3c69f9ac413c721433da5b1c080f39"
+    },
+    {
+      "path": "/fr/lexique/point-de-bouclette-en-soie/",
+      "bytes": 14465,
+      "sha256": "646162a84017ef6758ddb43ca9cc014d4c05abf522daa186daf91339ed50e390"
+    },
+    {
+      "path": "/fr/lexique/point-de-bouclette/",
+      "bytes": 14443,
+      "sha256": "12913fdf167f42dfb60ca62cf31df4741ffa9495b10e4b75cae430bed138d506"
+    },
+    {
+      "path": "/fr/lexique/point-de-boulogne/",
+      "bytes": 14468,
+      "sha256": "1c9592e5dd0071927d2dbc09313ffbad5e5a5e62837e291280cd79ff373fcd1e"
+    },
+    {
+      "path": "/fr/lexique/point-de-chainette/",
+      "bytes": 14458,
+      "sha256": "de4450b4c3332005d8b351375f427fb5584dd2f2a0436fba67904c53161d39db"
+    },
+    {
+      "path": "/fr/lexique/point-de-chausson/",
+      "bytes": 14403,
+      "sha256": "f3baa5a0183030ef7d5c39be1896386ad54f5480759da58ea7f6164d9009aca8"
+    },
+    {
+      "path": "/fr/lexique/point-de-croix/",
+      "bytes": 14409,
+      "sha256": "f3351b9562056ffd77e76df2cd63b0d90801c710d8c47892e322da2171265581"
+    },
+    {
+      "path": "/fr/lexique/point-de-depart-fr-2/",
+      "bytes": 14445,
+      "sha256": "8f2e934811e9814668dd919e2ba6bf4bdc9b40f45c196cb3957bbbed906b0a5c"
+    },
+    {
+      "path": "/fr/lexique/point-de-depart-fr/",
+      "bytes": 14476,
+      "sha256": "01b09430751a834c78e687eeefe73aaf5fbac2614bdd972c3f2f95945aec0daf"
+    },
+    {
+      "path": "/fr/lexique/point-de-depart/",
+      "bytes": 14293,
+      "sha256": "842e7bbc3c9edb26ce624f33c6d61cefee309799ed4c2e715c88282a3548ed7c"
+    },
+    {
+      "path": "/fr/lexique/point-de-feston/",
+      "bytes": 14458,
+      "sha256": "1febc94e908f24af0e76a17e8530dcf5753e02e028fd444fb97e2254c25caae2"
+    },
+    {
+      "path": "/fr/lexique/point-de-graine-en-soie/",
+      "bytes": 14331,
+      "sha256": "4d49c4a69509abbcb27ccdfd5e4fd6a0ad2b693e00a98ae0b3313b5ab7e1178c"
+    },
+    {
+      "path": "/fr/lexique/point-de-graine-fr/",
+      "bytes": 14442,
+      "sha256": "b24bb990be1f098dbe64a35c65de06666c116af6bec2f2837bed75f2a32cbc1e"
+    },
+    {
+      "path": "/fr/lexique/point-de-graine/",
+      "bytes": 14421,
+      "sha256": "5b45ffce08922da92f740f5d53d9ac2633e53cd8562824f098acd5dea5eb6720"
+    },
+    {
+      "path": "/fr/lexique/point-de-noeud-allemand/",
+      "bytes": 14641,
+      "sha256": "18a0d24ac8353e87f731cc181b239f9ea8a9db9edea53da7d91b1ab6c5dcfd57"
+    },
+    {
+      "path": "/fr/lexique/point-de-noeud-en-coton-mouline-et-chenille/",
+      "bytes": 14699,
+      "sha256": "e7a23df50c0af0a0c77184166719d62d5b48eb96ef1691e5c524f0703208cf6f"
+    },
+    {
+      "path": "/fr/lexique/point-de-piqure/",
+      "bytes": 14547,
+      "sha256": "55f78c0dc317075820e4cbfe5f046f02a678fe4b374b42b8acac781f816e3fa0"
+    },
+    {
+      "path": "/fr/lexique/point-de-poste-en-coton-mouline/",
+      "bytes": 14477,
+      "sha256": "9de7a3bc566c14e2b03488207223514d50863c7c019306b8af8d7b4bedb0e442"
+    },
+    {
+      "path": "/fr/lexique/point-de-poste-en-fil-de-soie/",
+      "bytes": 14343,
+      "sha256": "6789fdd55174f27706fa1bc02228271ee4fb9c42f41569f99ab8b7ec0e77c1fd"
+    },
+    {
+      "path": "/fr/lexique/point-de-poste-fr/",
+      "bytes": 14442,
+      "sha256": "c9a2b0b7c8921e1f01abf78a350ec69447e3cb7bb75851acb40b12f4260fc390"
+    },
+    {
+      "path": "/fr/lexique/point-de-poste/",
+      "bytes": 14449,
+      "sha256": "008fdb6bbba585f7eac2622516b52da0f3ffd0ca3857ee13e78582a27d6ef033"
+    },
+    {
+      "path": "/fr/lexique/point-de-ruban/",
+      "bytes": 14440,
+      "sha256": "d6a3a5da409cd134ad7ea33fae7c45afd8350ee1c29433bc6f0c9f307384191b"
+    },
+    {
+      "path": "/fr/lexique/point-de-sucre/",
+      "bytes": 14301,
+      "sha256": "e3ad994a3e6ff82cca4b7f563eea74c210b18915f4e89f252f1918aadfaaf9a4"
+    },
+    {
+      "path": "/fr/lexique/point-de-tiges/",
+      "bytes": 14414,
+      "sha256": "efa5bddbc887c4833cb907d72d19cfae2ff82d526eecaf8a3f96a08c1a8e18bc"
+    },
+    {
+      "path": "/fr/lexique/point-en-ecaille/",
+      "bytes": 14347,
+      "sha256": "dba57e15fb028ccb1d44b05a3b6787ae8a3b8da0f66f1bdef267f61c4ca54f97"
+    },
+    {
+      "path": "/fr/lexique/point-epine/",
+      "bytes": 14504,
+      "sha256": "ae70261c9be95717346a187aa8ba3562a39b03422d234f179e9af140c2b74724"
+    },
+    {
+      "path": "/fr/lexique/point-final/",
+      "bytes": 14457,
+      "sha256": "f7a816b36270ceca9f97bc9456f9ef9b03445461eb11ffe3ba2ceab4388c1706"
+    },
+    {
+      "path": "/fr/lexique/point-lance-fr/",
+      "bytes": 14437,
+      "sha256": "2ed28f23f43039f0595b0843f1d09288b5d1be32167ffe608130da3967e57c4d"
+    },
+    {
+      "path": "/fr/lexique/point-lance/",
+      "bytes": 14263,
+      "sha256": "fbc2b4e9bd5d6f0b9beafca0592d392c3eb28160baa4ab56596bd5c5e731f875"
+    },
+    {
+      "path": "/fr/lexique/point-mousse/",
+      "bytes": 14334,
+      "sha256": "a2eb51417b4a51ae68e6ef77be2d083aaad89f6e54c52e63745f617b29d2eba7"
+    },
+    {
+      "path": "/fr/lexique/point-plie/",
+      "bytes": 14463,
+      "sha256": "393b48dcbd61488115804be4d0fd3eaaee5f1dac4cdc28a292f58e48b3d2ca7f"
+    },
+    {
+      "path": "/fr/lexique/point-riche-de-soie/",
+      "bytes": 14451,
+      "sha256": "d92169a5574451ffa842fe5fe223830dbcc78f11ef7176ba70d1f75a14963865"
+    },
+    {
+      "path": "/fr/lexique/point-riche/",
+      "bytes": 14462,
+      "sha256": "53a90f12ce46f95b6f8a8f06545e5f61ca7d048e52a8d5bde2d3677728128e10"
+    },
+    {
+      "path": "/fr/lexique/point-tire-au-fil-de-coton/",
+      "bytes": 14467,
+      "sha256": "ebd01c04120d25492537a6d938b605dff4bba69e1a94a5726aacd708a60bce13"
+    },
+    {
+      "path": "/fr/lexique/point-tire-de-cordonnet-de-soie-et-pose-de-paillettes-en-ecaille-fr/",
+      "bytes": 14417,
+      "sha256": "a8e6f991c704ccdee944ab5d600f0bdc54ed5f7c63cf2a4176cc19f98d76ff25"
+    },
+    {
+      "path": "/fr/lexique/point-tire-de-perles/",
+      "bytes": 14521,
+      "sha256": "a3e059e052d266a8781c32d2f3f20b0f79cafb8118099e240f165efd38ad3c97"
+    },
+    {
+      "path": "/fr/lexique/point-tire-de-soie-en-va-et-vient/",
+      "bytes": 14481,
+      "sha256": "c3fc2d6517937de0796d5759424ebeeac2b25141678cda961f80e0325e628888"
+    },
+    {
+      "path": "/fr/lexique/point-tire-de-soie-fr-2/",
+      "bytes": 14530,
+      "sha256": "54e6705bc01a67ffacb2a4984b6a56d9a976a3e8aabc6f2377b30ebe5ca72dd0"
+    },
+    {
+      "path": "/fr/lexique/point-tire-de-soie-fr/",
+      "bytes": 14451,
+      "sha256": "5c0a0d5980fdedaf8954ed1886955235edb5dd2870fa2d950149c3d693388abf"
+    },
+    {
+      "path": "/fr/lexique/point-tire-de-soie/",
+      "bytes": 14451,
+      "sha256": "ee7351a83773c39040d121b64e8fde96a50788b760ec76ff25cc48d1fc90f7d2"
+    },
+    {
+      "path": "/fr/lexique/point-tire-de-tubes-en-casse/",
+      "bytes": 14473,
+      "sha256": "72d817ebde3829294718568151e89920dde64ecfda41f4560c20410f4c6514fd"
+    },
+    {
+      "path": "/fr/lexique/point-tire-de-tubes-et-de-perles-sur-bourrage-et-a-plat/",
+      "bytes": 14399,
+      "sha256": "247685adb5d427f08f934a46c505a7880998377702c75f0e65fa3bed56ce26e8"
+    },
+    {
+      "path": "/fr/lexique/point-tire-de-tubes-fr/",
+      "bytes": 14325,
+      "sha256": "1e37dcaeb0cbbc02419a05bdcaa9f40908f9fd34fc5d6a9488008ef3aeb92dbd"
+    },
+    {
+      "path": "/fr/lexique/point-tire-de-tubes/",
+      "bytes": 14525,
+      "sha256": "8b187124ef95e84d2923c57e90cca44ea4aefc0365a9e595f8167c1212a0bc11"
+    },
+    {
+      "path": "/fr/lexique/point-tire-remordu/",
+      "bytes": 14275,
+      "sha256": "dfe15d3f64b212f82d171ea3601c96b09194cc13b58346efeaf96ffe61c26f09"
+    },
+    {
+      "path": "/fr/lexique/point-tire/",
+      "bytes": 14338,
+      "sha256": "ff58220f31a5fa27777b77c28680b7f420441eb869dfa4634976e403d9a317ac"
+    },
+    {
+      "path": "/fr/lexique/pont-de-perles/",
+      "bytes": 14438,
+      "sha256": "501d7f00d71ca1d46cb9e17ad6a840cf748f7f2c7b75a4b0bc1550e5b107fec2"
+    },
+    {
+      "path": "/fr/lexique/pose-a-l-anglaise/",
+      "bytes": 14348,
+      "sha256": "36e946a3aa7860389a89031090d87b79b0d159951e3f0c7ab0f248afe021d6ae"
+    },
+    {
+      "path": "/fr/lexique/pose-a-langlaise-de-paillettes/",
+      "bytes": 14353,
+      "sha256": "1725db9351469c69e0138067b2db59b913940deb2edb5a647739d6140350870c"
+    },
+    {
+      "path": "/fr/lexique/pose-continue-et-discontinue-de-perles/",
+      "bytes": 14568,
+      "sha256": "e80a016d3689a349ee5495dd245704e3664c2b359e8d9121a5a9f47ca0e9b9b9"
+    },
+    {
+      "path": "/fr/lexique/pose-dailes-brodees-en-soie-et-en-paillettes-cousues-en-relief-fr/",
+      "bytes": 14417,
+      "sha256": "a7c4aaa15bd15b039d70917e189e76a35e078988340cf39874955540c58feb5d"
+    },
+    {
+      "path": "/fr/lexique/pose-dailes-brodees-en-soie-et-en-paillettes-cousues-en-relief/",
+      "bytes": 14417,
+      "sha256": "b82876ea036d12608a0007455d25eec756d33fb47c66f2390f132c85b2313bfe"
+    },
+    {
+      "path": "/fr/lexique/pose-de-bijoux-et-declats/",
+      "bytes": 14471,
+      "sha256": "b92e4d6047e647aae3336ecd533702812beff99f03e588bc4f95e7eec3b949cd"
+    },
+    {
+      "path": "/fr/lexique/pose-de-bijoux-evide-et-remordu/",
+      "bytes": 14353,
+      "sha256": "be3f09c5d4725d60c8566de1a41f0022d0c505a2ba6284f38185891ec87e1fc7"
+    },
+    {
+      "path": "/fr/lexique/pose-de-bijoux/",
+      "bytes": 14451,
+      "sha256": "077f66bc64b9b68b9fdeddfe082a449626408efdbd5394494d6ae2d657fe0b92"
+    },
+    {
+      "path": "/fr/lexique/pose-de-boules-et-de-fleurs/",
+      "bytes": 14339,
+      "sha256": "a424d6e735c23c47309e60cd4be9198dc65d5de87836ace997139c8ce8c83229"
+    },
+    {
+      "path": "/fr/lexique/pose-de-boules-fantaisie/",
+      "bytes": 14333,
+      "sha256": "91611be6300dba8b8e18c318f4e9396e7a12b15ddaf226d0ec9f65dfb803f9e7"
+    },
+    {
+      "path": "/fr/lexique/pose-de-bourdon-au-point-de-boulogne/",
+      "bytes": 14650,
+      "sha256": "61b4acd48afd3e88ffc2afd0e1dd708088300b312692b66296db2d2643bca3da"
+    },
+    {
+      "path": "/fr/lexique/pose-de-cabochons-differentes-formes-de-motifs-rhodoides-boules-et-eclats/",
+      "bytes": 14441,
+      "sha256": "85e7222ed84e8904cd0eb9d821b611d92034a6545680ba1a0ea310a3c2af9ade"
+    },
+    {
+      "path": "/fr/lexique/pose-de-cabochons-et-de-boules/",
+      "bytes": 14473,
+      "sha256": "8dc01184fc4eca68f04af7ff4103d85e29ee66a03b8ecf235b1e1bef44fe24a7"
+    },
+    {
+      "path": "/fr/lexique/pose-de-crin-prealablement-brode-de-paillettes/",
+      "bytes": 14661,
+      "sha256": "4b4ba9713e8454fa682b011dc709a834728fbc6422381f0b5e48d24f86f77706"
+    },
+    {
+      "path": "/fr/lexique/pose-de-cuir/",
+      "bytes": 14437,
+      "sha256": "a84650b64c2a5d7effe497a4a9d66aca9de46c27679e521eb2cf98db4ab7ec60"
+    },
+    {
+      "path": "/fr/lexique/pose-de-cuvettes-a-langlaise/",
+      "bytes": 14584,
+      "sha256": "44e6389f63e5052cbfaec2f83a7ac14fbf7d20f9eed448e8c09794f20003a199"
+    },
+    {
+      "path": "/fr/lexique/pose-de-cuvettes-avec-point-a-vide/",
+      "bytes": 14483,
+      "sha256": "e390e14c242d33184dbe32be1f0f1d222c08efd05420135ecb458f1556d5c94b"
+    },
+    {
+      "path": "/fr/lexique/pose-de-cuvettes-de-tubes-de-paillettes-de-perles/",
+      "bytes": 14694,
+      "sha256": "7d1afe17c29e53127d6cc79b70aedde3573375c748be35178269c427af3729ce"
+    },
+    {
+      "path": "/fr/lexique/pose-de-cuvettes-sur-bande-de-crin/",
+      "bytes": 14561,
+      "sha256": "f05ba0bcb3ef405727d42d58c6e1c31adc1f4a9d869a8b254c9eca58b568fb66"
+    },
+    {
+      "path": "/fr/lexique/pose-de-dentelle-metallique-en-relief/",
+      "bytes": 14489,
+      "sha256": "51ca4bed87a44db81cdac57853b425f4a6fa0a95eea08a289a1eb1b528c86e15"
+    },
+    {
+      "path": "/fr/lexique/pose-de-dentelle/",
+      "bytes": 14434,
+      "sha256": "4aedd433552859e106c2d9f0506af69786ef512ff1668ff04f9b62a487ecbbd3"
+    },
+    {
+      "path": "/fr/lexique/pose-de-fleurs-de-petales-de-feuilles-de-pistils-et-de-perles/",
+      "bytes": 14415,
+      "sha256": "21cf9ad34e58c9715ee03c02ca58e409114ca00122dcdcf070f82b1525beaaf6"
+    },
+    {
+      "path": "/fr/lexique/pose-de-fleurs-et-de-boules/",
+      "bytes": 14520,
+      "sha256": "1495b8446c92a1d6cbe4d03d6aeb530a3fff058ceae6b83540e488ed785d5e9f"
+    },
+    {
+      "path": "/fr/lexique/pose-de-galon-fantaisie/",
+      "bytes": 14516,
+      "sha256": "509b64b644e9efe0248441f0d07c64db9df0641e2b8249f2e03a5a36434e31c5"
+    },
+    {
+      "path": "/fr/lexique/pose-de-ganse-au-luneville/",
+      "bytes": 14576,
+      "sha256": "1dea90a1acb680b6a7d5094376f4bee8b881e668eddb98ce0888564531be946f"
+    },
+    {
+      "path": "/fr/lexique/pose-de-ganse-fantaisie-et-de-ruban/",
+      "bytes": 14355,
+      "sha256": "b716024a7dbecf1833c180442043a46346aef41c56fab766472f9e1ab3a9cfcb"
+    },
+    {
+      "path": "/fr/lexique/pose-de-ganse-maintenue-par-un-zigzag/",
+      "bytes": 14577,
+      "sha256": "317b47786cfc670035aec52042b23500652ad0914e79c4c61a655521433018ca"
+    },
+    {
+      "path": "/fr/lexique/pose-de-ganse-torsadee/",
+      "bytes": 14508,
+      "sha256": "8e1905234b50a3e4f10dbeb4c8f99ce2c873df2f9cd1a9db44167a42923f17fb"
+    },
+    {
+      "path": "/fr/lexique/pose-de-ganse/",
+      "bytes": 14435,
+      "sha256": "beecc05c84d01fb1a0b515b2aa2d053538cce8dbdab0c26e7a150c76f7704940"
+    },
+    {
+      "path": "/fr/lexique/pose-de-jaseron-et-de-bigoudis/",
+      "bytes": 14533,
+      "sha256": "7ef53a119431253aa11b75498146d4fab466592105abee0380bc54bfe7f0a823"
+    },
+    {
+      "path": "/fr/lexique/pose-de-laiton/",
+      "bytes": 14313,
+      "sha256": "3c9a6f2a1fb109bdd20fd636a8deb29e875041fd0b97c8b3697c9af4731373e3"
+    },
+    {
+      "path": "/fr/lexique/pose-de-lame-plastique-et-metal-sur-bourrage-ou-a-plat/",
+      "bytes": 14397,
+      "sha256": "ce71bc4572b44d02e8f6402ec24b12796447a02ff7b87fb14b8ded2c07ecbf3d"
+    },
+    {
+      "path": "/fr/lexique/pose-de-lame/",
+      "bytes": 14437,
+      "sha256": "c398971fbf1b42bc73a9aa6cd54665052227ed6340309d2b0ec695ce2ddce8bc"
+    },
+    {
+      "path": "/fr/lexique/pose-de-motifs-decoupes-en-bougie/",
+      "bytes": 14585,
+      "sha256": "ac0359c464fa23df353da67ce465a4a597571367f38885ca0c56568034290597"
+    },
+    {
+      "path": "/fr/lexique/pose-de-motifs-rhodoid/",
+      "bytes": 14509,
+      "sha256": "25b61b0d41b77a0655859e04ab6eeee09068198f9d44c0458ae0fe764b8ca19f"
+    },
+    {
+      "path": "/fr/lexique/pose-de-navettes-bijoux-perles-fines-et-roses-montees/",
+      "bytes": 14699,
+      "sha256": "a75c57450e37e08a10c138f24dbdaba6e6b93be58ca069902e2fbebd248faace"
+    },
+    {
+      "path": "/fr/lexique/pose-de-paillettes-en-casse/",
+      "bytes": 14341,
+      "sha256": "ff91be3c44d486e157a3e70ff2c5ca17cfc50ef08f1ab6adccc703e40ec2051b"
+    },
+    {
+      "path": "/fr/lexique/pose-de-paillettes-en-riviere-en-dos-dane-en-va-et-vient-et-a-lecaille/",
+      "bytes": 14449,
+      "sha256": "74548dd26b95d125bc5c69f7f8928c58ff3dcb4823f774d299222a526ba8b688"
+    },
+    {
+      "path": "/fr/lexique/pose-de-paillettes-en-riviere/",
+      "bytes": 14542,
+      "sha256": "c9fae43d8b9aa1da041c92a555cd87db5358e9e2d3c34efc90f61e09b9175bbc"
+    },
+    {
+      "path": "/fr/lexique/pose-de-paillettes-en-va-et-vient/",
+      "bytes": 14582,
+      "sha256": "9965dee94db55ca275d6b730a96fea07943fca9b03f00ec386a57ec420a38bb4"
+    },
+    {
+      "path": "/fr/lexique/pose-de-paillettes-et-de-cuvettes-en-va-et-vient/",
+      "bytes": 14692,
+      "sha256": "401bfdec9739acfe058da9646e9dcf10d6c2a734a461fabac864110cb102c5d3"
+    },
+    {
+      "path": "/fr/lexique/pose-de-paillettes-et-de-tubes-en-va-et-vient/",
+      "bytes": 14503,
+      "sha256": "86c30638a85543f8d31967538389e9f428971173503797a2a7685d7d10859598"
+    },
+    {
+      "path": "/fr/lexique/pose-de-paillettes-et-de-tubes/",
+      "bytes": 14345,
+      "sha256": "ea33b3b94fa3a815c1660c434907e67fce50188b8589874b91975b2fef9a26fc"
+    },
+    {
+      "path": "/fr/lexique/pose-de-perles-de-paillettes-et-declats/",
+      "bytes": 14501,
+      "sha256": "686cb5d6e1b2d0d074e54e02cc723f5caeae276b10145da7562cd25d7941989a"
+    },
+    {
+      "path": "/fr/lexique/pose-de-perles-en-casse/",
+      "bytes": 14476,
+      "sha256": "67f0d0e77c5acded31c577f984b2ae42340af4062df95eca505c970487341ab2"
+    },
+    {
+      "path": "/fr/lexique/pose-de-perles-en-vermicelles-et-en-continu/",
+      "bytes": 14371,
+      "sha256": "f265e0684a87e187e3e38b413ec0ab96bc07a61974ae8fd1985272d511de01a4"
+    },
+    {
+      "path": "/fr/lexique/pose-de-perles-et-de-corail/",
+      "bytes": 14467,
+      "sha256": "f8b1f9c0bc5b4eeca402e46d72cd652c6b5838ecd2f4a56c94991819242bff07"
+    },
+    {
+      "path": "/fr/lexique/pose-de-perles-et-de-tubes-en-lignes-continues-et-discontinues-au-point-tire-et-en-casse/",
+      "bytes": 14467,
+      "sha256": "13fc355abe44091d8e9b36c304b4a3f4733513f8f5e9fa7d682b39855c523b92"
+    },
+    {
+      "path": "/fr/lexique/pose-de-perles-et-de-tubes-en-lignes-continues-et-discontinues/",
+      "bytes": 14729,
+      "sha256": "3584ddd076f40b8048c6fa7847ad76940862e66638f358433db2cf3a527f7a41"
+    },
+    {
+      "path": "/fr/lexique/pose-de-perles-fantaisie/",
+      "bytes": 14333,
+      "sha256": "6f2d041c940b5c2730e48a6ae2478326d1d78cedaeaa1588deff3230ce5ef50f"
+    },
+    {
+      "path": "/fr/lexique/pose-de-perles-fr/",
+      "bytes": 14313,
+      "sha256": "d1b0a1e90cb079a48904eb2132bde5df105c5531a1243c7c9cfd5fe57e92a4b4"
+    },
+    {
+      "path": "/fr/lexique/pose-de-perles/",
+      "bytes": 14429,
+      "sha256": "1df24cdc639793ede531de11e25a9194e7a309b405edcf51eba0bef959b08dc9"
+    },
+    {
+      "path": "/fr/lexique/pose-de-plaques-plastique/",
+      "bytes": 14535,
+      "sha256": "e0469b10736b8dc0d77ce4fd9101957b749a3253072e6f01a1548c703beadcfc"
+    },
+    {
+      "path": "/fr/lexique/pose-de-plumes/",
+      "bytes": 14441,
+      "sha256": "e98c566d07736bdeb8b7d449efc61bbafb16768cc0a2c161dbfe818973b21c92"
+    },
+    {
+      "path": "/fr/lexique/pose-de-quatre-differentes-cannetilles/",
+      "bytes": 14555,
+      "sha256": "5ef17121f3243de2fe3dc45435e7790c506a75a557f9213d0a522dc03be4c562"
+    },
+    {
+      "path": "/fr/lexique/pose-de-roses-montees/",
+      "bytes": 14457,
+      "sha256": "e4302eac5132be81ebb12b4738379aa5e444600fb7bcd185de8816e39e5ac54d"
+    },
+    {
+      "path": "/fr/lexique/pose-de-ruban-debout-et-enroule/",
+      "bytes": 14584,
+      "sha256": "caf30a3147b41ab7085354579354e2e207c9ec9b83aace5494ec3fe6d3102e9c"
+    },
+    {
+      "path": "/fr/lexique/pose-de-ruban-en-chiffonne/",
+      "bytes": 14574,
+      "sha256": "f6b36bf014f071c8f0a7b59a46eca05a126584f50b76eacc36e30c950cdec230"
+    },
+    {
+      "path": "/fr/lexique/pose-de-ruban-enroule/",
+      "bytes": 14457,
+      "sha256": "32f3c28c7bfcc31cc2709a357a0b43617527059f07f3155d8de75283ed194c61"
+    },
+    {
+      "path": "/fr/lexique/pose-de-rubans-de-soie/",
+      "bytes": 14329,
+      "sha256": "8381b28c243c35489d2b46c5d0357e3e1b709e9ba63396f017515ff0466711a5"
+    },
+    {
+      "path": "/fr/lexique/pose-de-souleves-fr/",
+      "bytes": 14447,
+      "sha256": "c17d2eef385b1f60dcc3fd6eeeb9debe116c03f6e0c05af451bf92cc73bb4f0a"
+    },
+    {
+      "path": "/fr/lexique/pose-de-souleves/",
+      "bytes": 14450,
+      "sha256": "be48e4b061f1c52c635fbf6690a5978cade2d416e6fce4ac5d107025b9b4e165"
+    },
+    {
+      "path": "/fr/lexique/pose-de-soutache-debout-en-va-et-vient-et-enroulee/",
+      "bytes": 14517,
+      "sha256": "009b0e7936993c25676ca5e572169ccedd7719d9f177c941b900c0d158f8bc2c"
+    },
+    {
+      "path": "/fr/lexique/pose-de-soutache-debout/",
+      "bytes": 14331,
+      "sha256": "cbff6ee50ec7737600a1c07ee6f23615d29e4579bfa0559b4d61a73cafe227ae"
+    },
+    {
+      "path": "/fr/lexique/pose-de-soutache-ou-de-raphia-en-va-et-vient-ou-en-enroule/",
+      "bytes": 14403,
+      "sha256": "24d646f1a2789a7a1cd6b2dab38d184fa6f663a3245d242a285d895ea01a6ff7"
+    },
+    {
+      "path": "/fr/lexique/pose-de-tubes-de-perles-et-de-paillettes-sur-tissu-opaque/",
+      "bytes": 14401,
+      "sha256": "0cfc83afeb94a61ee9119af0d598cec9dcd6f7604863d70bec78be3e2270b6ed"
+    },
+    {
+      "path": "/fr/lexique/pose-de-tubes-en-dos-dane/",
+      "bytes": 14553,
+      "sha256": "34c67b4bf62318bfa85563645bd7f34dab9469e92187b29615e16f0cda8bf296"
+    },
+    {
+      "path": "/fr/lexique/pose-de-tubes-et-boules-en-discontinu/",
+      "bytes": 14487,
+      "sha256": "88a8e433642e47d2999b6af273b00d5b3140abb5cf714cad49013895d220dd93"
+    },
+    {
+      "path": "/fr/lexique/pose-de-tulle-chiffonne/",
+      "bytes": 14519,
+      "sha256": "47fc151d0ad465c3d14246daff563b4a05c1fe93998f29acdfe812b3a3a1f8de"
+    },
+    {
+      "path": "/fr/lexique/pose-debout-de-paillettes/",
+      "bytes": 14335,
+      "sha256": "d830e6f954a2f5688819522c163ce0cc6d4cf62b04eb191420a67db49bfd7c90"
+    },
+    {
+      "path": "/fr/lexique/pose-declat/",
+      "bytes": 14443,
+      "sha256": "ee65101b4706634f166e41c60de09d977f4dd524fdee0df9326cf265da185a93"
+    },
+    {
+      "path": "/fr/lexique/pose-declats-a-la-puce-et-a-langlaise/",
+      "bytes": 14505,
+      "sha256": "ae6b2e5a9d5514876b8e55761e7d7e748e7d946c1325054d16a2a9a83e8ee7c1"
+    },
+    {
+      "path": "/fr/lexique/pose-declats-a-la-puce/",
+      "bytes": 14614,
+      "sha256": "1994799e654e4b3d4cf8b8c6abee5eb1624b771ae1a614b3a69e7fadfd5328a9"
+    },
+    {
+      "path": "/fr/lexique/pose-declats-avec-perles-cabochons-et-pampilles/",
+      "bytes": 14389,
+      "sha256": "065c5c6be47e8fd2690ec6857c42b386c712736cba02e07bc7fec823a56f6a75"
+    },
+    {
+      "path": "/fr/lexique/pose-declats-perces/",
+      "bytes": 14333,
+      "sha256": "dc68e5662dfdfa73abe2d6701a4f2336e01519b2c9fbd0bcdf39868e22e3b701"
+    },
+    {
+      "path": "/fr/lexique/pose-des-paillettes-trefle-avec-un-point-a-vide/",
+      "bytes": 14511,
+      "sha256": "b5320589a2712bcbc5b9a7324b675916e85b6bd7d5adb6b410627eb2b1055207"
+    },
+    {
+      "path": "/fr/lexique/pose-en-casse-de-perles/",
+      "bytes": 14333,
+      "sha256": "6f8a20d091790fbda308ee70622a222fef5964849c1ea3a36bb5aae9d364f77e"
+    },
+    {
+      "path": "/fr/lexique/pose-en-casse/",
+      "bytes": 14304,
+      "sha256": "ad17ee66dfeac9be9223dd8037170790323a24dbf84ee064dea8159594efa7a9"
+    },
+    {
+      "path": "/fr/lexique/pose-en-dos-d-ane/",
+      "bytes": 14345,
+      "sha256": "bad0d14cec757cd221fcefe0a25e3f2f5cfc5cf47edf91f922ed30f0a0bb17c5"
+    },
+    {
+      "path": "/fr/lexique/pose-en-lignes-de-cuvettes-et-de-paillettes-en-riviere/",
+      "bytes": 14724,
+      "sha256": "4475325e9d05e6e0e3fe1647414fa43d3cb4cc7f40900b1ab94b1c0e0d30686c"
+    },
+    {
+      "path": "/fr/lexique/pose-en-relief-de-paillettes-fr-2/",
+      "bytes": 14341,
+      "sha256": "95cd6c5798e7e62fd940f07d2377f45e715fbb917a3c885ab050e718a8714078"
+    },
+    {
+      "path": "/fr/lexique/pose-en-relief-de-paillettes-fr/",
+      "bytes": 14341,
+      "sha256": "92c94f0f588aac2cd55c81fc0c3fa8485ea94258fc7806a8908e953f78f6c4a7"
+    },
+    {
+      "path": "/fr/lexique/pose-en-relief-de-paillettes/",
+      "bytes": 14545,
+      "sha256": "dff261f4f6d33ca2ae13db5accacc7bd8fd872201051fb116e36192749065c4a"
+    },
+    {
+      "path": "/fr/lexique/pose-en-riviere-de-cuvettes-et-de-tubes/",
+      "bytes": 14493,
+      "sha256": "a4afe792950a2cbb7f4bb4614b71ce4e4e11bc63611aa14963b9cd55d0bc6917"
+    },
+    {
+      "path": "/fr/lexique/pose-en-riviere-de-paillettes/",
+      "bytes": 14345,
+      "sha256": "7ec0fffae7a6310fe0ed51e38ef6f7281da5805a8dc1327f47233f9139d55858"
+    },
+    {
+      "path": "/fr/lexique/pose-en-riviere-de-perles-et-de-paillettes/",
+      "bytes": 14371,
+      "sha256": "4c6fa6195932605b54d75603f291591388965b0e7090bce3507d2ab4d2380e20"
+    },
+    {
+      "path": "/fr/lexique/pose-en-riviere/",
+      "bytes": 14290,
+      "sha256": "e7dc7e5a3aab88a0932c71fb4f4a2cfcd7fdcbb0a10896c5590754ff70322b62"
+    },
+    {
+      "path": "/fr/lexique/pose-en-suivi-de-tubes-et-de-perles/",
+      "bytes": 14355,
+      "sha256": "3c4a1c1c64f09f2126d3d57a1f41980a9476bdf3f79ef358f213bcfa05f960f0"
+    },
+    {
+      "path": "/fr/lexique/pose-en-vermicelle-de-perles-et-de-paillettes/",
+      "bytes": 14663,
+      "sha256": "aa1088e0473becbe395a5f130c57b5512fe884920b6bb02368673425c5d33985"
+    },
+    {
+      "path": "/fr/lexique/pose-irreguliere-de-perles-et-de-tubes/",
+      "bytes": 14365,
+      "sha256": "b6cf2e1f3cb931111263dc7af3ca35f1d5ba1cb26b7f5420b89aedc8f605c4a8"
+    },
+    {
+      "path": "/fr/lexique/pose-irreguliere-de-perles/",
+      "bytes": 14341,
+      "sha256": "1c4f9f823a5d2b33c396c935ed1e913ceafbe6b3fbf2a1a9d31914708f4ed6c5"
+    },
+    {
+      "path": "/fr/lexique/pose/",
+      "bytes": 14313,
+      "sha256": "4def4ef84ea35bafbab235aed953bdcc9c98eade6a3c9b824ae07c5037221bde"
+    },
+    {
+      "path": "/fr/lexique/poses-reguliere-et-irreguliere-de-perles/",
+      "bytes": 14373,
+      "sha256": "a17ec5f2faf862ce08b68b89ab0c43730816b0b2967d46c4eeff1c4a60cadc56"
+    },
+    {
+      "path": "/fr/lexique/puce-and-madeira-technique-fr/",
+      "bytes": 14465,
+      "sha256": "10fa12d24f5174bc532262fe41957b16120ef7d0ee7e823f87dc08231b78b433"
+    },
+    {
+      "path": "/fr/lexique/raccord-de-paillettes/",
+      "bytes": 14327,
+      "sha256": "69b8e0c18018de3141ab938dde7470f19550ffa3d810bf338c3b49a5d50200eb"
+    },
+    {
+      "path": "/fr/lexique/raphia-et-ruban-enroules/",
+      "bytes": 14294,
+      "sha256": "8804451dca16abd8ee9333301f5e326abe41df97f2c5b92fd163b28ac660a3a1"
+    },
+    {
+      "path": "/fr/lexique/re-application-des-feuilles-brodees-en-relief/",
+      "bytes": 14379,
+      "sha256": "c86f1eac06e2611b29e71a2a29c85d527e776753fa7862b735abbe8b431fd14a"
+    },
+    {
+      "path": "/fr/lexique/realisation-de-fleurs-en-volume-va-et-vient-de-lacet-soutache-ou-lame/",
+      "bytes": 14429,
+      "sha256": "a313c74c9315844ded903d407e3202b55929c424d0d5ab1a21d53f3854932b3b"
+    },
+    {
+      "path": "/fr/lexique/realisation-dune-rose-en-mousseline-et-tulle/",
+      "bytes": 14627,
+      "sha256": "7fece0fa40161c262ad8dde84fa914f0a31a12891c678ef87ad702d363fe6791"
+    },
+    {
+      "path": "/fr/lexique/remplissage-de-chainette-a-lenvers/",
+      "bytes": 14363,
+      "sha256": "44d345333cade4c2de4b5be7f2f6a2a87f971ff06d5b73c1138a94531c5d6087"
+    },
+    {
+      "path": "/fr/lexique/remplissage-de-chainette-sur-lenvers/",
+      "bytes": 14595,
+      "sha256": "2fec1c9a6309d77244d002fd3b408ecd1347e8e028eadb7e9787d7291cf8157d"
+    },
+    {
+      "path": "/fr/lexique/remplissage-de-chainette/",
+      "bytes": 14463,
+      "sha256": "44b7ae4488c6f945518b7e7e866263841ee154e2371ccef1ed7a4f718e9e9a91"
+    },
+    {
+      "path": "/fr/lexique/remplissage-de-chainettes-sur-lendroit/",
+      "bytes": 14497,
+      "sha256": "a9a0607263a81f31e4a9d93d3c762df524a0a14c0f3f1d6ad828c60de048020b"
+    },
+    {
+      "path": "/fr/lexique/remplissage-de-perles/",
+      "bytes": 14467,
+      "sha256": "dc75965c8d6e2fa8ea04223fe9e185b88430f1c539d8c4d7b18c2bf785a08462"
+    },
+    {
+      "path": "/fr/lexique/remplissage-de-soie-a-lenvers/",
+      "bytes": 14351,
+      "sha256": "4c25cddc6e21c0ee85f66e47888bf097987606461e82409108fcf0c13efc90ac"
+    },
+    {
+      "path": "/fr/lexique/remplissage-de-tubes-et-de-paillettes-en-va-et-vient-regulier-irregulier-ou-en-forme/",
+      "bytes": 14830,
+      "sha256": "5a36aacb0693b930103f0833d49017b0c4fab204cf6863ba79d451f2a05e5ce0"
+    },
+    {
+      "path": "/fr/lexique/remplissage-de-tubes/",
+      "bytes": 14453,
+      "sha256": "ac3763246d5d511d51a8a5f4376719ba833aa6f90dbe94d1ec90817ac59b252f"
+    },
+    {
+      "path": "/fr/lexique/remplissage-fantaisie-de-chainettes-sur-lendroit-avec-point-tire/",
+      "bytes": 14802,
+      "sha256": "91f79ca8579c059a9661627a222b8eabe4b483daf0058e8ffde78e41bcb63d14"
+    },
+    {
+      "path": "/fr/lexique/remplissage-fantaisie-de-chainettes-sur-lenvers/",
+      "bytes": 14687,
+      "sha256": "bbe4b6a77270e93525b31ead96d757a35a2deb7e327a803d65a22afd2852f73e"
+    },
+    {
+      "path": "/fr/lexique/remplissage/",
+      "bytes": 14291,
+      "sha256": "9c6e7dd99c2bbf377ec84813880997e2dd0cf6083270647e9d6daf4936a0d3ef"
+    },
+    {
+      "path": "/fr/lexique/retrace-un-dessin-au-point-de-chainette/",
+      "bytes": 14640,
+      "sha256": "dbcbcd804e85b215e8edd045cfdd412a22d21beddc7b584db86008455b89d27b"
+    },
+    {
+      "path": "/fr/lexique/retracer-le-dessin/",
+      "bytes": 14475,
+      "sha256": "ec1342513ac81d801fabd81a3962536d43961d0c4e3f9e33d4fe2bc2b0d6972a"
+    },
+    {
+      "path": "/fr/lexique/ruban-fronce/",
+      "bytes": 14435,
+      "sha256": "12fccb65853b3a36c99be3b36f879f5526c2b54bb5a37b4f50fe1d3b7c6fa20c"
+    },
+    {
+      "path": "/fr/lexique/seed-beads-and-assembled-roses-fr/",
+      "bytes": 14473,
+      "sha256": "a12c767759dc68312b65fda9482a332ea5654369360932b318cf0bdf5c90b3e1"
+    },
+    {
+      "path": "/fr/lexique/sequins-fr/",
+      "bytes": 14360,
+      "sha256": "08be5fe8cd2fe3c4027bb38fec9d48841705d0e84d60795197f21bc1eb8bbdbc"
+    },
+    {
+      "path": "/fr/lexique/sequins-in-river-work-in-dimensional-hump-fr/",
+      "bytes": 14495,
+      "sha256": "89fdb215fb90140b16cdc0ab553fab62123203c7a6da114083f2bb6f6b025b1b"
+    },
+    {
+      "path": "/fr/lexique/short-long-and-encroaching-satin-stitch-fr/",
+      "bytes": 14503,
+      "sha256": "016dede27f45b383114901b5f20f5a632630207b2949357b0f7cdd6558a92691"
+    },
+    {
+      "path": "/fr/lexique/soutache-debout/",
+      "bytes": 14443,
+      "sha256": "40700796f6da2491cd9356f449a5fdd9a5ec0ed7a6555cb4123acd08a3942b87"
+    },
+    {
+      "path": "/fr/lexique/soutache/",
+      "bytes": 14262,
+      "sha256": "7d723ff384714730eb994a035c45ae47a1374e88b1b6c7dc7df2b28ad8bccfa3"
+    },
+    {
+      "path": "/fr/lexique/spheres-and-eclat-beading-fr/",
+      "bytes": 14465,
+      "sha256": "0765637d2aae49aa463bc07bcbb82e16108e9a4c0c2dc048a79b71d177646bef"
+    },
+    {
+      "path": "/fr/lexique/sucre-double-vermicelle-de-perles/",
+      "bytes": 14483,
+      "sha256": "4f738a6a56b8c1d5181a15cc4c8e74a65aacac6d4b978bb0b29608786211fac0"
+    },
+    {
+      "path": "/fr/lexique/technique-de-rentre-et-de-doublure-des-feuilles/",
+      "bytes": 14381,
+      "sha256": "e36eb95bd79fbebf323f5a9cd5fd74609960e15f161d58842fe7130bfe254587"
+    },
+    {
+      "path": "/fr/lexique/technique-du-pliee-au-ruban/",
+      "bytes": 14469,
+      "sha256": "8a27a06938c2920ee1b2f12c82fa41244c77adea58e0a1a19e8071357bc55a48"
+    },
+    {
+      "path": "/fr/lexique/technique-du-rentre/",
+      "bytes": 14499,
+      "sha256": "744c72843aa8dd585f0085424fe192ffdc886f4f129f792f1aeaf2a89d3d2571"
+    },
+    {
+      "path": "/fr/lexique/techniques-du-cuir-froisse-et-du-cuir-tendu/",
+      "bytes": 14373,
+      "sha256": "d58f88e682522322fcc218d4bf5acc2f3e08c214f05a77ced541aa8672a6800a"
+    },
+    {
+      "path": "/fr/lexique/trame/",
+      "bytes": 14400,
+      "sha256": "2b90804ae1f84e413aa45b478f448114d2517cd11891ea0450314114e9bc91ba"
+    },
+    {
+      "path": "/fr/lexique/tubes-fr/",
+      "bytes": 14423,
+      "sha256": "617703424ac4c29fe2ebd12224cbe5f2278e101e812d869d06986597452af0b5"
+    },
+    {
+      "path": "/fr/lexique/vermicelle-de-micro-tubes/",
+      "bytes": 14554,
+      "sha256": "3daee376a31cad3ecb5ebb9241932967b8b883ca008b159bc98efbecee1ba37e"
+    },
+    {
+      "path": "/fr/lexique/vermicelle-de-paillettes/",
+      "bytes": 14461,
+      "sha256": "91c121a76a918d90cd612d125a38e3f275b549c3b129a7a1068c97594e6156e1"
+    },
+    {
+      "path": "/fr/lexique/vermicelle-serre-et-elague-de-perles-et-de-paillettes/",
+      "bytes": 14525,
+      "sha256": "843fa10219b26359c9c4f8f0153b51465b03825840c5511a982a8ab8f0bf6b97"
+    },
+    {
+      "path": "/fr/lexique/vermicelle/",
+      "bytes": 14451,
+      "sha256": "68a1996cdbc93bc1e4d4fd4ed8eedc670fd7a28e83a6efa976105bf93a429e1f"
+    },
+    {
+      "path": "/fr/mentions-legales/",
+      "bytes": 25065,
+      "sha256": "100ba0586e710e81bbf00a83c250a76a4ea0dd014b6e37d89558190a2e7db0e4"
+    },
+    {
+      "path": "/fr/politique-de-confidentialite/",
+      "bytes": 14673,
+      "sha256": "d3ef3d97de5958d58dd71cdfbff166f7e73804f6a649ee124c61bf656fb5e452"
+    },
+    {
+      "path": "/fr/produit/ameublement/",
+      "bytes": 13981,
+      "sha256": "30d37027b53d73a768c1c4126310752e25f39a41b06c23f84c971a9e1c5a142d"
+    },
+    {
+      "path": "/fr/produit/broderie-au-ruban-niveau-1/",
+      "bytes": 13998,
+      "sha256": "8ebc6826c9250befcf03050051ffda2b6d738a8c22fdc85d27f30af2e12a66a7"
+    },
+    {
+      "path": "/fr/produit/broderie-au-ruban-niveau-2/",
+      "bytes": 13998,
+      "sha256": "88cbcdc78becca8afb5703c74d2eaae17afba8ea6664c58d8d4905b6bade6d3b"
+    },
+    {
+      "path": "/fr/produit/decouverte-aiguille-brin-de-muguet/",
+      "bytes": 14006,
+      "sha256": "9c67b32c912c445298353c918916c31314c0e5167630594ab9207708bbfe784a"
+    },
+    {
+      "path": "/fr/produit/decouverte-aiguille-coeur-baroque/",
+      "bytes": 14005,
+      "sha256": "460c66b448def62834cf1497a26c523f7531755dc468a8a32de0ef306f5b961e"
+    },
+    {
+      "path": "/fr/produit/decouverte-aiguille-fleur-noire/",
+      "bytes": 14003,
+      "sha256": "27aeaf2ba120355f3b3edc249664360f10dbae564f65e4af9221a0330117787b"
+    },
+    {
+      "path": "/fr/produit/decouverte-aiguille-iris/",
+      "bytes": 13996,
+      "sha256": "2fdf7edcd5fbe6dec1b7ed6e7d7118569edb5c100974914b09940632f234897d"
+    },
+    {
+      "path": "/fr/produit/decouverte-crochet-niveau-1-noeud-blanc/",
+      "bytes": 13991,
+      "sha256": "2a2446ab9c3e78dc67947d5698119ebdd1acd6d3f6d31be0df33d3d4b7330ad7"
+    },
+    {
+      "path": "/fr/produit/decouverte-crochet-niveau-2-coquelicot/",
+      "bytes": 14010,
+      "sha256": "41a4daeaab2bbd2183e7622675e939496869708e2f852279afef1238fb5e50c3"
+    },
+    {
+      "path": "/fr/produit/forfait-de-2-specialisations/",
+      "bytes": 13998,
+      "sha256": "826913993a8eaf2b0be2a5f303b72290f33fdcf5ecf0b3ab1768840b9b990ee9"
+    },
+    {
+      "path": "/fr/produit/haute-couture/",
+      "bytes": 13983,
+      "sha256": "c4af9d963a5d5bc19d3cc2d5652aca0b30329790bf67ba51c5b760ce2b8ee8dc"
+    },
+    {
+      "path": "/fr/produit/niveau-1-michonet/",
+      "bytes": 13989,
+      "sha256": "86f6df27b109c9507b0affed25739ec5e5b106d950cf88b0ce8d777834d7918f"
+    },
+    {
+      "path": "/fr/produit/niveau-1-vasque-fleurie-panier-de-fruits/",
+      "bytes": 14013,
+      "sha256": "d4c303bc09c520e32eb130f20f32314e2466024f5d393c5bfa5093bdb0ff9a43"
+    },
+    {
+      "path": "/fr/produit/niveau-2-annees-20/",
+      "bytes": 13990,
+      "sha256": "5e0b3baf90bd215e3552916d2ce508ea609a6e736b9605986a2a6337ed2212d0"
+    },
+    {
+      "path": "/fr/produit/niveau-3-annees-30/",
+      "bytes": 13990,
+      "sha256": "161a83e62f0afe43b7c83d7190d543ae980d230b850f5dff67cafd3f297f8b08"
+    },
+    {
+      "path": "/fr/produit/niveau-4-annees-40/",
+      "bytes": 13990,
+      "sha256": "6baf595238a8765a994df1939ad6c732290d5d34de5012eb9f732d6e31a6aaf7"
+    },
+    {
+      "path": "/fr/produit/niveau-5-annees-50/",
+      "bytes": 13990,
+      "sha256": "566ab049f4afd0b0a7d43ce6d3c7540d38cecf128b6351510d66bb71b5a5c0cd"
+    },
+    {
+      "path": "/fr/produit/niveau-6-annees-60/",
+      "bytes": 13990,
+      "sha256": "9c4d9bfff466722b98a8ed0ea9e87f0f999a7360f1b7d6c317d24d3ad792c591"
+    },
+    {
+      "path": "/fr/produit/niveau-7-annees-80/",
+      "bytes": 13990,
+      "sha256": "236ed217f0261016a1c94fbb28b148cf59c6c825ea4baf76378d333382b6fb3a"
+    },
+    {
+      "path": "/fr/produit/niveau-8-annees-2000/",
+      "bytes": 13992,
+      "sha256": "df546b48f8f8ed85335430296f31bd7ab36335678a667bfd94f072448602c4a2"
+    },
+    {
+      "path": "/fr/produit/points-traditionnels/",
+      "bytes": 13990,
+      "sha256": "59dc66faa8e03fbf86b998ee8e4487a965e522161378cca9c3b0d761941f64cc"
+    },
+    {
+      "path": "/fr/seminaires/",
+      "bytes": 16811,
+      "sha256": "3c639106ef2232ef4424147a6a61d0477067259a8266ead24ed5d4e9c0578240"
+    },
+    {
+      "path": "/wp-content/themes/ecolelesage/assets/img/Logo-Mon-Compte-Formation-Appli-CPF.jpg",
+      "bytes": 52354,
+      "sha256": "39a55fd948ba31d5e4db2da41cce490c4f68ea4fa2c60dd2b22d520d85a8ddd0"
+    },
+    {
+      "path": "/wp-content/themes/ecolelesage/assets/img/logo-lesage.svg",
+      "bytes": 4770,
+      "sha256": "1910d2db69aff3215092aef8afcf42b41dc7c537432de8f942e34e15525f3c8e"
+    },
+    {
+      "path": "/wp-content/themes/ecolelesage/assets/img/logo-qualiopi.png",
+      "bytes": 19415,
+      "sha256": "1f2aaad412d3e3e53e5934a90398ae6db0bd129c7fddf61b450ef19eb8537c9c"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2020/11/Annees-20-JPG-scaled-e1742379988253.jpg",
+      "bytes": 183685,
+      "sha256": "9ab46e7f484ec927453816424727f7f504886e8b0558749392897c8e02d64642"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2020/11/Annees-2000-JPG-scaled-e1742381344386.jpg",
+      "bytes": 208890,
+      "sha256": "dd2dfea83cc46fc01bd81ab9672c75908e83b78c6d27cd70e330b03d0c6ff171"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2020/11/Annees-30-JPG-scaled-e1742380339522.jpg",
+      "bytes": 151883,
+      "sha256": "db0db7c0962826de1b022fdc94fad3f30d40db9d14bc6da4fdc1ced34a4771e7"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2020/11/Annees-40-JPG-scaled-e1742380911124.jpg",
+      "bytes": 154989,
+      "sha256": "3014ae6d55f1526eae704aef318adde7dd46bf30fa289ac4f309505d2d82f3a1"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2020/11/Annees-60-JPG-scaled-e1742380819185.jpg",
+      "bytes": 209342,
+      "sha256": "592ee8c6b9b40821d7658609ec8970d394296f4a54345e1a2eaab901865a581f"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2020/11/Page-Accueil-Ruban-Niveau-2.png",
+      "bytes": 237866,
+      "sha256": "bda6667c891e55fe893f388efbf80d931e4d35d6199bb1e65f07e23afbcb6a57"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2020/11/Page-Accueil-niveau-specialisation-1.png",
+      "bytes": 256952,
+      "sha256": "25b1ad74d402e11b066b2d742d80b578993d3073f41afcf2df2578d51a4dd2c6"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2020/11/Page-daccueil-Annees-20.png",
+      "bytes": 228581,
+      "sha256": "f65fdaa6517e8862152dd3e13d2538be1ce4500b86aa40e5cc1c1495eaa94911"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2020/11/Page-daccueil-Annees-2000s.png",
+      "bytes": 234622,
+      "sha256": "8dd096d18aee58098e0f0f38ddc1f6a313a278a6cc9490bb0687038afe11ef41"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2020/11/Page-daccueil-Annees-40.png",
+      "bytes": 221736,
+      "sha256": "ba3a1b70f1193afb258702fee33aec9e11cf89d930fa4fa4795139a2e2e0f934"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2020/11/Page-daccueil-Annees-60.png",
+      "bytes": 243933,
+      "sha256": "e15640b413e220ea141ab30aba72ddd5c0d4ecdbac7d80ad1ab2199ffc76a6f2"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2020/11/Page-daccueil-Cannetille-en-or-.png",
+      "bytes": 156605,
+      "sha256": "1be547aa964be76f2e55d20a092952fab6905dc0526c4ed0eb0680149c98f79b"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2020/11/Perfectionnement-Années_30_desktop.jpg",
+      "bytes": 897256,
+      "sha256": "3ed44e9ef9006835c56104c39d04e8c3542b0dba27fe000767143c4ccd2c9b9e"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2020/11/Perfectionnement-Années_50_desktop.jpg",
+      "bytes": 828854,
+      "sha256": "b8a4326d10489fe309cdbf61c4f974f3293312ce6d7df14dd598a198b0ce167f"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2020/11/Perfectionnement-Années_80_desktop.jpg",
+      "bytes": 904272,
+      "sha256": "c63a987933c568161c274bfaf48e1c041734c57989734d195078d161cf3da25b"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2020/11/Perfectionnement-Michonet_desktop.jpg",
+      "bytes": 718961,
+      "sha256": "3d9c7087f9d61dc6f2929fda6d36fe7a855a874447b4475d651d55ed18fec486"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2020/11/Perfectionnement-fleurs-fruits_desktop.jpg",
+      "bytes": 743655,
+      "sha256": "c7e5e186ce0c061e22cbaa0537173fdf939906e75a94e0fe1aecc5c2cf31b483"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2020/11/Specialisation_broderie-interieur_desktop-1.jpg",
+      "bytes": 893621,
+      "sha256": "25e997e44f88eb86905bb721e932149e00e36e2d7aaf45c3500156ead78a0585"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2020/11/cadre-Haute-Couture.jpg",
+      "bytes": 91851,
+      "sha256": "d380ef9701052e40052df57763851066031f68f3af5a64fa1cab894fe76cc672"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2020/11/cadre-brin-de-muguet.jpg",
+      "bytes": 20752,
+      "sha256": "cab36bfa09623451f63ab5aad30eb6eab643cb61fa6950dd049307d667ccb168"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2020/11/plp-aiguille-et-tradition_desktop.jpg",
+      "bytes": 736040,
+      "sha256": "c8dfdb72363cdfbcd62dca53647695c3f915d284dc11c448486636fac2d357cf"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2020/11/plp-ruban-niveau-1-a-laiguille_desktop.jpg",
+      "bytes": 892147,
+      "sha256": "71a504b866a890ce3be58132c739acaedee3827985365ba4f5bf62b6601393be"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2022/01/icone-handicap.png",
+      "bytes": 3354,
+      "sha256": "7d318e3afee13d4a4ba97250f98db3cbc4a6cc045938e74909f5df162895cbcc"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2022/03/Page-daccueil-Iris-.png",
+      "bytes": 192671,
+      "sha256": "16b8d021a829148ecf1d81485b36f847218ed962941808bbffe186e37e5ade4d"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2022/03/cadre-noeud-rose.jpg",
+      "bytes": 30306,
+      "sha256": "54271177bcf8b06bd24989c51ff964836b6e540ac266fd544ab33653916a12d5"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2023/08/Cadre-noeud-noir.jpg",
+      "bytes": 30534,
+      "sha256": "4ac3286c118672b9e862b0d63d6c4a036292c7da20c2723b21a3af4b23345490"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2023/08/DSCF1421-1-1024x577.jpg",
+      "bytes": 124651,
+      "sha256": "91f5b36ebad56c225798c6900d7f2da44a8f39384c35e83f421a5d19d5f7a9c9"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2023/08/DSCF1421-1-2048x1154.jpg",
+      "bytes": 360427,
+      "sha256": "af9d94cde5180a6e152063c2a5701e2ca6bca3168e769c2e1b604b8415b31352"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2023/08/Page-daccueil-Fleur-Noire-.png",
+      "bytes": 128703,
+      "sha256": "b0db0f5f7abac96b3e9fbb0d18e18f1e1b204f67a302c12a909692d40293f009"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2023/08/Page-daccueil-Ruban-Blanc.png",
+      "bytes": 110583,
+      "sha256": "dd4c281effb626bd92e06bd94f9d02f3f349d4099d3207e8fefcebbc3d1a9633"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2023/09/Pate-Ecole-Lesage-test-1-1024x300.png",
+      "bytes": 451792,
+      "sha256": "0eba2d107639d70640048b2c6c08d1e40809c5defb94321867ef92626d2cfe5e"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2024/10/france-competences-nouveaux-logos-768x204-1.png",
+      "bytes": 29354,
+      "sha256": "df1dffae58bc09b2014fdebea07cda7aeffb8e0943e78c423c13114331086d5c"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2024/11/Coeur-baroque-cadre-bleu-page-catalogue-produit-e1733402814118-1024x533.png",
+      "bytes": 467804,
+      "sha256": "699c9747151dc1c8cf35b316a1f814b9cb528e31ef6741ed6e5eac82a048ba6b"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2024/11/Pink-x-Blue-Coeur-baroque-1024x683.png",
+      "bytes": 557132,
+      "sha256": "f3544dc9ffd022aa1b94563a44ea8e8e01ba677c19bb183bcce7f514c6a83a37"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2024/11/certificat-lesage.pdf",
+      "bytes": 303594,
+      "sha256": "3a6918584ed3fcf8b8215a57440ca253d2c5c67381c4b66f5a76a3352da26d76"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2025/04/Image-produit-1024x512.png",
+      "bytes": 411141,
+      "sha256": "29a95cbb5ffff97b176043378f453ac2b55673f4513bee7de1bf32270bc3991b"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2025/06/Coquelicot.png",
+      "bytes": 681906,
+      "sha256": "abef5269da3843273bb782b429bacf22451952dbd2386aa11a08dddf9ec6e60e"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2025/07/Logo-officiel-cpf.png",
+      "bytes": 8792,
+      "sha256": "c46f1074f06af8a4c0e5ff3ffc867772e1de924bc523088fc1c1dc869ecdb4f1"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2026/10/19-1.png",
+      "bytes": 1674669,
+      "sha256": "20bc54a2ad761d97322807b5dc28b20668454e3e0908bcbd00bdc6ecf93ede2e"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/2026/10/6.png",
+      "bytes": 1923686,
+      "sha256": "089fd616b3462a63ed66b6c8c7fefaadf420f4ebd45908f5a459b34c5b4b8039"
+    },
+    {
+      "path": "/wp-content/uploads/sites/4/woocommerce-placeholder.png",
+      "bytes": 102644,
+      "sha256": "b207bfc50434ff10f4d5f2b9b0c3d7892c06ff72083026e3356dd7b6c3a04b45"
+    }
+  ],
+  "failures": {}
+}

@@ -1,0 +1,55 @@
+/* The source photographs already include space around the framed embroidery.
+   Fill a square instead of containing the wide photo inside a padded square. */
+.lesage-shop .shop-card-image,
+.home-page .home-course-photo {
+  aspect-ratio: 1;
+  padding: 0;
+  overflow: hidden;
+}
+
+.lesage-shop .shop-card-image-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+
+.lesage-shop .shop-card-image img,
+.home-page .home-course-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  object-fit: cover;
+  object-position: center;
+  mix-blend-mode: normal;
+  transform: none;
+  transition: none;
+}
+
+/* Stop the old hover zoom from clipping work near the edge of its frame. */
+.lesage-shop .shop-card-image-link:hover img,
+.home-page .home-course-photo:hover img {
+  transform: none;
+}
+
+/* This photograph has more wall around its central frame than the other works.
+   The small extra crop retains both hearts and the complete black frame. */
+.lesage-shop .shop-card-image img[src*="Pink-x-Blue-Coeur-baroque"],
+.home-page .home-course-photo img[src*="Pink-x-Blue-Coeur-baroque"] {
+  transform: scale(1.14);
+}
+
+/* These two photographs contain a horizontal work / two separate works.
+   Preserve the complete composition; only trim the inspected outer wall. */
+.lesage-shop .shop-card-image img[src*="Page-Accueil-Ruban-Niveau-2"],
+.home-page .home-course-photo img[src*="Page-Accueil-Ruban-Niveau-2"] {
+  object-fit: contain;
+  transform: scale(1.25);
+}
+
+.lesage-shop .shop-card-image img[src*="Page-Accueil-niveau-specialisation-1"],
+.home-page .home-course-photo img[src*="Page-Accueil-niveau-specialisation-1"] {
+  object-fit: contain;
+  transform: scale(1.1);
+}

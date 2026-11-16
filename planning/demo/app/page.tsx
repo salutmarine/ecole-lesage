@@ -46,6 +46,11 @@ export default function Demo() {
                         <Brand />
                     </div>
                     <div className="topbar_right">
+                        {process.env.NEXT_PUBLIC_SHOWCASE_URL && (
+                            <a className="btn secondary" href={process.env.NEXT_PUBLIC_SHOWCASE_URL}>
+                                Retour au site
+                            </a>
+                        )}
                         {!isLogin && (
                             <div className="topbar_right">
                                 <span className="breadcrumbs">{breadcrumb}</span>

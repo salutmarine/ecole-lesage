@@ -1,0 +1,30 @@
+.site-menu-toggle{display:flex;align-items:center;gap:11px;border:0;background:none;color:#181818;min-height:44px;padding:8px 0;font-size:10px;letter-spacing:.1em;text-transform:uppercase;justify-self:start;grid-column:1;grid-row:1}
+.site-menu-toggle svg,.site-menu-close svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.2;flex:none}
+.site-menu-dialog{position:fixed;inset:0 auto 0 0;margin:0;border:0;border-radius:0;padding:0;width:min(460px,calc(100% - 24px));max-width:none;height:100dvh;max-height:none;color:#181818;background:#fff;box-shadow:16px 0 70px #0002;overflow-y:auto;overscroll-behavior:contain}
+.site-menu-dialog[open]{display:flex;flex-direction:column;animation:site-menu-enter .25s ease-out}
+.site-menu-dialog::backdrop{background:#0006;backdrop-filter:blur(2px)}
+.site-menu-head{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 28px;border-bottom:0;position:sticky;top:0;background:#fff;z-index:1}
+.site-menu-brand{font-size:20px;font-weight:700;letter-spacing:.02em;white-space:nowrap}
+.site-menu-close{display:flex;align-items:center;justify-content:center;gap:13px;min-width:44px;min-height:44px;border:0;background:none;padding:8px 0;color:inherit;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+.site-menu-content{padding:28px 30px 24px;display:flex;flex-direction:column;min-height:0}
+
+.site-menu-dialog .main-navigation{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:0;margin:0;padding:0;max-width:none;min-height:0;overflow:visible;font-size:23px;line-height:1.35;letter-spacing:0;text-transform:none}
+.site-menu-dialog .main-navigation a,.site-menu-dialog .main-navigation a[data-static=seminars]{display:flex;align-items:center;justify-content:space-between;gap:20px;white-space:normal;padding:18px 0;min-height:64px;border:0;border-bottom:1px solid #e8e5e0;color:#181818}
+.site-menu-dialog .main-navigation a::after{content:'';width:8px;height:8px;border-top:1px solid #827c75;border-right:1px solid #827c75;transform:rotate(45deg);margin-right:3px;flex:none}
+.site-menu-dialog .main-navigation a[aria-current=page]{font-weight:600}
+.site-menu-dialog a:hover{text-decoration:underline;text-underline-offset:5px}
+.site-menu-school{padding-top:29px}
+.site-menu-school h3{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:400;color:#77716a;margin:0 0 10px}
+.site-menu-school nav{display:grid;grid-template-columns:1fr 1fr;gap:0 20px}
+.site-menu-school a{font-size:12px;line-height:1.5;padding:12px 0;min-height:44px;display:flex;align-items:center}
+.site-menu-dialog .header-language{display:flex;position:static;gap:25px;margin:27px 0 0;font-size:11px;line-height:1.5;letter-spacing:.05em}
+.site-menu-dialog .header-language a{min-height:44px;display:flex;align-items:center}
+.site-menu-dialog .header-language a[aria-current]{padding:0;border-bottom:1px solid}
+.site-menu-note{margin:22px 0 0;font-size:10px;color:#8b857d;letter-spacing:.08em}
+html.site-menu-open,body.site-menu-open{overflow:hidden}
+.has-compact-navigation .header-top{height:96px;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);padding-top:0}
+.has-compact-navigation .lesage-wordmark{grid-column:2;grid-row:1;justify-self:center}
+.has-compact-navigation .header-actions{grid-column:3;grid-row:1}
+@keyframes site-menu-enter{from{transform:translateX(-100%);opacity:.5}to{transform:translateX(0);opacity:1}}
+@media(max-width:650px){.has-compact-navigation .header-top{height:80px;grid-template-columns:44px minmax(0,1fr) 44px;padding:0 17px;column-gap:8px}.has-compact-navigation .site-menu-toggle{min-width:44px;justify-content:flex-start}.site-menu-toggle>span{display:none}.has-compact-navigation .lesage-wordmark{font-size:18px;gap:7px}.has-compact-navigation .lesage-wordmark img{width:25px;height:32px}.has-compact-navigation .header-actions{gap:0}.has-compact-navigation .header-actions .account-link{display:none}.site-menu-head{padding:16px 23px}.site-menu-close>span{display:none}.site-menu-content{padding:25px 24px 24px}.site-menu-dialog .main-navigation{font-size:21px}.site-menu-dialog .main-navigation a{min-height:62px;padding:17px 0}.site-menu-brand{font-size:18px}}
+@media(prefers-reduced-motion:reduce){.site-menu-dialog[open]{animation:none}.site-menu-dialog::backdrop{backdrop-filter:none}}

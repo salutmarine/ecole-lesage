@@ -1,0 +1,13 @@
+.ls-workspace .lesage-tabs{display:block;margin:0 0 42px;padding:0;border:0;border-bottom:1px solid #e5e3df;max-width:100%;background:#fff}
+.ls-tabs-viewport{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;overscroll-behavior-x:contain}
+.ls-tabs-viewport::-webkit-scrollbar{display:none}
+.ls-tabs-track{position:relative;display:flex;align-items:center;gap:6px;width:max-content;min-width:100%;padding:0 0 9px;isolation:isolate}
+.ls-workspace .lesage-tabs button[data-view]{position:relative;flex:none;display:block;min-height:44px;padding:10px 16px;border:0;border-bottom:2px solid transparent;background:none;color:#77716a;font:400 13px/1.6 Arial,Helvetica,sans-serif;letter-spacing:.015em;text-transform:none;white-space:nowrap;z-index:1}
+.ls-workspace .lesage-tabs button[data-view][aria-current=page]{color:#181818;border-bottom-color:#181818}
+.ls-workspace .lesage-tabs.ls-tabs-ready button[data-view][aria-current=page]{border-bottom-color:transparent}
+.ls-tabs-hover,.ls-tabs-indicator{position:absolute;left:0;width:0;pointer-events:none;transition:left .25s ease,width .25s ease,opacity .15s ease}
+.ls-tabs-hover{top:5px;bottom:14px;border-radius:5px;background:#f2f1ee;opacity:0;z-index:0}
+.ls-tabs-indicator{bottom:0;height:2px;background:#181818;z-index:2;opacity:0}
+.ls-tabs-ready .ls-tabs-indicator{opacity:1}
+@media(max-width:650px){.ls-workspace .lesage-tabs{margin-bottom:30px}.ls-workspace .lesage-tabs button[data-view]{padding:9px 12px;font-size:12px}.ls-tabs-track{gap:3px}}
+@media(prefers-reduced-motion:reduce){.ls-tabs-hover,.ls-tabs-indicator{transition:none}}

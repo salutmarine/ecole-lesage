@@ -1,0 +1,181 @@
+/* Full-width photography keeps the introductory copy on the image itself. */
+.home-page .home-hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  max-width: none;
+  min-height: clamp(570px, calc(100svh - 144px), 760px);
+  margin: 0;
+  overflow: hidden;
+  background: #26302a;
+  color: #fff;
+}
+
+.home-page .home-hero::before {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(90deg, #0c1714c2 0%, #0c1714a3 27%, #0c171438 61%, #0c171408 100%);
+  pointer-events: none;
+  content: '';
+}
+
+.home-page .home-hero-photo {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  aspect-ratio: auto;
+  overflow: hidden;
+}
+
+.home-page .home-hero-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  object-fit: cover;
+  object-position: center 44%;
+}
+
+/* Retain the native controller's coverage on both ends of its bounded travel. */
+.home-page.home-parallax-active .home-hero-photo img[data-parallax-layer='image'] {
+  top: calc(-1 * var(--home-parallax-space));
+  bottom: auto;
+  height: calc(100% + 2 * var(--home-parallax-space));
+}
+
+.home-page .home-hero-copy {
+  position: relative;
+  z-index: 2;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1520px;
+  margin: 0 auto;
+  padding: 74px clamp(28px, 5vw, 88px);
+  background: transparent;
+  text-align: left;
+}
+
+.home-page .home-hero .home-eyebrow {
+  color: #ffffffe0;
+  font-size: 11px;
+}
+
+.home-page .home-hero h1 {
+  max-width: 640px;
+  margin: 24px 0;
+  color: #fff;
+  font-size: clamp(60px, 6.2vw, 98px);
+  line-height: 1.04;
+}
+
+.home-page .home-hero-intro {
+  max-width: 365px;
+  color: #f8f8f4;
+  font-size: 14px;
+  line-height: 1.85;
+}
+
+.home-page .home-hero-actions {
+  align-items: flex-start;
+  margin-top: 30px;
+}
+
+.home-page .home-hero .home-link--solid {
+  min-width: 260px;
+  max-width: 100%;
+  min-height: 54px;
+  padding: 18px 25px;
+  border: 1px solid #fff;
+  background: #fff;
+  color: #171715 !important;
+  font-size: 10px;
+}
+
+.home-page .home-hero .home-link--solid:hover {
+  border-color: #efeee8;
+  background: #efeee8;
+}
+
+.home-page .home-hero a:focus-visible {
+  outline-color: #fff;
+}
+
+.home-page:lang(ja) .home-hero h1 {
+  font-size: clamp(56px, 5.6vw, 86px);
+  line-height: 1.3;
+}
+
+@media (max-width: 1000px) {
+  .home-page .home-hero {
+    min-height: clamp(570px, calc(100svh - 78px), 730px);
+  }
+
+  .home-page .home-hero-photo img {
+    object-position: 60% 44%;
+  }
+
+  .home-page .home-hero-copy {
+    padding: 66px 6%;
+  }
+}
+
+@media (max-width: 650px) {
+  .home-page .home-hero {
+    align-items: flex-end;
+    min-height: clamp(560px, calc(100svh - 78px), 680px);
+  }
+
+  .home-page .home-hero::before {
+    background: linear-gradient(180deg, #0c171410 0%, #0c171426 28%, #0c171498 58%, #0c1714e0 100%);
+  }
+
+  .home-page .home-hero-photo img {
+    object-position: 66% 42%;
+  }
+
+  .home-page .home-hero-copy {
+    padding: 58px 6% 42px;
+  }
+
+  .home-page .home-hero .home-eyebrow {
+    font-size: 9px;
+    letter-spacing: .14em;
+  }
+
+  .home-page .home-hero h1 {
+    margin: 20px 0;
+    font-size: clamp(44px, 12vw, 58px);
+    line-height: 1.05;
+  }
+
+  .home-page .home-hero-intro {
+    max-width: 310px;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .home-page .home-hero-actions {
+    align-items: flex-start;
+    margin-top: 25px;
+  }
+
+  .home-page .home-hero .home-link--solid {
+    min-width: 240px;
+    min-height: 52px;
+    padding: 16px 20px;
+    gap: 25px;
+  }
+
+  .home-page:lang(ja) .home-hero h1 {
+    font-size: 44px;
+    line-height: 1.3;
+  }
+}

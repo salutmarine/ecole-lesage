@@ -2,6 +2,12 @@
 
 Démo publique : https://salutmarine.github.io/ecole-lesage/
 
+Le site complet s’ouvre sur la vitrine française, conservée dans le dossier
+[`showcase`](showcase/README.md). « Mes cours & réservations » mène à la démo
+du planning : https://salutmarine.github.io/ecole-lesage/planning/.
+La vitrine et le planning sont publiés ensemble en fichiers statiques, avec leurs
+sources séparées. Pour construire l’ensemble : `node showcase/scripts/build-site.mjs`.
+
 ## Démo autonome GitHub Pages
 
 La démo affiche une mire de connexion fictive : `admin`, `prof` ou `etudiant`

@@ -1,0 +1,33 @@
+/* Overscan is enabled only after the motion controller is mounted. */
+.home-parallax-active {
+  --home-parallax-space: 72px;
+}
+.home-parallax-active [data-home-parallax],
+.home-parallax-active .home-hero-photo {
+  overflow: hidden;
+}
+.home-parallax-active [data-parallax-layer] {
+  translate: 0 var(--home-parallax-y, 0px);
+}
+.home-parallax-active [data-parallax-layer="image"] {
+  position: absolute;
+  top: calc(-1 * var(--home-parallax-space));
+  bottom: auto;
+  height: calc(100% + 2 * var(--home-parallax-space));
+  width: 100%;
+  max-width: 100%;
+  object-fit: cover;
+}
+.home-parallax-active [data-home-parallax-visible] [data-parallax-layer] {
+  will-change: translate;
+}
+@media (max-width: 650px) {
+  .home-parallax-active { --home-parallax-space: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-parallax-active { --home-parallax-space: 0px; }
+  .home-parallax-active [data-parallax-layer] {
+    translate: none !important;
+    will-change: auto;
+  }
+}

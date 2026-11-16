@@ -1,0 +1,58 @@
+/* Shared field surfaces. Loaded last so every page and injected form agrees. */
+:root {
+  --control-surface: #f9f9f9;
+}
+
+/* Keep native checkboxes, radios, sliders, file pickers and action buttons intact.
+   The enhanced select's hidden native field retains its clipping and semantics. */
+html[data-site-layout] body :is(
+  input:not([type='checkbox']):not([type='radio']):not([type='hidden']):not([type='submit']):not([type='button']):not([type='reset']):not([type='image']):not([type='range']):not([type='color']):not([type='file']),
+  textarea,
+  select:not(.ui-select-native),
+  .ui-select-trigger
+) {
+  border: 0 !important;
+  border-radius: 5px !important;
+  background-color: #f9f9f9 !important;
+  box-shadow: none !important;
+}
+
+/* The quantity group is one field surface; its +/- buttons keep their behavior. */
+html[data-site-layout] body .shop-quantity-control {
+  border: 0 !important;
+  border-radius: 5px !important;
+  background-color: #f9f9f9 !important;
+  box-shadow: none !important;
+}
+
+/* Course scopes are multi-select controls built with native details/summary. */
+html[data-site-layout] body :is(.ws-course-picker, .bo-course-scope),
+html[data-site-layout] body :is(.ws-course-picker > summary, .bo-course-scope > details > summary) {
+  border: 0 !important;
+  border-radius: 5px !important;
+  background-color: #f9f9f9 !important;
+  box-shadow: none !important;
+}
+
+/* A focus outline is transient and does not change the field's geometry. */
+html[data-site-layout] body :is(input, textarea, select:not(.ui-select-native), .ui-select-trigger):focus-visible,
+html[data-site-layout] body :is(.ws-course-picker > summary, .bo-course-scope > details > summary):focus-visible {
+  outline: 2px solid var(--control-focus, #22221e) !important;
+  outline-offset: 3px !important;
+}
+
+/* Existing error messages and native validation remain paired with a visible cue. */
+html[data-site-layout] body :is(input, textarea, select:not(.ui-select-native), .ui-select-trigger):is([aria-invalid='true'], :user-invalid) {
+  outline: 2px solid #9b5a49 !important;
+  outline-offset: 1px !important;
+}
+
+html[data-site-layout] body :is(input, textarea, select:not(.ui-select-native), .ui-select-trigger):disabled {
+  color: #92938b !important;
+  cursor: not-allowed;
+}
+
+html[data-site-layout] body :is(input, textarea)[readonly] {
+  color: #77776e !important;
+  cursor: default;
+}

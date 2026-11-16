@@ -1,0 +1,10 @@
+/* Keep the active category underline, with open space around the navigation. */
+.lesage-shop .shop-category-tabs {
+  border-top: 0;
+  border-bottom: 0;
+  box-shadow: none;
+}
+
+.lesage-shop .shop-category-tabs button[aria-pressed='true']::after {
+  bottom: 0;
+}

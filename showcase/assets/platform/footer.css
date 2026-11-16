@@ -1,0 +1,330 @@
+/* Footer-7's identity and three-column structure, adapted to the school's content. */
+.lesage-footer {
+  padding: 76px clamp(24px, 4.5vw, 80px) 0;
+  border-top: 0;
+  background: #f9f9f9;
+  color: #252522;
+  text-align: left;
+  font: 400 13px/1.7 Arial, Helvetica, sans-serif;
+}
+
+.lesage-footer .ls-footer-container {
+  display: block;
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.lesage-footer .ls-footer-top {
+  display: grid;
+  grid-template-columns: minmax(210px, .9fr) minmax(0, 2.2fr);
+  gap: clamp(48px, 5vw, 88px);
+}
+
+.lesage-footer .ls-footer-identity {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.lesage-footer .footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  width: fit-content;
+  color: #191916;
+  font-size: 23px;
+  font-weight: 400;
+  letter-spacing: -.035em;
+  line-height: 1.25;
+  text-decoration: none;
+}
+
+.lesage-footer .footer-brand img {
+  display: block;
+  width: 42px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.lesage-footer small.ls-footer-heritage {
+  display: block;
+  max-width: 245px;
+  color: #757570;
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.lesage-footer .ls-footer-social {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  min-height: 44px;
+  color: #5d5d57;
+  font-size: 12px;
+}
+
+.lesage-footer .ls-footer-social svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+}
+
+.lesage-footer .ls-footer-social .ls-footer-social-dot {
+  fill: currentColor;
+  stroke: none;
+}
+
+.lesage-footer .ls-footer-navigation {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(24px, 3vw, 50px);
+  min-width: 0;
+}
+
+.lesage-footer .ls-footer-column {
+  min-width: 0;
+  margin: 0;
+}
+
+.lesage-footer .ls-footer-column h2 {
+  margin: 4px 0 21px;
+  color: #292925;
+  font: 600 11px/1.5 Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+
+.lesage-footer .ls-footer-column ul {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 11px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lesage-footer .ls-footer-column li {
+  min-width: 0;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.lesage-footer .ls-footer-column a,
+.lesage-footer .ls-footer-column button {
+  display: inline;
+  min-height: 0;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: #6d6d66;
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.7;
+  text-align: left;
+  text-transform: none;
+  letter-spacing: 0;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+
+.lesage-footer .ls-footer-contact p {
+  margin: 0 0 15px;
+  color: #6d6d66;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.lesage-footer .ls-footer-professional {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  margin: 52px 0 0;
+  padding: 25px 0;
+  border-top: 1px solid #e4e4df;
+}
+
+.lesage-footer .ls-footer-professional > p {
+  margin: 0;
+  color: #797972;
+  font-size: 11px;
+  letter-spacing: .045em;
+}
+
+.lesage-footer .footer-certifications {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 30px;
+  margin: 0;
+}
+
+.lesage-footer .footer-certifications a {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+}
+
+.lesage-footer .footer-certifications img {
+  display: block;
+  width: auto;
+  max-width: 135px;
+  height: auto;
+  max-height: 43px;
+  object-fit: contain;
+}
+
+.lesage-footer .ls-footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin: 0;
+  padding: 23px 0 25px;
+  border-top: 1px solid #e4e4df;
+  color: #82827b;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.lesage-footer .ls-footer-copyright {
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.lesage-footer .footer-legal {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 13px 25px;
+  margin: 0;
+  color: inherit;
+  font-size: inherit;
+  letter-spacing: 0;
+}
+
+.lesage-footer .footer-legal a {
+  text-decoration: none;
+}
+
+.lesage-footer a:hover,
+.lesage-footer button:hover {
+  color: #191916;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.lesage-footer :is(a, button):focus-visible {
+  outline: 2px solid #252522;
+  outline-offset: 5px;
+}
+
+@media (max-width: 1100px) {
+  .lesage-footer .ls-footer-top {
+    grid-template-columns: minmax(180px, .75fr) minmax(0, 2fr);
+    gap: 38px;
+  }
+
+  .lesage-footer .ls-footer-navigation {
+    gap: 23px;
+  }
+}
+
+@media (max-width: 800px) {
+  .lesage-footer {
+    padding-top: 50px;
+  }
+
+  .lesage-footer .ls-footer-top {
+    grid-template-columns: 1fr;
+    gap: 42px;
+  }
+
+  .lesage-footer .ls-footer-identity {
+    gap: 18px;
+  }
+
+  .lesage-footer small.ls-footer-heritage {
+    max-width: 320px;
+  }
+
+  .lesage-footer .ls-footer-column h2 {
+    margin-top: 0;
+    margin-bottom: 13px;
+  }
+
+  .lesage-footer .ls-footer-column ul {
+    gap: 0;
+  }
+
+  .lesage-footer .ls-footer-column a,
+  .lesage-footer .ls-footer-column button {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    justify-content: flex-start;
+  }
+
+  .lesage-footer .ls-footer-professional {
+    margin-top: 32px;
+  }
+
+  .lesage-footer .ls-footer-bottom {
+    align-items: flex-start;
+    padding-bottom: max(22px, env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 580px) {
+  .lesage-footer .ls-footer-navigation {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px 25px;
+  }
+
+  .lesage-footer .ls-footer-contact {
+    grid-column: 1 / -1;
+  }
+
+  .lesage-footer .ls-footer-contact ul {
+    gap: 0;
+  }
+
+  .lesage-footer .ls-footer-professional {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .lesage-footer .footer-certifications {
+    gap: 26px;
+  }
+
+  .lesage-footer .ls-footer-bottom {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .lesage-footer .footer-legal {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .lesage-footer .footer-legal a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}

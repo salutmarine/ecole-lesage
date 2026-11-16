@@ -1,0 +1,434 @@
+/* A compact mobile catalogue; desktop keeps its category tabs and controls. */
+.lesage-shop .shop-mobile-filter-trigger,
+.lesage-shop .shop-filter-chips,
+.lesage-shop .shop-clear-label-mobile {
+  display: none;
+}
+
+.lesage-shop .shop-filter-dialog:not([open]) {
+  display: none;
+}
+
+@media (max-width: 800px) {
+  .lesage-shop .shop-catalog-intro {
+    margin: 0;
+    padding: 22px 0 18px;
+    text-align: left;
+  }
+
+  .lesage-shop .shop-catalog-intro h1 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -.035em;
+  }
+
+  .lesage-shop .shop-catalog-intro .shop-eyebrow,
+  .lesage-shop .shop-catalog-intro .shop-intro-line,
+  .lesage-shop .shop-catalog-intro .shop-intro-text,
+  .lesage-shop .shop-catalogue .shop-category-tabs,
+  .lesage-shop .shop-catalogue .shop-toolbar-selects,
+  .lesage-shop .shop-clear-label-full {
+    display: none !important;
+  }
+
+  .lesage-shop .shop-catalogue .shop-toolbar {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .lesage-shop .shop-catalogue .shop-search {
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+    max-width: none;
+    height: 46px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .lesage-shop .shop-catalogue .shop-search input {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    height: 46px;
+    min-height: 46px;
+    border: 1px solid #dddcd6 !important;
+    border-radius: 3px !important;
+    background: #faf9f7 !important;
+    font-size: 16px !important;
+    line-height: 22px;
+    text-overflow: ellipsis;
+  }
+
+  .lesage-shop .shop-catalogue .shop-search input::placeholder {
+    color: #77766f;
+    font-size: 14px;
+    opacity: 1;
+  }
+
+  .lesage-shop .shop-mobile-filter-trigger {
+    position: relative;
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    box-sizing: border-box;
+    min-width: 96px;
+    height: 46px;
+    min-height: 46px;
+    margin: 0;
+    padding: 0 12px;
+    border: 1px solid #c8c7c0;
+    border-radius: 3px;
+    background: #fff;
+    color: #1b1b18;
+    font: inherit;
+    font-size: 13px;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  .lesage-shop .shop-mobile-filter-trigger > svg {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+  }
+
+  .lesage-shop .shop-filter-badge {
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 4px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    background: #1b1b18;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  .lesage-shop .shop-filter-chips {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 6px;
+    overflow-x: auto;
+    margin: 10px 0 0;
+    padding: 1px 0;
+    scrollbar-width: none;
+  }
+
+  .lesage-shop .shop-filter-chips::-webkit-scrollbar {
+    display: none;
+  }
+
+  .lesage-shop .shop-filter-chip {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 7px;
+    min-height: 30px;
+    margin: 0;
+    padding: 5px 9px;
+    border: 1px solid #e4e2dc;
+    border-radius: 2px;
+    background: #f6f5f1;
+    color: #494841;
+    font: inherit;
+    font-size: 11px;
+    line-height: 18px;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  .lesage-shop .shop-filter-chip > span:last-child {
+    font-size: 16px;
+    line-height: 16px;
+  }
+
+  .lesage-shop .shop-catalogue .shop-results-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    min-height: 18px;
+    margin: 12px 0 14px;
+  }
+
+  .lesage-shop .shop-catalogue .shop-results-count {
+    margin: 0;
+    color: #77766f;
+    font-size: 11px;
+    line-height: 18px;
+  }
+
+  .lesage-shop .shop-catalogue .shop-clear-filters {
+    min-height: 24px;
+    margin: -3px 0;
+    padding: 0;
+    color: #68675f;
+    font-size: 11px;
+    line-height: 24px;
+  }
+
+  .lesage-shop .shop-clear-label-mobile {
+    display: inline;
+  }
+
+  .lesage-shop .shop-filter-dialog {
+    position: fixed;
+    inset: auto 0 0;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 560px;
+    max-height: min(90dvh, 720px);
+    margin: 0 auto;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    border-radius: 14px 14px 0 0;
+    background: #fff;
+    color: #1b1b18;
+    box-shadow: 0 -12px 60px #0000001a;
+    font-family: inherit;
+    overscroll-behavior: contain;
+  }
+
+  .lesage-shop .shop-filter-dialog::backdrop {
+    background: #18181566;
+    backdrop-filter: blur(3px);
+  }
+
+  .lesage-shop .shop-filter-dialog[open] {
+    display: block;
+  }
+
+  .lesage-shop .shop-filter-sheet {
+    display: flex;
+    flex-direction: column;
+    max-height: min(90dvh, 720px);
+    min-height: 0;
+  }
+
+  .lesage-shop .shop-filter-sheet-header {
+    position: relative;
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 80px;
+    padding: 15px 22px 10px;
+    border-bottom: 1px solid #eceae4;
+  }
+
+  .lesage-shop .shop-filter-sheet-header::before {
+    position: absolute;
+    top: 7px;
+    left: calc(50% - 18px);
+    width: 36px;
+    height: 3px;
+    border-radius: 3px;
+    background: #d7d5cc;
+    content: '';
+  }
+
+  .lesage-shop .shop-filter-sheet-header h2 {
+    margin: 0;
+    color: inherit;
+    font-family: inherit;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -.025em;
+  }
+
+  .lesage-shop .shop-filter-sheet-close {
+    display: inline-flex;
+    flex: 0 0 44px;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin: 0 -8px 0 0;
+    padding: 10px;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .lesage-shop .shop-filter-sheet-close > svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .lesage-shop .shop-filter-sheet-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: 24px 22px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .lesage-shop .shop-filter-group {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .lesage-shop .shop-filter-group + .shop-filter-group {
+    margin-top: 27px;
+  }
+
+  .lesage-shop .shop-filter-group legend {
+    margin: 0 0 12px;
+    padding: 0;
+    color: #77766f;
+    font-size: 11px;
+    line-height: 16px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  .lesage-shop .shop-filter-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .lesage-shop .shop-filter-option {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-width: 0;
+    min-height: 46px;
+    margin: 0;
+    padding: 10px 8px;
+    border: 1px solid #dedcd5;
+    border-radius: 3px;
+    background: #fff;
+    color: #57564f;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 18px;
+    cursor: pointer;
+  }
+
+  .lesage-shop .shop-filter-option.is-selected {
+    border-color: #1b1b18;
+    background: #f4f3ee;
+    color: #1b1b18;
+    box-shadow: inset 0 0 0 1px #1b1b18;
+  }
+
+  .lesage-shop .shop-filter-option input[type='radio'] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .lesage-shop .shop-filter-option:has(input:focus-visible) {
+    outline: 2px solid #8b7d64;
+    outline-offset: 3px;
+  }
+
+  .lesage-shop .shop-filter-sheet-footer {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 20px;
+    padding: 16px 22px max(16px, env(safe-area-inset-bottom));
+    border-top: 1px solid #eceae4;
+    background: #fff;
+  }
+
+  .lesage-shop .shop-filter-sheet-clear {
+    flex: 0 0 auto;
+    min-height: 46px;
+    margin: 0;
+    padding: 0 4px;
+    border: 0;
+    background: transparent;
+    color: #5b5a53;
+    font: inherit;
+    font-size: 13px;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    cursor: pointer;
+  }
+
+  .lesage-shop .shop-filter-sheet-apply {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 48px;
+    margin: 0;
+    padding: 12px;
+    border: 1px solid #1b1b18;
+    border-radius: 2px;
+    background: #1b1b18;
+    color: #fff;
+    font: inherit;
+    font-size: 13px;
+    line-height: 20px;
+    cursor: pointer;
+  }
+
+  .lesage-shop .shop-mobile-filter-trigger:focus-visible,
+  .lesage-shop .shop-filter-chip:focus-visible,
+  .lesage-shop .shop-filter-sheet-close:focus-visible,
+  .lesage-shop .shop-filter-sheet-clear:focus-visible,
+  .lesage-shop .shop-filter-sheet-apply:focus-visible {
+    outline: 2px solid #8b7d64;
+    outline-offset: 3px;
+  }
+}
+
+@media (max-width: 360px) {
+  .lesage-shop .shop-mobile-filter-trigger {
+    min-width: 92px;
+    gap: 5px;
+    padding: 0 9px;
+  }
+
+  .lesage-shop .shop-filter-sheet-header,
+  .lesage-shop .shop-filter-sheet-body,
+  .lesage-shop .shop-filter-sheet-footer {
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+
+  .lesage-shop .shop-filter-option {
+    font-size: 12px;
+  }
+}
