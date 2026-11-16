@@ -218,7 +218,10 @@ export default function StudentDashboard({
     }
     const [selectedEntitlementId, setSelectedEntitlementId] = useState(initialEntitlementId || '')
     const eligibleCourses = selected ? items.filter((item) => !!availableEntitlement([item], selected)) : []
-    const current = eligibleCourses.find((item) => item.id === selectedEntitlementId)
+    const current =
+        eligibleCourses.length === 1
+            ? eligibleCourses[0]
+            : eligibleCourses.find((item) => item.id === selectedEntitlementId)
     async function reserve() {
         if (!selected || !current) return
         setBusy(true)
@@ -404,50 +407,76 @@ export default function StudentDashboard({
                     <span className="section_kicker">Réserver une séance</span>
                     <h2 id="reserve-panel-title">Séance</h2>
 
-                    <dl className="admin_settings">
-                        <div>
-                            <dt>Début</dt>
-                            <dd>{dateLabel(selected.startsAt)}</dd>
+                    <p>
+                        {new Date(selected.startsAt).toLocaleDateString('fr-FR', {
+                            dateStyle: 'full',
+                            timeZone: 'Europe/Paris',
+                        })}{' '}
+                        de{' '}
+                        {new Date(selected.startsAt).toLocaleTimeString('fr-FR', {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            timeZone: 'Europe/Paris',
+                        })}{' '}
+                        à{' '}
+                        {new Date(selected.endsAt).toLocaleTimeString('fr-FR', {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            timeZone: 'Europe/Paris',
+                        })}
+                    </p>
+                    <p className="muted">
+                        Durée :{' '}
+                        {(
+                            (new Date(selected.endsAt).getTime() - new Date(selected.startsAt).getTime()) /
+                            3600000
+                        ).toLocaleString('fr-FR')}{' '}
+                        h
+                    </p>
+                    <p className="muted">
+                        Places disponibles : {Math.max(0, selected.capacity - selected.reserved)} sur{' '}
+                        {selected.capacity}
+                    </p>
+                    <hr className="subtle_rule" />
+                    {eligibleCourses.length === 1 && current ? (
+                        <div className="reservation_course_card">
+                            <div className="slot_student_course_heading">
+                                <strong>{current.course}</strong>
+                                {current.level && (
+                                    <span
+                                        className={`month_event_level month_event_level_${current.level.toLowerCase()}`}
+                                    >
+                                        {courseLevels[current.level]}
+                                    </span>
+                                )}
+                            </div>
+                            <p className="muted">
+                                {current.remaining}{' '}
+                                {current.remaining === 1 ? 'séance disponible' : 'séances disponibles'} sur{' '}
+                                {current.total}
+                            </p>
                         </div>
-                        <div>
-                            <dt>Fin</dt>
-                            <dd>{dateLabel(selected.endsAt)}</dd>
-                        </div>
-                        <div>
-                            <dt>Durée</dt>
-                            <dd>
-                                {(
-                                    (new Date(selected.endsAt).getTime() - new Date(selected.startsAt).getTime()) /
-                                    3600000
-                                ).toLocaleString('fr-FR')}{' '}
-                                h
-                            </dd>
-                        </div>
-
-                        <div>
-                            <dt>Places disponibles</dt>
-                            <dd>
-                                {Math.max(0, selected.capacity - selected.reserved)} sur {selected.capacity}
-                            </dd>
-                        </div>
-                    </dl>
-                    <label htmlFor="reservation-course">Cours à suivre pendant cette séance</label>
-                    <select
-                        id="reservation-course"
-                        value={selectedEntitlementId}
-                        disabled={busy}
-                        required
-                        onChange={(event) => setSelectedEntitlementId(event.target.value)}
-                    >
-                        <option value="">Choisir un cours acheté</option>
-                        {eligibleCourses.map((course) => (
-                            <option key={course.id} value={course.id}>
-                                {course.course}
-                                {course.level ? ` · ${courseLevels[course.level]}` : ''} · {course.remaining} séance(s)
-                                disponible(s)
-                            </option>
-                        ))}
-                    </select>
+                    ) : (
+                        <>
+                            <label htmlFor="reservation-course">Cours à suivre pendant cette séance</label>
+                            <select
+                                id="reservation-course"
+                                value={selectedEntitlementId}
+                                disabled={busy}
+                                required
+                                onChange={(event) => setSelectedEntitlementId(event.target.value)}
+                            >
+                                <option value="">Choisir un cours acheté</option>
+                                {eligibleCourses.map((course) => (
+                                    <option key={course.id} value={course.id}>
+                                        {course.course}
+                                        {course.level ? ` · ${courseLevels[course.level]}` : ''} · {course.remaining}{' '}
+                                        séance(s) disponible(s)
+                                    </option>
+                                ))}
+                            </select>
+                        </>
+                    )}
                     {current && (
                         <p className="muted">
                             {current.remaining === 1

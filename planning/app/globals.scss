@@ -1269,6 +1269,16 @@ label {
     }
 }
 
+.reservation_course_card {
+    padding: 12px 14px;
+    background: var(--paper);
+    border-radius: 8px;
+    overflow-wrap: anywhere;
+    margin-bottom: 10px;
+    p {
+        margin: 4px 0 0;
+    }
+}
 .slot_registered_students {
     list-style: none;
     padding: 0;
