@@ -171,8 +171,14 @@ export default function AdminDashboard({
         [capacity, setCapacity] = useState(12)
     const [durationMinutes, setDurationMinutes] = useState(180)
     const [teacherIds, setTeacherIds] = useState<string[]>([])
+    const [repeatUnit, setRepeatUnit] = useState('')
+    const [repeatInterval, setRepeatInterval] = useState(1)
+    const [repeatUntil, setRepeatUntil] = useState('')
     function openCreateSlot(date?: string) {
         setEditingSlot(null)
+        setRepeatUnit('')
+        setRepeatInterval(1)
+        setRepeatUntil('')
         setSelected(null)
         setStart(date ? `${date}T09:00` : '')
         setDurationMinutes(180)
@@ -279,6 +285,10 @@ export default function AdminDashboard({
                     endsAt: new Date(d.getTime() + durationMinutes * 60000).toISOString(),
                     teacherIds,
                     capacity,
+                    recurrence:
+                        !editingSlot && repeatUnit
+                            ? { unit: repeatUnit, interval: repeatInterval, until: repeatUntil }
+                            : undefined,
                 }),
             })
             const data = await r.json()
@@ -286,7 +296,13 @@ export default function AdminDashboard({
             setRefresh((n) => n + 1)
             router.refresh()
             router.push('/admin/planning')
-            notify(editingSlot ? 'Séance modifiée avec succès.' : 'Créneau créé avec succès.')
+            notify(
+                editingSlot
+                    ? 'Séance modifiée avec succès.'
+                    : data.count > 1
+                      ? `${data.count} créneaux créés avec succès.`
+                      : 'Créneau créé avec succès.',
+            )
             setCreatingSlot(false)
             setEditingSlot(null)
         } catch (e) {
@@ -474,6 +490,41 @@ export default function AdminDashboard({
         <form onSubmit={create}>
             <label htmlFor="slot-start">Date et heure de début</label>
             <DatePicker id="slot-start" withTime value={start} onChange={setStart} required />
+            {!editingSlot && (
+                <>
+                    <label htmlFor="slot-repeat">Répétition</label>
+                    <select id="slot-repeat" value={repeatUnit} onChange={(event) => setRepeatUnit(event.target.value)}>
+                        <option value="">Ne pas répéter</option>
+                        <option value="day">Tous les N jours</option>
+                        <option value="week">Toutes les N semaines</option>
+                    </select>
+                    {repeatUnit && (
+                        <>
+                            <label htmlFor="slot-repeat-interval">
+                                {repeatUnit === 'day'
+                                    ? 'Tous les combien de jours ?'
+                                    : 'Toutes les combien de semaines ?'}
+                            </label>
+                            <input
+                                id="slot-repeat-interval"
+                                type="number"
+                                min="1"
+                                max="365"
+                                step="1"
+                                required
+                                value={repeatInterval}
+                                onChange={(event) => setRepeatInterval(Number(event.target.value))}
+                            />
+                            <label htmlFor="slot-repeat-until">Répéter jusqu’au (inclus)</label>
+                            <DatePicker id="slot-repeat-until" value={repeatUntil} onChange={setRepeatUntil} required />
+                            <p className="muted">
+                                Chaque occurrence conserve l’heure de début, la durée, la capacité et les professeurs.
+                                Maximum : 366 créneaux. En cas de conflit, aucun créneau n’est créé.
+                            </p>
+                        </>
+                    )}
+                </>
+            )}
             <label htmlFor="slot-duration">Durée (en heures)</label>
             <input
                 id="slot-duration"

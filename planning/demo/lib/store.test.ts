@@ -2,6 +2,84 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { createState, mutateBooking, remaining, demoFetch } from './store'
 import { availableEntitlement, reservationUnavailableReason } from '../../lib/student-availability'
+import { slotOccurrences } from '../../lib/slot-recurrence'
+
+test('les répétitions gardent l’heure de Paris et respectent la fréquence et la fin incluse', () => {
+    const weekly = slotOccurrences('2027-03-22T08:00:00Z', '2027-03-22T11:00:00Z', {
+        unit: 'week',
+        interval: 1,
+        until: '2027-04-05',
+    })
+    assert.deepEqual(
+        weekly.map((slot) => slot.startsAt.toISOString()),
+        ['2027-03-22T08:00:00.000Z', '2027-03-29T07:00:00.000Z', '2027-04-05T07:00:00.000Z'],
+    )
+    assert.ok(weekly.every((slot) => +slot.endsAt - +slot.startsAt === 3 * 3600000))
+    const daily = slotOccurrences('2027-01-01T13:00:00Z', '2027-01-01T16:00:00Z', {
+        unit: 'day',
+        interval: 2,
+        until: '2027-01-06',
+    })
+    assert.deepEqual(
+        daily.map((slot) => slot.startsAt.getUTCDate()),
+        [1, 3, 5],
+    )
+    assert.throws(() =>
+        slotOccurrences('2027-01-01T13:00:00Z', '2027-01-01T16:00:00Z', {
+            unit: 'day',
+            interval: 0,
+            until: '2027-01-06',
+        }),
+    )
+    assert.throws(() =>
+        slotOccurrences('2027-01-01T13:00:00Z', '2027-01-01T16:00:00Z', {
+            unit: 'day',
+            interval: 1,
+            until: '2028-12-31',
+        }),
+    )
+    assert.throws(
+        () =>
+            slotOccurrences('2027-03-27T01:30:00Z', '2027-03-27T04:30:00Z', {
+                unit: 'day',
+                interval: 1,
+                until: '2027-03-28',
+            }),
+        /n’existe pas/,
+    )
+})
+
+test('une série est créée entièrement et un conflit annule toutes ses occurrences', async () => {
+    const { adminRequest, hydrate } = await import('./admin-store')
+    const state = createState(new Date(), false)
+    const teacher = hydrate(state).people.find((person) => person.role === 'TEACHER')!
+    const url = new URL('https://demo.invalid/api/admin/slots')
+    const body = {
+        startsAt: '2090-01-01T08:00:00Z',
+        endsAt: '2090-01-01T11:00:00Z',
+        capacity: 12,
+        teacherIds: [teacher.id],
+    }
+    const series = (await adminRequest(state, url, {
+        method: 'POST',
+        body: JSON.stringify({ ...body, recurrence: { unit: 'day', interval: 2, until: '2090-01-05' } }),
+    })) as { count: number }
+    assert.equal(series.count, 3)
+    const before = structuredClone(state)
+    await assert.rejects(
+        adminRequest(state, url, {
+            method: 'POST',
+            body: JSON.stringify({
+                ...body,
+                startsAt: '2089-12-31T08:00:00Z',
+                endsAt: '2089-12-31T11:00:00Z',
+                recurrence: { unit: 'day', interval: 1, until: '2090-01-02' },
+            }),
+        }),
+        /déjà une séance/,
+    )
+    assert.deepEqual(state, before)
+})
 function scenario() {
     const state = createState(new Date(), false)
     const slot = state.slots.find(

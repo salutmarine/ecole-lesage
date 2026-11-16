@@ -33,10 +33,9 @@ for (const name of ['course-levels', 'student-availability', 'teacher-sessions']
     await cp(path.join(root, `lib/${name}.ts`), path.join(target, `lib/${name}.ts`))
 await writeFile(
     path.join(target, 'lib/admin-store.ts'),
-    (await readFile(path.join(target, 'lib/admin-store.ts'), 'utf8')).replace(
-        '../../lib/agenda-period',
-        './agenda-period',
-    ),
+    (await readFile(path.join(target, 'lib/admin-store.ts'), 'utf8'))
+        .replace('../../lib/agenda-period', './agenda-period')
+        .replace('../../lib/slot-recurrence', './slot-recurrence'),
 )
 const basePath = process.env.PAGES_BASE_PATH ?? '/ecole-lesage'
 await mkdir(path.join(target, 'public/fonts'), { recursive: true })
@@ -102,7 +101,7 @@ await writeFile(
     path.join(target, 'components/brand.tsx'),
     "import Link from '@/lib/navigation'\nexport default function Brand(){ return (" + brand + ')}\n',
 )
-for (const name of ['admin-navigation', 'student-summary', 'agenda-period'])
+for (const name of ['admin-navigation', 'student-summary', 'agenda-period', 'slot-recurrence'])
     await cp(path.join(root, `lib/${name}.ts`), path.join(target, `lib/${name}.ts`))
 let pdf = await readFile(path.join(root, 'lib/agenda-pdf.ts'), 'utf8')
 pdf = pdf

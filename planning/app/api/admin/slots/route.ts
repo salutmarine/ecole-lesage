@@ -4,6 +4,7 @@ import { db } from '@/lib/db'
 import { z } from 'zod'
 import { validateBooking } from '@/lib/booking'
 import { validateSlotTeachers } from '@/lib/slot-teachers'
+import { slotOccurrences } from '@/lib/slot-recurrence'
 const schema = z.object({
     courseId: z.string().min(1).nullable().default(null),
     startsAt: z.string().datetime(),
@@ -12,11 +13,15 @@ const schema = z.object({
     teacherId: z.string().min(1).optional(),
     teacherIds: z.array(z.string().min(1)).max(100).optional(),
     entitlementId: z.string().min(1).optional(),
+    recurrence: z
+        .object({ unit: z.enum(['day', 'week']), interval: z.number().int().min(1).max(365), until: z.string() })
+        .optional(),
 })
 export async function POST(req: NextRequest) {
     if (!(await requireRole(['ADMIN']))) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
     try {
         const d = schema.parse(await req.json())
+        const occurrences = slotOccurrences(d.startsAt, d.endsAt, d.recurrence)
         const start = new Date(d.startsAt),
             end = new Date(d.endsAt)
         if (start >= end || start < new Date()) throw Error('Dates invalides')
@@ -26,38 +31,42 @@ export async function POST(req: NextRequest) {
         if (d.courseId && !(await db.course.findUnique({ where: { id: d.courseId } }))) throw Error('Cours inconnu')
         const slot = await db.$transaction(
             async (tx) => {
-                const teacherIds = [...new Set(d.teacherIds ?? (d.teacherId ? [d.teacherId] : []))].sort()
-                await validateSlotTeachers(tx, teacherIds, start, end)
-                const created = await tx.slot.create({
-                    data: {
-                        courseId: d.courseId,
-                        teacherId: null,
-                        teachers: { connect: teacherIds.map((id) => ({ id })) },
-                        startsAt: start,
-                        endsAt: end,
-                        capacity: d.capacity,
-                    },
-                })
-                if (d.entitlementId) {
-                    await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${d.entitlementId}))`
-                    const entitlement = await tx.entitlement.findUnique({
-                        where: { id: d.entitlementId },
-                        include: { user: true },
-                    })
-                    if (!entitlement || entitlement.user.role !== 'STUDENT') throw Error('Élève inconnu.')
-                    await validateBooking(tx, entitlement.userId, entitlement.id, created.id, undefined, true)
-                    await tx.booking.create({
+                const createdSlots = []
+                for (const { startsAt: start, endsAt: end } of occurrences) {
+                    const teacherIds = [...new Set(d.teacherIds ?? (d.teacherId ? [d.teacherId] : []))].sort()
+                    await validateSlotTeachers(tx, teacherIds, start, end)
+                    const created = await tx.slot.create({
                         data: {
-                            userId: entitlement.userId,
-                            entitlementId: entitlement.id,
-                            courseId: entitlement.courseId,
-                            slotId: created.id,
+                            courseId: d.courseId,
+                            teacherId: null,
+                            teachers: { connect: teacherIds.map((id) => ({ id })) },
+                            startsAt: start,
+                            endsAt: end,
+                            capacity: d.capacity,
                         },
                     })
+                    if (d.entitlementId) {
+                        await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${d.entitlementId}))`
+                        const entitlement = await tx.entitlement.findUnique({
+                            where: { id: d.entitlementId },
+                            include: { user: true },
+                        })
+                        if (!entitlement || entitlement.user.role !== 'STUDENT') throw Error('Élève inconnu.')
+                        await validateBooking(tx, entitlement.userId, entitlement.id, created.id, undefined, true)
+                        await tx.booking.create({
+                            data: {
+                                userId: entitlement.userId,
+                                entitlementId: entitlement.id,
+                                courseId: entitlement.courseId,
+                                slotId: created.id,
+                            },
+                        })
+                    }
+                    createdSlots.push(created)
                 }
-                return created
+                return { ...createdSlots[0], count: createdSlots.length }
             },
-            { isolationLevel: 'Serializable', timeout: 10000 },
+            { isolationLevel: 'Serializable', timeout: 60000 },
         )
         return NextResponse.json(slot, { status: 201 })
     } catch (e) {

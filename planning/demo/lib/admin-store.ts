@@ -1,4 +1,5 @@
 import { agendaPeriod } from '../../lib/agenda-period'
+import { slotOccurrences, type SlotRecurrence } from '../../lib/slot-recurrence'
 import { sourceCatalogue, remaining, validateSlot, mutateBooking, type State, type Person, type Course } from './store'
 const studentId = 'student-demo'
 export function hydrate(state: State) {
@@ -352,6 +353,7 @@ export function assignDemoStudents(
     return { count: bookings.length }
 }
 type Payload = Partial<Course & Person> & {
+    recurrence?: SlotRecurrence
     id?: string
     bookingId?: string
     attendance?: string
@@ -463,6 +465,26 @@ export async function adminRequest(state: State, url: URL, init?: RequestInit): 
             .find((e) => e.id === credit.id)
     }
     if (path === '/api/admin/slots') {
+        if (method === 'POST' && body.recurrence) {
+            const occurrences = slotOccurrences(body.startsAt ?? '', body.endsAt ?? '', body.recurrence)
+            const draft = structuredClone(state)
+            const created = []
+            for (const occurrence of occurrences) {
+                created.push(
+                    await adminRequest(draft, url, {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            ...body,
+                            recurrence: undefined,
+                            startsAt: occurrence.startsAt.toISOString(),
+                            endsAt: occurrence.endsAt.toISOString(),
+                        }),
+                    }),
+                )
+            }
+            Object.assign(state, draft)
+            return { ...(created[0] as object), count: created.length }
+        }
         const previous = state.slots.find((s) => s.id === body.id)
         if (method === 'DELETE') {
             if (!previous) throw Error('Séance introuvable.')

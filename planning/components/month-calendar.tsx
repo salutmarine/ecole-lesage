@@ -168,6 +168,11 @@ export function MonthCalendar({
                     </p>
                 </div>
                 <div className="month_controls">
+                    {mode === 'admin' && onCreateSlot && (
+                        <button type="button" className="btn btn-plus" aria-label="Ajouter un créneau" title="Ajouter un créneau" onClick={() => onCreateSlot('')}>
+                            +
+                        </button>
+                    )}
                     <button
                         type="button"
                         className="btn secondary month_today"
