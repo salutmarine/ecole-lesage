@@ -49,6 +49,32 @@ test('les répétitions gardent l’heure de Paris et respectent la fréquence e
     )
 })
 
+test('la répétition mensuelle garde le jour initial après les mois courts et les années bissextiles', () => {
+    const monthly = slotOccurrences('2028-01-31T08:00:00Z', '2028-01-31T11:00:00Z', {
+        unit: 'month',
+        interval: 1,
+        until: '2028-04-30',
+    })
+    assert.deepEqual(
+        monthly.map((slot) => slot.startsAt.toISOString()),
+        [
+            '2028-01-31T08:00:00.000Z',
+            '2028-02-29T08:00:00.000Z',
+            '2028-03-31T07:00:00.000Z',
+            '2028-04-30T07:00:00.000Z',
+        ],
+    )
+    const everyTwo = slotOccurrences('2027-11-30T13:00:00Z', '2027-11-30T16:00:00Z', {
+        unit: 'month',
+        interval: 2,
+        until: '2028-03-30',
+    })
+    assert.deepEqual(
+        everyTwo.map((slot) => slot.startsAt.toISOString().slice(0, 10)),
+        ['2027-11-30', '2028-01-30', '2028-03-30'],
+    )
+})
+
 test('une série est créée entièrement et un conflit annule toutes ses occurrences', async () => {
     const { adminRequest, hydrate } = await import('./admin-store')
     const state = createState(new Date(), false)

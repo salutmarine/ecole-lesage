@@ -1,6 +1,6 @@
 import { agendaPeriod, parisDate } from './agenda-period'
 
-export type SlotRecurrence = { unit: 'day' | 'week'; interval: number; until: string }
+export type SlotRecurrence = { unit: 'day' | 'week' | 'month'; interval: number; until: string }
 
 export function slotOccurrences(startsAt: string, endsAt: string, recurrence?: SlotRecurrence) {
     const start = new Date(startsAt),
@@ -17,7 +17,7 @@ export function slotOccurrences(startsAt: string, endsAt: string, recurrence?: S
     const result = [{ startsAt: start, endsAt: end }]
     if (!recurrence) return result
     if (
-        !['day', 'week'].includes(recurrence.unit) ||
+        !['day', 'week', 'month'].includes(recurrence.unit) ||
         !Number.isInteger(recurrence.interval) ||
         recurrence.interval < 1 ||
         recurrence.interval > 365
@@ -36,8 +36,16 @@ export function slotOccurrences(startsAt: string, endsAt: string, recurrence?: S
     const minutes = Number(parts.find((part) => part.type === 'minute')!.value)
     const step = recurrence.interval * (recurrence.unit === 'week' ? 7 : 1)
     const cursor = new Date(`${firstDay}T12:00:00Z`)
+    const anchor = new Date(cursor)
+    let occurrence = 0
     for (;;) {
-        cursor.setUTCDate(cursor.getUTCDate() + step)
+        occurrence++
+        if (recurrence.unit === 'month') {
+            cursor.setUTCDate(1)
+            cursor.setUTCFullYear(anchor.getUTCFullYear(), anchor.getUTCMonth() + occurrence * recurrence.interval, 1)
+            const lastDay = new Date(Date.UTC(cursor.getUTCFullYear(), cursor.getUTCMonth() + 1, 0)).getUTCDate()
+            cursor.setUTCDate(Math.min(anchor.getUTCDate(), lastDay))
+        } else cursor.setUTCDate(cursor.getUTCDate() + step)
         const day = cursor.toISOString().slice(0, 10)
         if (day > recurrence.until) break
         if (result.length >= 366) throw Error('Limitez la série à 366 créneaux.')

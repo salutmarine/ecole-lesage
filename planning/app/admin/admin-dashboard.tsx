@@ -492,35 +492,55 @@ export default function AdminDashboard({
             <DatePicker id="slot-start" withTime value={start} onChange={setStart} required />
             {!editingSlot && (
                 <>
-                    <label htmlFor="slot-repeat">Répétition</label>
-                    <select id="slot-repeat" value={repeatUnit} onChange={(event) => setRepeatUnit(event.target.value)}>
-                        <option value="">Ne pas répéter</option>
-                        <option value="day">Tous les N jours</option>
-                        <option value="week">Toutes les N semaines</option>
-                    </select>
+                    <label className="attendance_checkbox slot_recurrence_toggle">
+                        <input
+                            type="checkbox"
+                            checked={!!repeatUnit}
+                            onChange={(event) => setRepeatUnit(event.target.checked ? 'day' : '')}
+                        />
+                        Répéter ce créneau
+                    </label>
                     {repeatUnit && (
                         <>
-                            <label htmlFor="slot-repeat-interval">
-                                {repeatUnit === 'day'
-                                    ? 'Tous les combien de jours ?'
-                                    : 'Toutes les combien de semaines ?'}
-                            </label>
-                            <input
-                                id="slot-repeat-interval"
-                                type="number"
-                                min="1"
-                                max="365"
-                                step="1"
-                                required
-                                value={repeatInterval}
-                                onChange={(event) => setRepeatInterval(Number(event.target.value))}
-                            />
-                            <label htmlFor="slot-repeat-until">Répéter jusqu’au (inclus)</label>
-                            <DatePicker id="slot-repeat-until" value={repeatUntil} onChange={setRepeatUntil} required />
                             <p className="muted">
                                 Chaque occurrence conserve l’heure de début, la durée, la capacité et les professeurs.
                                 Maximum : 366 créneaux. En cas de conflit, aucun créneau n’est créé.
                             </p>
+                            <div className="slot_recurrence_fields">
+                                <div>
+                                    <label htmlFor="slot-repeat-interval">Tous les</label>
+                                    <input
+                                        id="slot-repeat-interval"
+                                        type="number"
+                                        min="1"
+                                        max="365"
+                                        step="1"
+                                        required
+                                        value={repeatInterval}
+                                        onChange={(event) => setRepeatInterval(Number(event.target.value))}
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="slot-repeat">Unité</label>
+                                    <select
+                                        id="slot-repeat"
+                                        value={repeatUnit}
+                                        onChange={(event) => setRepeatUnit(event.target.value)}
+                                    >
+                                        <option value="day">Jour{repeatInterval > 1 ? 's' : ''}</option>
+                                        <option value="week">Semaine{repeatInterval > 1 ? 's' : ''}</option>
+                                        <option value="month">Mois</option>
+                                    </select>
+                                </div>
+                            </div>
+                            {repeatUnit === 'month' && (
+                                <p className="muted">
+                                    Si le jour n’existe pas dans un mois, le créneau est placé le dernier jour de ce
+                                    mois.
+                                </p>
+                            )}
+                            <label htmlFor="slot-repeat-until">Répéter jusqu’au (inclus)</label>
+                            <DatePicker id="slot-repeat-until" value={repeatUntil} onChange={setRepeatUntil} required />
                         </>
                     )}
                 </>
@@ -555,7 +575,6 @@ export default function AdminDashboard({
                         <span>{teacher.name}</span>
                     </label>
                 ))}
-                {teacherIds.length === 0 && <p className="muted">Professeurs à définir</p>}
             </fieldset>
             <label>Capacité d’accueil</label>
             <input

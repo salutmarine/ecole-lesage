@@ -14,7 +14,11 @@ const schema = z.object({
     teacherIds: z.array(z.string().min(1)).max(100).optional(),
     entitlementId: z.string().min(1).optional(),
     recurrence: z
-        .object({ unit: z.enum(['day', 'week']), interval: z.number().int().min(1).max(365), until: z.string() })
+        .object({
+            unit: z.enum(['day', 'week', 'month']),
+            interval: z.number().int().min(1).max(365),
+            until: z.string(),
+        })
         .optional(),
 })
 export async function POST(req: NextRequest) {

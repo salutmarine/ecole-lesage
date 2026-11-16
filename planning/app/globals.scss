@@ -809,6 +809,22 @@ label {
     margin: 5px 0 0 28px;
     font-size: 12px;
 }
+.attendance_rollcall_actions,
+.teacher_session_actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+.attendance_control_rollcall > strong,
+.attendance_control_rollcall > .muted {
+    display: block;
+}
+.attendance_rollcall_actions .btn[aria-pressed='true'] {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+}
 
 .student_workspace {
     display: grid;
@@ -1273,6 +1289,53 @@ label {
 .slot_student_courses {
     display: grid;
     gap: 12px;
+}
+.slot_recurrence_fields {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 12px;
+}
+.slot_recurrence_toggle {
+    margin-bottom: 20px;
+}
+
+.teacher_session_student {
+    position: relative;
+    &.teacher_session_student_other {
+        filter: grayscale(1);
+        opacity: 0.5;
+    }
+    &:hover .teacher_session_claim,
+    &:focus-within .teacher_session_claim {
+        opacity: 1;
+    }
+}
+.teacher_session_claim {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    border: 0;
+    border-radius: inherit;
+    background: var(--paper);
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 150ms ease;
+    &:disabled {
+        cursor: wait;
+    }
+    &:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+    }
+}
+@media (hover: none) {
+    .teacher_session_claim {
+        position: static;
+        opacity: 1;
+    }
 }
 .slot_student_course_heading {
     display: flex;
