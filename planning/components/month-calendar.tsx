@@ -23,6 +23,7 @@ export type CalendarSlot = {
         bookingId: string
         id: string
         name: string
+        language?: string
         email: string
         sessions?: { total: number; remaining: number }
         phone?: string | null
@@ -170,17 +171,6 @@ export function MonthCalendar({
                     </p>
                 </div>
                 <div className="month_controls">
-                    {mode === 'admin' && onCreateSlot && (
-                        <button
-                            type="button"
-                            className="btn btn-plus"
-                            aria-label="Ajouter un créneau"
-                            title="Ajouter un créneau"
-                            onClick={() => onCreateSlot('')}
-                        >
-                            +
-                        </button>
-                    )}
                     <button
                         type="button"
                         className="btn secondary month_today"
@@ -193,24 +183,11 @@ export function MonthCalendar({
                     </button>
                     <button
                         type="button"
-                        className="btn secondary"
+                        className="calendar-month-button calendar-month-button--previous"
                         onClick={() => setMonth((d) => new Date(d.getFullYear(), d.getMonth() - 1, 1))}
                         aria-label="Mois précédent"
                     >
-                        <svg
-                            width="18"
-                            height="18"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="1.8"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            aria-hidden="true"
-                            focusable="false"
-                        >
-                            <path d="m14 6-6 6 6 6" />
-                        </svg>
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="1.4" /></svg>
                     </button>
                     <strong>
                         {month.toLocaleDateString('fr-FR', {
@@ -220,24 +197,11 @@ export function MonthCalendar({
                     </strong>
                     <button
                         type="button"
-                        className="btn secondary"
+                        className="calendar-month-button"
                         onClick={() => setMonth((d) => new Date(d.getFullYear(), d.getMonth() + 1, 1))}
                         aria-label="Mois suivant"
                     >
-                        <svg
-                            width="18"
-                            height="18"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="1.8"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            aria-hidden="true"
-                            focusable="false"
-                        >
-                            <path d="m10 6 6 6-6 6" />
-                        </svg>
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="1.4" /></svg>
                     </button>
                 </div>
             </div>

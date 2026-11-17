@@ -1,4 +1,5 @@
 'use client'
+import StudentLanguage from '@/components/student-language'
 import { useState } from 'react'
 import { courseLevels } from '@/lib/course-levels'
 import { parisDate } from '@/lib/agenda-period'
@@ -180,11 +181,7 @@ export default function TeacherDashboard({ user }: { user: { id: string; firstNa
                     </h3>
                     {callingRoll && (
                         <p className="muted" role="status">
-                            {
-                                myStudents.filter((student) => student.attendance && student.attendance !== 'UNMARKED')
-                                    .length
-                            }{' '}
-                            sur {myStudents.length} élèves pointés. Chaque pointage est enregistré immédiatement.
+                            Chaque pointage est enregistré immédiatement.
                         </p>
                     )}
                     {!selected.students?.length && <p className="muted">Aucun étudiant inscrit à cette séance.</p>}
@@ -224,13 +221,14 @@ export default function TeacherDashboard({ user }: { user: { id: string; firstNa
                                                 void claimStudent(student.bookingId, student.teacherId === user.id)
                                             }
                                         />
-                                        <strong>{student.name}</strong>
+                                        <strong>{student.name} <StudentLanguage language={student.language} /></strong>
                                     </label>
                                 ) : callingRoll ? (
                                     <AttendanceControl
                                         bookingId={student.bookingId}
                                         initialAttendance={student.attendance ?? 'UNMARKED'}
                                         studentName={student.name}
+                                        studentLanguage={student.language}
                                         canEdit={!attendanceBusy}
                                         variant="rollcall"
                                         onBusyChange={setAttendanceBusy}
@@ -251,7 +249,7 @@ export default function TeacherDashboard({ user }: { user: { id: string; firstNa
                                         }}
                                     />
                                 ) : (
-                                    <strong>{student.name}</strong>
+                                    <strong>{student.name} <StudentLanguage language={student.language} /></strong>
                                 )}
                                 <div className="slot_student_course_heading">
                                     <span className="slot_student_course_name">{student.course}</span>
@@ -263,15 +261,15 @@ export default function TeacherDashboard({ user }: { user: { id: string; firstNa
                                         </span>
                                     )}
                                 </div>
-                                <span className="muted">
-                                    {student.teacherId === user.id && !organizingSession && !callingRoll
+                                {!callingRoll && <span className="muted">
+                                    {student.teacherId === user.id && !organizingSession
                                         ? `Pris en charge par vous · ${student.attendance === 'PRESENT' ? 'Présent' : student.attendance === 'ABSENT' ? 'Absent' : 'Non pointé'}`
                                         : student.teacherId === user.id
                                           ? 'Pris en charge par vous'
                                           : student.teacher
                                             ? `Avec ${student.teacher}`
                                             : 'Professeur à définir'}
-                                </span>
+                                </span>}
                                 {!organizingSession &&
                                     !callingRoll &&
                                     !student.teacherId &&

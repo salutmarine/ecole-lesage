@@ -51,8 +51,8 @@ export function mountCourseCalendar(root, store, productKey) {
   document.body.append(section);
   const opener = document.createElement("button");
   opener.type = "button";
-  opener.className = "shop-text-link showcase-calendar-open";
-  opener.textContent = "Voir les séances réservables";
+  opener.className = "home-link showcase-calendar-open";
+  opener.innerHTML = '<span>Voir les séances réservables</span><svg viewBox="0 0 28 18" aria-hidden="true"><path d="M0 9h26M18 1l8 8-8 8" fill="none" stroke="currentColor" stroke-width="1"/></svg>';
   opener.setAttribute("aria-haspopup", "dialog");
   opener.setAttribute("aria-controls", section.id);
   opener.setAttribute("aria-expanded", "false");
@@ -78,7 +78,7 @@ export function mountCourseCalendar(root, store, productKey) {
   });
   section.addEventListener("close", restore);
   window.addEventListener("pagehide", close);
-  root.querySelector("[data-purchase-main]")?.after(opener);
+  root.querySelector("[data-purchase-main]")?.append(opener);
   let disposed = false,
     planning,
     slots = [],
@@ -114,7 +114,7 @@ export function mountCourseCalendar(root, store, productKey) {
       const key = `${month}-${String(number).padStart(2, "0")}`;
       const count = byDay.get(key)?.length || 0;
       cells.push(
-        `<button type="button" data-calendar-day="${key}" ${count ? "" : "disabled"} aria-pressed="${day === key}" aria-label="${number} ${first.toLocaleDateString("fr-FR", { month: "long", year: "numeric", timeZone: "UTC" })}, ${count} séances disponibles"><strong>${number}</strong>${count ? `<small>${count} séances</small>` : ""}</button>`,
+        `<button type="button" data-calendar-day="${key}" ${count ? "" : "disabled"} aria-pressed="${day === key}" aria-label="${number} ${first.toLocaleDateString("fr-FR", { month: "long", year: "numeric", timeZone: "UTC" })}, ${count} séance${count > 1 ? "s" : ""} disponible${count > 1 ? "s" : ""}"><strong>${number}</strong>${count ? `<small>${count} séance${count > 1 ? "s" : ""}</small>` : ""}</button>`,
       );
     }
     const daySlots = byDay.get(day) || [];
@@ -124,7 +124,7 @@ export function mountCourseCalendar(root, store, productKey) {
           store.actor.studentId &&
         order.items.some((item) => item.productKey === String(product.key)),
     );
-    content.innerHTML = `<nav class="showcase-calendar-nav" aria-label="Choisir un mois"><button type="button" data-calendar-shift="-1" ${month <= slots[0].startsAt.slice(0, 7) ? "disabled" : ""} aria-label="Mois précédent">←</button><h3>${escape(first.toLocaleDateString("fr-FR", { month: "long", year: "numeric", timeZone: "UTC" }))}</h3><button type="button" data-calendar-shift="1" ${month >= slots.at(-1).startsAt.slice(0, 7) ? "disabled" : ""} aria-label="Mois suivant">→</button></nav><div class="showcase-calendar-grid">${["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"].map((label) => `<span>${label}</span>`).join("")}${cells.join("")}</div><h3>${escape(new Date(`${day}T12:00:00Z`).toLocaleDateString("fr-FR", { dateStyle: "full", timeZone: "UTC" }))}</h3><ul class="showcase-calendar-sessions">${daySlots.map((slot) => `<li><div><strong>${time(slot.startsAt)} à ${time(slot.endsAt)}</strong><span>${slot.capacity - slot.reserved} places disponibles</span></div><button type="button" class="shop-button shop-button-dark" data-calendar-buy="${escape(slot.id)}">${owned ? "Réserver cette séance dans mon planning" : "Acheter un cours pour faire cette séance"}</button></li>`).join("")}</ul><p class="shop-summary-note">Le choix d’une séance ne bloque pas de place. La réservation sera confirmée dans le planning après l’achat fictif. Première séance au moins ${Math.max(72, product.purchaseLeadHours || 72)} h après l’achat.</p>`;
+    content.innerHTML = `<nav class="showcase-calendar-nav" aria-label="Choisir un mois"><button type="button" class="calendar-month-button calendar-month-button--previous" data-calendar-shift="-1" ${month <= slots[0].startsAt.slice(0, 7) ? "disabled" : ""} aria-label="Mois précédent"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.4"></path></svg></button><h3>${escape(first.toLocaleDateString("fr-FR", { month: "long", year: "numeric", timeZone: "UTC" }))}</h3><button type="button" class="calendar-month-button" data-calendar-shift="1" ${month >= slots.at(-1).startsAt.slice(0, 7) ? "disabled" : ""} aria-label="Mois suivant"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.4"></path></svg></button></nav><div class="showcase-calendar-grid">${["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"].map((label) => `<span>${label}</span>`).join("")}${cells.join("")}</div><h3>${escape(new Date(`${day}T12:00:00Z`).toLocaleDateString("fr-FR", { dateStyle: "full", timeZone: "UTC" }))}</h3><ul class="showcase-calendar-sessions">${daySlots.map((slot) => `<li><div><strong>${time(slot.startsAt)} à ${time(slot.endsAt)}</strong><span>${slot.capacity - slot.reserved} place${slot.capacity - slot.reserved > 1 ? "s" : ""} disponible${slot.capacity - slot.reserved > 1 ? "s" : ""}</span></div><button type="button" class="shop-button shop-button-dark" data-calendar-buy="${escape(slot.id)}">${owned ? "Réserver cette séance dans mon planning" : "Acheter un cours pour faire cette séance"}</button></li>`).join("")}</ul><p class="shop-summary-note">Le choix d’une séance ne bloque pas de place. La réservation sera confirmée dans le planning après l’achat fictif. Première séance au moins ${Math.max(72, product.purchaseLeadHours || 72)} h après l’achat.</p>`;
   }
   async function refresh() {
     const response = await fetch("/assets/planning-availability.json", {

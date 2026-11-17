@@ -1,0 +1,58 @@
+/* Shared presentation for filled and outlined calls to action. */
+:is(
+  .btn:not(.month_event):not(.btn-plus):not(.sidepanel_close):not(.teacher_dispatch_slot),
+  .shop-button,
+  .shop-checkout-submit,
+  .editorial-button,
+  .editorial-cta,
+  .editorial-body .wp-element-button,
+  .editorial-body a.button,
+  .editorial-body button.button,
+  .editorial-body input[type="submit"],
+  .home-link--solid,
+  .home-finder-actions button,
+  .local-form-actions button,
+  .platform-dialog button,
+  .platform-empty a,
+  .ws-button:not(.ws-button--link):not(.ws-button--icon),
+  .ls-date-foot button,
+  .film-start,
+  .film-feedback button,
+  .site-session-logout
+) {
+  border-radius: 5px !important;
+  min-height: 0 !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: auto !important;
+  padding: 15px 25px !important;
+  letter-spacing: .08px !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+  font-size: 10px !important;
+}
+
+/* Shared month navigation in the public calendar and planning. */
+.showcase-calendar-nav .calendar-month-button,
+.month_controls .calendar-month-button,
+.date_picker_header .calendar-month-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  padding: 0;
+  border: 1px solid #dedbd6;
+  border-radius: 100%;
+  background: #fff;
+  color: #181818;
+  cursor: pointer;
+}
+.calendar-month-button svg { width: 18px; height: 18px; }
+.calendar-month-button--previous svg { transform: rotate(180deg); }
+.calendar-month-button:hover:not(:disabled) { background: #f4f4f5; }
+.calendar-month-button:disabled { opacity: .35; cursor: default; }
+.calendar-month-button:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }

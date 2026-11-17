@@ -341,13 +341,13 @@ export default function StudentDashboard({
                         <svg
                             width="24"
                             height="24"
-                            viewBox="0 0 24 24"
+                            viewBox="0 0 28 18"
                             fill="none"
                             aria-hidden="true"
                             focusable="false"
                             style={{ flexShrink: 0 }}
                         >
-                            <path d="M4 12h15m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="1.4" />
+                            <path d="M0 9h26M18 1l8 8-8 8" stroke="currentColor" strokeWidth="1" />
                         </svg>
                     </button>
                 </aside>

@@ -1,3 +1,5 @@
+@import url("./platform/contact-form.css");
+@import url("./platform/cta.css");
 @font-face {
   font-family: "Manrope";
   font-style: normal;
@@ -44,21 +46,10 @@
   border-radius: var(--planning-card-radius);
   background: var(--planning-paper);
 }
-.shop-detail-purchase .shop-button,
-.shop-detail-copy .showcase-calendar-open {
-  width: 100%;
-}
-.shop-detail-purchase .shop-button {
-  justify-content: space-between;
-}
-.shop-detail-copy .showcase-calendar-open {
-  display: flex;
-  justify-content: center;
-}
 .showcase-course-calendar {
   position: fixed;
   inset: 0 0 0 auto;
-  width: 50vw;
+  width: 40vw;
   max-width: none;
   height: 100dvh;
   max-height: none;
@@ -115,22 +106,9 @@
 .showcase-calendar-close:hover {
   transform: scale(1.02);
 }
-.showcase-calendar-open {
-  border: 1px solid var(--planning-line);
-  border-radius: 5px;
-  background: var(--planning-paper);
-  color: var(--planning-ink);
-  padding: 12px 18px;
-  margin-top: 8px;
-  min-height: 44px;
-  text-decoration: none;
-}
-.showcase-calendar-open:hover {
-  background: var(--planning-secondary-background);
-}
 .showcase-course-calendar h2 {
   font-size: 25px;
-  font-weight: 500;
+  font-weight: 700;
   margin: 10px 0 12px;
 }
 .showcase-course-calendar > p {
@@ -232,3 +210,161 @@
     font-size: 10px;
   }
 }
+
+/* Surtitles share the planning section_kicker typography. */
+:is([class$="-eyebrow"], [class*="-eyebrow "]) {
+  text-transform: uppercase !important;
+  font-size: 9px !important;
+  letter-spacing: 1.5px !important;
+  color: #6b6b68 !important;
+  font-weight: 600 !important;
+  margin-bottom: 7px !important;
+}
+
+.home-page :is(.home-hero,.home-school) .home-eyebrow {
+  color: #fff !important;
+}
+.home-page .home-featured-copy h3,
+.shop-related .home-featured-copy h3 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: normal;
+  line-height: normal;
+  min-height: 0;
+}
+.lesage-shop .shop-detail {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: 5%;
+}
+.lesage-shop .shop-detail-copy { max-width: none; }
+.shop-course-overview { margin-top: 32px; }
+.shop-course-overview-section + .shop-course-overview-section { margin-top: 28px; }
+.shop-course-overview-section > h2 { font-family: Georgia, serif; font-size: 22px; font-weight: 400; margin: 0; }
+.shop-course-overview .shop-rich-content { max-width: none; padding: 0; margin-top: 20px; }
+.shop-course-description .shop-decision { margin: 0; }
+.shop-related.home-section { padding: 60px 0 0; }
+.shop-related .home-section-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; margin-bottom: 38px; }
+.shop-related .home-section-heading h2 { font: 400 33px/1.28 Georgia, serif; margin: 0; }
+.shop-related .home-featured-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; }
+.shop-related .home-featured-course { min-width: 0; }
+.shop-related .home-featured-photo { display: block; overflow: hidden; aspect-ratio: 4/3; background: #f9f9f9; }
+.shop-related .home-featured-photo img { width: 100%; height: 100%; object-fit: cover; }
+.shop-related .home-featured-copy { padding-top: 24px; }
+.shop-related .home-featured-copy h3 { margin: 11px 0 13px; }
+.shop-related .home-featured-meta { font-size: 12px; color: #73736e; line-height: 1.7; }
+.shop-related .home-featured-meta span { margin: 0 7px; }
+.shop-related .home-featured-price { font-size: 18px; line-height: 1.5; margin-top: 9px; }
+.shop-related .home-featured-price span { font-size: 10px; color: #777; margin-left: 6px; }
+.shop-related .home-link { display: inline-flex; align-items: center; justify-content: space-between; gap: 32px; padding: 15px 0; font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; border-bottom: 1px solid #e3e1dc; width: 100%; margin-top: 15px; }
+.shop-related .home-link svg { width: 26px; height: 18px; flex: none; }
+@media (max-width: 900px) {
+  .lesage-shop .shop-detail { grid-template-columns: minmax(0, 1fr); gap: 0; }
+}
+@media (max-width: 700px) {
+  .shop-related .home-featured-grid { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .shop-related .home-section-heading { flex-wrap: wrap; }
+}
+
+.lesage-shop .shop-detail-purchase { display: flex; align-items: center; flex-wrap: wrap; gap: 20px 28px; }
+.lesage-shop .shop-detail-purchase .shop-button { flex: 0 0 auto; width: auto; }
+.lesage-shop .shop-detail-purchase .showcase-calendar-open {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  width: auto;
+  min-height: 47px;
+  margin: 0;
+  padding: 15px 0;
+  border: 0;
+  border-bottom: 1px solid #a4a39e;
+  border-radius: 0;
+  background: transparent;
+  color: #181818;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color .2s, border-color .2s;
+}
+.lesage-shop .showcase-calendar-open svg { width: 26px; height: 18px; flex: none; transition: transform .2s; }
+.lesage-shop .showcase-calendar-open:hover { border-bottom-color: #111; }
+.lesage-shop .showcase-calendar-open:hover svg { transform: translateX(4px); }
+
+.showcase-calendar-subtitle {
+  color: var(--planning-muted);
+  font-size: 11px;
+  font-weight: 200;
+}
+
+.editorial-heading h1,
+.lesage-shop .shop-intro h1,
+.lesage-shop .shop-page-heading h1 {
+  font-size: 45px;
+  font-weight: 700;
+  letter-spacing: normal;
+  line-height: normal;
+}
+.editorial-intro,
+.lesage-shop .shop-intro-text {
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #6b6b68;
+  max-width: 650px;
+  margin: 0 auto;
+}
+.editorial-intro { margin-top: 24px; }
+.editorial-button { display: inline-flex; align-items: center; gap: 32px; }
+.editorial-button svg { width: 26px; height: 18px; flex: none; transition: transform .2s; }
+.editorial-button:hover svg { transform: translateX(4px); }
+@media (max-width: 900px) {
+  .editorial-intro, .lesage-shop .shop-intro-text { max-width: 520px; }
+}
+@media (max-width: 600px) {
+  .editorial-intro, .lesage-shop .shop-intro-text { font-size: 11px; line-height: 1.65; max-width: 340px; }
+}
+
+/* Focus outlines disabled across the showcase and planning. */
+@layer focus-reset {
+  *:focus,
+  *:focus-visible {
+    outline: none !important;
+    outline-offset: 0 !important;
+  }
+}
+
+.lesage-shop .shop-cart-item h2 {
+  font-size: 18px;
+  font-weight: 700;
+}
+.shop-button.shop-button-dark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  border: 1px solid #000;
+  background: #000 !important;
+  color: #fff !important;
+  line-height: 1.5;
+  text-decoration: none;
+  transition: background .2s, border-color .2s;
+}
+.shop-button.shop-button-dark svg {
+  width: 26px;
+  height: 18px;
+  flex: none;
+  transition: transform .2s;
+}
+.shop-button.shop-button-dark:hover {
+  background: #383838 !important;
+  border-color: #383838;
+}
+.shop-button.shop-button-dark:hover svg {
+  transform: translateX(4px);
+}
+
+.lesage-shop .shop-checkout-submit { width: auto; }

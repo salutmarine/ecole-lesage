@@ -1,0 +1,63 @@
+/* Shared contact and login form presentation. */
+:is(.editorial-site, .login_wrap) .local-contact-form {
+  max-width: 450px;
+  margin: 0 auto !important;
+  font-family: Manrope, Arial, sans-serif;
+  color: #181818;
+}
+:is(.editorial-site, .login_wrap) .local-contact-form > h3 {
+  font: 400 30px/1.4 Georgia, serif;
+  margin: 0 0 20px;
+}
+:is(.editorial-site, .login_wrap) .local-contact-form > p {
+  font-size: 12px;
+  line-height: 1.9;
+  color: #74716c;
+  margin: 0 0 33px;
+}
+:is(.editorial-site, .login_wrap) .local-contact-form .local-field { margin: 28px 0 !important; }
+:is(.editorial-site, .login_wrap) .local-contact-form .local-field > label {
+  display: block;
+  color: #595a53;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: .015em;
+  margin: 0 0 8px !important;
+}
+:is(.editorial-site, .login_wrap) .local-contact-form .local-field .form-control {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  height: 48px;
+  min-height: 48px;
+  margin: 0;
+  padding: 12px 14px;
+  border: 0;
+  border-radius: 5px;
+  background: #f9f9f9;
+  box-shadow: none;
+  color: #1b1b18;
+  font: 400 14px/1.45 Manrope, Arial, sans-serif;
+}
+:is(.editorial-site, .login_wrap) .local-contact-form .local-field textarea.form-control {
+  height: auto;
+  min-height: 120px;
+  padding: 13px 14px;
+  line-height: 1.65;
+  resize: vertical;
+}
+:is(.editorial-site, .login_wrap) .local-contact-form .local-form-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 28px 0 20px; }
+:is(.editorial-site, .login_wrap) .local-contact-form .local-form-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #171717;
+  background: #171717;
+  color: #fff;
+  line-height: 1.7;
+  cursor: pointer;
+}
+:is(.editorial-site, .login_wrap) .local-contact-form .local-form-actions button:hover { background: #363631; }

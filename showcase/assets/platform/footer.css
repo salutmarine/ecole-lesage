@@ -33,9 +33,10 @@
   gap: 16px;
   width: fit-content;
   color: #191916;
-  font-size: 23px;
-  font-weight: 400;
-  letter-spacing: -.035em;
+  font-family: Georgia, serif;
+  font-size: 25px;
+  font-weight: 500;
+  letter-spacing: 1px;
   line-height: 1.25;
   text-decoration: none;
 }

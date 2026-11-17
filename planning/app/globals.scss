@@ -126,7 +126,7 @@ h2 {
 }
 .card {
     background: var(--surface);
-    border-radius: 18px;
+    border-radius: 5px;
     padding: 20px;
     margin-bottom: 20px;
 }
@@ -138,7 +138,7 @@ h2 {
     background: var(--ink);
     color: var(--surface);
     padding: 6px 10px;
-    border-radius: 999px;
+    border-radius: 5px;
     font-size: 12px;
     font-weight: 300;
     transform: scale(1);
@@ -187,7 +187,7 @@ h2 {
 .slot {
     border: 1px solid var(--line);
     background: var(--surface);
-    border-radius: 12px;
+    border-radius: 5px;
     padding: 15px;
     margin: 10px 0;
     &:hover {
@@ -202,7 +202,7 @@ select {
     border: 1px solid var(--line);
     color: var(--ink);
     padding: 8px 12px;
-    border-radius: 999px;
+    border-radius: 5px;
     margin: 8px 0 20px;
     outline: none;
     font-size: 13px;
@@ -228,82 +228,23 @@ label {
 .error {
     color: var(--error-text);
 }
-.login {
-    &_wrap {
-        max-width: 600px;
-        margin: 9vh auto;
-    }
-    &_field_group {
-        overflow: hidden;
-        border: 1px solid var(--line-strong);
-        border-radius: 18px;
-        background: var(--surface);
-    }
-    &_field {
-        position: relative;
-        min-height: 96px;
-        &:not(:first-child)::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 24px;
-            right: 24px;
-            height: 1px;
-            background: var(--line-strong);
-        }
-        input {
-            width: 100%;
-            min-height: 96px;
-            margin: 0;
-            padding: 38px 24px 17px;
-            border: 0;
-            border-radius: 0;
-            background: transparent;
-            color: var(--ink);
-            font-size: 16px;
-            &:focus {
-                box-shadow: inset 0 0 0 1px var(--ink);
-            }
-            &:focus + label,
-            &:not(:placeholder-shown) + label {
-                top: 16px;
-                transform: none;
-                font-size: 11px;
-            }
-        }
-        label {
-            position: absolute;
-            top: 50%;
-            left: 24px;
-            right: 24px;
-            transform: translateY(-50%);
-            color: var(--text-subtle);
-            font-size: 16px;
-            font-weight: 400;
-            pointer-events: none;
-            transition:
-                top 160ms ease,
-                transform 160ms ease,
-                font-size 160ms ease;
-            span {
-                color: var(--danger-text);
-            }
-        }
-        &.is_invalid input {
-            box-shadow: inset 0 0 0 2px var(--danger-text);
-        }
-        &:first-child input {
-            border-radius: 17px 17px 0 0;
-        }
-        &:last-child input {
-            border-radius: 0 0 17px 17px;
-        }
+.login_wrap {
+    max-width: 760px;
+    margin: 0 auto 85px;
+}
+.login_heading {
+    padding: 32px 30px 46px;
+    text-align: center;
+    h1 {
+        font-size: 45px;
+        font-weight: 700;
+        line-height: normal;
+        letter-spacing: normal;
+        margin: 0;
     }
 }
-@media (prefers-reduced-motion: reduce) {
-    .login_field label {
-        transition: none;
-    }
+@media (max-width: 600px) {
+    .login_heading { padding: 32px 6px 32px; }
 }
 .section_kicker {
     text-transform: uppercase;
@@ -322,7 +263,7 @@ label {
 .hero_panel {
     background-color: var(--ink);
     color: var(--surface);
-    border-radius: 18px;
+    border-radius: 5px;
     padding: 25px;
     margin-bottom: 20px;
     display: flex;
@@ -417,14 +358,14 @@ label {
             height: 32px;
             flex-shrink: 0;
             padding: 0;
-            border-radius: 50%;
+            border-radius: 5px;
         }
     }
     &_grid {
         display: grid;
         grid-template-columns: repeat(5, minmax(0, 1fr));
         border: 1px solid var(--line);
-        border-radius: 12px;
+        border-radius: 5px;
         overflow: hidden;
         background: var(--surface);
     }
@@ -463,7 +404,7 @@ label {
         width: 100%;
         min-width: 0;
         text-align: left;
-        border-radius: 6px;
+        border-radius: 5px;
         padding: 7px;
         font-weight: 400;
         display: flex;
@@ -479,7 +420,7 @@ label {
             bottom: 10px;
             left: 7px;
             width: 3px;
-            border-radius: 999px;
+            border-radius: 5px;
         }
     }
     &_event_time {
@@ -531,7 +472,7 @@ label {
         gap: 5px;
         background: var(--session-accent);
         color: var(--surface);
-        border-radius: 999px;
+        border-radius: 5px;
         padding: 3px 6px;
         font-size: 10px;
         font-weight: 600;
@@ -557,7 +498,7 @@ label {
         display: inline-block;
         width: 12px;
         height: 12px;
-        border-radius: 3px;
+        border-radius: 5px;
         flex-shrink: 0;
     }
     &_legend_blue {
@@ -672,13 +613,13 @@ label {
     min-width: 0;
     overflow: hidden;
     background: var(--surface);
-    border-radius: 18px;
+    border-radius: 5px;
     box-shadow: var(--shadow);
 
     .hero_panel {
         margin: 0;
         padding: 20px;
-        border-radius: 18px 18px 0 0;
+        border-radius: 5px;
         align-items: flex-start;
 
         h1 {
@@ -695,7 +636,7 @@ label {
 .admin_sidebar {
     background: var(--surface);
     border: 0;
-    border-radius: 0 0 18px 18px;
+    border-radius: 5px;
     padding: 20px;
 
     nav {
@@ -708,7 +649,7 @@ label {
         background: transparent;
         color: var(--ink);
         padding: 10px 20px;
-        border-radius: 999px;
+        border-radius: 5px;
         font-size: 14px;
         font-weight: 400;
         &[aria-current='page'] {
@@ -816,14 +757,18 @@ label {
     gap: 8px;
     margin-top: 12px;
 }
-.attendance_control_rollcall > strong,
-.attendance_control_rollcall > .muted {
+.attendance_control_rollcall > strong {
     display: block;
 }
-.attendance_rollcall_actions .btn[aria-pressed='true'] {
-    background: var(--ink);
-    color: var(--paper);
-    border-color: var(--ink);
+.attendance_rollcall_actions .btn[data-attendance='PRESENT'][aria-pressed='true'] {
+    background: var(--session-green-background) !important;
+    color: var(--session-green-text) !important;
+    border-color: var(--session-green-accent);
+}
+.attendance_rollcall_actions .btn[data-attendance='ABSENT'][aria-pressed='true'] {
+    background: var(--danger-background) !important;
+    color: var(--danger-text) !important;
+    border-color: var(--danger-border);
 }
 
 .student_workspace {
@@ -841,13 +786,13 @@ label {
     top: 20px;
     overflow: hidden;
     background: var(--surface);
-    border-radius: 18px;
+    border-radius: 5px;
     box-shadow: var(--shadow);
 
     .hero_panel {
         margin: 0;
         padding: 20px;
-        border-radius: 18px 18px 0 0;
+        border-radius: 5px;
         align-items: flex-start;
 
         h1 {
@@ -864,14 +809,14 @@ label {
         margin: 0;
         padding: 20px;
         border: 0;
-        border-radius: 0;
+        border-radius: 5px;
         box-shadow: none;
     }
     > .student_reservations_cta {
         width: calc(100% - 40px);
         margin: 0 20px 20px;
         padding: 13px 20px;
-        border-radius: 999px;
+        border-radius: 5px;
         background: var(--accent);
         color: var(--surface);
     }
@@ -1055,7 +1000,7 @@ label {
     overflow-wrap: anywhere;
     border: none;
     padding: 10px 15px;
-    border-radius: 18px;
+    border-radius: 5px;
     cursor: pointer;
 }
 
@@ -1091,7 +1036,7 @@ label {
     color: var(--toast-text);
     background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: 24px;
+    border-radius: 5px;
     box-shadow: 0 8px 28px var(--toast-shadow-color);
     font-size: 13px;
     line-height: 1.5;
@@ -1179,7 +1124,7 @@ label {
     background: var(--session-green-background);
     color: var(--session-green-text);
     padding: 3px 7px;
-    border-radius: 12px;
+    border-radius: 5px;
     font-size: 10px;
     line-height: 1.4;
     font-weight: 600;
@@ -1210,7 +1155,7 @@ label {
     width: fit-content;
     max-width: 100%;
     padding: 3px 7px;
-    border-radius: 12px;
+    border-radius: 5px;
     font-size: 10px;
     line-height: 1.4;
     font-weight: 600;
@@ -1230,7 +1175,7 @@ label {
     margin: 24px 0;
     padding: 20px;
     border: 1px solid var(--line);
-    border-radius: 12px;
+    border-radius: 5px;
     h3 {
         margin-top: 0;
         font-size: 16px;
@@ -1244,7 +1189,7 @@ label {
     gap: 6px;
     background: var(--paper);
     padding: 16px;
-    border-radius: 8px;
+    border-radius: 5px;
     margin-bottom: 16px;
     p {
         margin: 0;
@@ -1272,7 +1217,7 @@ label {
 .reservation_course_card {
     padding: 12px 14px;
     background: var(--paper);
-    border-radius: 8px;
+    border-radius: 5px;
     overflow-wrap: anywhere;
     margin-bottom: 10px;
     p {
@@ -1291,7 +1236,7 @@ label {
         gap: 4px;
         padding: 12px 14px;
         background: var(--paper);
-        border-radius: 8px;
+        border-radius: 5px;
         overflow-wrap: anywhere;
     }
 }
@@ -1328,7 +1273,7 @@ label {
     justify-content: center;
     padding: 12px;
     border: 0;
-    border-radius: inherit;
+    border-radius: 5px;
     background: var(--paper);
     cursor: pointer;
     opacity: 0;
@@ -1447,7 +1392,7 @@ label {
 .month_controls .month_today {
     width: auto;
     padding: 0 12px;
-    border-radius: 999px;
+    border-radius: 5px;
 }
 .month_event > .month_event_level {
     align-self: flex-end;
@@ -1517,7 +1462,7 @@ label {
     gap: 16px;
     width: 100%;
     border: 1px solid var(--line);
-    border-radius: 999px;
+    border-radius: 5px;
     padding: 8px 12px;
     background: var(--surface);
     color: var(--ink);
@@ -1533,7 +1478,7 @@ label {
     max-height: calc(100dvh - 24px);
     overflow-y: auto;
     border: 1px solid #e4e4e7;
-    border-radius: 12px;
+    border-radius: 5px;
     background: #fff;
     color: #17171b;
     box-shadow: 0 8px 28px #0000000d;
@@ -1564,7 +1509,7 @@ label {
         color: #99999f;
         font-size: 28px;
         line-height: 1;
-        border-radius: 8px;
+        border-radius: 5px;
     }
     button:hover {
         background: #f4f4f5;
@@ -1584,7 +1529,7 @@ label {
 .date_picker_day {
     position: relative;
     aspect-ratio: 1;
-    border-radius: 10px;
+    border-radius: 5px;
     background: transparent;
     color: #17171b;
     &:hover {
@@ -1608,7 +1553,7 @@ label {
     left: calc(50% - 1.5px);
     width: 3px;
     height: 3px;
-    border-radius: 50%;
+    border-radius: 5px;
     background: currentColor;
 }
 
@@ -1659,7 +1604,7 @@ label {
     width: 100%;
     margin-top: 16px;
     padding: 11px;
-    border-radius: 10px;
+    border-radius: 5px;
     background: #18181c;
     color: white;
     font-size: 13px;
@@ -1773,5 +1718,106 @@ label {
     }
     .attendance_checkbox {
         margin: 8px 0;
+        font-weight: 400;
+        > span { font-weight: 400; }
+    }
+}
+
+// Shared CTA sizing for the showcase and planning.
+@import '../../showcase/assets/platform/cta';
+
+// Planning action sizes override the shared showcase CTA padding.
+.btn:not(.month_event):not(.btn-plus):not(.sidepanel_close):not(.teacher_dispatch_slot),
+.site-session-logout {
+    padding: 10px 15px !important;
+}
+.btn.btn-medium:not(.month_event):not(.btn-plus):not(.sidepanel_close):not(.teacher_dispatch_slot) {
+    padding: 15px 25px !important;
+}
+
+/* Focus outlines disabled across the showcase and planning. */
+@layer focus-reset {
+  *:focus,
+  *:focus-visible {
+    outline: none !important;
+    outline-offset: 0 !important;
+  }
+}
+
+.student_summary > .student_reservations_cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    padding: 15px 25px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    background: #000;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: .08px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background .2s, border-color .2s;
+
+    svg {
+        width: 26px;
+        height: 18px;
+        transition: transform .2s;
+    }
+    &:hover {
+        background: #383838;
+        border-color: #383838;
+        filter: none;
+        svg { transform: translateX(4px); }
+    }
+}
+
+@import '../../showcase/assets/platform/contact-form';
+
+body:has(.login_wrap) {
+    background: #fff;
+}
+.login_heading .section_kicker {
+    color: #6b6b68;
+    margin: 0 0 7px;
+}
+
+.planning-arrow {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    vertical-align: middle;
+    margin-right: 6px;
+}
+
+.student_language {
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 400;
+    margin-left: 6px;
+}
+
+.attendance_control_rollcall {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 16px;
+    row-gap: 6px;
+    min-width: 0;
+    width: 100%;
+    > strong { grid-column: 1; grid-row: 1; }
+    > p { grid-column: 1 / -1; }
+    .attendance_rollcall_actions {
+        grid-column: 2;
+        grid-row: 1;
+        align-self: center;
+        display: grid;
+        grid-template-columns: repeat(2, max-content);
+        justify-content: end;
+        margin-top: 0;
     }
 }

@@ -1,4 +1,5 @@
 'use client'
+import StudentLanguage from '@/components/student-language'
 import { useId, useState } from 'react'
 import Toast from '@/components/toast'
 
@@ -7,6 +8,7 @@ export default function AttendanceControl({
     bookingId,
     initialAttendance,
     studentName,
+    studentLanguage,
     canEdit,
     variant = 'checkbox',
     onUpdated,
@@ -14,6 +16,7 @@ export default function AttendanceControl({
 }: {
     bookingId: string
     initialAttendance: Attendance
+    studentLanguage?: string
     studentName: string
     canEdit: boolean
     variant?: 'checkbox' | 'rollcall'
@@ -52,39 +55,29 @@ export default function AttendanceControl({
         <div className={`attendance_control${variant === 'rollcall' ? ' attendance_control_rollcall' : ''}`}>
             {variant === 'rollcall' ? (
                 <>
-                    <strong id={`${id}-name`}>{studentName}</strong>
-                    <span className="muted" role="status">
-                        {attendance === 'UNMARKED' ? 'Non pointé' : attendance === 'PRESENT' ? 'Présent' : 'Absent'}
-                    </span>
+                    <strong id={`${id}-name`}>{studentName} <StudentLanguage language={studentLanguage} /></strong>
                     <div className="attendance_rollcall_actions" role="group" aria-labelledby={`${id}-name`}>
                         <button
                             type="button"
                             className="btn secondary"
+                            data-attendance="PRESENT"
                             aria-pressed={attendance === 'PRESENT'}
                             disabled={busy || !canEdit}
-                            onClick={() => void mark('PRESENT')}
+                            onClick={() => void mark(attendance === 'PRESENT' ? 'UNMARKED' : 'PRESENT')}
                         >
                             Présent
                         </button>
                         <button
                             type="button"
                             className="btn secondary"
+                            data-attendance="ABSENT"
                             aria-pressed={attendance === 'ABSENT'}
                             disabled={busy || !canEdit}
-                            onClick={() => void mark('ABSENT')}
+                            onClick={() => void mark(attendance === 'ABSENT' ? 'UNMARKED' : 'ABSENT')}
                         >
                             Absent
                         </button>
-                        {attendance !== 'UNMARKED' && (
-                            <button
-                                type="button"
-                                className="btn secondary"
-                                disabled={busy || !canEdit}
-                                onClick={() => void mark('UNMARKED')}
-                            >
-                                Effacer le pointage
-                            </button>
-                        )}
+
                     </div>
                 </>
             ) : (
@@ -98,7 +91,7 @@ export default function AttendanceControl({
                             onChange={(e) => void mark(e.target.checked ? 'PRESENT' : 'ABSENT')}
                             aria-describedby={attendance === 'UNMARKED' ? undefined : `${id}-status`}
                         />
-                        <span>{studentName}</span>
+                        <span>{studentName} <StudentLanguage language={studentLanguage} /></span>
                     </label>
                     {attendance !== 'UNMARKED' && (
                         <span className="muted attendance_status" id={`${id}-status`}>

@@ -134,6 +134,7 @@ export function calendarSlots(state: State) {
                 return {
                     id: person.id,
                     name: `${person.firstName} ${person.lastName.toLocaleUpperCase('fr-FR')}`,
+                    language: person.language,
                     email: person.email,
                     status: b.status,
                     attendance: b.attendance as 'UNMARKED' | 'PRESENT' | 'ABSENT',
@@ -315,6 +316,7 @@ export function teacherSessions(state: State, date: string, next = false) {
                             ).length,
                         totalSessions: entitlement.total,
                         name: `${person.firstName} ${person.lastName.toLocaleUpperCase('fr-FR')}`,
+                    language: person.language,
                         courseId: entitlement.courseId,
                         course: entitlement.course,
                         level: course?.level ?? 'INITIATION',

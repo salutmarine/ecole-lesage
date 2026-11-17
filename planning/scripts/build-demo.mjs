@@ -20,7 +20,7 @@ await mkdir(path.join(target, 'components'), { recursive: true })
 await mkdir(path.join(target, 'data'), { recursive: true })
 await cp(path.join(root, 'data/lesage/catalogue.json'), path.join(target, 'data/catalogue.json'))
 await cp(path.join(root, 'data/lesage/local-demo.json'), path.join(target, 'data/local-demo.json'))
-for (const name of ['month-calendar', 'date-picker', 'booking-actions', 'side-panel', 'toast']) {
+for (const name of ['month-calendar', 'date-picker', 'booking-actions', 'side-panel', 'toast', 'student-language']) {
     let source = await readFile(path.join(root, `components/${name}.tsx`), 'utf8')
     if (source.includes('fetch('))
         source = source.replace("'use client'", "'use client'\nimport { demoFetch as fetch } from '@/lib/store'")
@@ -44,7 +44,7 @@ await cp(
     path.join(target, 'public/fonts/NotoSansJP-Regular.otf'),
 )
 const stylesheet = await readFile(path.join(root, 'app/globals.scss'), 'utf8')
-await writeFile(path.join(target, 'app/globals.scss'), stylesheet)
+await writeFile(path.join(target, 'app/globals.scss'), stylesheet.replace("@import '../../showcase/assets/platform/cta';", await readFile(path.join(root, '../showcase/assets/platform/cta.css'), 'utf8')).replace("@import '../../showcase/assets/platform/contact-form';", await readFile(path.join(root, '../showcase/assets/platform/contact-form.css'), 'utf8')))
 for (const name of [
     'admin-dashboard',
     'admin-forms',
@@ -95,12 +95,10 @@ login =
         )
         .replace('action="/api/auth/demo" method="post"', 'onSubmit={submit}')
 await writeFile(path.join(target, 'components/demo-login.tsx'), login)
-const layout = await readFile(path.join(root, 'app/layout.tsx'), 'utf8')
-const brand = layout.slice(layout.indexOf('<Link href="/"'), layout.indexOf('</Link>') + '</Link>'.length)
-await writeFile(
-    path.join(target, 'components/brand.tsx'),
-    "import Link from '@/lib/navigation'\nexport default function Brand(){ return (" + brand + ')}\n',
-)
+await writeFile(path.join(target, 'components/site-header.tsx'),
+    (await readFile(path.join(root, 'components/site-header.tsx'), 'utf8'))
+        .replace("../../showcase/assets/platform/planning-header.css", "./planning-header.css"))
+await cp(path.join(root, '../showcase/assets/platform/planning-header.css'), path.join(target, 'components/planning-header.css'))
 for (const name of ['admin-navigation', 'student-summary', 'agenda-period', 'slot-recurrence'])
     await cp(path.join(root, `lib/${name}.ts`), path.join(target, `lib/${name}.ts`))
 await cp(path.join(root, 'demo/lib/showcase-purchases.ts'), path.join(target, 'lib/showcase-purchases.ts'))

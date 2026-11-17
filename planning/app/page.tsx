@@ -9,47 +9,38 @@ export default async function Login({ searchParams }: { searchParams: Promise<{ 
     }
     return (
         <div className="login_wrap">
-            <h1>Planifiez vos cours à l'école Lesage</h1>
-            <form className="login_form" action="/api/auth/demo" method="post">
-                <div className="login_field_group">
-                    <div className={`login_field${error === 'login' ? ' is_invalid' : ''}`}>
-                        <input
-                            id="demo-login"
-                            name="login"
-                            type="text"
-                            placeholder=" "
-                            autoComplete="off"
-                            autoCapitalize="none"
-                            spellCheck={false}
-                            required
-                            aria-invalid={error === 'login' || undefined}
-                            aria-describedby="login-hint"
-                        />
-                        <label htmlFor="demo-login">
-                            Login : admin, prof ou etudiant. <span aria-hidden="true">*</span>
-                        </label>
-                    </div>
-                    <div className="login_field">
-                        <input
-                            id="demo-password"
-                            name="password"
-                            type="password"
-                            placeholder=" "
-                            defaultValue="lesage-demo"
-                            autoComplete="off"
-                            required
-                            aria-describedby="login-hint"
-                        />
-                        <label htmlFor="demo-password">
-                            Mot de passe <span aria-hidden="true">*</span>
-                        </label>
-                    </div>
+            <header className="login_heading"><p className="section_kicker">Connexion</p><h1>Planifiez vos cours</h1></header>
+            <form className="login_form local-contact-form" action="/api/auth/demo" method="post">
+                <div className="local-field">
+                    <label htmlFor="demo-login">Login : admin, prof ou etudiant. <span aria-hidden="true">*</span></label>
+                    <input
+                        className="form-control"
+                        id="demo-login"
+                        name="login"
+                        type="text"
+                        autoComplete="off"
+                        autoCapitalize="none"
+                        spellCheck={false}
+                        required
+                        aria-invalid={error === 'login' || undefined}
+                    />
                 </div>
-                <br />
+                <div className="local-field">
+                    <label htmlFor="demo-password">Mot de passe <span aria-hidden="true">*</span></label>
+                    <input
+                        className="form-control"
+                        id="demo-password"
+                        name="password"
+                        type="password"
+                        defaultValue="lesage-demo"
+                        autoComplete="off"
+                        required
+                    />
+                </div>
                 {error && errors[error] && <Toast message={errors[error]} />}
-                <button className="btn btn-large" type="submit">
-                    Se connecter
-                </button>
+                <div className="local-form-actions">
+                    <button className="btn btn-medium" type="submit">Se connecter</button>
+                </div>
             </form>
         </div>
     )

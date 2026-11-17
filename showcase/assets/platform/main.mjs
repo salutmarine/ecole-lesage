@@ -5,7 +5,7 @@ const main=document.querySelector('#platform-main'),loading=document.querySelect
 const lang=()=>location.pathname.match(/^\/(fr|en|ja)(?:\/|$)/)?.[1]||'fr';
 const publicViews=new Set(['catalog','product']);
 let store,cleanup;
-const dictionary={fr:{account:'Mon espace',cart:'Panier',school:'L’école',courses:'Les cours',seminars:'Les séminaires',workspace:'Mes cours & réservations'},en:{account:'My account',cart:'Cart',school:'The school',courses:'The courses',seminars:'Seminars',workspace:'My courses & bookings'},ja:{account:'マイアカウント',cart:'カート',school:'スクール',courses:'コース',seminars:'セミナー',workspace:'受講コース・予約'}};
+const dictionary={fr:{account:'Mon compte & mes réservations',cart:'Panier',school:'L’école',courses:'Les cours',seminars:'Les séminaires',workspace:'Mes cours & réservations'},en:{account:'My account',cart:'Cart',school:'The school',courses:'The courses',seminars:'Seminars',workspace:'My courses & bookings'},ja:{account:'マイアカウント',cart:'カート',school:'スクール',courses:'コース',seminars:'セミナー',workspace:'受講コース・予約'}};
 function urlFor(view,params={},language=lang()){
  if(view==='shop')view='catalog';
  if(!publicViews.has(view))return portalUrl(view,params,language);

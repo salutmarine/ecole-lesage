@@ -1,4 +1,5 @@
 'use client'
+import StudentLanguage from '@/components/student-language'
 import { useEffect, useState } from 'react'
 import { courseLevels, type CourseLevel } from '@/lib/course-levels'
 import { parisDate } from '@/lib/agenda-period'
@@ -303,6 +304,7 @@ export default function TeacherDayOrganizer({
                                                     bookingId={student.bookingId}
                                                     initialAttendance={student.attendance}
                                                     studentName={student.name}
+                                        studentLanguage={student.language}
                                                     canEdit={!busy}
                                                 />
                                             ) : (
@@ -324,7 +326,7 @@ export default function TeacherDayOrganizer({
                                                             )
                                                         }
                                                     />
-                                                    <span>{student.name}</span>
+                                                    <span>{student.name} <StudentLanguage language={student.language} /></span>
                                                 </label>
                                             )}
                                             <div className="teacher_dispatch_course">

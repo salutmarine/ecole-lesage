@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import StudentDashboard from '@/components/student-dashboard'
 import AdminDashboard from '@/components/admin-dashboard'
 import TeacherDashboard from '@/components/teacher-dashboard'
-import Brand from '@/components/brand'
+import SiteHeader from '@/components/site-header'
 import DemoLogin from '@/components/demo-login'
 import { adminSections } from '@/lib/admin-navigation'
 import { adminProps, teacherProps, hydrate, displayTeacher } from '@/lib/admin-store'
@@ -48,35 +48,14 @@ export default function Demo() {
     const studentId = state ? demoStudentId(state) : ''
     const student = state?.people?.find((person) => person.id === studentId)
     const teacher = state ? teacherProps(state).user : null
-    const breadcrumb =
-        view === 'admin'
-            ? 'Je suis un administrateur'
-            : view === 'teacher'
-              ? `Je suis le professeur ${teacher?.firstName ?? ''} ${teacher?.lastName.toLocaleUpperCase('fr-FR') ?? ''}`
-              : `Je suis l’étudiant ${student?.firstName ?? ''} ${student?.lastName.toLocaleUpperCase('fr-FR') ?? ''}`
     return (
         <div className="app_shell app_shell_no_sidebar">
             <div className="main_area">
-                <header className="topbar">
-                    <div className="topbar_left">
-                        <Brand />
-                    </div>
-                    <div className="topbar_right">
-                        {process.env.NEXT_PUBLIC_SHOWCASE_URL && (
-                            <a className="btn secondary" href={process.env.NEXT_PUBLIC_SHOWCASE_URL}>
-                                Retour au site
-                            </a>
-                        )}
-                        {!isLogin && (
-                            <div className="topbar_right">
-                                <span className="breadcrumbs">{breadcrumb}</span>
-                                <button className="btn topbar_logout" type="button" onClick={() => router.push('/')}>
-                                    Se déconnecter
-                                </button>
-                            </div>
-                        )}
-                    </div>
-                </header>
+                <SiteHeader
+                    firstName={!isLogin ? (view === 'student' ? student?.firstName : view === 'teacher' ? teacher?.firstName : 'Administrateur') : undefined}
+                    planningHref={view === 'student' ? '#/student' : view === 'teacher' ? '#/teacher' : '#/admin/planning'}
+                    onLogout={() => router.push('/')}
+                />
                 <main className="wrap">
                     {isLogin ? (
                         <DemoLogin />

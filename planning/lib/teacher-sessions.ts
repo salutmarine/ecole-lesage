@@ -3,6 +3,7 @@ import type { CourseLevel } from './course-levels'
 export type TeacherStudent = {
     bookingId: string
     name: string
+    language?: string
     sessionNumber: number
     totalSessions: number
     courseId: string

@@ -100,7 +100,7 @@ async function mirror(directory) {
         )
         .replace(
           "cleanup=mountShop(main,store,options);loading.hidden=true;",
-          "cleanup=mountShop(main,store,options);const stopShop=cleanup;const stopCalendar=options.view==='product'?mountCourseCalendar(main,store,options.productKey):()=>{};cleanup=()=>{stopCalendar();stopShop?.();};loading.hidden=true;",
+          "let stopCalendar=()=>{};const shopOptions={...options,onProductRendered:()=>{stopCalendar();stopCalendar=mountCourseCalendar(main,store,options.productKey);}};const stopShop=mountShop(main,store,shopOptions);cleanup=()=>{stopCalendar();stopShop?.();};loading.hidden=true;",
         );
     }
     if (relative === "assets/platform/shop.mjs") {

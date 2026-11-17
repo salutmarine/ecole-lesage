@@ -135,22 +135,22 @@ export default function DatePicker({ id, name, value, defaultValue = '', onChang
                 }}
             >
                 <div className="date_picker_header">
-                    <button
+                    <button className="calendar-month-button calendar-month-button--previous"
                         type="button"
                         aria-label="Mois précédent"
                         onClick={() => setMonth(new Date(month.getFullYear(), month.getMonth() - 1, 1))}
                     >
-                        ‹
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="1.4"></path></svg>
                     </button>
                     <span aria-live="polite">
                         {month.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })}
                     </span>
-                    <button
+                    <button className="calendar-month-button"
                         type="button"
                         aria-label="Mois suivant"
                         onClick={() => setMonth(new Date(month.getFullYear(), month.getMonth() + 1, 1))}
                     >
-                        ›
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="1.4"></path></svg>
                     </button>
                 </div>
                 <div className="date_picker_grid">

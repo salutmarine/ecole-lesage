@@ -39,6 +39,7 @@ export async function GET(req: NextRequest) {
                             lastName: true,
                             email: true,
                             phone: true,
+                            language: true,
                             entitlements: {
                                 select: {
                                     courseId: true,
@@ -111,6 +112,7 @@ export async function GET(req: NextRequest) {
                               id: booking.user.id,
                               name: `${booking.user.firstName} ${booking.user.lastName.toLocaleUpperCase('fr-FR')}`,
                               email: booking.user.email,
+                              language: booking.user.language,
                               sessions: booking.user.entitlements
                                   .filter(
                                       (entitlement) =>

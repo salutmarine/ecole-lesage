@@ -83,7 +83,9 @@ function TeacherSessionCourses({ session }: { session: Teacher['assignedSessions
             {session.courses.map((course) => (
                 <div key={course.id} className="slot_student_course_heading">
                     <span className="slot_student_course_name">
-                        <span aria-hidden="true">➔ </span>
+                        <svg className="planning-arrow" viewBox="0 0 28 18" fill="none" aria-hidden="true">
+                            <path d="M0 9h26M18 1l8 8-8 8" stroke="currentColor" strokeWidth="1" />
+                        </svg>
                         {course.name.toLocaleUpperCase('fr-FR')}
                     </span>
                     <span className={`month_event_level month_event_level_${course.level.toLowerCase()}`}>
@@ -679,10 +681,6 @@ export default function AdminDashboard({
                         <div className="admin_create">
                             <div className="card">
                                 <h2>Gestion des créneaux</h2>
-                                <p>
-                                    Ajoutez un créneau ouvert à tous les cours en choisissant la date, le nombre de
-                                    places et le professeur.
-                                </p>
                                 {slotForm}
                             </div>
                         </div>

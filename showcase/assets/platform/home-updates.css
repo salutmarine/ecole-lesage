@@ -1,0 +1,23 @@
+.home-page .home-featured-actions{justify-content:center;padding-top:24px}
+.home-page .home-featured-actions>.home-link--solid{background:#111;border-color:#111;color:#fff}
+.home-maison .home-section-heading{align-items:center}
+.home-maison .home-section-heading h2{margin-top:14px}
+.maison-slider{position:relative;isolation:isolate;overflow:hidden}
+.maison-slides{position:relative;height:clamp(320px,48vw,680px);background:#eae8e3}
+.home-page .maison-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease;pointer-events:none}
+.home-page .maison-slide.is-active{opacity:1}
+.home-page .maison-slide img{width:100%;height:100%;object-fit:cover}
+.home-page .maison-slider-cta{position:absolute;z-index:2;left:50%;top:50%;transform:translate(-50%,-50%);white-space:nowrap;background:#111;color:#fff;box-shadow:0 4px 20px #0002}
+@media(prefers-reduced-motion:reduce){.home-page .maison-slide{transition:none}}
+.home-page .home-news-grid{grid-template-columns:1fr 1fr;gap:0;padding:0;border:0;background:#f6f6f6;align-items:stretch}
+.home-news-copy{padding:clamp(28px,4vw,64px);align-self:center;min-width:0}
+.home-page .home-news-copy h2{font:400 clamp(32px,3.6vw,52px)/1.15 Georgia,serif;margin:18px 0 30px}
+.home-news-copy dl{display:grid;gap:20px;margin:0 0 28px;font-size:13px;line-height:1.8}
+.home-news-copy dl>div{display:grid;grid-template-columns:60px 1fr;gap:18px}
+.home-news-copy dt{font-weight:600}
+.home-news-copy dd{margin:0}
+.home-news-copy>p:last-child{font-size:12px;line-height:1.9}
+.home-page .home-news-copy>.home-link{display:inline-flex;text-decoration:none}
+.home-page .home-news-photo{min-width:0;overflow:hidden;min-height:500px;position:relative}
+.home-page .home-news-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:right center;max-width:none}
+@media(max-width:700px){.home-maison .home-section-heading{align-items:flex-start;flex-direction:column;gap:24px}.home-page .home-news-grid{grid-template-columns:1fr}.home-page .home-news-photo{min-height:0;aspect-ratio:1/1}.home-news-copy{padding:30px 24px}.home-page .home-featured-actions{display:flex}.home-page .home-featured-actions>.home-link--solid{width:auto}.maison-slides{height:360px}}
