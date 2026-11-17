@@ -225,7 +225,7 @@
   color: #fff !important;
 }
 .home-page .home-featured-copy h3,
-.shop-related .home-featured-copy h3 {
+.lesage-shop .home-featured-copy h3 {
   font-size: 22px;
   font-weight: 700;
   letter-spacing: normal;
@@ -245,23 +245,23 @@
 .shop-related.home-section { padding: 60px 0 0; }
 .shop-related .home-section-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; margin-bottom: 38px; }
 .shop-related .home-section-heading h2 { font: 400 33px/1.28 Georgia, serif; margin: 0; }
-.shop-related .home-featured-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; }
-.shop-related .home-featured-course { min-width: 0; }
-.shop-related .home-featured-photo { display: block; overflow: hidden; aspect-ratio: 4/3; background: #f9f9f9; }
-.shop-related .home-featured-photo img { width: 100%; height: 100%; object-fit: cover; }
-.shop-related .home-featured-copy { padding-top: 24px; }
-.shop-related .home-featured-copy h3 { margin: 11px 0 13px; }
-.shop-related .home-featured-meta { font-size: 12px; color: #73736e; line-height: 1.7; }
-.shop-related .home-featured-meta span { margin: 0 7px; }
-.shop-related .home-featured-price { font-size: 18px; line-height: 1.5; margin-top: 9px; }
-.shop-related .home-featured-price span { font-size: 10px; color: #777; margin-left: 6px; }
-.shop-related .home-link { display: inline-flex; align-items: center; justify-content: space-between; gap: 32px; padding: 15px 0; font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; border-bottom: 1px solid #e3e1dc; width: 100%; margin-top: 15px; }
-.shop-related .home-link svg { width: 26px; height: 18px; flex: none; }
+.lesage-shop .home-featured-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; }
+.lesage-shop .home-featured-course { min-width: 0; }
+.lesage-shop .home-featured-photo { display: block; overflow: hidden; aspect-ratio: 4/3; background: #f9f9f9; }
+.lesage-shop .home-featured-photo img { width: 100%; height: 100%; object-fit: cover; }
+.lesage-shop .home-featured-copy { padding-top: 24px; }
+.lesage-shop .home-featured-copy h3 { margin: 11px 0 13px; }
+.lesage-shop .home-featured-meta { font-size: 12px; color: #73736e; line-height: 1.7; }
+.lesage-shop .home-featured-meta span { margin: 0 7px; }
+.lesage-shop .home-featured-price { font-size: 18px; line-height: 1.5; margin-top: 9px; }
+.lesage-shop .home-featured-price span { font-size: 10px; color: #777; margin-left: 6px; }
+.lesage-shop .home-featured-copy > .home-link { display: inline-flex; align-items: center; justify-content: space-between; gap: 32px; padding: 15px 0; font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; border-bottom: 1px solid #e3e1dc; width: 100%; margin-top: 15px; }
+.lesage-shop .home-featured-copy > .home-link svg { width: 26px; height: 18px; flex: none; }
 @media (max-width: 900px) {
   .lesage-shop .shop-detail { grid-template-columns: minmax(0, 1fr); gap: 0; }
 }
 @media (max-width: 700px) {
-  .shop-related .home-featured-grid { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .lesage-shop .home-featured-grid { grid-template-columns: minmax(0, 1fr); gap: 32px; }
   .shop-related .home-section-heading { flex-wrap: wrap; }
 }
 
@@ -368,3 +368,9 @@
 }
 
 .lesage-shop .shop-checkout-submit { width: auto; }
+
+.lesage-shop .shop-intro { padding-top: 72px; }
+
+@media (max-width: 700px) {
+  .lesage-shop .shop-product-grid:has(> .home-featured-course) { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+}

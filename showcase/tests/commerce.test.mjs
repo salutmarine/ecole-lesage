@@ -115,3 +115,28 @@ test("le calendrier public exclut les séances passées, complètes, bloquées e
     0,
   );
 });
+
+
+test("le lien du compte quitte le showcase et conserve la commande et la destination élève", async (t) => {
+  const previousLocation = globalThis.location;
+  const previousWindow = globalThis.window;
+  t.after(() => {
+    if (previousLocation === undefined) delete globalThis.location;
+    else globalThis.location = previousLocation;
+    if (previousWindow === undefined) delete globalThis.window;
+    else globalThis.window = previousWindow;
+  });
+  globalThis.location = {
+    origin: "http://localhost:8124",
+    href: "http://localhost:8124/ecole-lesage/showcase/boutique/?cours=2579",
+  };
+  globalThis.window = {
+    Showcase: { base: "/ecole-lesage/showcase", planning: "/ecole-lesage/planning/" },
+  };
+  const { portalDestination } = await import("../assets/platform/showcase-portal.mjs");
+  const account = "http://localhost:8124/ecole-lesage/planning/?showcaseOrder=abc#/student";
+  assert.equal(portalDestination(account), account);
+  assert.equal(portalDestination("/ecole-lesage/planning/"), "http://localhost:8124/ecole-lesage/planning/");
+  assert.equal(portalDestination("/ecole-lesage/showcase/boutique/"), null);
+  assert.equal(portalDestination("https://example.com/ecole-lesage/planning/"), null);
+});

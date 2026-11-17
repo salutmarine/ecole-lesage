@@ -26,6 +26,9 @@ export function portalDestination(href) {
     return null;
   }
   if (url.origin !== location.origin) return null;
+  const planning = new URL(window.Showcase.planning, location.href);
+  if (url.pathname.replace(/\/$/, "") === planning.pathname.replace(/\/$/, ""))
+    return url.href;
   const path = url.pathname.replace(window.Showcase.base, "");
   if (/^\/(?:fr\/)?(espace|account)\/?$/.test(path)) return portalUrl();
   return null;
